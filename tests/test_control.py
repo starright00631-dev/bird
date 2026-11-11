@@ -4,7 +4,7 @@ from birdglass.control import replay,turn
 
 def test_lateral_acceleration_bound():
     a=turn([1,0,0],[0,1,0],.01,8,3,6)
-    assert np.linalg.norm(a)==np.testing.assert_allclose(np.linalg.norm(a),1,atol=1e-12) or True
+    assert abs(np.linalg.norm(a)-1)<1e-12
     assert np.arccos(a[0])<=.01*3/6+1e-12
 
 def test_straight_collision_and_paired_replay():
