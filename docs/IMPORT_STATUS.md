@@ -1,18 +1,46 @@
-# Import and review status
+# Engineering and scientific completion gates
 
-**Repository contents, not historical promises, define what is implemented.**
+Repository: **executable modular prototype with tests**. The complete
+archived historical research code has **not** been imported.
 
-Completed:
-- Public research architecture, causal measurement protocol, evidence ledger and selected derived/synthetic numerical audit tables.
-- A running Python interface for continuous swept-sphere/wing contact with first-hit time ordering.
-- Identification-safe observation likelihood factorization and paired policy contrast.\n- Spectral physical proxies and viewpoint-dependent finite-pane reflection and transmission, including a measurable co-located pixel spectral interface.\n- A delayed 3D steering demonstration using the full finite-patch retinal angular footprint and zero-latency unit fix.
-- Regression/unit tests and automated CI configuration.
+## Implemented and independently unit-tested
 
-Not yet imported:
-- The complete original gap-selection, delayed visuomotor-control and joint-search implementation.
-- The complete historical regression test suite, report viewer, and extensive synthetic outputs.
-- The original raw local campus responses (deliberately excluded).
+- Finite glass/opaque-structure first swept contact and deterministic
+  first-hit attribution across adjacent faces.
+- Arbitrarily oriented rectangular optical patches, mirror virtual habitat,
+  transmitted habitat, per-pane angular footprint and solid angle; measured
+  spectral R/T and species cone catches remain explicit external inputs.
+- A simplified delayed heading/gap controller with corrected zero-delay
+  command behavior and physical rectangular pane attention.
+- A paired whole-facade policy evaluation of *both* glass and opaque contact,
+  without converting unmeasured cue effects into efficacy estimates.
+- Strict schema for individual-held-out lag/gain estimation with matched
+  delay windows and baseline comparison; tests use generated tracks only.
+- Strict schema for independently measured wingtip/head/body keypoints, with
+  FPS/unit calibration, no gap interpolation and earliest sampled contact;
+  tests use generated 3D pose trajectories only.
 
-Current geometry is coplanar, axis-aligned rectangles; the wing envelope uses fixed span stations, not measured 3D wing articulation. All reported policies remain uncalibrated research hypotheses. No treatment claims are field verified.
+## Open blockers (scientific, not unit-test failures)
 
-Next testable research priorities: validated flight-track ingestion with camera calibration, held-out individual likelihood comparison, collision-free approach denominator, optical recognition studies, and treatment-to-neighboring-surface spillover tests.
+1. No downloaded or fitted real 3D bird+obstacle+eye-direction tracks
+   sufficient to calibrate recognition or visuomotor delay near glass.
+2. No independently observed denominator of all trajectories *approaching*
+   each pane and no verified collision/near-miss labels linked to that.
+3. No field measured pane-by-pane spectral reflection/transmission and
+   geometry registered against bird camera views for BNBU.
+4. Rigid sphere keypoints do not reconstruct entire wing membranes, body
+   compliance, or fatality probability.
+5. The original multi-module simulation code, historical analyses, and
+   full offline report have only been partially migrated to this repo.
+
+## Scientific order of operations
+
+First verify geometric camera registration and flight pose transfer on
+independent recorded views. Then estimate species/context-dependent perception
+and steering on **held-out birds** using known gap geometry. Next estimate
+approach traffic from ecological habitat/seasonal inputs, separately from
+observation detection. Only then compare full-building low-impact
+interventions by counterfactual contact, behavior and architectural costs.
+
+No replacement glass, no universal UV efficacy, and no installation decision
+based solely on simulation outputs. See `docs/RESEARCH_GATES.md`.
