@@ -1,0 +1,16 @@
+scene,hypothesis,approaches_simulated,geometrically_intersecting,expected_glass_impacts_unfitted,expected_normal_kinetic_energy_J,per_1000_hypothetical_approaches,source_status
+bridge_habitat_convergence,less_perceptive,2000,1587,1587.0,489.0855954754821,793.5,FICTIONAL route + optics + response; NOT BNBU incidence
+bridge_habitat_convergence,lower_agility,2000,1587,1579.6265040979536,488.0133755520136,789.8132520489768,FICTIONAL route + optics + response; NOT BNBU incidence
+bridge_habitat_convergence,central,2000,1587,1387.8557036684667,440.1115101068706,693.9278518342334,FICTIONAL route + optics + response; NOT BNBU incidence
+bridge_habitat_convergence,sensitive_to_cues,2000,1587,1065.8803937936996,330.30163000568507,532.9401968968498,FICTIONAL route + optics + response; NOT BNBU incidence
+bridge_habitat_convergence,very_agile,2000,1587,967.4276926181284,298.44090988017683,483.7138463090642,FICTIONAL route + optics + response; NOT BNBU incidence
+library_multistory_glass,less_perceptive,2000,763,763.0,491.7569837978118,381.5,FICTIONAL route + optics + response; NOT BNBU incidence
+library_multistory_glass,lower_agility,2000,763,761.4670188956463,491.4656518912533,380.73350944782317,FICTIONAL route + optics + response; NOT BNBU incidence
+library_multistory_glass,central,2000,763,683.8739561630882,456.1250957887039,341.9369780815441,FICTIONAL route + optics + response; NOT BNBU incidence
+library_multistory_glass,sensitive_to_cues,2000,763,503.97774207698967,327.6231107102659,251.98887103849484,FICTIONAL route + optics + response; NOT BNBU incidence
+library_multistory_glass,very_agile,2000,763,448.4417743919557,284.32170269553467,224.22088719597784,FICTIONAL route + optics + response; NOT BNBU incidence
+dorm_groundfloor_trees_hills,less_perceptive,2000,944,944.0,258.26781125428187,472.0,FICTIONAL route + optics + response; NOT BNBU incidence
+dorm_groundfloor_trees_hills,lower_agility,2000,944,938.23942047377,257.29680056483403,469.119710236885,FICTIONAL route + optics + response; NOT BNBU incidence
+dorm_groundfloor_trees_hills,central,2000,944,799.8903800811671,223.91981554811878,399.94519004058355,FICTIONAL route + optics + response; NOT BNBU incidence
+dorm_groundfloor_trees_hills,sensitive_to_cues,2000,944,614.128180491524,167.34942005693605,307.064090245762,FICTIONAL route + optics + response; NOT BNBU incidence
+dorm_groundfloor_trees_hills,very_agile,2000,944,553.8693635291544,150.43652339395604,276.9346817645772,FICTIONAL route + optics + response; NOT BNBU incidence
