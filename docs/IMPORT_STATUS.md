@@ -5,7 +5,7 @@
 Completed:
 - Public research architecture, causal measurement protocol, evidence ledger and selected derived/synthetic numerical audit tables.
 - A running Python interface for continuous swept-sphere/wing contact with first-hit time ordering.
-- Identification-safe observation likelihood factorization and paired policy contrast.
+- Identification-safe observation likelihood factorization and paired policy contrast.\n- Spectral physical proxies and viewpoint-dependent finite-pane reflection and transmission, including a measurable co-located pixel spectral interface.\n- A delayed 3D steering demonstration using the full finite-patch retinal angular footprint and zero-latency unit fix.
 - Regression/unit tests and automated CI configuration.
 
 Not yet imported:

@@ -6,6 +6,7 @@ hypotheses, not expected field efficacy.
 """
 from collections import deque
 from math import acos, sin, cos
+from .scene_optics import RectPatch, minimum_heading_angle_deg
 import numpy as np
 from .contact import first_contact
 
@@ -45,6 +46,27 @@ def route(position,heading,panes,destination,span,body,step=.3):
             proposals.append((score,y,z,point))
     return min(proposals,key=lambda v:v[:3])[3] if proposals else destination
 
+def visible_glass_ids(position,heading,panes,max_forward_distance_m,
+                      max_view_angle_deg=57.2957795131):
+    """Geometrically visible *portion* of each glass patch, not its centre.
+
+    This is a field-of-view candidate set only. It does not infer whether
+    birds can distinguish glass from a reflected/transmitted scene.
+    """
+    p=np.asarray(position,float)
+    if p.shape!=(3,) or not np.isfinite(p).all() or max_forward_distance_m<=0:
+        raise ValueError("invalid observer geometry")
+    if not 0<max_view_angle_deg<180:
+        raise ValueError("invalid angular attention threshold")
+    return [
+        pane.id for pane in panes
+        if pane.material=="glass"
+        and 0<=pane.x-p[0]<=max_forward_distance_m
+        and minimum_heading_angle_deg(p,heading,RectPatch.from_axis_pane(pane))
+            <=max_view_angle_deg
+    ]
+
+
 def replay(start,velocity,destination,panes,recognition,draws,
            body_radius=.05,wingspan=.3,latency=.14,gain=4.5,
            max_lateral_accel=12.,detection_range=7.,dt=.025,max_time=4.):
@@ -62,17 +84,18 @@ def replay(start,velocity,destination,panes,recognition,draws,
     speed=float(np.linalg.norm(velocity))
     goal=np.asarray(destination,float)
     target=goal.copy()
-    commands=deque([h.copy() for _ in range(int(round(latency/dt))+1)])
+    # With zero latency the current steering target must take effect in
+    # this step, not the following one. Round to the nearest time step;
+    # caller must check time-step sensitivity for noninteger delays.
+    lag=int(round(latency/dt))
+    commands=deque([h.copy() for _ in range(lag)])
     known=set()
+    if len({pane.id for pane in panes})!=len(panes):
+        raise ValueError("pane ids must be unique")
     for i in range(int(max_time/dt)):
+        candidates=set(visible_glass_ids(p,h,panes,detection_range))
         for pane in panes:
-            if pane.material!="glass" or pane.id in known:continue
-            dx=pane.x-p[0]
-            if not 0<=dx<=detection_range:continue
-            center=np.array([dx,(pane.ymin+pane.ymax)/2-p[1],
-                                  (pane.zmin+pane.zmax)/2-p[2]])
-            angle=acos(float(np.clip(unit(center)@h,-1,1)))
-            if angle>1.0:continue
+            if pane.id not in candidates or pane.id in known:continue
             if draws.get(pane.id,1.)<recognition.get(pane.id,0.):
                 known.add(pane.id)
                 target=route(p,h,panes,goal,wingspan,body_radius)
@@ -82,10 +105,11 @@ def replay(start,velocity,destination,panes,recognition,draws,
         contact=first_contact(p,nxt,h*speed,panes,body_radius,wingspan)
         if contact:
             return {"outcome":contact.material,"pane":contact.pane_id,
-                    "time_s":(i+contact.t)*dt}
+                    "time_s":(i+contact.t)*dt,
+                    "end_xyz":tuple(p+(nxt-p)*contact.t)}
         p=nxt
         if p[0]>panes[0].x+wingspan/2+.1:
-            return {"outcome":"passed","pane":None,"time_s":(i+1)*dt}
+            return {"outcome":"passed","pane":None,"time_s":(i+1)*dt,"end_xyz":tuple(p)}
         if abs(p[1])>100 or p[2]>100 or p[2]<-10:
             return {"outcome":"diverted","pane":None,"time_s":(i+1)*dt}
-    return {"outcome":"unresolved","pane":None,"time_s":max_time}
+    return {"outcome":"unresolved","pane":None,"time_s":max_time,"end_xyz":tuple(p)}
