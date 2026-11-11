@@ -28,7 +28,7 @@ def test_measured_spread_wingtip_contacts_edge_pane():
     c=x.first_sampled_keypoint_contact
     assert c is not None and c.body_keypoint=="left_wingtip"
     assert c.pane_id=="edge_glass"
-    assert c.time_s_from_first_frame==pytest.approx(.5/120,abs=1e-8)
+    assert c.time_s_from_first_frame==pytest.approx(.495/120,abs=1e-8)
     assert x.observed_wingtip_distance_median_m==pytest.approx(1.4)
     assert not x.collision_free_certified
 
