@@ -28,16 +28,24 @@ def turn(heading,target,dt,gain,amax,speed):
     theta=min(angle,dt*gain*angle,dt*amax/speed)
     return unit(a*cos(theta)+tangent*sin(theta))
 
-def route(position,heading,panes,destination,span,body,step=.3):
-    """Finite-search baseline over physically open passages around facade."""
-    x=panes[0].x
-    ys=np.arange(min(p.ymin for p in panes)-2,max(p.ymax for p in panes)+2,step)
-    zs=np.arange(max(0,min(p.zmin for p in panes)-1.5),max(p.zmax for p in panes)+2,step)
+def route(position,heading,panes,destination,span,body,step=.3,recognized_glass=()):
+    """Hypothetical gap search using *perceived*, not omniscient, geometry.
+
+    Opaque structures are assumed known; transparent panes count as obstacles
+    only after recognition. The true full geometry remains in first_contact.
+    This is an uncalibrated planning rule, not evidence of what birds perceive.
+    """
+    visible=[q for q in panes if q.material=="opaque" or q.id in recognized_glass]
+    if not visible:
+        return np.asarray(destination,float).copy()
+    x=visible[0].x
+    ys=np.arange(min(p.ymin for p in visible)-2,max(p.ymax for p in visible)+2,step)
+    zs=np.arange(max(0,min(p.zmin for p in visible)-1.5),max(p.zmax for p in visible)+2,step)
     proposals=[]
     for y in ys:
         for z in zs:
             if any(p.ymin-span/2<=y<=p.ymax+span/2 and
-                   p.zmin-body<=z<=p.zmax+body for p in panes):continue
+                   p.zmin-body<=z<=p.zmax+body for p in visible):continue
             point=np.array([x+.3,y,z])
             ang=acos(float(np.clip(unit(point-position)@heading,-1,1)))
             if ang>1.2:continue
@@ -75,7 +83,7 @@ def replay(start,velocity,destination,panes,recognition,draws,
             if angle>1.0:continue
             if draws.get(pane.id,1.)<recognition.get(pane.id,0.):
                 known.add(pane.id)
-                target=route(p,h,panes,goal,wingspan,body_radius)
+                target=route(p,h,panes,goal,wingspan,body_radius,recognized_glass=known)
         commands.append(unit(target-p))
         h=turn(h,commands.popleft(),dt,gain,max_lateral_accel,speed)
         nxt=p+h*speed*dt
