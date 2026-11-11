@@ -17,7 +17,7 @@ kinematic collision energy. **None** is a calibrated recognition probability.
 
 - Håstad & Ödeen (2014), DOI `10.7717/peerj.621`: UVS and VS bird visual systems differ substantially. A nominal UV mark cannot be treated as equally visible to all species under all illumination/vegetation backgrounds.
 - Swaddle et al. (2020), DOI `10.7717/peerj.9926`: in *protected-window* trials involving zebra finches, 'would collide' judgments were 17/20 for both control windows and 8/19 for both externally treated windows. Under the protected setup birds approaching treated windows also slowed around 25%; this is **not measured wild death or site-level efficacy**. The repeated bird design and unequal trial counts preclude naive independent-binomial inference from the totals. Forced-choice and uniform-treatment contrasts have different estimands and must NOT be pooled.
-- Swaddle et al. (2023), DOI `10.7717/peerj.14253`: exterior versus interior placement of films led to very different avoidance in an aviary. Exterior optical behavior cannot be assumed for a film behind reflective glazing.
+- Swaddle et al. (2023), DOI `10.7717/peerj.14676`: exterior versus interior placement of films led to very different avoidance in an aviary. Exterior optical behavior cannot be assumed for a film behind reflective glazing.
 - Samuels et al. (2022), DOI `10.7717/peerj.14604`: 29 selected collisions and nine selected near misses were recorded; 29/38 is not a probability of a collision among all approaching birds.
 
 ## Architectural consequence: do not replace glass
