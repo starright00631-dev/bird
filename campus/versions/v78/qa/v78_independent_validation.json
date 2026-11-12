@@ -1,0 +1,36 @@
+{
+  "version": "v78",
+  "pass": true,
+  "main_nodes": 1379,
+  "branch_nodes": 1382,
+  "new_active_nodes": 1380,
+  "parent_meshes_bytewise_geometry_equal": 1341,
+  "retopologized_opaque_trims": 37,
+  "new_skylight_meshes": 1,
+  "corrected_cap_Z_relative": 0.021999835968017578,
+  "bridge_contact_faces_preserved": 2,
+  "root_rotation_main": [
+    -0.7071067811865476,
+    0.0,
+    0.0,
+    0.7071067811865476
+  ],
+  "root_rotation_reconciled": [
+    -0.7071067811865476,
+    0.0,
+    0.0,
+    0.7071067811865476
+  ],
+  "v77_roof_seams_active": 0,
+  "v64_smoothed_terrain_active": 0,
+  "GPKG_spatial_layers": 143,
+  "GeoJSON_features": 567,
+  "KML_placemarks": 567,
+  "GIS_membership_roles": 8,
+  "viewer_asset_hash_matches_model": true,
+  "no_new_unsourced_glass_windows_trees": true,
+  "geodetic_vertical_datum_verified": false,
+  "new_OSM_way_nodes": 0,
+  "full_browser_runtime_this_run": "not verified: sandbox Chromium blocks localhost/file navigation by administrator",
+  "model_sha256": "999f2d8d59efbb8a094257c765bdb4c1d9eb843908bc2e5ae757020fd868c320"
+}
