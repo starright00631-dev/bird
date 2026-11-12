@@ -39,3 +39,10 @@ The following are **different** types of evidence and cannot be collapsed into a
 The archived larger v0.4 multi-module simulator is **not fully migrated**. See `docs/IMPORT_STATUS.md`. Current source code, not archived numerical output or documentation alone, defines the reproducible implementation.
 
 No personal campus incident reports, identifying respondent details, access credentials or unlicensed raw footage are included. We do not infer bird injury or mortality from translational energy or sampled keypoint contacts. The model explicitly considers low-visual-impact additions and lighting/habitat adjustments, but does **not** authorize any installation without measured context, robust field validation and ecological/safety review.
+
+
+## BNBU campus 3D scene (versioned research baseline)
+
+The campus scene is available under [`campus/`](campus/README.md) as the **complete imported v64 GLB and editable GIS**, with lossless XZ archives, evidence limitations, local 3D viewer and source-integrity checks. It retains the existing modeled lake and ridge meshes, while **CTV's unverified building candidate is explicitly excluded**. These inherited meshes are not a survey, DEM, photographic camera calibration, or quantitative glass exposure map.
+
+Run `python campus/unpack_assets.py && python campus/validate_scene.py`, then `python -m http.server 8000` and open `http://localhost:8000/campus/viewer.html`.
