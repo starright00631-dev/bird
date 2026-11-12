@@ -45,6 +45,16 @@ def check(page,label,offline=False):
     # v75 independent windows/glass data: keep source scientific mesh count 1379.
     page.wait_for_function("window.__BNBU_DEBUG__.v75BridgeCount()===7",timeout=50000)
     page.wait_for_function("window.__BNBU_DEBUG__.v76BuildingCount()===30",timeout=75000)
+    assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapSegments()")==12
+    assert not page.locator("#show-v76-phaseii-gaps").is_checked()
+    page.locator("#show-v76-phaseii-gaps").check()
+    assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is True
+    page.locator("#architecture-v76-select").select_option("D1")
+    detail=page.locator("#architecture-v76-detail").inner_text()
+    assert "径向路缺口" in detail and "中央环路缺口" in detail
+    page.locator("#show-v76-phaseii-gaps").uncheck()
+    assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is False
+
     assert page.locator("#architecture-v76-select option").count()==30
     assert page.evaluate("window.__BNBU_DEBUG__.v76FeatureFamilies()")==4
     assert page.locator("#show-v76-facades").is_checked()
