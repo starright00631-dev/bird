@@ -1074,14 +1074,23 @@ function architectureChoose76(){
  const id=$('architecture-v76-select').value;
  const record=architecture76.building_records.find(b=>b.id===id);
  if(!record)return;
- const mesh=meshes.find(m=>m.name===record.source_anchor_node);
+ // A building-inspection camera must not inherit the global overview's
+ // minimum 60-unit radius. Prefer source facade for actual frame/edge review.
+ const facadeName=id==='LRC'?'V40_MAIN_LRC_FACADE_AND_SIDEWALLS':
+   record.family==='T'?'V40_MAIN_'+id+'_FACADE_AND_SIDEWALLS':record.source_anchor_node;
+ const mesh=meshes.find(m=>m.name===facadeName)||
+   meshes.find(m=>m.name===record.source_anchor_node);
  if(!mesh)return;
  if(current!=='campus')$('choose-campus').click();
  const bounds=boxWorld(mesh);
  const center=bounds.getCenter(new THREE.Vector3());
  const sz=bounds.getSize(new THREE.Vector3());
- const r=Math.max(14,Math.max(sz.x,sz.z)*1.12);
- fit(new THREE.Box3().setFromCenterAndSize(center,new THREE.Vector3(r*2,Math.max(sz.y+7,16),r*2)));
+ const span=Math.max(11,sz.x,sz.z);
+ orbit.target.copy(center);
+ cam.up.set(0,1,0);
+ cam.position.copy(center).add(new THREE.Vector3(span*.85,Math.max(7,span*.42,sz.y*.75),span*1.05));
+ cam.near=.03;cam.far=Math.max(3000,span*100);cam.updateProjectionMatrix();
+ cam.lookAt(center);orbit.update();
  const routes=record.nearest_walk_or_road.map(x=>x.node+' '+x.xy_gap_model_units.toFixed(2)).join(' · ');
  const water=record.nearest_lake.map(x=>x.node+' '+x.xy_gap_model_units.toFixed(1)).join(' · ');
  $('architecture-v76-detail').textContent=
