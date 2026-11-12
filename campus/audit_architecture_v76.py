@@ -7,7 +7,8 @@ from __future__ import annotations
 import collections, hashlib, json, math, re
 from pathlib import Path
 import numpy as np
-from audit_connections_v74 import Surface, load_features, DATA, GLB, sha_file
+from audit_connections_v74 import Surface, load_features, DATA, GLB, sha_file, OFFSET
+from shapely.ops import nearest_points
 from build_bridges_v75 import glb_pack, unpack_glb
 
 ATLAS=DATA/"BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json"
@@ -150,6 +151,15 @@ def proximity(source):
     paths=[(name,geom) for name,geom in geometry.items()
            if re.fullmatch(r"(?:WALK|ROAD)_\d{3}",name)]
     assert len(paths)==56
+    # Phase-II PAVING_* radial routes and V49 ground links are source GLB
+    # elements, absent from the 56 GIS WALK_/ROAD_ classes. Keep them as
+    # unverified candidates, NEVER as certified traversable doors/paths.
+    phaseii_names=sorted(n for n in source.nodes if
+        re.fullmatch(r"PHASEII_V12_PAVING_phaseII_(?:radial_D[1-6]|inner_college_ring|west_road_concept)_surface",n)
+        or re.fullmatch(r"V49_PHASEII_D[1-6]_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",n))
+    assert len(phaseii_names)==14
+    phaseii=[(name,source.footprint(name)) for name in phaseii_names]
+    candidates=paths+phaseii
     water=[(name,geom) for name,geom in geometry.items() if re.fullmatch(r"LAKE_\d{2}",name)]
     assert len(water)==5
     buildings=[]
@@ -159,6 +169,7 @@ def proximity(source):
         footprint=source.footprint(name)
         triangles=source.triangles(name).reshape(-1,3)
         routes=sorted((float(footprint.distance(geom)),n) for n,geom in paths)
+        route_candidates=sorted((float(footprint.distance(geom)),n) for n,geom in candidates)
         lakes=sorted((float(footprint.distance(geom)),n) for n,geom in water)
         components=sorted(n for n in source.nodes if belongs(n,key))
         buildings.append({"id":key,"family":building_cat(key),"source_anchor_node":name,
@@ -168,12 +179,41 @@ def proximity(source):
           "source_mesh_z_range":[round(float(triangles[:,2].min()),3),round(float(triangles[:,2].max()),3)],
           "existing_component_names":components,"existing_component_count":len(components),
           "nearest_walk_or_road":[{"node":n,"xy_gap_model_units":round(d,3)} for d,n in routes[:4]],
+          "nearest_approach_candidates":[{"node":n,"xy_gap_model_units":round(d,3),
+              "source_group":"phaseII_GLTF_inferred" if n in phaseii_names else "GIS_WALK_ROAD_inherited",
+              "physical_connection_verified":False} for d,n in route_candidates[:4]],
           "nearest_lake":[{"node":n,"xy_gap_model_units":round(d,3)} for d,n in lakes[:2]],
           "no_measured_entry_doors":True,"no_photo_registered_windows":True,
           "not_proof_of_accessible_connection":True,
           "notes":"Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim."})
     assert len(buildings)==30
-    return buildings
+    network=[]
+    center=source.footprint("PHASEII_V12_PAVING_phaseII_inner_college_ring_surface")
+    for k in range(1,7):
+        dorm=source.footprint(f"PHASEII_DORM_D{k}")
+        radial_name=f"PHASEII_V12_PAVING_phaseII_radial_D{k}_surface"
+        radial=source.footprint(radial_name)
+        inferred=source.footprint(f"V49_PHASEII_D{k}_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE")
+        p_d,p_r=nearest_points(dorm,radial)
+        p_ring,p_r2=nearest_points(center,radial)
+        dorm_min=float(np.min(source.triangles(f"PHASEII_DORM_D{k}")[:,:,2]))
+        z_rad=source.local_top(radial_name,p_r)["z"]
+        z_ring=source.local_top("PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",p_ring)["z"]
+        z_rad2=source.local_top(radial_name,p_r2)["z"]
+        def local(point,z):
+            return [round(point.x-OFFSET[0],4),round(point.y-OFFSET[1],4),round(z,4)]
+        network.append({
+            "dorm":f"D{k}",
+            "dorm_to_radial_local_points":[local(p_d,dorm_min),local(p_r,z_rad)],
+            "radial_to_ring_local_points":[local(p_r2,z_rad2),local(p_ring,z_ring)],
+            "dorm_to_radial_plan_gap_model_units":round(float(dorm.distance(radial)),4),
+            "radial_to_central_ring_gap_model_units":round(float(radial.distance(center)),4),
+            "inferred_connector_to_radial_gap_model_units":round(float(inferred.distance(radial)),4),
+            "inferred_connector_to_dorm_gap_model_units":round(float(inferred.distance(dorm)),4),
+            "source_model_circulation_verified":False,
+            "do_not_extrude_missing_paths":True})
+    assert len(network)==6
+    return buildings,network
 
 def build():
     before=sha_file(GLB)
@@ -181,7 +221,7 @@ def build():
     selected={cat:sorted(n for n in source.nodes if component_group(n)==cat) for cat in CATS}
     assert all(len(selected[cat])>50 for cat in CATS),{k:len(v) for k,v in selected.items()}
     lines=sharp_line_glb(source,selected)
-    buildings=proximity(source)
+    buildings,phaseii_network=proximity(source)
     atlas={
       "version":"v76","source":"immutable inherited v71 GLB + v66 GIS",
       "source_glb_sha256":before,"original_meshes":1379,"original_gis_features":522,
@@ -192,7 +232,10 @@ def build():
       "feature_edge_overlay":lines,"building_count":len(buildings),"building_records":buildings,
       "published_evidence":SOURCES,
       "algorithm":"source-surface crease/boundary extraction at 34 degrees, 0.0001 source-local vertex quantization",
-      "spatial_environment":"30 building source planar envelopes x 56 WALK/ROAD routes + 5 source lakes; nearest 4 road/path and nearest 2 lakes retained for manual inspection",
+      "spatial_environment":"30 buildings x (56 GIS WALK/ROAD + 14 Phase-II GLB radial/ring/grade candidates) and 5 lakes; source XY proximity is NEVER a verified door connection",
+      "phaseII_route_candidate_count":14,
+      "all_route_candidates_count":70,
+      "phaseII_network_disconnection_audit":phaseii_network,
       "approach_glb_unchanged":True,
       "window_panel_count_measured":None,"dorm_balcony_number_measured":None,
       "lrc_fins_measured":None,"new_campus_triangles":0,
@@ -202,6 +245,7 @@ def build():
         "V15–V29 not identical to Phase-II D1–D6 dormitory architecture",
         "LRC diagonal braces and oval skylight source-model shape not independently surveyed",
         "Source roof-to-WALK proximity is not a valid door or floor-level connection",
+        "Six D dormitories are 18-21 model units from inherited radial paving and radial links are 40-48 from the central ring; source does not prove entrances",
         "Interbuilding elevated V52 span ends and v74 shoreline grade conflicts remain pending"],
       "future_validation":["Match 3+ distinct images per facade sector for COLMAP/pycolmap SfM",
         "Infer vanishing point axes and optimize image reprojection with source footprint anchors",
