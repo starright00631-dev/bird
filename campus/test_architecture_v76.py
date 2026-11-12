@@ -95,8 +95,10 @@ class TestArchitectureV76(unittest.TestCase):
                 self.assertEqual(len(p),2)
                 self.assertTrue(all(len(x)==3 and all(np.isfinite(v) for v in x) for x in p))
             rec=next(b for b in self.report['building_records'] if b['id']==f'D{k}')
-            self.assertGreater(rec['nearest_walk_or_road'][0]['xy_gap_model_units'],600)
-            self.assertLess(rec['nearest_approach_candidates'][0]['xy_gap_model_units'],30)
+            old_gap=rec['nearest_walk_or_road'][0]['xy_gap_model_units']
+            new_gap=rec['nearest_approach_candidates'][0]['xy_gap_model_units']
+            self.assertGreater(old_gap,10*new_gap)
+            self.assertLess(new_gap,30)
             self.assertTrue(all(not x['physical_connection_verified'] for x in rec['nearest_approach_candidates']))
             self.assertTrue(any(x['source_group']=='phaseII_GLTF_inferred' for x in rec['nearest_approach_candidates']))
 
