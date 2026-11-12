@@ -26,7 +26,7 @@ def check(page,label,offline=False):
     assert state=={"n":1377,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
-    assert page.evaluate("window.__BNBU_VERSION__")==="v69"
+    assert page.evaluate("window.__BNBU_VERSION__")=="v69"
     assert page.locator("#layers input[type=checkbox]").count()==10
     page.screenshot(path=str(RESULT/(label+"_campus.png")),full_page=True,timeout=45000)
     page.locator("#part-water_unsurveyed").uncheck()
