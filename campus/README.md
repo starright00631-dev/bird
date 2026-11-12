@@ -1,3 +1,20 @@
+## BNBU v76 — architectural identity, 30-building environment inspection, LRC detail (current)
+
+The current released campus package is **v76**. The [successful full packaging and Chromium run](https://github.com/starright00631-dev/bird/actions/runs/43180769755) verifies a full offline ZIP and standalone HTML on both file:// and local HTTP. Source original remains 1,379 meshes and 522 GIS features.
+
+- **T1–T8:** distinguish 8 teaching-block facades, galleries, roof and story-band detail
+- **V15–V29:** 15 Phase I residences with their own roof and floor-edge identities, *not* Phase II balcony templates
+- **D1–D6:** 6 independent Phase II dormitory masses and cross-rib roof systems
+- **LRC:** restore visual reading of inherited diagonal braces, support pillars, skylight, blue glass and projecting frame
+- Recover **22,528 model-derived 3D crease/open-edge line segments** across the four architectural types from immutable GLB triangles; these are source edges, **not surveyed construction members**. Per-building selection checks nearest four of 56 paths/roads and nearest two of five water footprints, *never claims door connectivity from planar overlap*.
+- Preserve v74's 47 junction hotspots and v75's 7 bridge system/12 academic bridge-end inspection. Local model-Z discontinuities remain unresolved until photos can be registered.
+- All 30 building families, per-building local facade view, source-only edge layer and reversible material differentiation can be inspected in the v76 offline viewer. The system **does not fabricate windows/balconies/glazing area**.
+- Detailed research, evidence limits and recommended methods (COLMAP SfM/MVS → image line/plane constraints → validated facade meshing): [architecture report](ARCHITECTURE_V76_RECOVERY.md).
+
+The following v72–v75 sections are historical milestones, **not the latest model**.
+
+---
+
 ## BNBU v72 — 16-photo evidence audit and source-height-matched junction details (current)
 
 The [verified v72 update (PR #9)](https://github.com/starright00631-dev/bird/pull/9) substantially expands the photo evidence underlying land/road/building/bridge connections: **16 distinct sourced BNBU and Zhuhai photographs**, classified by specific visible junction type and supplied with original-publisher links, plus three additional BNBU multi-image collections. Explore the source photos online in the viewer's *Evidence & Data* panel; they are **not copied** into the ZIP and are **not camera-registered** survey data. See [the critical image-by-image 3D comparison](PHOTO_CONNECTION_AUDIT_V72.md) and [machine-readable photo register](connection_photos_v72.json).
