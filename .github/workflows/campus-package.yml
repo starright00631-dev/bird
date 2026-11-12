@@ -1,10 +1,13 @@
-name: BNBU v72 multi-image source-elevation connection detail and offline QA
+name: BNBU v73 independent DSM 3D contours and complete offline QA
 on:
   push:
     paths:
       - "campus/interface/**"
       - "campus/build_connection_profiles_v72.py"
       - "campus/test_connection_profiles_v72.py"
+      - "campus/build_terrain_contours_v73.py"
+      - "campus/test_terrain_contours_v73.py"
+      - "campus/TERRAIN_3D_V73.md"
       - "campus/connection_photos_v72.json"
       - "campus/PHOTO_CONNECTION_AUDIT_V72.md"
       - ".github/workflows/campus-package.yml"
@@ -15,7 +18,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: bnbu-v72-viewer-${{ github.head_ref || github.ref_name }}
+  group: bnbu-v73-viewer-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 permissions:
@@ -53,9 +56,11 @@ jobs:
           python -m unittest discover -s campus -p 'test_waterfront_v69.py' -v
       - name: Install geodetic dependency and reconstruct independent real DSM
         run: |
-          python -m pip install "pyproj>=3.6,<4" "shapely>=2,<3"
+          python -m pip install "numpy>=1.26,<3" "pyproj>=3.6,<4" "shapely>=2,<3"
           python -m unittest discover -s campus -p 'test_terrain_v67.py' -v
           python campus/build_terrain_v67.py
+          python campus/build_terrain_contours_v73.py
+          python -m unittest discover -s campus -p 'test_terrain_contours_v73.py' -v
           python campus/build_lakefront_v70.py
           python -m unittest discover -s campus -p 'test_lakefront_v70.py' -v
           python campus/build_connection_v71.py
@@ -68,11 +73,14 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import json,zipfile
-          base=Path('dist/BNBU_Campus_Full_v72')
+          base=Path('dist/BNBU_Campus_Full_v73')
           m=json.loads((base/'manifest.json').read_text())
           assert m['mesh_count']==1379 and m['original_mesh_count']==1377 and m['GIS_feature_count']==522
           assert m['v72_optional_source_height_rail_profiles']==4 and m['v72_observed_distinct_photo_links']==16
           assert m['standalone_file_embeds_assets']
+          assert m['v73_dsm_3d_interpolated_contour_segments']==3737
+          assert m['v73_dsm_3d_contour_vertices']==7474
+          assert m['v73_original_dsm_source_preserved'] and not m['v73_campus_geometry_edited']
           html=(base/'双击查看_校园3D.html').read_text()
           assert all('id="embedded-'+k+'"' in html for k in ('v71','dsm','gis','contours','dsm-meta','lakefront','junctions','junction-patches','junction-meta','profile-v72','photos-v72'))
           assert 'cdn.jsdelivr' not in html and 'unpkg.com' not in html
@@ -91,9 +99,12 @@ jobs:
                          'docs/PHOTO_CONNECTION_AUDIT_V72.md',
                          'docs/LAKEFRONT_V70_CRITICAL_COMPARISON.md',
                          'generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb',
+                         'generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb',
+                         'generated/BNBU_v73_DSM_CONTOUR_PROVENANCE.json',
+                         'docs/TERRAIN_3D_V73.md',
                          'source/v64/BNBU_v64_EDITABLE_GIS.gpkg'):
               assert (base/needed).is_file(),needed
-          with zipfile.ZipFile('dist/BNBU_Campus_Full_v72.zip') as z:
+          with zipfile.ZipFile('dist/BNBU_Campus_Full_v73.zip') as z:
               assert z.testzip() is None
           print('full package and standalone viewer complete:',len(m['files']),'files')
           PY
@@ -105,16 +116,16 @@ jobs:
         run: python campus/interface/test_browser.py
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v72-browser-screenshots-and-report
+          name: BNBU-v73-browser-screenshots-and-report
           path: dist/qa/
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v72-complete-offline-model-zip
-          path: dist/BNBU_Campus_Full_v72.zip
+          name: BNBU-v73-complete-offline-model-zip
+          path: dist/BNBU_Campus_Full_v73.zip
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v72-double-click-HTML
-          path: dist/BNBU_Campus_Full_v72/双击查看_校园3D.html
+          name: BNBU-v73-double-click-HTML
+          path: dist/BNBU_Campus_Full_v73/双击查看_校园3D.html
           retention-days: 30
