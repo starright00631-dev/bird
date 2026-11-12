@@ -1,3 +1,11 @@
+## v76.1 — Phase II dormitory approach and central-ring correction
+
+The viewer's D1–D6 proximity index now includes 14 previously omitted source-GLB circulation candidates (six radial paving meshes, six inferred grade links, a central ring and a west-side concept route), in addition to 56 `WALK_/ROAD_` GIS paths. The 70-source audit makes the model's missing dormitory approach surfaces explicit: six dorm-to-radial gaps of 18.6–20.6 model units, six radial-to-ring gaps of 40.2–47.6. Toggle **二期宿舍连接问题** to display 12 diagnostic lines. These lines **are not newly reconstructed roads or evidence of actual path discontinuity**; the physical connection remains unverified. See [technical details](ARCHITECTURE_V76_RECOVERY.md).
+
+The GitHub-hosted viewer has a [Pages deployment workflow](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml). GitHub Pages must first be enabled at [repository Settings → Pages](https://github.com/starright00631-dev/bird/settings/pages), Source = GitHub Actions; that account-level setting cannot be changed from the repository file API. Until then, use the workflow's downloadable tested offline ZIP.
+
+---
+
 ## BNBU v76 — architectural identity, 30-building environment inspection, LRC detail (current)
 
 The current released campus package is **v76**. The [successful full packaging and Chromium run](https://github.com/starright00631-dev/bird/actions/runs/43180769755) verifies a full offline ZIP and standalone HTML on both file:// and local HTTP. Source original remains 1,379 meshes and 522 GIS features.
