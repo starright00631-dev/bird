@@ -11,6 +11,14 @@ summary=json.loads((R/'qa/v78_geometry_compatibility.json').read_text())
 ma=set(main.graph.nodes_geometry);nb=set(branch.graph.nodes_geometry);ac=set(active.graph.nodes_geometry)
 replacement=summary['source_main_name_to_branch_replacements']
 assert len(ma)==1379 and len(nb)==1382 and len(ac)==1380
+oldgroups={n for n in main.graph.nodes if n.startswith('BNBU_GROUP_')}
+newgroups={n for n in active.graph.nodes if n.startswith('BNBU_GROUP_')}
+assert len(oldgroups)==10 and newgroups==oldgroups
+parent_old={child:parent for parent,child,data in main.graph.to_edgelist()}
+parent_new={child:parent for parent,child,data in active.graph.to_edgelist()}
+assert all(parent_old[n]==parent_new[n] for n in ma&ac)
+assert all(parent_old[old]==parent_new[new] for old,new in summary['source_main_name_to_branch_replacements'].items())
+assert parent_new['V76_LRC_EXISTING_SKYLIGHT_CONTINUOUS_GLASS_INFILL_RIB_DERIVED_UNSURVEYED']=='BNBU_GROUP_GLASS_PROXIES_UNREGISTERED'
 assert len(replacement)==37
 assert ma-ac==set(replacement) and ac-ma==set(replacement.values())|{'V76_LRC_EXISTING_SKYLIGHT_CONTINUOUS_GLASS_INFILL_RIB_DERIVED_UNSURVEYED'}
 unchanged=0
@@ -55,9 +63,9 @@ with sqlite3.connect(R/'data/BNBU_v78_EDITABLE_GIS.gpkg') as con:
  out=con.execute('select model_node,scene_role from bnbu_v78_scene_membership').fetchall()
 assert len(out)==8 and len([a for a,b in out if 'DISPLAY_ONLY' in b])==6
 js=(R/'viewer/viewer.js').read_text();html=(R/'viewer/index.html').read_text()
-assert 'generated/BNBU_v78_RECONCILED_MAIN.glb' in js and 'show-v78-seams' in html and 'show-v78-skylight' in html
+assert 'generated/BNBU_v78_RECONCILED_MAIN.glb' in js and 'show-v78-seams' in html and 'show-v78-skylight' in html and 'it.length!==1380' in js and 'it.length!==1379' not in js
 assert (R/'viewer/generated/BNBU_v78_RECONCILED_MAIN.glb').read_bytes()==(R/'model/BNBU_v78_RECONCILED_MAIN_EDITABLE.glb').read_bytes()
 assert (R/'viewer/generated/BNBU_v78_PAVING_SEAMS_DISPLAY_ONLY.glb').read_bytes()==(R/'model/BNBU_v78_PAVING_SEAMS_DISPLAY_ONLY.glb').read_bytes()
-report={'version':'v78','pass':True,'main_nodes':len(ma),'branch_nodes':len(nb),'new_active_nodes':len(ac),'parent_meshes_bytewise_geometry_equal':unchanged,'retopologized_opaque_trims':len(replacement),'new_skylight_meshes':1,'corrected_cap_Z_relative':float(np.mean(height)),'bridge_contact_faces_preserved':2,'root_rotation_main':worldA,'root_rotation_reconciled':worldNew,'v77_roof_seams_active':0,'v64_smoothed_terrain_active':0,'GPKG_spatial_layers':len(layers)-1,'GeoJSON_features':len(geo['features']),'KML_placemarks':567,'GIS_membership_roles':len(out),'viewer_asset_hash_matches_model':True,'no_new_unsourced_glass_windows_trees':True,'geodetic_vertical_datum_verified':False,'new_OSM_way_nodes':0,'full_browser_runtime_this_run':'not verified: sandbox Chromium blocks localhost/file navigation by administrator','model_sha256':hashlib.sha256((R/'model/BNBU_v78_RECONCILED_MAIN_EDITABLE.glb').read_bytes()).hexdigest()}
+report={'version':'v78','pass':True,'main_nodes':len(ma),'branch_nodes':len(nb),'new_active_nodes':len(ac),'parent_meshes_bytewise_geometry_equal':unchanged,'preserved_original_layer_groups':len(oldgroups),'old_layer_parents_preserved':True,'retopologized_opaque_trims':len(replacement),'new_skylight_meshes':1,'corrected_cap_Z_relative':float(np.mean(height)),'bridge_contact_faces_preserved':2,'root_rotation_main':worldA,'root_rotation_reconciled':worldNew,'v77_roof_seams_active':0,'v64_smoothed_terrain_active':0,'GPKG_spatial_layers':len(layers)-1,'GeoJSON_features':len(geo['features']),'KML_placemarks':567,'GIS_membership_roles':len(out),'viewer_asset_hash_matches_model':True,'no_new_unsourced_glass_windows_trees':True,'geodetic_vertical_datum_verified':False,'new_OSM_way_nodes':0,'full_browser_runtime_this_run':'not verified: sandbox Chromium blocks localhost/file navigation by administrator','model_sha256':hashlib.sha256((R/'model/BNBU_v78_RECONCILED_MAIN_EDITABLE.glb').read_bytes()).hexdigest()}
 (R/'qa/v78_independent_validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
 print(json.dumps(report,ensure_ascii=False,indent=2))
