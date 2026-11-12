@@ -42,10 +42,19 @@ assert np.max(cap_delta)-np.min(cap_delta)<2.e-5 and 0.01<float(np.median(cap_de
 
 # No arbitrary geometry for the unsurveyed pavilion paving seam spacing or terrain smoothing.
 scene=trimesh.Scene()
+# Recreate all 10 BNBU_GROUP_* nodes and their edge metadata, otherwise the
+# existing main viewer loses ALL category/layer toggles even if mesh counts match.
+# Do not flatten the full scene graph into a world-only geometry list.
+source_edges=A.graph.to_edgelist()
+parent_edge={child:(parent,record) for parent,child,record in source_edges if child!='world'}
+for parent,child,record in source_edges:
+ if child.startswith('BNBU_GROUP_'):
+  scene.graph.update(frame_from=parent,frame_to=child,matrix=np.asarray(record['matrix']),metadata=record.get('metadata',{}))
+assert len([n for n in scene.graph.nodes if n.startswith('BNBU_GROUP_')])==10
 for n in A.graph.nodes_geometry:
  if n in replace or n==CAP:continue
- t,k=A.graph[n]
- scene.add_geometry(A.geometry[k].copy(),node_name=n,geom_name=n,transform=t)
+ parent,record=parent_edge[n];k=A.graph[n][1]
+ scene.add_geometry(A.geometry[k].copy(),node_name=n,geom_name=n,parent_node_name=parent,transform=np.asarray(record['matrix']),metadata=record.get('metadata',{}))
 for n,ref in replace.items():
  tf,k=B.graph[ref]; new=B.geometry[k].copy()
  assert new.is_watertight and new.is_winding_consistent and new.volume>0
@@ -57,10 +66,16 @@ for n,ref in replace.items():
  newpoly=unary_union([Polygon(t[:,:2]) for t in newtri[mm] if Polygon(t[:,:2]).area>1.e-8])
  assert oldpoly.symmetric_difference(newpoly).area<0.0004,(n,oldpoly.area,newpoly.area)
  assert abs(newverts[:,2].min()-old_verts[:,2].min())<1e-4 and abs(newverts[:,2].max()-zmax)<1e-4
- scene.add_geometry(new,node_name=ref,geom_name=ref,transform=tf)
+ parent,record=parent_edge[n]
+ scene.add_geometry(new,node_name=ref,geom_name=ref,parent_node_name=parent,transform=np.asarray(record['matrix']),metadata=record.get('metadata',{}))
 for n in (CAP,SKY):
- t,k=B.graph[n];scene.add_geometry(B.geometry[k].copy(),node_name=n,geom_name=n,transform=t)
-assert len(scene.graph.nodes_geometry)==1380
+ t,k=B.graph[n]
+ if n==CAP:
+  parent,record=parent_edge[n]
+  scene.add_geometry(B.geometry[k].copy(),node_name=n,geom_name=n,parent_node_name=parent,transform=np.asarray(record['matrix']),metadata=record.get('metadata',{}))
+ else:
+  scene.add_geometry(B.geometry[k].copy(),node_name=n,geom_name=n,parent_node_name='BNBU_GROUP_GLASS_PROXIES_UNREGISTERED',transform=t,metadata={'surveyed':False,'metric_birdstrike_eligible':False,'confidence':'LOW_RIB_INHERITED_CURVATURE'})
+assert len(scene.graph.nodes_geometry)==1380 and len([n for n in scene.graph.nodes if n.startswith("BNBU_GROUP_")])==10
 main_out=MD/'BNBU_v78_RECONCILED_MAIN_EDITABLE.glb';main_out.write_bytes(scene.export('glb'))
 # MAIN is a glTF Y-up scene with a -90 degree X rotation at `world`, whereas
 # `trimesh.Scene.export` writes a bare root. Restore the exact main world
