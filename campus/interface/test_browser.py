@@ -37,6 +37,7 @@ def check(page,label,offline=False):
     page.locator("#show-photo-proxies").check()
     assert page.evaluate("window.__BNBU_DEBUG__.photoProxyVisible()") is True
     page.locator("button[data-focus=boardwalk]").click()
+    assert page.evaluate("window.__BNBU_DEBUG__.cameraDistance()")<70
     page.screenshot(path=str(RESULT/(label+"_lakefront_detail.png")),full_page=True,timeout=45000)
     page.screenshot(path=str(RESULT/(label+"_campus.png")),full_page=True,timeout=45000)
     page.locator("#part-water_unsurveyed").uncheck()
