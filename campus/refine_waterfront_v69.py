@@ -87,8 +87,8 @@ def build(source):
         return len(materials)-1
     water=add("v69_water_reflectance_not_measured",(.41,.66,.67),.018,.32,.43)
     pond=add("v69_archived_wetland_different_water_typology",(.34,.50,.42),.012,.50,.25)
-    bank=add("v69_source_profile_dry_wet_shore",(1,1,1),0,.94)
-    marsh=add("v69_wetland_bank_model_relative",(1,1,1),0,1)
+    bank=add("v69_source_profile_dry_wet_shore",(.54,.63,.50),0,.96)
+    marsh=add("v69_wetland_bank_model_relative",(.69,.78,.62),0,1)
     seam=add("v69_lake_shore_existing_seam",(.52,.61,.52),.012,.86)
     counts={"existing_water":0,"existing_shore":0,"seam":0,"wetland_water":0,
             "wetland_bank":0,"wetland_ground":0,"recolored_vertices":0}
