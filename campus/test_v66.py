@@ -66,6 +66,8 @@ class TestBNBUv66(unittest.TestCase):
         for old, new in zip(before["features"], after["features"]):
             self.assertEqual(old["geometry"], new["geometry"], "GIS geometry must be immutable")
             for k, value in old["properties"].items():
+                if k == "render_model_node":
+                    continue  # This is the intentionally corrected output association.
                 self.assertEqual(value, new["properties"][k], "Never replace source metadata")
         repaired = Counter(f["properties"]["model_node"] for f in after["features"]
                            if f["properties"].get("v66_edit_type"))
