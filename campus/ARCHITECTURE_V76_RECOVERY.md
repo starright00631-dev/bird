@@ -1,3 +1,21 @@
+## v76.1 Phase II dormitory environment correction
+
+The earlier proximity audit mistakenly restricted itself to 56 `WALK_###` / `ROAD_###` GIS objects. That wrongly put the nearest recorded path for all D1–D6 approximately 700+ inherited model units away. Fourteen separate **source GLB** objects were omitted: six Phase II radial paving meshes, six V49 inferred ground-link meshes, an inner-college ring paving surface and a west road-concept surface. The corrected atlas keeps the original 56-route baseline separately and adds a transparent 70-candidate proximity register.
+
+Exact source-mesh polygon analysis identifies, for each D1–D6 residence, two distinct unregistered connection gaps:
+
+| Model pair | Range across D1–D6 (inherited XY model units) | Interpretation |
+|---|---:|---|
+| Dorm mass projection → its radial paving | 18.584–20.619 | No verifiable doorway/walkable continuity; do not fill with a guessed plaza |
+| Radial paving → central ring paving | 40.190–47.561 | Source model omits the connecting surface; real-world link unverified |
+| Inferred V49 ground connector → radial paving | 0 | Source polygons touch/overlap, **not** proof of a surveyed physical entrance |
+
+Twelve distinct orange/red **diagnostic segments** are now source-derived in the viewer, displayed only when enabled. Their endpoints follow the inherited XY meshes; their elevated display Z is for annotation rather than physical modeling. The active v71 GLB remains untouched, and none of these marker lines constitutes a road, ramp, door, or bird-exposure surface.
+
+This correction prioritizes architectural photography or georeferenced Phase II campus plans for D1–D6 radial path and ring junctions. Do not infer measured stairs, entry floors or accessibility from a roof projection, a fabricated glass pane, or a source label ending in `INFERRED_NOT_BRIDGE`.
+
+---
+
 # BNBU v76 — architectural feature recovery and connection evidence
 
 ## Scope and source discipline
@@ -19,7 +37,7 @@ The existing model already includes detailed architectural components; the v75 r
 
 ## Environment and junction inspection
 
-For each of the 30 buildings, project its inherited roof or mass to XY; compare with all **56 WALK/ROAD** route polygons and five lake polygons; record the closest four routes and two lakes, source bounding box and Z range. This yields candidate *spatial neighbors*, not doors, paths, and not a verified connection graph. Keep v74's 47 source-local junction cases, v75's 12 academic bridge ends, and V60 east/west shore approach as independent layers. The inherited model mismatch of approximately 0.64 source units between lake bridge and western platform remains unresolved, as does approximately 0.24 between platform and WALK_045. The V52_03 elevated connection remains sloping.
+For each of the 30 buildings, project its inherited roof or mass to XY; compare with all **70 candidate path/approach** route polygons and five lake polygons; record the closest four routes and two lakes, source bounding box and Z range. This yields candidate *spatial neighbors*, not doors, paths, and not a verified connection graph. Keep v74's 47 source-local junction cases, v75's 12 academic bridge ends, and V60 east/west shore approach as independent layers. The inherited model mismatch of approximately 0.64 source units between lake bridge and western platform remains unresolved, as does approximately 0.24 between platform and WALK_045. The V52_03 elevated connection remains sloping.
 
 ## Algorithms with actionable data requirements
 
