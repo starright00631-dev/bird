@@ -40,6 +40,16 @@ def check(page,label,offline=False):
     assert page.evaluate("window.__BNBU_DEBUG__.cameraDistance()")<70
     page.wait_for_function("window.__BNBU_DEBUG__.junctionCount()===11",timeout=35000)
     page.wait_for_function("window.__BNBU_DEBUG__.photoCount()===16",timeout=35000)
+    page.locator("#tab-source").click()
+    assert page.locator("#photo-cards article").count()==16
+    assert page.locator("#photo-cards article a[href^='https://']").count()>=16
+    page.locator("#photo-filter").select_option("road")
+    assert page.locator("#photo-cards article").count()==2
+    page.locator("#photo-filter").select_option("stairs")
+    assert page.locator("#photo-cards article").count()==4
+    page.locator("#photo-filter").select_option("all")
+    assert page.locator("#photo-cards article").count()==16
+    page.locator("#tab-map").click()
     page.wait_for_function("window.__BNBU_DEBUG__.hasProfileRails()===true",timeout=35000)
     assert page.evaluate("window.__BNBU_DEBUG__.profileRailCount()")>220
     assert page.evaluate("window.__BNBU_DEBUG__.gradeMarkerCount()")==3
