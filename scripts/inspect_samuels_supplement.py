@@ -52,8 +52,9 @@ def get(url,max_bytes=2_000_000):
 
 try:
     # Listing a SINGLE article's available object versions, not a bulk scrape.
-    listing=f"{BASE}/?{urllib.parse.urlencode(dict(
-        **{'list-type':'2'},prefix=PMCID+'.',delimiter='/'))}"
+    params=urllib.parse.urlencode({
+        "list-type":"2","prefix":PMCID+".","delimiter":"/"})
+    listing=f"{BASE}/?{params}"
     root=ET.fromstring(get(listing,max_bytes=131072))
     def suffix(tag):
         return tag.split('}')[-1]
