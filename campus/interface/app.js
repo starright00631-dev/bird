@@ -1001,7 +1001,7 @@ $('bridge-v75-select').addEventListener('change',bridge75Choose);
 // v76: source-fidelity architectural reading, not new window/roof geometry.
 // This changes the rendering of EXISTING meshes only; exact source vertex
 // positions and source GLB are immutable.
-let architecture76=null,architectureEdges76=null,architectureStyleCount76=0;
+let architecture76=null,architectureEdges76=null,architectureStyleCount76=0,phaseIIGaps76=null;
 const architectureOriginalMaterials76=new Map();
 const architectureModelIndex76=new Map();
 
@@ -1069,6 +1069,50 @@ function architectureApply76(){
  architectureStyleCount76=makeStyle?architectureModelIndex76.size:0;
  redraw();
 }
+
+/* Phase-II diagnostic segments are MODEL-INTERNAL XY-nearest points, not
+   reconstructed footpaths. The displayed 0.16 lift is a visual annotation. */
+function renderPhaseIIConnectionGaps76(){
+ if(!architecture76||phaseIIGaps76)return;
+ const root=campus?.getObjectByName('world');
+ if(!root)throw Error('Phase-II diagnostic world root missing');
+ const report=architecture76.phaseII_network_disconnection_audit;
+ if(!Array.isArray(report)||report.length!==6||
+    architecture76.phaseII_route_candidate_count!==14||
+    architecture76.all_route_candidates_count!==70)
+    throw Error('Phase-II source topology audit missing');
+ const group=new THREE.Group();group.name='BNBU_V76_PHASEII_SOURCE_MODEL_GAPS_NOT_REAL_PATHS';
+ group.userData={displayOnly:true,isSurveyed:false,physicalConnection:false};
+ const bead=new THREE.SphereGeometry(.24,7,5);
+ for(const audit of report){
+  for(const [name,color] of [
+   ['dorm_to_radial_local_points',0xff796e],
+   ['radial_to_ring_local_points',0xe5b15e]]){
+   const endpoints=audit[name].map(([x,y,z])=>new THREE.Vector3(x,y,z+.16));
+   if(endpoints.length!==2||endpoints.some(x=>!Number.isFinite(x.x+x.y+x.z)))
+     throw Error('Invalid phase-II source XY gap');
+   const line=new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(endpoints),
+      new THREE.LineBasicMaterial({color,transparent:true,opacity:.88,depthTest:false}));
+   line.name='BNBU_'+audit.dorm+'_'+name+'_GAP_NOT_A_WALKWAY';
+   line.userData={dorm:audit.dorm,physicalConnection:false,displayOnly:true};
+   group.add(line);
+   const material=new THREE.MeshBasicMaterial({color,depthTest:false});
+   for(const pos of endpoints){
+     const dot=new THREE.Mesh(bead,material);dot.position.copy(pos);dot.userData.displayOnly=true;
+     group.add(dot);
+   }
+  }
+ }
+ root.add(group);
+ group.visible=$('show-v76-phaseii-gaps').checked;
+ phaseIIGaps76=group;
+}
+$('show-v76-phaseii-gaps').addEventListener('change',()=>{
+ if(phaseIIGaps76)phaseIIGaps76.visible=$('show-v76-phaseii-gaps').checked;
+ redraw();
+});
+
 function architectureChoose76(){
  if(!architecture76||!campus)return;
  const id=$('architecture-v76-select').value;
@@ -1091,14 +1135,22 @@ function architectureChoose76(){
  cam.position.copy(center).add(new THREE.Vector3(span*.85,Math.max(7,span*.42,sz.y*.75),span*1.05));
  cam.near=.03;cam.far=Math.max(3000,span*100);cam.updateProjectionMatrix();
  cam.lookAt(center);orbit.update();
- const routes=record.nearest_walk_or_road.map(x=>x.node+' '+x.xy_gap_model_units.toFixed(2)).join(' · ');
+ const routes=(record.nearest_approach_candidates||record.nearest_walk_or_road)
+  .map(x=>x.node.replace('PHASEII_V12_PAVING_phaseII_','')
+    .replace('V49_PHASEII_','inferred_')+' '+x.xy_gap_model_units.toFixed(2)).join(' · ');
+ const phaseIICase=record.family==='D'?
+   architecture76.phaseII_network_disconnection_audit.find(x=>x.dorm===id):null;
+ const phaseIINote=phaseIICase?
+    '\n二期宿舍 → 模型径向路缺口 '+phaseIICase.dorm_to_radial_plan_gap_model_units.toFixed(2)
+    +'，径向路 → 中央环路缺口 '+phaseIICase.radial_to_central_ring_gap_model_units.toFixed(2)
+    +'（模型平面单位，均尚未配准，不能自动补成道路）。':'';
  const water=record.nearest_lake.map(x=>x.node+' '+x.xy_gap_model_units.toFixed(1)).join(' · ');
  $('architecture-v76-detail').textContent=
   id+' ('+record.family+') · 原始结构 '+record.existing_component_count
   +' 件 · 原模型Z范围 '+record.source_mesh_z_range.join(' ~ ')+'\n'
   +'就近道路/步道（平面模型距离）：'+routes+'\n'
   +'就近湖面（平面模型距离）：'+water+'\n'
-  +'屋顶投影不是门口位置。窗格数、阳台开口及可通行的连接阈值均未测量；层级应按局部三角面高程核实。';
+  +'屋顶投影不是门口位置。窗格数、阳台开口及可通行的连接阈值均未测量；层级应按局部三角面高程核实。'+phaseIINote;
  redraw();
 }
 async function loadArchitecture76(){
@@ -1139,6 +1191,7 @@ async function loadArchitecture76(){
  architectureEdges76=gltf.scene;
  architectureEdges76.visible=$('show-v76-edges').checked;
  architecture76=atlas;
+ renderPhaseIIConnectionGaps76();
  architectureApply76();
  $('architecture-v76-status').textContent='已核对 8 栋 T、15 栋 V、6 栋 D 与 LRC，共 30 栋；依原三角面恢复结构线，无虚构窗格。';
  $('architecture-v76-detail').textContent='选择建筑可近距离查看现有楼层线、屋面、回廊或支撑构件，并检查与道路、水体的平面关系。';
@@ -1157,7 +1210,7 @@ async function start(){
   await switchScene('campus');
   window.__BNBU_READY__=true;
   window.__BNBU_VERSION__='v76';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,v75BridgeCount:()=>bridgeAtlas75?.system_count||0,v76BuildingCount:()=>architecture76?.building_count||0,v76FeatureFamilies:()=>architectureEdges76?.children?.length||0,v76StyleCount:()=>architectureStyleCount76,v76EdgeVisible:()=>!!architectureEdges76&&architectureEdges76.visible,v75GlassVisible:()=>!!bridgeGlass75&&bridgeGlass75.visible,v75GlassVertices:()=>bridgeGlass75?.getObjectByName(bridgeGlassNode75)?.geometry?.getAttribute('position')?.count||0,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,v75BridgeCount:()=>bridgeAtlas75?.system_count||0,v76BuildingCount:()=>architecture76?.building_count||0,v76PhaseIIGapSegments:()=>phaseIIGaps76?.children.filter(x=>x.isLine)?.length||0,v76PhaseIIGapsVisible:()=>!!phaseIIGaps76&&phaseIIGaps76.visible,v76FeatureFamilies:()=>architectureEdges76?.children?.length||0,v76StyleCount:()=>architectureStyleCount76,v76EdgeVisible:()=>!!architectureEdges76&&architectureEdges76.visible,v75GlassVisible:()=>!!bridgeGlass75&&bridgeGlass75.visible,v75GlassVertices:()=>bridgeGlass75?.getObjectByName(bridgeGlassNode75)?.geometry?.getAttribute('position')?.count||0,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
   loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
   loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});
