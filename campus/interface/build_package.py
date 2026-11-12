@@ -14,13 +14,14 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v69"
+NAME = "BNBU_Campus_Full_v70"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
     "generated/BNBU_v66_SEMANTIC_Y_UP.glb": "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
     "generated/BNBU_v69_WATERFRONT_REFINED.glb": "generated/BNBU_v69_WATERFRONT_REFINED.glb",
     "generated/BNBU_v69_WATERFRONT_PROVENANCE.json": "generated/BNBU_v69_WATERFRONT_PROVENANCE.json",
+    "generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json": "generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json",
     "generated/BNBU_v66_RESOLVED_REFERENCES.geojson": "generated/BNBU_v66_RESOLVED_REFERENCES.geojson",
     "generated/v66_provenance.json": "generated/v66_provenance.json",
     "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb": "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
@@ -42,17 +43,20 @@ ASSETS = {
     "src/build_v65.py": "build_v65.py",
     "src/build_v66.py": "build_v66.py",
     "src/refine_waterfront_v69.py": "refine_waterfront_v69.py",
+    "src/build_lakefront_v70.py": "build_lakefront_v70.py",
     "src/build_terrain_v67.py": "build_terrain_v67.py",
     "src/test_v65.py": "test_v65.py",
     "src/test_v66.py": "test_v66.py",
     "src/test_waterfront_v69.py": "test_waterfront_v69.py",
+    "src/test_lakefront_v70.py": "test_lakefront_v70.py",
     "src/test_terrain_v67.py": "test_terrain_v67.py",
     "src/validate_scene.py": "validate_scene.py",
     "docs/README_source.md": "README.md",
     "docs/WATERFRONT_V69_EVIDENCE.md": "WATERFRONT_V69_EVIDENCE.md",
+    "docs/LAKEFRONT_V70_CRITICAL_COMPARISON.md": "LAKEFRONT_V70_CRITICAL_COMPARISON.md",
 }
 
-README = """# BNBU 校园完整三维模型与查看器 v69
+README = """# BNBU 校园完整三维模型与查看器 v70
 
 ## 最简单的打开方式
 
@@ -75,7 +79,7 @@ README = """# BNBU 校园完整三维模型与查看器 v69
 - source/archives：v64 无损 XZ 源归档。
 - source/CTV_UNVERIFIED_DO_NOT_MERGE.*：隔离的 CTV 小建筑推测记录，非活动场景。
 - history：v65 坐标方向和节点关联版本。
-- generated：v66 原几何与 GIS，v69 水岸反射材质 / 连续岸坡颜色版本；v67 ALOS 地形与插值等高线。
+- generated：v66 原几何/GIS、v69 水面材质模型、v70 照片支持的可隐藏栏杆参考和证据叠加JSON；v67 ALOS 地形/插值等高线。
 - src：源码及测试、来源记录；manifest.json：文件完整性 SHA-256。
 
 数据准确性：v69 继承 v66 的 1377 个三维网格是继承模型，不等于 1377
@@ -84,7 +88,7 @@ CTV 附近小屋的身份和屋顶尺寸未得到独立核实。
 ALOS 约 30 m DSM 含植被和建筑，不等于裸地 DEM，不能直接与
 v69 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴露分母。
 
-新增 v69：以原 SHORE 网格模型相对高程推导湿岸—植被岸材质渐变；将水面与历史湿地水面分开设定光学外观；并在查看器标出既有临水廊道轮廓与近岸视角。没有改变湖塘的平面轮廓、地形高程或新增建筑。学校官方于 2019 年记录东侧赤花山脚下湿地与两处淡水池塘，位置未经摄影测量配准；**不要把二期历史湿地模型当成那两处池塘**。
+新增 v70：使用校园湖岸照片对照，仅沿已有 V60 高架廊道多边形置入可关闭的栏杆视觉参考，现有 V13 草地改成草地表面材质、V61 实体临水平台改成石质铺装表面，均不调整范围和高度，渲染值不是实测。出于可追溯性，这些添加的栏杆从 1,377 个原始网格之外单独渲染，不用于鸟撞分析。\n\n原 v69：以原 SHORE 网格模型相对高程推导湿岸—植被岸材质渐变；将水面与历史湿地水面分开设定光学外观；并在查看器标出既有临水廊道轮廓与近岸视角。没有改变湖塘的平面轮廓、地形高程或新增建筑。学校官方于 2019 年记录东侧赤花山脚下湿地与两处淡水池塘，位置未经摄影测量配准；**不要把二期历史湿地模型当成那两处池塘**。
 
 源码：https://github.com/starright00631-dev/bird/tree/main/campus
 """
@@ -153,6 +157,7 @@ def assemble_standalone(template,css,js):
         ("gis","generated/BNBU_v66_RESOLVED_REFERENCES.geojson"),
         ("contours","generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson"),
         ("dsm-meta","generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json"),
+        ("lakefront","generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json"),
     ]:
         content=(PACKAGE/rel).read_text(encoding="utf-8").replace("</script","<\\/script")
         tags.append('<script id="embedded-'+key+'" type="application/json">'+content+'</script>')
@@ -167,6 +172,9 @@ def assemble_standalone(template,css,js):
 def validate():
     gis=json.loads((PACKAGE/"generated/BNBU_v66_RESOLVED_REFERENCES.geojson").read_text(encoding="utf-8"))
     assert len(gis["features"])==522
+    overlay=json.loads((PACKAGE/"generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json").read_text(encoding="utf-8"))
+    assert overlay["role"]=="DISPLAY_ONLY_NO_METRIC_GEOMETRY"
+    assert overlay["original_meshes"]==1377
     for rel in ["generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
                 "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
@@ -204,8 +212,9 @@ def build():
     sh.write_text(SH,encoding="utf-8");sh.chmod(sh.stat().st_mode|stat.S_IXUSR)
     validate()
     manifest={
-        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v69","external_DSM":"v67",
+        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v70 viewer on v69 source","external_DSM":"v67",
         "mesh_count":1377,"GIS_feature_count":522,
+        "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
         "physical_geometry_edited":False,"standalone_file_embeds_assets":True,
         "files":{str(p.relative_to(PACKAGE)):{"size":p.stat().st_size,"sha256":sha256(p)}
