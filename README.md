@@ -1,3 +1,13 @@
+## BNBU v72 — 16-photo evidence audit and source-height-matched junction details (current)
+
+The [verified v72 update (PR #9)](https://github.com/starright00631-dev/bird/pull/9) substantially expands the photo evidence underlying land/road/building/bridge connections: **16 distinct sourced BNBU and Zhuhai photographs**, classified by specific visible junction type and supplied with original-publisher links, plus three additional BNBU multi-image collections. Explore the source photos online in the viewer's *Evidence & Data* panel; they are **not copied** into the ZIP and are **not camera-registered** survey data. See [the critical image-by-image 3D comparison](campus/PHOTO_CONNECTION_AUDIT_V72.md) and [machine-readable photo register](campus/connection_photos_v72.json).
+
+v72 extracts **four true source-model XYZ profile paths** (two sides of an existing **122-vertex** bridge-to-east-land ramp and two sides of the **19-level** LRC external stair from the original 76 vertices). It uses these for individually switchable **display-only** slope/stair railings. Three remaining model vertical discrepancies (0.24 / 0.64 / 0.64 model units) can be shown separately as **warning markers, not new connecting ramps**. The LRC inspection camera now looks from the original ground approach below the building's soffit rather than through an opaque upper floor. Two v71 source-geometry repairs remain in place. The source GLB still contains exactly **1,379 meshes** and the original GeoJSON exactly **522** features; v72 makes no new surveyed road, bridge, ramp or bank/pond geometry and asserts no photogrammetric accuracy.
+
+**Download and run the complete v72 offline model:** [Successful tested GitHub Actions run](https://github.com/starright00631-dev/bird/actions/runs/43152309398), artifact `BNBU-v72-complete-offline-model-zip`. Extract nested `BNBU_Campus_Full_v72.zip`, then double-click `双击查看_校园3D.html` without Python or Internet. The standalone model and local HTTP viewer both passed real Chromium controls, 16-photo gallery filtering, 4 source profile visualizations and full scientific-model/GIS regression; package content hashes have been independently verified.
+
+---
+
 ## BNBU v71 — land / road / building / bridge junction audit (current)
 
 The verified [v71 change, PR #8](https://github.com/starright00631-dev/bird/pull/8) repairs two short source-model **land-only** gaps between original V61 shore-promenade slabs. It adds **two small at-grade pavement mesh patches** (~4.156 and ~4.247 model m²), producing **1,379 meshes** while retaining all original 1,377 mesh buffers and **522 unchanged original GIS features**. These are topology-constrained model repairs, **not field-surveyed sidewalks**.
