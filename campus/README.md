@@ -1,6 +1,14 @@
-## BNBU 3D viewer — v68 complete offline release
+## BNBU v69 — evidence-aware waterfront refinements (current)
 
-**The verified v68 interface and complete model ZIP are built and published by [BNBU complete offline interface and ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml).** Download the latest successful run's artifact named BNBU-v68-complete-offline-model-zip, then extract the nested BNBU_Campus_Full_v68.zip.
+The [v69 full offline release](https://github.com/starright00631-dev/bird/actions/runs/43143405025) now packages the complete model, a single double-click HTML viewer, and source/evidence/metadata for reproducibility. Download the CI artifact named **BNBU-v69-complete-offline-model-zip**, extract the nested `BNBU_Campus_Full_v69.zip`, then open `双击查看_校园3D.html` locally. Browser tests pass for both a standalone offline file and localhost viewer. The source changes are in [PR #6](https://github.com/starright00631-dev/bird/pull/6).
+
+v69 makes **appearance-only edits** to inherited lake/shore/wetland geometry: independent PBR styles on five inherited lake water entities and the separate archived wetland, height-toned existing banks, display-only subtle ripple normals and existing walkway edge highlighting; a close-up lakefront initial camera view plus synchronized GIS focus. The original 1,377 mesh positions/indices, 522 GIS source features and separate v67 ALOS surface-reference data are retained. Official [2019 BNBU ecology report](https://www.bnbu.edu.cn/info/1077/4589.htm) records a natural seasonal wetland at Chihua Hill connected to **two freshwater ponds**, but their geolocated outlines are **not** verified. Do not equate them with the historical Phase II wetland mesh or interpret v69 as a surveyed shoreline/bare-earth terrain, glass area or bird-strike exposure map. See [waterfront evidence and limitations](campus/WATERFRONT_V69_EVIDENCE.md).
+
+---
+
+## Archived v68 interface release
+
+**The archived v68 interface and complete model ZIP are built and published by [BNBU complete offline interface and ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml).** Download the latest successful run's artifact named BNBU-v68-complete-offline-model-zip, then extract the nested BNBU_Campus_Full_v68.zip.
 
 Open the extracted **双击查看_校园3D.html** directly in a modern browser (Chrome/Edge): it contains all necessary three.js code, v66 GLB, GIS and independent v67 DSM **offline, with no server or CDN**. Alternatively launch 启动查看器.bat to serve index.html locally with Python 3.
 
