@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BNBU 校园 3D / GIS 模型核查接口</title>
+<link rel="stylesheet" href="./viewer.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v68</span></div></div>
+  <div class="scene-switch" role="group" aria-label="场景切换"><button id="choose-campus" class="selected" type="button">校园三维模型</button><button id="choose-dsm" type="button">遥感山体参考</button></div>
+  <div class="top-actions"><button id="help-button" type="button">使用说明</button><span id="health" role="status">准备载入</span></div>
+</header>
+<main class="main-layout">
+  <section class="render-panel" aria-label="可交互三维场景">
+    <div id="scene3d"></div>
+    <div class="floating-nav">
+      <div class="eyebrow">快速定位</div>
+      <div class="quick-grid">
+        <button type="button" data-focus="all">全景</button>
+        <button type="button" data-focus="phase1">一期校区</button>
+        <button type="button" data-focus="phase2">二期校区</button>
+        <button type="button" data-focus="lake">湖泊</button>
+        <button type="button" data-focus="ridge">山体</button>
+        <button type="button" data-focus="roads">车行道</button>
+        <button type="button" data-focus="boardwalk">临水廊道</button>
+        <button type="button" data-focus="cc">CTV/CC</button>
+      </div>
+      <div class="camera-row"><button id="top-view" type="button">俯视</button><button id="reset-view" type="button">重置视角</button></div>
+    </div>
+    <div id="render-error" hidden role="alert"></div>
+    <div class="bottom-bar"><span id="scene-status">正在读取模型资源…</span><span id="mouse-hint">鼠标左键旋转 · 滚轮缩放 · 右键平移 · 点击检查结构</span></div>
+  </section>
+  <aside class="right-pane">
+    <div class="tab-row"><button id="tab-map" class="active" type="button">GIS 平面</button><button id="tab-source" type="button">证据和数据</button></div>
+    <section id="map-section" class="map-section">
+      <div class="map-top"><strong>校园 GIS 轮廓</strong><small>原模型推定几何，非正射测绘</small></div>
+      <div class="map-window"><canvas id="map2d" aria-label="校园 GIS 二维矢量图"></canvas><div class="map-tools"><button id="map-fit" title="适应全部" type="button">适应</button><button id="map-zoom-in" type="button">+</button><button id="map-zoom-out" type="button">−</button></div><span class="north">N ↑</span></div>
+      <p class="map-footnote">坐标依据：原模型 EPSG:4326 轮廓；显示范围可移动缩放。DSM 等高线为 30 米像元插值，不能当实测道路或岸线。</p>
+    </section>
+    <section id="source-section" class="source-section" hidden>
+      <h2>研究模型及外部证据</h2><p>3D 建筑、道路、湖泊使用 v64 继承网格，v66 仅重组模型层级并修复来源关联。山体参考使用 ALOS 衍生约 30m DSM，**不与建筑标高混合**。</p>
+      <p><a href="https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg" target="_blank" rel="noopener">官方手绘校园图</a>（拓扑参考，非测绘）</p>
+      <p><a href="https://www.4dmodel.com/UICcode/code/#/list" target="_blank" rel="noopener">学校互动影像</a>（待相机配准）</p>
+      <p><a href="https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm" target="_blank" rel="noopener">JAXA AW3D30 数据集说明</a></p>
+      <p>CTV 附近独立小建筑及其“校长别墅”名称尚未独立核实。未将其加入正式场景。</p>
+    </section>
+    <section class="layers-panel">
+      <div class="section-header"><h2>显示图层</h2><div><button id="show-all" type="button">全选</button><button id="hide-all" type="button">隐藏</button></div></div>
+      <div id="layers"></div>
+    </section>
+    <section class="selected-panel"><div class="section-header"><h2>结构信息</h2><small id="match-count">0 项关联</small></div><div id="selection" class="selection-text">点击左侧 3D 网格查看名称、类型及 GIS 记录。</div></section>
+    <div class="disclaimer">研究版空间几何，非校园实测 BIM、DEM 或量化鸟撞暴露面。保存所有不确定性记录。</div>
+  </aside>
+</main>
+<dialog id="help-dialog"><h2>查看器操作</h2><p>直接双击独立 HTML 可离线打开（无需安装 Python，也不需要联网）。ZIP 内另有分文件版本，可通过「启动查看器.bat」打开。</p><p>左侧 3D：旋转 / 缩放 / 平移；右侧 GIS：拖拽移动、滚轮缩放。切换“遥感山体参考”可独立查看外部 DSM 高程，不会与建筑模型叠加。</p><button id="close-help" type="button">关闭</button></dialog>
+<!-- PACKAGER_EMBEDDED_DATA -->
+<script src="./viewer.js"></script>
+</body></html>
