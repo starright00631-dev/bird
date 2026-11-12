@@ -46,8 +46,8 @@ The archived larger v0.4 multi-module simulator is **not fully migrated**. See `
 No personal campus incident reports, identifying respondent details, access credentials or unlicensed raw footage are included. We do not infer bird injury or mortality from translational energy or sampled keypoint contacts. The model explicitly considers low-visual-impact additions and lighting/habitat adjustments, but does **not** authorize any installation without measured context, robust field validation and ecological/safety review.
 
 
-## BNBU campus 3D scene (versioned research baseline)
+## BNBU campus 3D scene (v66 evidence-linked semantic GIS / 3D)
 
-The campus scene is available under [`campus/`](campus/README.md) as the **complete imported v64 GLB and editable GIS**, with lossless XZ archives, evidence limitations, local 3D viewer and source-integrity checks. It retains the existing modeled lake and ridge meshes, while **CTV's unverified building candidate is explicitly excluded**. These inherited meshes are not a survey, DEM, photographic camera calibration, or quantitative glass exposure map.
+The complete inherited v64 campus meshes and editable GIS source are stored in [`campus/`](campus/README.md). The v66 builder produces a physically categorized GLB with ten named scene layers, retaining the original 1,377 meshes and restoring 112 render associations (10 water/shore + 96 stair + 6 at-grade links). This is a scene-structure and source-link repair, **not a surveyed reconstruction**. The CTV “校长别墅” candidate remains excluded. Hill elevations are relative, water boundaries and driveways are not independently surveyed, and no glass area is calibrated.
 
-Run `python campus/unpack_assets.py && python campus/validate_scene.py`, then `python -m http.server 8000` and open `http://localhost:8000/campus/viewer.html`.
+Run `python campus/build_v66.py && python -m unittest discover -s campus -p 'test_v66.py' -v`, then `python -m http.server 8000`; open `http://localhost:8000/campus/viewer.html` to inspect the complete layered 3D model and GIS evidence. GitHub Actions produces downloadable generated GLB, GIS and provenance artifacts.
