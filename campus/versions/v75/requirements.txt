@@ -1,0 +1,8 @@
+numpy>=1.25
+trimesh>=4.4
+shapely>=2.1
+scipy>=1.11
+fiona>=1.10
+pyproj>=3.6
+matplotlib>=3.8
+playwright>=1.40
