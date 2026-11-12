@@ -506,9 +506,10 @@ function focusStairFromApproach(){
  outward.y=0;outward.normalize();
  if(outward.lengthSq()<.01)throw new Error('source stair approach direction missing');
  const cameraLocation=ground.clone().addScaledVector(outward,17);
- // Stay below the inherited LRC soffit (model Z=3.10): a high-angle
- // camera looks through an opaque floor and completely hides the stair.
- cameraLocation.y=target.y+2.8;
+ // Ground-side view: source V16 approach top Z ~0.025 and LRC soffit
+ // begins Z 3.10; a high-angle camera would stare into the opaque slab.
+ // This is a VIEWING height, not a survey or new model dimension.
+ cameraLocation.y=ground.y+2.15;
  orbit.target.copy(target);cam.up.set(0,1,0);
  cam.position.copy(cameraLocation);
  cam.near=.025;cam.far=3500;cam.updateProjectionMatrix();
