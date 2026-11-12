@@ -1,3 +1,38 @@
+# BNBU v67 — independent remote-sensing terrain evidence
+
+**Purpose.** Provide a real, georeferenced **30 m-class digital surface model (DSM)** for validating the broad shape of the mountain ridge around the two campus phases. This is a *separate observed reference*, not a photogrammetrically reconstructed building+ground scene.
+
+Data source: [ArduPilot SRTM1 public mirror](https://terrain.ardupilot.org/SRTM1/N22E113.hgt.zip), individual tile `N22E113.hgt.zip`. Despite the mirror's name, ArduPilot explicitly documents this as **JAXA ALOS-based** data, **not NASA SRTM** ([documentation](https://docs.ardupilot.org/plane/docs/common-terrain-following.html)). The mirror archive lists a 2022 snapshot; **this is not asserted to be the latest 2024 JAXA AW3D30 v4.1**. [Official JAXA AW3D30 dataset and version information](https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm). Observe applicable [JAXA use terms](https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm#).
+
+## Reproducible source-data operation
+
+```bash
+python -m pip install 'pyproj>=3.6,<4'
+python -m unittest discover -s campus -p 'test_terrain_v67.py' -v
+python campus/test_terrain_viewer_v67.py
+python campus/build_terrain_v67.py
+python -m http.server 8000
+# http://localhost:8000/campus/terrain_reference.html
+```
+
+An independent GitHub Actions `campus-terrain.yml` workflow also downloads the actual, externally sourced source tile, verifies its signed big-endian HGT dimensions, reprojects *raw pixel points* with `pyproj` to EPSG:32649 and the inherited GLB XY offsets, and writes:
+
+- `generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb` — actual terrain **surface** triangle mesh from every sampled 30 m pixel (not interpolated to higher resolution)
+- `generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson` — **visually inferred 10 m contours** linearly interpolated between existing 30 m raster pixels; not additional measurements
+- `generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json` — archive and source raster SHA-256 checksums, exact source URI, clip bounds from the unchanged v64 GIS (522 features) with 0.003° context padding, raster dimensions, no-data count, raw elevation range, GLB checksum and datum limitations
+
+It never modifies the original `BNBU_v64` or v66 GLB/GIS, and does not commit/mirror the source ZIP. The public download is a **run-time dependency**: if source retrieval fails, the workflow fails instead of silently inventing heights. CI releases the derived reference GLB, contours, source register and viewer as an Actions artifact.
+
+## What this DOES and DOES NOT resolve
+
+- **Resolves:** supplies external topographic observations, CRS control, numerical terrain height samples and independently reproducible regional ridge mesh (something the prior relative-height GLB lacked).
+- **Does not resolve:** exact bare-earth ground at each building (ALOS **DSM** may include roofs and canopy), a surveyed height datum for v66 local-Z building masses, camera-to-photo registration, 0.2 m sidewalk/curb/road lines, lake-bank grading, glass surface dimensions, or the identity/footprint of the suspected CTV outbuilding / adjacent vehicle driveway.
+- **Do not overlay v67 DSM heights with the v66 GLB** or replace all terrain nodes until surveyed ground control links their vertical references. User-visible scene and independent DSM evidence viewer are intentionally separated.
+- **No artificial densification:** The only contour interpolation is explicitly marked and does not claim finer remote-sensing resolution. A 2022 mirror of ALOS is not the newest 2024 source.
+- **Licensing:** ALOS World 3D 30 m © JAXA, used from the ArduPilot mirror as research data with explicit attribution and data provenance. Independently verify current terms before republishing full raster tiles.
+
+---
+
 # BNBU campus modeling — v66 semantic hierarchy and evidence-linked GIS
 
 **Current live development: v66.** Build the complete campus 3D scene, GIS
