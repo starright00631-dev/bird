@@ -49,6 +49,7 @@ ASSETS = {
     "src/test_terrain_v67.py": "test_terrain_v67.py",
     "src/validate_scene.py": "validate_scene.py",
     "docs/README_source.md": "README.md",
+    "docs/WATERFRONT_V69_EVIDENCE.md": "WATERFRONT_V69_EVIDENCE.md",
 }
 
 README = """# BNBU 校园完整三维模型与查看器 v69
