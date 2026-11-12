@@ -1,0 +1,28 @@
+name: Inspect selected public video event data
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/inspect_samuels_supplement.py
+      - .github/workflows/inspect-samuels.yml
+permissions:
+  contents: read
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download or mark inaccessible
+        run: python scripts/inspect_samuels_supplement.py
+      - name: Save audit, and public coded table if accessible
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-peerj-14604-supp4-evidence-audit
+          path: results/external/samuels_2022
+          if-no-files-found: error
+          retention-days: 30
