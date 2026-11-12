@@ -110,6 +110,8 @@ jobs:
           assert m['v76_architectural_buildings']==30 and m['v76_teaching_T']==8
           assert m['v76_residential_V']==15 and m['v76_residential_D']==6 and m['v76_unique_LRC']==1
           assert m['v76_original_geometry_unchanged'] and m['v76_no_new_surveyed_windows_balconies_or_paths']
+          assert m['v76_complete_environment_candidates']==70 and m['v76_phaseII_source_circulation_candidates']==14
+          assert m['v76_phaseII_dormitory_network_gap_segments']==12
           html=(base/'双击查看_校园3D.html').read_text()
           assert all('id="embedded-'+k+'"' in html for k in ('v71','dsm','gis','contours','dsm-meta','lakefront','junctions','junction-patches','junction-meta','profile-v72','photos-v72','v74-hotspots','v75-glass','v75-atlas','v76-edges','v76-architecture'))
           assert 'cdn.jsdelivr' not in html and 'unpkg.com' not in html
