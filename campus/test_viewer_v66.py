@@ -1,50 +1,45 @@
-"""No browser screenshot implied: validate HTML module syntax and artifact references."""
+"""Validate that the obsolete v66 GitHub file no longer loads missing data.
+
+The historical v66 model is still tested elsewhere. The public repository
+entrypoint now redirects to the verified self-contained v76 Pages build.
+"""
 from html.parser import HTMLParser
 from pathlib import Path
-import shutil
 import subprocess
+import shutil
 import tempfile
 
-ROOT = Path(__file__).resolve().parent
-HTML = (ROOT / "viewer.html").read_text(encoding="utf-8")
+ROOT=Path(__file__).resolve().parent
+HTML=(ROOT/"viewer.html").read_text(encoding="utf-8")
+TARGET="https://starright00631-dev.github.io/bird/"
 
-
-class Modules(HTMLParser):
+class Scripts(HTMLParser):
     def __init__(self):
-        super().__init__()
-        self.in_module = False
-        self.modules = []
-    def handle_starttag(self, tag, attrs):
-        self.in_module = tag == "script" and ("type", "module") in attrs
-        if self.in_module:
-            self.modules.append("")
-    def handle_data(self, data):
-        if self.in_module:
-            self.modules[-1] += data
-    def handle_endtag(self, tag):
-        if tag == "script":
-            self.in_module = False
-
+        super().__init__();self.current=False;self.scripts=[]
+    def handle_starttag(self,tag,attrs):
+        self.current=tag=="script"
+        if self.current:self.scripts.append("")
+    def handle_data(self,data):
+        if self.current:self.scripts[-1]+=data
+    def handle_endtag(self,tag):
+        if tag=="script":self.current=False
 
 def verify():
-    for name in ("BNBU_v66_SEMANTIC_Y_UP.glb", "BNBU_v66_RESOLVED_REFERENCES.geojson"):
-        assert name in HTML, "viewer points to obsolete asset: " + name
-    for keyword in ("terrain_unsurveyed", "water_unsurveyed", "shore_unsurveyed",
-                    "vehicle_roads_unsurveyed", "pedestrian_paving_unsurveyed",
-                    "elevated_boardwalk_unsurveyed", "ground_connectors_unsurveyed",
-                    "architecture_opaque", "glass_proxies_unregistered", "stairs_unsurveyed"):
-        assert 'data-part="' + keyword + '"' in HTML
-    assert "点击" in HTML and "CTV" in HTML and "not_bridge" not in HTML
-    p = Modules()
-    p.feed(HTML)
-    assert len(p.modules) == 1 and "GLTFLoader" in p.modules[0]
+    assert TARGET in HTML
+    assert 'http-equiv="refresh"' in HTML
+    assert 'rel="canonical"' in HTML
+    assert "location.replace" in HTML
+    assert 'actions/workflows/campus-package.yml' in HTML
+    for obsolete in ("BNBU_v66_SEMANTIC_Y_UP.glb",
+                     "BNBU_v66_RESOLVED_REFERENCES.geojson",
+                     "cdn.jsdelivr.net","unpkg.com","fetch('./generated/"):
+        assert obsolete not in HTML,"legacy viewer still fetches missing GitHub assets: "+obsolete
+    parser=Scripts();parser.feed(HTML)
+    assert len(parser.scripts)==1 and "location.replace" in parser.scripts[0]
     if shutil.which("node"):
-        with tempfile.TemporaryDirectory() as d:
-            module = Path(d) / "viewer.mjs"
-            module.write_text(p.modules[0], encoding="utf-8")
-            subprocess.run(["node", "--check", str(module)], check=True)
-    print("viewer v66 markup/assets/10 categories/module syntax: OK")
+        with tempfile.TemporaryDirectory() as tmp:
+            f=Path(tmp)/"redirect.js";f.write_text(parser.scripts[0],encoding="utf-8")
+            subprocess.run(["node","--check",str(f)],check=True)
+    print("Legacy v66 file is a no-CDN redirect to verified v76 Pages viewer: OK")
 
-
-if __name__ == "__main__":
-    verify()
+if __name__=="__main__":verify()
