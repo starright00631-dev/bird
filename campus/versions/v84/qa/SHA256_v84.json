@@ -1,0 +1,170 @@
+{
+  "version": "v84",
+  "file_count": 41,
+  "files": {
+    "README.md": {
+      "sha256": "8f61d1017e9ba689b7f84d278297b72ab09dc9ecd726ac1a6f56ea6e871c4337",
+      "bytes": 5697
+    },
+    "data/BNBU_v84_ACTIVE.geojson": {
+      "sha256": "a2cf23094f388eb1004a58c206862773161a3a7866d4b25791dd8f34800f08fa",
+      "bytes": 2600770
+    },
+    "data/BNBU_v84_ACTIVE.kml": {
+      "sha256": "a81286cb18108ff56b61a4b22ca689a36c60f04974055592674759e0d05a50b3",
+      "bytes": 1116192
+    },
+    "data/BNBU_v84_EDITABLE_GIS.gpkg": {
+      "sha256": "6bf8807eea0c7811b18c1569551bd806e117d518ba50f6ad0979686a29d78374",
+      "bytes": 14352384
+    },
+    "figures/BNBU_v84_CPU_Chromium.png": {
+      "sha256": "9394d6936320aca0cf5563ecaf58023cb38687f3237bdc3243ebc365d96094a7",
+      "bytes": 131044
+    },
+    "figures/BNBU_v84_Embedded_Fallback_Chromium.png": {
+      "sha256": "74a4d4241725e75274c1d1d23022fe08d1d2f6907b31935d5b3588cb93cc1240",
+      "bytes": 184543
+    },
+    "input/BNBU_v83_ACTIVE.geojson": {
+      "sha256": "a2cf23094f388eb1004a58c206862773161a3a7866d4b25791dd8f34800f08fa",
+      "bytes": 2600770
+    },
+    "input/BNBU_v83_ACTIVE.kml": {
+      "sha256": "a81286cb18108ff56b61a4b22ca689a36c60f04974055592674759e0d05a50b3",
+      "bytes": 1116192
+    },
+    "input/BNBU_v83_DISPLAY_ONLY.geojson": {
+      "sha256": "24a284c7853bb0d4b1dfbb3851e09aa0428da44445f988ea422998273b1d4a1d",
+      "bytes": 237492
+    },
+    "input/BNBU_v83_DISPLAY_ONLY.kml": {
+      "sha256": "5a2ed652463786b9224a040821a55052ed782f64fad195abe7679dafc77f456e",
+      "bytes": 104162
+    },
+    "input/BNBU_v83_EDITABLE_GIS.gpkg": {
+      "sha256": "6bf8807eea0c7811b18c1569551bd806e117d518ba50f6ad0979686a29d78374",
+      "bytes": 14352384
+    },
+    "input/BNBU_v83_FULL_EDITABLE.glb": {
+      "sha256": "2b694603f2d592499196f40bf74b569de55ccf42d2c63217b82bf76dce717b36",
+      "bytes": 13915316
+    },
+    "model/BNBU_v84_FULL_EDITABLE.glb": {
+      "sha256": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848",
+      "bytes": 13905924
+    },
+    "model/BNBU_v84_REDUNDANT_ROAD000_SIDE_DISPLAY_ONLY.glb": {
+      "sha256": "71735f7962e3ceefd7a85a1293f7e28cfea99f0a99cc579c678519826e882274",
+      "bytes": 8220
+    },
+    "model/BNBU_v84_ROAD000_RETAINED_ONLY.glb": {
+      "sha256": "749a9cf4a11f0946eb5313deecdcb1c5b91cc1f2112109f2f6bf9530e2c06e84",
+      "bytes": 9412
+    },
+    "qa/final_verify_stdout.txt": {
+      "sha256": "3122840c7bcb27eae577fb669c7a8f6bf3b2f91e96b0f6697a0ee53d066f3621",
+      "bytes": 683
+    },
+    "qa/v84_browser_validation.json": {
+      "sha256": "727f660135e3577b772994e883a0a687642ce774abe3e5e3fc60fc70f360ae29",
+      "bytes": 919
+    },
+    "qa/v84_cpu_viewer_data.json": {
+      "sha256": "848313b1b435668346ce3a6ea38f16c69897fd7f322088ae788d40dc721f638d",
+      "bytes": 338
+    },
+    "qa/v84_duplicate_screening.json": {
+      "sha256": "f49bd9b6d06b074a89178534db24c4d561a64fc89de4eb3314ff467ed2f75e69",
+      "bytes": 377
+    },
+    "qa/v84_geometry_build.json": {
+      "sha256": "e3502df55dd1d7147afc65c64348c89b1d3e4b7e1c48b78f35129ae55a587f49",
+      "bytes": 1262
+    },
+    "qa/v84_independent_validation.json": {
+      "sha256": "cb36643c6ce5650259b8c4d87f349ec444081cd7e5ff33b16e131aa35687804d",
+      "bytes": 682
+    },
+    "qa/v84_viewer_build.json": {
+      "sha256": "4ac7e1daf20e8bb35121b28e8ad20b84b657d56f6cef44d9ca931d3d922b2d08",
+      "bytes": 278
+    },
+    "qa/verify_stdout.txt": {
+      "sha256": "3122840c7bcb27eae577fb669c7a8f6bf3b2f91e96b0f6697a0ee53d066f3621",
+      "bytes": 683
+    },
+    "qa/viewer_build_stdout.txt": {
+      "sha256": "80c49220b2b2f20f67c865213a5e63e7f21d5eb32e6a125040cdc2620efc1336",
+      "bytes": 294
+    },
+    "reference/BNBU_Campus_3D_CPU_v83.html": {
+      "sha256": "8612cd7b68783b242dded0c08c20358a2ffc816b09e89a705408bfb57325697b",
+      "bytes": 1917493
+    },
+    "reference/BNBU_Campus_3D_Offline_v83.html": {
+      "sha256": "8a27b6a1456cd6ac27d20fe97bd8b8782026c23e2e79efd77d49f9b1dd6428fc",
+      "bytes": 23470660
+    },
+    "reference/BNBU_hourly_campus_v10_2026-11-10.zip": {
+      "sha256": "e3dd1580004eeeb793f0696a55b5eef426597b5da2fff8002ce81a9c29762cb0",
+      "bytes": 8046707
+    },
+    "reference/BNBU_v83_V52_Actual_Triangle_3D_Inspector.html": {
+      "sha256": "f7c603ae9fa92a4e66d64d5726f82bb5c9269cc570bb8bc57c4d50b860bcc6bd",
+      "bytes": 268767
+    },
+    "reference/_cpu_builder_generated_v83.py": {
+      "sha256": "6e9767ea35ab9bfc8271ec52cc1ca004070892dbf4b80984874fff0f67759b6c",
+      "bytes": 13705
+    },
+    "reference/build_cpu_viewer_v83.py": {
+      "sha256": "9ed54639dbee28a66aa91e2bb888bb4b4c1d1d99b6b9d1538f40164d344c42f1",
+      "bytes": 2162
+    },
+    "reference/v83_independent_validation.json": {
+      "sha256": "1834964006529cdf49dc6e130f4209b0e39af1b7430e71287774554e0d881532",
+      "bytes": 694
+    },
+    "reference/v83_v52_probe.json": {
+      "sha256": "252a466c6f6405cf4319c89987933a19fd21c6ddbdf9359f43eb9de2d0e52f39",
+      "bytes": 46906
+    },
+    "requirements.txt": {
+      "sha256": "5817fa7584e1976497c67c1a87f787e6cc8966944b232ea7c7682d2909f5d359",
+      "bytes": 90
+    },
+    "source/_cpu_builder_generated_v84.py": {
+      "sha256": "55185a38af8045f49a47dfd8c8a9a21b7b035833333602ee1772636a3105bcca",
+      "bytes": 13720
+    },
+    "source/build_v84.py": {
+      "sha256": "789ab4a901765a4cc8db299697b110d462a2212b06b43a58c9c77638ea28e03b",
+      "bytes": 3865
+    },
+    "source/build_viewers_v84.py": {
+      "sha256": "0c589c9eb119a2ee5339c16ea25f5825b258258cf30b099756fb289547591320",
+      "bytes": 5301
+    },
+    "source/test_viewers_v84.py": {
+      "sha256": "d0ad41ce5aeb116d96012adb9c061a3b07211350e421689c042a8ae9fdd175f1",
+      "bytes": 4056
+    },
+    "source/verify_v84.py": {
+      "sha256": "13aa65f46baab1e5218ed10ccb178b984be731cc791d7f0e2cad6d518390997d",
+      "bytes": 4564
+    },
+    "viewer/BNBU_Campus_3D_CPU_v84.html": {
+      "sha256": "7543cf22aa6ed90daeec20a2c7d9f1a2062c518f67bf02cac470e80aeaad72be",
+      "bytes": 1913308
+    },
+    "viewer/BNBU_Campus_3D_Offline_v84.html": {
+      "sha256": "c214baf49a8f7e7e50fca596850a0a7e8b3cb536d9065547745a01a004e36a8d",
+      "bytes": 26011217
+    },
+    "viewer/BNBU_v84_V52_Actual_Triangle_3D_Inspector.html": {
+      "sha256": "f7c603ae9fa92a4e66d64d5726f82bb5c9269cc570bb8bc57c4d50b860bcc6bd",
+      "bytes": 268767
+    }
+  }
+}
