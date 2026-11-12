@@ -115,7 +115,7 @@ def build():
         "visual_rail_height_above_existing_deck_m":.9,
         "visual_post_spacing_m":2.8,
         "railing_xy_polylines_local":polylines,
-        "surface_materials":{"boardwalk":"photo type: warm planks",
+        "surface_materials":{"boardwalk":"photo type: warm timber-tone finish, boards not measured",
                              "existing_lrc_grass":"existing V13 designated lawn, no new land parcel",
                              "existing_lrc_prom": "existing V61 slabs, photo type: light concrete"},
         "validation_flags":[{
