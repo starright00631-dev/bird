@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BNBU 校园 3D / GIS 模型核查接口</title>
+<title>BNBU 校园 v69 · 水岸细节 3D / GIS</title>
 <link rel="stylesheet" href="./viewer.css">
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v68</span></div></div>
+  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v69</span></div></div>
   <div class="scene-switch" role="group" aria-label="场景切换"><button id="choose-campus" class="selected" type="button">校园三维模型</button><button id="choose-dsm" type="button">遥感山体参考</button></div>
   <div class="top-actions"><button id="help-button" type="button">使用说明</button><span id="health" role="status">准备载入</span></div>
 </header>
@@ -21,11 +21,11 @@
         <button type="button" data-focus="all">全景</button>
         <button type="button" data-focus="phase1">一期校区</button>
         <button type="button" data-focus="phase2">二期校区</button>
-        <button type="button" data-focus="lake">湖泊</button>
+        <button type="button" data-focus="lakefront">主湖近岸</button>
+        <button type="button" data-focus="lake">全部湖面</button>
+        <button type="button" data-focus="wetland">二期湿地旧模型</button>
+        <button type="button" data-focus="boardwalk">岸边廊道</button>
         <button type="button" data-focus="ridge">山体</button>
-        <button type="button" data-focus="roads">车行道</button>
-        <button type="button" data-focus="boardwalk">临水廊道</button>
-        <button type="button" data-focus="cc">CTV/CC</button>
       </div>
       <div class="camera-row"><button id="top-view" type="button">俯视</button><button id="reset-view" type="button">重置视角</button></div>
     </div>
@@ -40,11 +40,11 @@
       <p class="map-footnote">坐标依据：原模型 EPSG:4326 轮廓；显示范围可移动缩放。DSM 等高线为 30 米像元插值，不能当实测道路或岸线。</p>
     </section>
     <section id="source-section" class="source-section" hidden>
-      <h2>研究模型及外部证据</h2><p>3D 建筑、道路、湖泊使用 v64 继承网格，v66 仅重组模型层级并修复来源关联。山体参考使用 ALOS 衍生约 30m DSM，**不与建筑标高混合**。</p>
+      <h2>研究模型及外部证据</h2><p>水岸 v69 对继承的湖面、岸坡和临水路缘采用不同的可视材质；岸坡颜色依照原模型的相对高程变化，水面纹理是渲染效果而非实测。原有岸线及建筑坐标未被修改。山体参考仍使用独立 ALOS 衍生约 30m DSM，不能与建筑标高直接合并。</p>
       <p><a href="https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg" target="_blank" rel="noopener">官方手绘校园图</a>（拓扑参考，非测绘）</p>
       <p><a href="https://www.4dmodel.com/UICcode/code/#/list" target="_blank" rel="noopener">学校互动影像</a>（待相机配准）</p>
       <p><a href="https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm" target="_blank" rel="noopener">JAXA AW3D30 数据集说明</a></p>
-      <p>CTV 附近独立小建筑及其“校长别墅”名称尚未独立核实。未将其加入正式场景。</p>
+      <p><strong>真实水体证据：</strong>学校 2019 年资料记载，东侧赤花山脚下有季节性自然湿地，与山上的两处淡水池塘相连；尚未获得足以将其准确配准进 3D 的坐标。二期“湿地旧模型”是历史假设，不能混同于这两处真实池塘。</p><p><a href="https://www.bnbu.edu.cn/info/1077/4589.htm" target="_blank" rel="noopener">学校生态调查：湿地与两处淡水池塘</a></p><p>CTV 附近独立小建筑及其“校长别墅”名称尚未独立核实。未将其加入正式场景。</p>
     </section>
     <section class="layers-panel">
       <div class="section-header"><h2>显示图层</h2><div><button id="show-all" type="button">全选</button><button id="hide-all" type="button">隐藏</button></div></div>
