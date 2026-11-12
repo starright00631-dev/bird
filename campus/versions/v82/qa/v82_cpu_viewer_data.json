@@ -1,0 +1,16 @@
+{
+  "source_meshes": 1347,
+  "source_faces": 691907,
+  "original_source_face_refs": 114185,
+  "per_category": {
+    "building": 556,
+    "lrc": 267,
+    "road": 337,
+    "water": 29,
+    "dorm": 153,
+    "terrain": 5
+  },
+  "rounded_display_coordinates_3_decimal_places": true,
+  "payload_gzip_bytes": 1406919,
+  "no_new_geometry": true
+}
