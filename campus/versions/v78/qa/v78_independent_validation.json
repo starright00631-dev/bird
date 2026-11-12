@@ -5,6 +5,8 @@
   "branch_nodes": 1382,
   "new_active_nodes": 1380,
   "parent_meshes_bytewise_geometry_equal": 1341,
+  "preserved_original_layer_groups": 10,
+  "old_layer_parents_preserved": true,
   "retopologized_opaque_trims": 37,
   "new_skylight_meshes": 1,
   "corrected_cap_Z_relative": 0.021999835968017578,
@@ -32,5 +34,5 @@
   "geodetic_vertical_datum_verified": false,
   "new_OSM_way_nodes": 0,
   "full_browser_runtime_this_run": "not verified: sandbox Chromium blocks localhost/file navigation by administrator",
-  "model_sha256": "999f2d8d59efbb8a094257c765bdb4c1d9eb843908bc2e5ae757020fd868c320"
+  "model_sha256": "6a89879e5b64e7d56581cee54cbc7e1b62b60eb1f48cb57b56bdbbb7dbbb23b4"
 }
