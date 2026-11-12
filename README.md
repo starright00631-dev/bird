@@ -1,3 +1,15 @@
+## BNBU v71 — land / road / building / bridge junction audit (current)
+
+The verified [v71 change, PR #8](https://github.com/starright00631-dev/bird/pull/8) repairs two short source-model **land-only** gaps between original V61 shore-promenade slabs. It adds **two small at-grade pavement mesh patches** (~4.156 and ~4.247 model m²), producing **1,379 meshes** while retaining all original 1,377 mesh buffers and **522 unchanged original GIS features**. These are topology-constrained model repairs, **not field-surveyed sidewalks**.
+
+The separate [11-junction technical audit](campus/JUNCTION_V71_AUDIT.md) checks photo-supported structure types against actual inherited footprint intersections and vertex heights. The interface now has close-up controls for two new joins, the existing east bridge landfall, the original vehicle-road / pedestrian-path seam and an inherited exterior building stair, plus an optional color-coded GIS status overlay. Three key height differences remain unresolved, especially the ~0.64 model-height deck/west-promenade difference; no unsupported bridge, ramp or road was added.
+
+**Download the complete tested ZIP** from [v71 GitHub Actions run](https://github.com/starright00631-dev/bird/actions/runs/43148911926) (artifact `BNBU-v71-complete-offline-model-zip`), extract the nested `BNBU_Campus_Full_v71.zip`, then double-click `双击查看_校园3D.html`. A separate self-contained HTML artifact is also available. Actual Chromium QA passed both file:// and localhost, testing patch visibility, junction inspector, lakefront and DSM; original scientific-model and campus integrity CI both passed.
+
+This is a research scene and does **not** certify real-world ADA/accessibility, road width, pond shoreline or bird-strike exposure surface area. The western deck-to-land heights and other unresolved circulation gaps require registered photographs and elevation control.
+
+---
+
 ## BNBU v70 — photo-audited lakefront and near-land structure (current)
 
 The [v70 source comparison and complete offline viewer, PR #7](https://github.com/starright00631-dev/bird/pull/7) refine the existing lakefront using real campus-photo **structural typologies**: a reversible, source-boardwalk-footprint-bound railing overlay, distinct model-owned deck/lawn/promenade material finishes, greener lake water, a muted bank join and a tighter boardwalk inspection view. The source 1,377 campus mesh positions and 522 GIS geometries remain unchanged; the rail is **a display-only proxy**, not surveyed geometry.
