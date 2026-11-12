@@ -9,7 +9,7 @@ from pathlib import Path
 import threading
 from playwright.sync_api import sync_playwright
 
-PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v72"
+PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v73"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
@@ -28,7 +28,7 @@ def check(page,label,offline=False):
     assert state=={"n":1379,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
-    assert page.evaluate("window.__BNBU_VERSION__")=="v72"
+    assert page.evaluate("window.__BNBU_VERSION__")=="v73"
     assert page.locator("#layers input[type=checkbox]").count()==10
     page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
     assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==12
@@ -100,6 +100,12 @@ def check(page,label,offline=False):
     page.wait_for_function("window.__BNBU_DEBUG__?.hasDSM()===true",timeout=65000)
     page.wait_for_function("document.querySelector('#scene-status').textContent.includes('DSM')",timeout=30000)
     assert "DSM" in page.locator("#scene-status").inner_text()
+    page.wait_for_function("window.__BNBU_DEBUG__.contourMeshCount()===3737",timeout=35000)
+    assert page.locator("#show-v73-dsm-contours").is_checked()
+    page.locator("#show-v73-dsm-contours").uncheck()
+    assert page.evaluate("window.__BNBU_DEBUG__.contourVisible()") is False
+    page.locator("#show-v73-dsm-contours").check()
+    assert page.evaluate("window.__BNBU_DEBUG__.contourVisible()") is True
     page.screenshot(path=str(RESULT/(label+"_dsm.png")),full_page=True,timeout=45000)
     page.locator("#choose-campus").click()
     page.wait_for_function("window.__BNBU_DEBUG__?.getScene()==='campus'",timeout=12000)
