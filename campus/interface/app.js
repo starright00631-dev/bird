@@ -147,11 +147,99 @@ function focusGroup(key){
  const g=groups.get(key);
  if(g){if(!g.visible){toggleLayer(key,true);renderLayerControls();}fit(boxWorld(g));}
 }
+
+// v69 visual controls: geospatial positions and waterlines stay unchanged.
+let waterfrontAppearanceCount=0;
+let ripples=null;
+function buildRippleNormalTexture(){
+ const side=128,pixels=new Uint8Array(side*side*4);
+ for(let j=0;j<side;j++)for(let i=0;i<side;i++){
+  const x=i/side*Math.PI*2,y=j/side*Math.PI*2;
+  // Smooth, periodic tangent-space ripples only; a rendering effect, not flow data.
+  const dx=.15*Math.cos(4*x+2*y)+.08*Math.cos(7*y-3*x);
+  const dy=.075*Math.cos(4*x+2*y)+.19*Math.cos(7*y-3*x);
+  const den=Math.hypot(dx,dy,1),k=(j*side+i)*4;
+  pixels[k]=Math.round(128+127*(-dx)/den);
+  pixels[k+1]=Math.round(128+127*(-dy)/den);
+  pixels[k+2]=Math.round(128+127/den);pixels[k+3]=255;
+ }
+ const t=new THREE.DataTexture(pixels,side,side,THREE.RGBAFormat);
+ t.wrapS=t.wrapT=THREE.RepeatWrapping;
+ t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;
+ t.generateMipmaps=true;t.needsUpdate=true;
+ return t;
+}
+function improveWaterVisuals(){
+ if(!campus)return;
+ ripples=buildRippleNormalTexture();
+ const sourceWater=/^LAKE_0[0-4]$/;
+ const wetlandName='V55_P2_ARCHIVED_WETLAND_RESTORED_WATER_NOT_SURVEYED';
+ for(const m of meshes){
+  const isWater=sourceWater.test(m.name),isWetland=m.name===wetlandName;
+  if(isWater||isWetland){
+   const g=m.geometry,position=g.getAttribute('position');
+   if(!g.getAttribute('uv')){
+    const uv=new Float32Array(position.count*2);
+    for(let k=0;k<position.count;k++){
+     // The source GLB has model-XY horizontal coordinates before its Y-up root transform.
+     uv[k*2]=position.getX(k)/6.2;uv[k*2+1]=position.getY(k)/6.2;
+    }
+    g.setAttribute('uv',new THREE.BufferAttribute(uv,2));
+   }
+   const mats=Array.isArray(m.material)?m.material:[m.material];
+   for(const mat of mats){
+    if(!mat?.isMeshStandardMaterial)continue;
+    mat.normalMap=ripples;
+    mat.normalScale=new THREE.Vector2(isWetland?.03:.045,isWetland?.03:.045);
+    mat.roughness=isWetland?.49:.34;
+    mat.metalness=isWetland?.012:.018;
+    if(mat.isMeshPhysicalMaterial){
+     mat.clearcoat=isWetland?.25:.42;
+     mat.clearcoatRoughness=isWetland?.27:.24;
+    }
+    mat.side=THREE.DoubleSide;
+    mat.needsUpdate=true;
+   }
+   waterfrontAppearanceCount++;
+  }
+  if(/^(V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_|V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK)/.test(m.name)){
+   // Highlight real edges of *existing model mesh*. No constructed piers/bridges.
+   const e=new THREE.EdgesGeometry(m.geometry,36);
+   const lines=new THREE.LineSegments(e,new THREE.LineBasicMaterial({
+      color:0x586b70,transparent:true,opacity:.48,depthWrite:false}));
+   lines.userData.displayOnly=true;
+   m.add(lines);
+  }
+ }
+}
+function focusWaterfront(name){
+ if(!campus)return;
+ const target=meshes.find(m=>m.name===name);
+ if(!target)return;
+ const centre=boxWorld(target).getCenter(new THREE.Vector3());
+ const b=new THREE.Box3();
+ let included=0;
+ for(const m of meshes){
+  const bounds=boxWorld(m),c=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3());
+  // Exclude huge source basemap and terrain masses from local photographic framing.
+  if(size.length()>290 || m.name.startsWith('BASE_'))continue;
+  const d=Math.hypot(c.x-centre.x,c.z-centre.z);
+  if(d<75){b.union(bounds);included++;}
+ }
+ if(!included){fit(boxWorld(target));return;}
+ // A little context, without bringing distant phase II into the frame.
+ b.expandByVector(new THREE.Vector3(8,5,8));
+ fit(b);
+ if(gis)focusGIS(name);
+}
+
 function focusPreset(key){
  if(current==='dsm'){fit(allBox(),key==='all');return;}
  if(!campus)return;
  if(key==='all'){fit(allBox());return;}
  if(key==='lake'){focusGroup('water_unsurveyed');return;}
+ if(key==='lakefront'){focusWaterfront('LAKE_00');return;}
+ if(key==='wetland'){focusWaterfront('V55_P2_ARCHIVED_WETLAND_RESTORED_WATER_NOT_SURVEYED');return;}
  if(key==='ridge'){focusGroup('terrain_unsurveyed');return;}
  if(key==='roads'){focusGroup('vehicle_roads_unsurveyed');return;}
  if(key==='boardwalk'){focusGroup('elevated_boardwalk_unsurveyed');return;}
@@ -183,7 +271,7 @@ async function switchScene(which){
  updateSceneVisibility();
  if(which==='campus'){
   if(!campus)await ensureCampus();
-  activeRoot=campus;updateSceneVisibility();fit(allBox());
+  activeRoot=campus;updateSceneVisibility();focusWaterfront('LAKE_00');
   progress('校园三维已就绪 · '+meshes.length+' 个网格');
  }else{
   if(!dsm)await ensureDSM();
@@ -197,8 +285,8 @@ $('choose-dsm').addEventListener('click',()=>switchScene('dsm').catch(showError)
 
 async function ensureCampus(){
  progress('读取完整校园网格…');
- const gltf=await loadScene('v66','generated/BNBU_v66_SEMANTIC_Y_UP.glb');
- campus=gltf.scene;scene.add(campus);indexCampus();campus.visible=current==='campus';
+ const gltf=await loadScene('v69','generated/BNBU_v69_WATERFRONT_REFINED.glb');
+ campus=gltf.scene;scene.add(campus);indexCampus();improveWaterVisuals();campus.visible=current==='campus';
  for(const [key,g] of groups)g.visible=visible.has(key);
 }
 async function ensureDSM(){
@@ -217,7 +305,7 @@ async function ensureGIS(){
    const n=f.properties?.render_model_node;
    if(n){const matches=featuresByName.get(n)||[];matches.push(f);featuresByName.set(n,matches);}
   }
-  computeMapBounds();redraw();
+  computeMapBounds();focusGIS('LAKE_00');redraw();
  }catch(e){console.error(e);$('map-section').querySelector('.map-footnote').textContent='GIS 轮廓资源加载失败：'+e.message;}
 }
 function showError(e){
@@ -268,6 +356,30 @@ function walkCoordinates(obj,fn){
  if(obj.length>=2&&typeof obj[0]==='number'&&typeof obj[1]==='number'){fn(obj);return;}
  for(const child of obj)walkCoordinates(child,fn);
 }
+function focusGIS(nodeName){
+ if(!gis || !geoExtent)return;
+ const f=gis.features.find(f=>f.properties?.render_model_node===nodeName);
+ if(!f)return;
+ let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
+ walkCoordinates(f.geometry?.coordinates,p=>{
+  x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);
+  y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1]);
+ });
+ if(!(x1>x0 && y1>y0))return;
+ const rect=canvas.getBoundingClientRect(),w=rect.width,h=rect.height;
+ if(w<30||h<30)return;
+ const cos=Math.cos(geoExtent.my*Math.PI/180);
+ const base=Math.min((w-34)/((geoExtent.maxX-geoExtent.minX)*cos),
+                     (h-34)/(geoExtent.maxY-geoExtent.minY));
+ mapScale=Math.min(14,Math.max(1,Math.min(
+   (w*.8)/((x1-x0)*cos*base),
+   (h*.8)/((y1-y0)*base))));
+ const cx=(x0+x1)/2,cy=(y0+y1)/2;
+ mapPan=[-(cx-geoExtent.mx)*cos*base*mapScale,
+          (cy-geoExtent.my)*base*mapScale];
+ redraw();
+}
+
 function computeMapBounds(){
  if(!gis)return;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
  for(const f of gis.features)walkCoordinates(f.geometry?.coordinates,p=>{minX=Math.min(minX,p[0]);maxX=Math.max(maxX,p[0]);minY=Math.min(minY,p[1]);maxY=Math.max(maxY,p[1]);});
@@ -347,15 +459,15 @@ $('tab-map').onclick=()=>{$('tab-map').classList.add('active');$('tab-source').c
 $('tab-source').onclick=()=>{$('tab-source').classList.add('active');$('tab-map').classList.remove('active');$('map-section').hidden=true;$('source-section').hidden=false;};
 $('help-button').onclick=()=>$('help-dialog').showModal();
 $('close-help').onclick=()=>$('help-dialog').close();
-function animate(){requestAnimationFrame(animate);orbit.update();renderer.render(scene,cam);}
+function animate(){requestAnimationFrame(animate);orbit.update();if(ripples){const t=performance.now()*0.000006;ripples.offset.set(t,t*.55);}renderer.render(scene,cam);}
 animate();
 async function start(){
  try{
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v68';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible};
+  window.__BNBU_VERSION__='v69';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray()};
   ensureGIS();
  }catch(e){showError(e);}
 }
