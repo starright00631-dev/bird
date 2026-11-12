@@ -74,6 +74,8 @@ let meshes=[],groups=new Map(),gis=null,contours=null,dsmMeta=null,featuresByNam
 const visible=new Set(TYPES.map(t=>t[0]));
 let selectedName=null,outline=null,viewStatus='loading';
 let junctions=null,connectionMeta=null,patches=null;
+let profileData=null,profileGroup=null,gradeGroup=null,photoCatalog=null,profileRailCount=0;
+let galleryRendered=false;
 const boxWorld=obj=>new THREE.Box3().setFromObject(obj);
 function fit(box,top=false){
  if(!box || box.isEmpty())return;
@@ -283,6 +285,14 @@ function styleExistingLakesideLand(){
   }else if(m.name==='V54_PAVEMENT_SEAM_CLOSE_ROAD_000__WALK_040_MODEL_EDGE_MATCH'){
    // Existing road-to-footpath seam, never a new elevated bridge.
    setSourceSurfaceMaterial(m,0xb9b9b1);
+  }else if(m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')){
+   // Source-bound original v71 slabs should share the V61 terrace finish.
+   setSourceSurfaceMaterial(m,0xb6b7ad);
+  }else if(m.name==='ROAD_000'){
+   // Typology-informed road display only, not a surveyed asphalt material.
+   setSourceSurfaceMaterial(m,0x777e83);
+  }else if(m.name==='WALK_040'){
+   setSourceSurfaceMaterial(m,0xc2bfb4);
   }else if(m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'){
    setSourceSurfaceMaterial(m,0xb8875c);
   }else if(m.name==='V13_PHASEI_GREEN_CORRECTED_lrc_lakeside_grass'){
@@ -405,6 +415,155 @@ async function ensureJunctions(){
  $('junction-status').textContent='已核查 11 对空间关系；2 处陆地铺装小间隙已连接，3 处高差疑点保持未改。';
  redraw();
 }
+
+
+// v72 supplements with local xyz sampled from the INHERITED source mesh,
+// not guessed terrain elevation. Rail HEIGHT is visualization-only.
+function instanceBars(group,segments,rgba,name){
+ if(!segments.length)return;
+ const geometry=new THREE.CylinderGeometry(1,1,1,6,1);
+ const material=new THREE.MeshBasicMaterial({color:rgba,side:THREE.DoubleSide});
+ const inst=new THREE.InstancedMesh(geometry,material,segments.length);
+ inst.name=name;inst.userData.displayOnly=true;inst.frustumCulled=false;
+ const tmp=new THREE.Object3D(),yaxis=new THREE.Vector3(0,1,0);
+ segments.forEach(([a,b,r],i)=>{
+  const vec=b.clone().sub(a);const length=vec.length();
+  tmp.position.copy(a).add(b).multiplyScalar(.5);
+  tmp.scale.set(r,length,r);
+  tmp.quaternion.setFromUnitVectors(yaxis,vec.normalize());
+  tmp.updateMatrix();inst.setMatrixAt(i,tmp.matrix);
+ });
+ inst.instanceMatrix.needsUpdate=true;group.add(inst);
+}
+function makeSourceConnectionRails(data){
+ if(profileGroup)return;
+ if(data.v71_scene_meshes!==1379||data.original_source_meshes!==1377||data.rail_profiles.length!==4)
+  throw new Error('v72 source ramp/stair evidence profile not verified');
+ const world=campus.getObjectByName('world');
+ if(!world)throw new Error('world space axis mapping missing');
+ const group=new THREE.Group();
+ group.name='BNBU_V72_DISPLAY_ONLY_RAILS_SOURCE_XYZ';
+ group.userData={displayOnly:true,notForBirdStrike:true,source:"v71 actual mesh boundary and heights"};
+ const beams=[],posts=[];
+ for(const rail of data.rail_profiles){
+  const points=rail.model_surface_xyz.map(p=>new THREE.Vector3(...p));
+  const height=rail.height_above_surface_model_units;
+  let walked=0,next=1.2;
+  for(let i=0;i<points.length-1;i++){
+   const a=points[i],b=points[i+1],len=a.distanceTo(b);
+   if(len<.01)continue;
+   for(const offset of [height,.45*height]){
+    beams.push([a.clone().add(new THREE.Vector3(0,0,offset)),
+                b.clone().add(new THREE.Vector3(0,0,offset)),.021]);
+   }
+   if(walked>=next || i===1){
+    posts.push([a.clone().add(new THREE.Vector3(0,0,.04)),
+                a.clone().add(new THREE.Vector3(0,0,height)),.024]);
+    next=walked+2.5;
+   }
+   walked+=len;
+  }
+ }
+ instanceBars(group,beams,0xa6b6bc,'V72_SOURCE_PROFILE_HANDRAILS_UNSURVEYED');
+ instanceBars(group,posts,0x8b9ea5,'V72_SOURCE_PROFILE_POSTS_UNSURVEYED');
+ world.add(group);profileGroup=group;
+ profileRailCount=beams.length+posts.length;
+ // Vertical disagreement markers deliberately default OFF and must never be
+ // mistaken for constructed accessways or measured stair heights.
+ const flags=new THREE.Group();
+ flags.name='BNBU_V72_3D_GRADE_MISMATCH_INSPECTION_ONLY';
+ flags.userData={displayOnly:true,notForBirdStrike:true,notPhysicalConnector:true};
+ const lines=data.height_disagreement_markers.map(g=>{
+   const a=new THREE.Vector3(g.local_x,g.local_y,g.z_low);
+   const b=new THREE.Vector3(g.local_x,g.local_y,g.z_high);
+   return [a,b,.085];
+ });
+ instanceBars(flags,lines,0xf16c70,'V72_VERTICAL_GRADE_DIAGNOSTIC_NOT_RAMP');
+ flags.visible=false;world.add(flags);gradeGroup=flags;
+ $('v72-profile-status').textContent='源网格高程采样：东岸坡道 2 侧、LRC 楼梯 2 侧；3 处模型高差待测。护栏高度为示意。';
+}
+async function loadV72Profiles(){
+ const data=await loadJson('profile-v72','generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json');
+ makeSourceConnectionRails(data);profileData=data;
+}
+$('show-v72-rails').addEventListener('change',e=>{
+ if(profileGroup)profileGroup.visible=e.target.checked;
+});
+$('show-v72-grade').addEventListener('change',e=>{
+ if(gradeGroup)gradeGroup.visible=e.target.checked;
+});
+$('focus-v72-ramp').addEventListener('click',()=>viewJunctionSource('V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH'));
+function focusStairFromApproach(){
+ const stair=meshes.find(m=>m.name==='V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED');
+ const approach=meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH');
+ if(!stair||!approach)return;
+ // The actual inherited V16 walkway at the lower 18-tread landing gives
+ // a defensible *direction* from which to inspect the real model stair.
+ const stairBox=boxWorld(stair),approachBox=boxWorld(approach);
+ const target=stairBox.getCenter(new THREE.Vector3());
+ const ground=approachBox.getCenter(new THREE.Vector3());
+ const outward=ground.clone().sub(target);
+ outward.y=0;outward.normalize();
+ if(outward.lengthSq()<.01)throw new Error('source stair approach direction missing');
+ const cameraLocation=ground.clone().addScaledVector(outward,17);
+ // Ground-side view: source V16 approach top Z ~0.025 and LRC soffit
+ // begins Z 3.10; a high-angle camera would stare into the opaque slab.
+ // This is a VIEWING height, not a survey or new model dimension.
+ cameraLocation.y=ground.y+2.15;
+ orbit.target.copy(target);cam.up.set(0,1,0);
+ cam.position.copy(cameraLocation);
+ cam.near=.025;cam.far=3500;cam.updateProjectionMatrix();
+ cam.lookAt(target);orbit.update();
+ // Keep all facades visible in ordinary scene inspection. No arbitrary
+ // building geometry deletion or made-up stair pitch.
+ selectMesh(stair);
+}
+$('focus-v72-stair').addEventListener('click',focusStairFromApproach);
+$('focus-v72-west').addEventListener('click',()=>{
+ viewJunctionSource('V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE');
+ if(gradeGroup){gradeGroup.visible=true;$('show-v72-grade').checked=true;}
+});
+async function loadV72PhotoCatalog(){
+ const data=await loadJson('photos-v72','evidence/connection_photos_v72.json');
+ if(data.photos?.length!==16||new Set(data.photos.map(p=>p.image_url)).size!==16)
+  throw new Error('photo set changed, inspect and register each image before use');
+ photoCatalog=data;
+ $('photo-count').textContent='16 张独立照片 · 3 个多图官方页面';
+ if(!$('source-section').hidden)renderPhotoGallery();
+}
+function renderPhotoGallery(){
+ if(!photoCatalog)return;
+ const holder=$('photo-cards');
+ holder.textContent='';
+ const group=$('photo-filter').value;
+ const items=photoCatalog.photos.filter(p=>group==='all'||p.category===group);
+ for(const p of items){
+  const el=document.createElement('article');
+  el.style.cssText='border:1px solid #344758;border-radius:8px;padding:8px;margin:6px 0;background:#0d1e2c';
+  const a=document.createElement('a');
+  a.href=p.source_url;a.target='_blank';a.rel='noopener noreferrer';
+  a.textContent=p.id+' · '+p.title;
+  a.style.cssText='display:block;margin-bottom:4px;font-weight:600;font-size:12px';
+  const link=document.createElement('a');
+  link.href=p.image_url;link.target='_blank';link.rel='noopener noreferrer';
+  const image=document.createElement('img');
+  // Photos remain on the copyright owner's site and are loaded only here,
+  // never bundled or represented as measured camera correspondences.
+  image.src=p.image_url;image.alt=p.title;
+  image.loading='lazy';image.referrerPolicy='no-referrer';
+  image.style.cssText='display:block;max-width:100%;width:100%;max-height:155px;object-fit:cover;border-radius:5px;background:#233849';
+  image.onerror=()=>{image.style.display='none';};
+  link.append(image);el.append(a,link);
+  const note=document.createElement('p');
+  note.textContent=p.observed;
+  note.style.cssText='font-size:11px;margin:5px 0;color:#bbd0dc';el.append(note);
+  const qa=document.createElement('small');
+  qa.style.cssText='font-size:10px;color:#e0b98e';
+  qa.textContent='空间匹配：'+p.model_match+' · 未完成摄影配准/尺寸测量';
+  el.append(qa);holder.append(el);
+ }
+}
+$('photo-filter').addEventListener('change',renderPhotoGallery);
 
 function focusBoardwalkDetailed(){
  if(!campus)return;
@@ -676,7 +835,7 @@ canvas.addEventListener('wheel',e=>{e.preventDefault();changeZoom(e.deltaY<0?1.1
 new ResizeObserver(()=>{const r=host.getBoundingClientRect();if(r.width>0&&r.height>0){cam.aspect=r.width/r.height;cam.updateProjectionMatrix();renderer.setSize(r.width,r.height);}redraw();}).observe(host);
 new ResizeObserver(redraw).observe(canvas);
 $('tab-map').onclick=()=>{$('tab-map').classList.add('active');$('tab-source').classList.remove('active');$('map-section').hidden=false;$('source-section').hidden=true;redraw();};
-$('tab-source').onclick=()=>{$('tab-source').classList.add('active');$('tab-map').classList.remove('active');$('map-section').hidden=true;$('source-section').hidden=false;};
+$('tab-source').onclick=()=>{$('tab-source').classList.add('active');$('tab-map').classList.remove('active');$('map-section').hidden=true;$('source-section').hidden=false;renderPhotoGallery();};
 $('help-button').onclick=()=>$('help-dialog').showModal();
 $('close-help').onclick=()=>$('help-dialog').close();
 function animate(){requestAnimationFrame(animate);orbit.update();if(ripples){const t=performance.now()*0.000006;ripples.offset.set(t,t*.55);}renderer.render(scene,cam);}
@@ -686,9 +845,11 @@ async function start(){
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v71';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible)};
+  window.__BNBU_VERSION__='v72';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
+  loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
+  loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});
   ensureJunctions().catch(e=>{$('junction-status').textContent='连接记录载入失败：'+e.message;console.warn(e)});
   loadLakefrontProxies().catch(e=>{$('lakefront-status').textContent='近岸示意加载失败：'+e.message;console.warn(e);});
  }catch(e){showError(e);}

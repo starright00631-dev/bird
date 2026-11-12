@@ -9,7 +9,7 @@ from pathlib import Path
 import threading
 from playwright.sync_api import sync_playwright
 
-PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v71"
+PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v72"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
@@ -19,17 +19,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 def check(page,label,offline=False):
     failures=[];console=[]
     page.on("pageerror",lambda e:failures.append(str(e)))
-    page.on("console",lambda e:console.append(e.text) if e.type=="error" else None)
+    # Publisher-hosted photo thumbnails are intentionally offline-blocked here;
+    # do not mistake those expected HTTPS request failures for missing local GLB/GIS.
+    page.on("console",lambda e:console.append(e.text) if e.type=="error" and "net::ERR_FAILED" not in e.text and "net::ERR_BLOCKED_BY_CLIENT" not in e.text else None)
     page.wait_for_function("window.__BNBU_READY__ === true",timeout=130000)
     page.wait_for_function("window.__BNBU_DEBUG__?.hasGIS() === true",timeout=30000)
     state=page.evaluate("({n:window.__BNBU_DEBUG__.meshCount(),l:window.__BNBU_DEBUG__.layerCount(),gis:window.__BNBU_DEBUG__.hasGIS()})")
     assert state=={"n":1379,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
-    assert page.evaluate("window.__BNBU_VERSION__")=="v71"
+    assert page.evaluate("window.__BNBU_VERSION__")=="v72"
     assert page.locator("#layers input[type=checkbox]").count()==10
     page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
-    assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==8
+    assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==12
     assert page.evaluate("window.__BNBU_DEBUG__.railingProxyCount()")>250
     assert page.locator("#show-photo-proxies").is_checked()
     page.locator("#show-photo-proxies").uncheck()
@@ -39,6 +41,39 @@ def check(page,label,offline=False):
     page.locator("button[data-focus=boardwalk]").click()
     assert page.evaluate("window.__BNBU_DEBUG__.cameraDistance()")<70
     page.wait_for_function("window.__BNBU_DEBUG__.junctionCount()===11",timeout=35000)
+    page.wait_for_function("window.__BNBU_DEBUG__.photoCount()===16",timeout=35000)
+    page.locator("#tab-source").click()
+    assert page.locator("#photo-cards article").count()==16
+    assert page.locator("#photo-cards article a[href^='https://']").count()>=16
+    page.locator("#photo-filter").select_option("road")
+    assert page.locator("#photo-cards article").count()==2
+    page.locator("#photo-filter").select_option("stairs")
+    assert page.locator("#photo-cards article").count()==4
+    page.locator("#photo-filter").select_option("all")
+    assert page.locator("#photo-cards article").count()==16
+    page.locator("#tab-map").click()
+    page.wait_for_function("window.__BNBU_DEBUG__.hasProfileRails()===true",timeout=35000)
+    assert page.evaluate("window.__BNBU_DEBUG__.profileRailCount()")>220
+    assert page.evaluate("window.__BNBU_DEBUG__.gradeMarkerCount()")==3
+    assert page.locator("#show-v72-rails").is_checked()
+    page.locator("#show-v72-rails").uncheck()
+    assert page.evaluate("window.__BNBU_DEBUG__.hasProfileRails()") is True
+    page.locator("#show-v72-rails").check()
+    assert not page.locator("#show-v72-grade").is_checked()
+    page.locator("#show-v72-grade").check()
+    assert page.evaluate("window.__BNBU_DEBUG__.gradeMarkersVisible()") is True
+    page.locator("#show-v72-grade").uncheck()
+    assert page.evaluate("window.__BNBU_DEBUG__.gradeMarkersVisible()") is False
+    page.locator("#focus-v72-ramp").click()
+    page.screenshot(path=str(RESULT/(label+"_v72_ramp_rail.png")),full_page=True,timeout=45000)
+    page.locator("#focus-v72-stair").click()
+    cam_and_ground=page.evaluate("({cam:window.__BNBU_DEBUG__.cameraWorld(),ground:window.__BNBU_DEBUG__.stairApproachWorld()})")
+    assert cam_and_ground["cam"][2] < cam_and_ground["ground"][2]-10,cam_and_ground
+    assert cam_and_ground["cam"][1] < 3.1,"Camera eye must be below inherited LRC raised-floor soffit"
+    page.screenshot(path=str(RESULT/(label+"_v72_LRC_stair.png")),full_page=True,timeout=45000)
+    page.locator("#focus-v72-west").click()
+    page.screenshot(path=str(RESULT/(label+"_v72_west_grade_unresolved.png")),full_page=True,timeout=45000)
+    page.locator("#show-v72-grade").uncheck()
     assert page.evaluate("window.__BNBU_DEBUG__.modelConnectionPatchCount()")==2
     assert page.locator("#show-junction-graph").is_checked()
     assert page.locator("#show-model-joints").is_checked()
@@ -73,6 +108,7 @@ def check(page,label,offline=False):
     assert not [e for e in console if "WebGL context lost" not in e and "GL_INVALID" not in e],(label,console)
     return {"entry":label,"status":"pass","campus_meshes":1379,"layers":10,
             "junctions_checked":11,"short_at_grade_connections_added":2,
+            "model_source_profiles":4,"distinct_photo_references":16,"unresolved_grade_markers":3,
             "gis_features":522,"independent_dsm":True,
             "browser_errors":failures,"console_errors":console}
 
