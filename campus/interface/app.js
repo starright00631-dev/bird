@@ -997,19 +997,165 @@ $('show-v75-glass').addEventListener('change',()=>{
 });
 $('bridge-v75-select').addEventListener('change',bridge75Choose);
 
+
+// v76: source-fidelity architectural reading, not new window/roof geometry.
+// This changes the rendering of EXISTING meshes only; exact source vertex
+// positions and source GLB are immutable.
+let architecture76=null,architectureEdges76=null,architectureStyleCount76=0;
+const architectureOriginalMaterials76=new Map();
+const architectureModelIndex76=new Map();
+
+function architectureRole76(name,family){
+ const n=name.toUpperCase();
+ if(family==='LRC'){
+  if(n.includes('DIAGONAL_BRACE')||n.includes('STILT')||n.includes('OPAQUE_FRAME')
+      ||n.includes('OPAQUE_MULLION'))return {hex:0xf5f5ed};
+  if((n.includes('GLASS')||n.includes('GLAZ'))&&!n.includes('OPAQUE'))
+    return {hex:0x739fb5,opacity:.69,roughness:.22,metalness:.04};
+  if(n.includes('CANOPY')||n.includes('PARAPET')||n.includes('ROOF'))
+    return {hex:0xe4e9e3};
+  if(n.includes('SKYLIGHT'))return {hex:0x85b3c3,opacity:.79};
+  return {hex:0xc7d9d9};
+ }
+ if(family==='T'){
+  if((n.includes('GLASS')||n.includes('GLAZ'))&&!n.includes('OPAQUE')
+      &&!n.includes('NOT_GLASS'))
+    return {hex:0x466b82,opacity:.83,roughness:.17};
+  if(n.includes('RECESSED_GALLERY')||n.includes('PILOTIS'))return {hex:0xb1a18f};
+  if(n.includes('PARAPET')||n.includes('GALLERY_PIER')
+     ||n.includes('PORTICO_COLUMN'))return {hex:0xe4d5be};
+  if(n.includes('ROOF'))return {hex:0x7e8585};
+  if(n.includes('FLOOR_EDGE')||n.includes('STORYBAND'))return {hex:0xdfc4a5};
+  return {hex:0xc6ad8e};
+ }
+ if(family==='V'){
+  if(n.includes('ROOF'))return {hex:0x5c6462};
+  if(n.includes('STORYEDGE')||n.includes('PARAPET'))return {hex:0xdfc7a6};
+  if(n.includes('GALLERY'))return {hex:0xa38f7e};
+  return {hex:0xbca88e};
+ }
+ if(family==='D'){
+  if(n.includes('ROOF'))return {hex:0x465358};
+  if(n.includes('CROSSRIB')||n.includes('FRAME'))return {hex:0x8a9391};
+  return {hex:0xd5dad5};
+ }
+ return null;
+}
+function architectureApply76(){
+ if(!campus||!architecture76)return;
+ const makeStyle=$('show-v76-facades').checked;
+ for(const [name,family] of architectureModelIndex76){
+  const target=meshes.find(m=>m.name===name);
+  if(!target)continue;
+  if(!architectureOriginalMaterials76.has(target))
+    architectureOriginalMaterials76.set(target,target.material);
+  const original=architectureOriginalMaterials76.get(target);
+  if(!makeStyle){target.material=original;continue;}
+  const style=architectureRole76(name,family);
+  if(!style)continue;
+  const edit=material=>{
+    const next=material.clone();
+    if(next.color)next.color.setHex(style.hex);
+    if('roughness' in next)next.roughness=style.roughness??.87;
+    if('metalness' in next)next.metalness=style.metalness??0.01;
+    if(style.opacity!==undefined){
+      next.transparent=true;next.opacity=style.opacity;next.depthWrite=false;
+    }
+    next.needsUpdate=true;
+    return next;
+  };
+  target.material=Array.isArray(original)?original.map(edit):edit(original);
+ }
+ architectureStyleCount76=makeStyle?architectureModelIndex76.size:0;
+ redraw();
+}
+function architectureChoose76(){
+ if(!architecture76||!campus)return;
+ const id=$('architecture-v76-select').value;
+ const record=architecture76.building_records.find(b=>b.id===id);
+ if(!record)return;
+ const mesh=meshes.find(m=>m.name===record.source_anchor_node);
+ if(!mesh)return;
+ if(current!=='campus')$('choose-campus').click();
+ const bounds=boxWorld(mesh);
+ const center=bounds.getCenter(new THREE.Vector3());
+ const sz=bounds.getSize(new THREE.Vector3());
+ const r=Math.max(14,Math.max(sz.x,sz.z)*1.12);
+ fit(new THREE.Box3().setFromCenterAndSize(center,new THREE.Vector3(r*2,Math.max(sz.y+7,16),r*2)));
+ const routes=record.nearest_walk_or_road.map(x=>x.node+' '+x.xy_gap_model_units.toFixed(2)).join(' · ');
+ const water=record.nearest_lake.map(x=>x.node+' '+x.xy_gap_model_units.toFixed(1)).join(' · ');
+ $('architecture-v76-detail').textContent=
+  id+' ('+record.family+') · 原始结构 '+record.existing_component_count
+  +' 件 · 原模型Z范围 '+record.source_mesh_z_range.join(' ~ ')+'\n'
+  +'就近道路/步道（平面模型距离）：'+routes+'\n'
+  +'就近湖面（平面模型距离）：'+water+'\n'
+  +'屋顶投影不是门口位置。窗格数、阳台开口及可通行的连接阈值均未测量；层级应按局部三角面高程核实。';
+ redraw();
+}
+async function loadArchitecture76(){
+ const [atlas,gltf]=await Promise.all([
+    loadJson('v76-architecture','generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json'),
+    loadScene('v76-edges','generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb')
+ ]);
+ if(atlas.version!=='v76'||atlas.building_count!==30||
+    atlas.original_meshes!==1379||atlas.original_gis_features!==522||
+    atlas.new_campus_triangles!==0||atlas.new_physical_windows_or_routes!==0)
+   throw Error('Architecture source integrity gate failed');
+ const root=campus.getObjectByName('world');
+ if(!root)throw Error('Architecture source world root missing');
+ for(const family of ['T','V','D','LRC']){
+  const o=gltf.scene.getObjectByName('BNBU_V76_SOURCE_EDGES_'+family+'_NOT_SURVEYED');
+  if(!o||!o.isLineSegments||o.geometry.getAttribute('position')?.count<200)
+   throw Error('Architecture source edge geometry failed '+family);
+ }
+ const opts=$('architecture-v76-select');opts.textContent='';
+ architectureModelIndex76.clear();
+ for(const b of atlas.building_records){
+  const option=document.createElement('option');option.value=b.id;
+  option.textContent=b.id+' · '+({T:'教学楼',V:'一期宿舍',D:'二期宿舍',LRC:'学习资源中心'}[b.family]);
+  opts.add(option);
+  for(const node of b.existing_component_names){
+   if(!architectureModelIndex76.has(node))architectureModelIndex76.set(node,b.family);
+  }
+ }
+ gltf.scene.traverse(o=>{
+  o.userData.displayOnly=true;
+  o.userData.birdGlassDenominator=false;
+  if(o.isLineSegments){
+   o.renderOrder=2;
+   o.material.transparent=true;o.material.depthWrite=false;o.material.opacity=.72;
+  }
+ });
+ root.add(gltf.scene);
+ architectureEdges76=gltf.scene;
+ architectureEdges76.visible=$('show-v76-edges').checked;
+ architecture76=atlas;
+ architectureApply76();
+ $('architecture-v76-status').textContent='已核对 8 栋 T、15 栋 V、6 栋 D 与 LRC，共 30 栋；依原三角面恢复结构线，无虚构窗格。';
+ $('architecture-v76-detail').textContent='选择建筑可近距离查看现有楼层线、屋面、回廊或支撑构件，并检查与道路、水体的平面关系。';
+ redraw();
+}
+$('architecture-v76-select').addEventListener('change',architectureChoose76);
+$('show-v76-facades').addEventListener('change',architectureApply76);
+$('show-v76-edges').addEventListener('change',()=>{
+ if(architectureEdges76)architectureEdges76.visible=$('show-v76-edges').checked;
+ redraw();
+});
+
 async function start(){
  try{
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v75';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,v75BridgeCount:()=>bridgeAtlas75?.system_count||0,v75GlassVisible:()=>!!bridgeGlass75&&bridgeGlass75.visible,v75GlassVertices:()=>bridgeGlass75?.getObjectByName(bridgeGlassNode75)?.geometry?.getAttribute('position')?.count||0,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
+  window.__BNBU_VERSION__='v76';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,v75BridgeCount:()=>bridgeAtlas75?.system_count||0,v76BuildingCount:()=>architecture76?.building_count||0,v76FeatureFamilies:()=>architectureEdges76?.children?.length||0,v76StyleCount:()=>architectureStyleCount76,v76EdgeVisible:()=>!!architectureEdges76&&architectureEdges76.visible,v75GlassVisible:()=>!!bridgeGlass75&&bridgeGlass75.visible,v75GlassVertices:()=>bridgeGlass75?.getObjectByName(bridgeGlassNode75)?.geometry?.getAttribute('position')?.count||0,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
   loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
   loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});
   ensureJunctions().catch(e=>{$('junction-status').textContent='连接记录载入失败：'+e.message;console.warn(e)});
   loadV74Junctions().catch(e=>{$('v74-junction-status').textContent='专项连接审核加载失败：'+e.message;console.warn(e)});
   loadBridgeComponents75().catch(e=>{$('bridge-v75-status').textContent='桥梁细部加载失败：'+e.message;console.warn(e);});
+  loadArchitecture76().catch(e=>{$('architecture-v76-status').textContent='建筑构件核验失败：'+e.message;console.warn(e);});
   loadLakefrontProxies().catch(e=>{$('lakefront-status').textContent='近岸示意加载失败：'+e.message;console.warn(e);});
  }catch(e){showError(e);}
 }
