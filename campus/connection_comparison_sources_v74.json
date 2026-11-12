@@ -1,0 +1,323 @@
+{
+  "version": "v74",
+  "baseline_v72_photo_count": 16,
+  "extra_photo_count": 7,
+  "total_photos_reviewed": 23,
+  "registration_grade": "none",
+  "deduplicated_source_urls": true,
+  "base_source_photos": [
+    {
+      "id": "P01",
+      "source_url": "https://co.bnbu.edu.cn/en/info/1131/2702.htm",
+      "title": "LRC panorama • building / terrace / bridge",
+      "category": "lrc",
+      "observed": "A glazed wing projects over an open ground-level terrace; wood bridge reaches a hard-paved and planted bank; separate low waterfront roof",
+      "source_model_node": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P02",
+      "source_url": "https://uic.edu.cn/info/1078/108739.htm",
+      "title": "Boardwalk landing with pedestrians",
+      "category": "bridge",
+      "observed": "Thin timber deck with repeated handrail posts leads into planted campus ground; building facades visible behind palm trees",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P03",
+      "source_url": "https://admission.bnbu.edu.cn/info/1732/1481.htm",
+      "title": "Teaching building wood boardwalk / pergola",
+      "category": "bridge",
+      "observed": "Raised timber walkway runs alongside trim planting and pond water; metal overhead shade frame and opaque concrete bank are separate features",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P04",
+      "source_url": "https://fst.bnbu.edu.cn/mscbs_en/index.htm",
+      "title": "LRC reflecting water, rail bridge and lawns",
+      "category": "lrc",
+      "observed": "Curved elevated water crossing with supports, low handrails, stepped hard bank, planted island and large blue glass facade",
+      "source_model_node": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P05",
+      "source_url": "https://www.uic.edu.cn/en/info/1077/2974.htm",
+      "title": "LRC stair at dusk",
+      "category": "stairs",
+      "observed": "Exterior stair visibly reaches an elevated slab under a glazed building; continuous handrails at terraces; paving at base",
+      "source_model_node": "V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED",
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P06",
+      "source_url": "https://www.bnbu.edu.cn/info/1076/4599.htm",
+      "title": "Learning Resource Centre steep front steps",
+      "category": "stairs",
+      "observed": "Broad exterior stair approaches a glass-clad LRC entrance, frontal guardrail and level terracing; not the same flight as every model stair",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P07",
+      "source_url": "https://www.bnbu.edu.cn/info/1076/17209.htm",
+      "title": "Glass-rail terrace on building stair",
+      "category": "stairs",
+      "observed": "Stone stair at raised terrace has transparent glass balustrade, metal cap/handrail and stone retaining wall; not necessarily the LRC flight",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P08",
+      "source_url": "https://www.uic.edu.cn/info/1075/106799.htm",
+      "title": "Campus open-day bridge / glazed entrance",
+      "category": "bridge",
+      "observed": "Curved rail-on-bridge approaches transparent multi-level building; bridge supported above lower landscaped passage; entrance-level needs verification",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P09",
+      "source_url": "https://hro.bnbu.edu.cn/index.htm",
+      "title": "Curved promenade with planted islands",
+      "category": "lake",
+      "observed": "Water-side promenade follows planted island; lower green shore and parapet contrast with main inland ground and buildings",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P10",
+      "source_url": "https://www.eol.cn/guangdong/gdgd/202407/t20240707_2622062.shtml",
+      "title": "Aerial lake and surrounding academic parcels",
+      "category": "aerial",
+      "observed": "Aerial identifies water/curved bridge/planted bank/glass buildings and multi-level terraces; oblique not orthorectified",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P11",
+      "source_url": "https://pacificalliance.org/institutions/bnu-hkbu-united-international-college/",
+      "title": "Aerial campus roads, buildings and gardens",
+      "category": "aerial",
+      "observed": "Broader road and building blocks, hardscape terraces, planted areas and pond; helps classify vehicle circulation versus footbridge",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P12",
+      "source_url": "https://www.linkedin.com/posts/bnu-hkbu-uic_%E5%8C%97%E5%B8%88%E6%B8%AF%E6%B5%B8%E5%A4%A7-uic-university-activity-7153301781697990657-K395",
+      "title": "Pedestrian stone path / building stair entrance",
+      "category": "stairs",
+      "observed": "Wide exterior stair from pedestrian-paved courtyard enters academic block, planting and bench flank steps",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P13",
+      "source_url": "https://www.bnbu.edu.cn/info/1076/17884.htm",
+      "title": "Walkway between academic buildings",
+      "category": "road",
+      "observed": "Clearly different footpath, planted verge and academic building entry; no georeferenced curb width",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P14",
+      "source_url": "https://www.uic.edu.cn/en/info/1077/2577.htm",
+      "title": "Excellence Road carriageway and verge",
+      "category": "road",
+      "observed": "Named vehicle road with separate roadside pedestrian edge, planting, curb and near-street student buildings. Not matched to ROAD_000 location.",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P15",
+      "source_url": "https://www.globaladmissions.com/university/beijing-normal-hong-kong-baptist-university-bnbu",
+      "title": "Reflecting pond against teaching facility",
+      "category": "lake",
+      "observed": "Shallow water and broad timber promenade at building edge with raised concrete lip and an overhead canopy",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    },
+    {
+      "id": "P16",
+      "source_url": "https://www.bnbu.edu.cn/info/1075/14515.htm",
+      "title": "Roof/aerial lake and bridge",
+      "category": "aerial",
+      "observed": "Overhead relation of LRC, lake, academic squares and raised landscape edges; camera uncalibrated",
+      "source_model_node": null,
+      "can_locate_xy": false,
+      "can_measure_z": false
+    }
+  ],
+  "new_distinct_photos": [
+    {
+      "id": "P17",
+      "title": "Central pond, branched bridge and planting",
+      "category": "bridge",
+      "source_url": "https://www.uic.edu.cn/en/info/1055/8428.htm",
+      "observed": "Main pond has visibly distinct bridge cross section, intermediate islet and supporting columns; bridge ends in planted bank, not carriageway.",
+      "interpretation": "bridge_structure_only",
+      "visual_checked": true,
+      "source_type": "published_photo",
+      "can_locate_xy": false,
+      "can_measure_z": false,
+      "can_measure_width": false,
+      "can_derive_building_threshold": false,
+      "model_match": "typology_or_oblique_adjacency_only",
+      "new_geometry_permitted": false,
+      "photo_copied_to_zip": false
+    },
+    {
+      "id": "P18",
+      "title": "Official elevated overview: lake, stepped plaza and ridge",
+      "category": "aerial",
+      "source_url": "https://www.bnbu.edu.cn/info/1077/12404.htm",
+      "observed": "Multiple pond arms, planted islands, raised approach and roads seen together in oblique panorama; the steep hills behind campus are distinct terrain.",
+      "interpretation": "campus_adjacency_only",
+      "visual_checked": true,
+      "source_type": "published_photo",
+      "can_locate_xy": false,
+      "can_measure_z": false,
+      "can_measure_width": false,
+      "can_derive_building_threshold": false,
+      "model_match": "typology_or_oblique_adjacency_only",
+      "new_geometry_permitted": false,
+      "photo_copied_to_zip": false
+    },
+    {
+      "id": "P19",
+      "title": "University landscape gallery: pond edge and elevated gallery",
+      "category": "lrc",
+      "source_url": "https://www.bnbu.edu.cn/campus_life/Landscape_and_Facilities.htm",
+      "observed": "Gallery edge is raised above water with supports and lower bank route; visible vertical hierarchy is not one level.",
+      "interpretation": "terrace_type_only",
+      "visual_checked": true,
+      "source_type": "published_photo",
+      "can_locate_xy": false,
+      "can_measure_z": false,
+      "can_measure_width": false,
+      "can_derive_building_threshold": false,
+      "model_match": "typology_or_oblique_adjacency_only",
+      "new_geometry_permitted": false,
+      "photo_copied_to_zip": false
+    },
+    {
+      "id": "P20",
+      "title": "LRC rooftop aerial: stairs / terraces / glazed envelope",
+      "category": "stairs",
+      "source_url": "https://admission.uic.edu.cn/info/1717/1202.htm",
+      "observed": "Elevated LRC roof, circular feature and distinctly offset exterior access with stairs; the pictured exterior stair cannot be assigned to V48 without control points.",
+      "interpretation": "vertical_type_only",
+      "visual_checked": true,
+      "source_type": "published_photo",
+      "can_locate_xy": false,
+      "can_measure_z": false,
+      "can_measure_width": false,
+      "can_derive_building_threshold": false,
+      "model_match": "typology_or_oblique_adjacency_only",
+      "new_geometry_permitted": false,
+      "photo_copied_to_zip": false
+    },
+    {
+      "id": "P21",
+      "title": "English research splash: glazed building and lake bridge at dusk",
+      "category": "bridge",
+      "source_url": "https://www.uic.edu.cn/en/research.htm",
+      "observed": "Lit, low waterside crossing is separate from level-two glass corridors and building balconies.",
+      "interpretation": "bridge_type_only",
+      "visual_checked": true,
+      "source_type": "published_photo",
+      "can_locate_xy": false,
+      "can_measure_z": false,
+      "can_measure_width": false,
+      "can_derive_building_threshold": false,
+      "model_match": "typology_or_oblique_adjacency_only",
+      "new_geometry_permitted": false,
+      "photo_copied_to_zip": false
+    },
+    {
+      "id": "P22",
+      "title": "Waterfront side bank and footbridge with large canopy tree",
+      "category": "lake",
+      "source_url": "https://www.uic.edu.cn/en/",
+      "observed": "Lake edge slopes into planted ground where pedestrian route approaches; no as-built shoreline elevations visible.",
+      "interpretation": "shore_type_only",
+      "visual_checked": true,
+      "source_type": "published_photo",
+      "can_locate_xy": false,
+      "can_measure_z": false,
+      "can_measure_width": false,
+      "can_derive_building_threshold": false,
+      "model_match": "typology_or_oblique_adjacency_only",
+      "new_geometry_permitted": false,
+      "photo_copied_to_zip": false
+    },
+    {
+      "id": "P23",
+      "title": "University shoreline with planted lawn and low stone retaining edge",
+      "category": "lake",
+      "source_url": "https://uic.edu.cn/en/index.htm",
+      "observed": "Distinct nearshore stone parapet, landscaped lawn and stepped building-side dock; avoid extending water to road/steps by assumption.",
+      "interpretation": "shore_building_relation_only",
+      "visual_checked": true,
+      "source_type": "published_photo",
+      "can_locate_xy": false,
+      "can_measure_z": false,
+      "can_measure_width": false,
+      "can_derive_building_threshold": false,
+      "model_match": "typology_or_oblique_adjacency_only",
+      "new_geometry_permitted": false,
+      "photo_copied_to_zip": false
+    }
+  ],
+  "other_comparative_sources": [
+    {
+      "publisher": "Ronald Lu & Partners (design architect)",
+      "url": "https://rlp.asia/en/project/beijing-normal-university-hong-kong-baptist-university-united-international-college/",
+      "type": "architect_description",
+      "supports": "Pedestrian street, suspended offset walk bridges and stairs, LRC as lake hub",
+      "limits": "Design description; no surveyed as-built junction endpoints"
+    },
+    {
+      "publisher": "BNBU official",
+      "url": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+      "type": "schematic_map",
+      "supports": "General campus neighborhood and pathway system",
+      "limits": "Hand-drawn illustration; no photogrammetric coordinates or elevation"
+    },
+    {
+      "publisher": "Community POI compilation",
+      "url": "https://u-map.haotian22.top/poi-directory.html",
+      "type": "secondary_location_index",
+      "supports": "39 building POIs and 237 total names/anchor clues, distinguishes phase-I and phase-II library",
+      "limits": "Crowdsourced positions not building footprints; do not use as survey or road-centerlines"
+    }
+  ],
+  "comparison_rules": [
+    "No BNBU-versus-Beijing-Normal campus mixups",
+    "No University of Illinois Chicago photo mixups",
+    "Oblique photos do not determine XY or elevation",
+    "Artist render is not an as-built photo",
+    "Confirm same physical stair/bridge from multiple views before assignment",
+    "Keep older bridge/grade hypotheses separate from surveyed campus model"
+  ],
+  "allow_new_structure_from_these_sources": false
+}
