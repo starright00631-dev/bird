@@ -1,0 +1,196 @@
+{
+  "version": "v76",
+  "parent_version": "v75",
+  "parent_meshes": 1379,
+  "result_meshes": 1380,
+  "added_existing_covered_glass_surface": 1,
+  "new_glass_panels": 0,
+  "observational_presence": "archived school roof photo URL and LRC architectural note",
+  "new_mesh_triangles": 34816,
+  "new_mesh_vertices": 17410,
+  "glass_solid_watertight": true,
+  "glass_solid_winding_consistent": true,
+  "glass_solid_volume_positive": true,
+  "plan_area_model_m2_not_surveyed": 315.38228012784384,
+  "glass_proxy_surface_area_model_m2_not_surveyed": 401.0117575595569,
+  "rim_center_model_xy": [
+    153.804927387171,
+    -72.30459742319545
+  ],
+  "rim_radius_model_m": 10.020009433834993,
+  "sampled_ribs": [
+    "V26_LRC_OVAL_SKYLIGHT_OPAQUE_MULLIONS_EASTWEST",
+    "V26_LRC_OVAL_SKYLIGHT_OPAQUE_MULLIONS_NORTHSOUTH"
+  ],
+  "radial_guide_points_model": [
+    [
+      0.0,
+      21.344782791137696
+    ],
+    [
+      1.0,
+      21.287287063598633
+    ],
+    [
+      1.5,
+      21.278624839782715
+    ],
+    [
+      2.5,
+      21.2247908782959
+    ],
+    [
+      3.5,
+      21.102368659973145
+    ],
+    [
+      4.0,
+      21.052358932495117
+    ],
+    [
+      4.5,
+      21.000646896362305
+    ],
+    [
+      5.0,
+      20.989570922851563
+    ],
+    [
+      5.5,
+      20.79786045074463
+    ],
+    [
+      6.0,
+      20.7195418548584
+    ],
+    [
+      6.5,
+      20.628420181274414
+    ],
+    [
+      7.0,
+      20.482711143493653
+    ],
+    [
+      7.5,
+      20.315498657226563
+    ],
+    [
+      8.0,
+      20.11365062713623
+    ],
+    [
+      8.5,
+      20.01040012359619
+    ],
+    [
+      9.0,
+      19.70997745513916
+    ],
+    [
+      9.5,
+      19.476110763549805
+    ],
+    [
+      9.75,
+      18.869999618530272
+    ],
+    [
+      10.020009433834993,
+      17.889999618530272
+    ]
+  ],
+  "radial_source_samples": [
+    {
+      "radius_model_m": 1.0,
+      "rib_median_model_z": 21.342287063598633,
+      "count": 16
+    },
+    {
+      "radius_model_m": 1.5,
+      "rib_median_model_z": 21.333624839782715,
+      "count": 80
+    },
+    {
+      "radius_model_m": 2.5,
+      "rib_median_model_z": 21.2797908782959,
+      "count": 64
+    },
+    {
+      "radius_model_m": 3.5,
+      "rib_median_model_z": 21.157368659973145,
+      "count": 128
+    },
+    {
+      "radius_model_m": 4.0,
+      "rib_median_model_z": 21.107358932495117,
+      "count": 82
+    },
+    {
+      "radius_model_m": 4.5,
+      "rib_median_model_z": 21.055646896362305,
+      "count": 72
+    },
+    {
+      "radius_model_m": 5.0,
+      "rib_median_model_z": 21.044570922851562,
+      "count": 70
+    },
+    {
+      "radius_model_m": 5.5,
+      "rib_median_model_z": 20.85286045074463,
+      "count": 64
+    },
+    {
+      "radius_model_m": 6.0,
+      "rib_median_model_z": 20.7745418548584,
+      "count": 188
+    },
+    {
+      "radius_model_m": 6.5,
+      "rib_median_model_z": 20.683420181274414,
+      "count": 164
+    },
+    {
+      "radius_model_m": 7.0,
+      "rib_median_model_z": 20.537711143493652,
+      "count": 128
+    },
+    {
+      "radius_model_m": 7.5,
+      "rib_median_model_z": 20.370498657226562,
+      "count": 128
+    },
+    {
+      "radius_model_m": 8.0,
+      "rib_median_model_z": 20.16865062713623,
+      "count": 88
+    },
+    {
+      "radius_model_m": 8.5,
+      "rib_median_model_z": 20.06540012359619,
+      "count": 328
+    },
+    {
+      "radius_model_m": 9.0,
+      "rib_median_model_z": 19.76497745513916,
+      "count": 256
+    },
+    {
+      "radius_model_m": 9.5,
+      "rib_median_model_z": 19.531110763549805,
+      "count": 224
+    }
+  ],
+  "model_crs": "EPSG:32649 minus 758940,2474080; z model-relative",
+  "gis_crs": "EPSG:4326",
+  "archive_v10_skylight_proxy_area_m2": 2.7507998283792562e-08,
+  "is_orthorectified": false,
+  "is_surveyed": false,
+  "eligible_for_glass_area_risk": false,
+  "gpkg_layers": 142,
+  "geojson_features": 566,
+  "kml_placemarks": 566,
+  "no_new_random_panes_rails_trees_roof_equipment": true,
+  "missing_survey": "camera pose / photogrammetry, ground way nodes, DEM/vertical survey"
+}
