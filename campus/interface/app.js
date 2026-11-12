@@ -230,6 +230,7 @@ function focusWaterfront(name){
  // A little context, without bringing distant phase II into the frame.
  b.expandByVector(new THREE.Vector3(8,5,8));
  fit(b);
+ if(gis)focusGIS(name);
 }
 
 function focusPreset(key){
@@ -304,7 +305,7 @@ async function ensureGIS(){
    const n=f.properties?.render_model_node;
    if(n){const matches=featuresByName.get(n)||[];matches.push(f);featuresByName.set(n,matches);}
   }
-  computeMapBounds();redraw();
+  computeMapBounds();focusGIS('LAKE_00');redraw();
  }catch(e){console.error(e);$('map-section').querySelector('.map-footnote').textContent='GIS 轮廓资源加载失败：'+e.message;}
 }
 function showError(e){
@@ -355,6 +356,30 @@ function walkCoordinates(obj,fn){
  if(obj.length>=2&&typeof obj[0]==='number'&&typeof obj[1]==='number'){fn(obj);return;}
  for(const child of obj)walkCoordinates(child,fn);
 }
+function focusGIS(nodeName){
+ if(!gis || !geoExtent)return;
+ const f=gis.features.find(f=>f.properties?.render_model_node===nodeName);
+ if(!f)return;
+ let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
+ walkCoordinates(f.geometry?.coordinates,p=>{
+  x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);
+  y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1]);
+ });
+ if(!(x1>x0 && y1>y0))return;
+ const rect=canvas.getBoundingClientRect(),w=rect.width,h=rect.height;
+ if(w<30||h<30)return;
+ const cos=Math.cos(geoExtent.my*Math.PI/180);
+ const base=Math.min((w-34)/((geoExtent.maxX-geoExtent.minX)*cos),
+                     (h-34)/(geoExtent.maxY-geoExtent.minY));
+ mapScale=Math.min(14,Math.max(1,Math.min(
+   (w*.8)/((x1-x0)*cos*base),
+   (h*.8)/((y1-y0)*base))));
+ const cx=(x0+x1)/2,cy=(y0+y1)/2;
+ mapPan=[-(cx-geoExtent.mx)*cos*base*mapScale,
+          (cy-geoExtent.my)*base*mapScale];
+ redraw();
+}
+
 function computeMapBounds(){
  if(!gis)return;let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
  for(const f of gis.features)walkCoordinates(f.geometry?.coordinates,p=>{minX=Math.min(minX,p[0]);maxX=Math.max(maxX,p[0]);minY=Math.min(minY,p[1]);maxY=Math.max(maxY,p[1]);});
