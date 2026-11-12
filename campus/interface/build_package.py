@@ -14,7 +14,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v73"
+NAME = "BNBU_Campus_Full_v74"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
@@ -28,11 +28,15 @@ ASSETS = {
     "generated/BNBU_v71_CONNECTION_PROVENANCE.json": "generated/BNBU_v71_CONNECTION_PROVENANCE.json",
     "generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json": "generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json",
     "evidence/connection_photos_v72.json": "connection_photos_v72.json",
+    "evidence/connection_comparison_sources_v74.json": "connection_comparison_sources_v74.json",
     "generated/BNBU_v66_RESOLVED_REFERENCES.geojson": "generated/BNBU_v66_RESOLVED_REFERENCES.geojson",
     "generated/v66_provenance.json": "generated/v66_provenance.json",
     "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb": "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
     "generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb": "generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb",
     "generated/BNBU_v73_DSM_CONTOUR_PROVENANCE.json": "generated/BNBU_v73_DSM_CONTOUR_PROVENANCE.json",
+    "generated/BNBU_v74_ALL_ROAD_WALK_PAIRWISE.json": "generated/BNBU_v74_ALL_ROAD_WALK_PAIRWISE.json",
+    "generated/BNBU_v74_LOCAL_3D_JUNCTION_HOTSPOTS.geojson": "generated/BNBU_v74_LOCAL_3D_JUNCTION_HOTSPOTS.geojson",
+    "generated/BNBU_v74_CONNECTION_RESEARCH_SUMMARY.json": "generated/BNBU_v74_CONNECTION_RESEARCH_SUMMARY.json",
     "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson": "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson",
     "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json": "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json",
     "history/BNBU_v65_DISPLAY_Y_UP.glb": "generated/BNBU_v65_DISPLAY_Y_UP.glb",
@@ -60,6 +64,8 @@ ASSETS = {
     "src/build_terrain_v67.py": "build_terrain_v67.py",
     "src/build_terrain_contours_v73.py": "build_terrain_contours_v73.py",
     "src/test_terrain_contours_v73.py": "test_terrain_contours_v73.py",
+    "src/audit_connections_v74.py": "audit_connections_v74.py",
+    "src/test_connections_v74.py": "test_connections_v74.py",
     "src/test_v65.py": "test_v65.py",
     "src/test_v66.py": "test_v66.py",
     "src/test_waterfront_v69.py": "test_waterfront_v69.py",
@@ -72,9 +78,10 @@ ASSETS = {
     "docs/JUNCTION_V71_AUDIT.md": "JUNCTION_V71_AUDIT.md",
     "docs/PHOTO_CONNECTION_AUDIT_V72.md": "PHOTO_CONNECTION_AUDIT_V72.md",
     "docs/TERRAIN_3D_V73.md": "TERRAIN_3D_V73.md",
+    "docs/JUNCTIONS_V74_DEEP_COMPARISON.md": "JUNCTIONS_V74_DEEP_COMPARISON.md",
 }
 
-README = """# BNBU 校园完整三维模型与查看器 v73
+README = """# BNBU 校园完整三维模型与查看器 v74
 
 ## 最简单的打开方式
 
@@ -112,7 +119,7 @@ v69 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴�
 
 新增 v72：根据16张不同位置真实校园照片识别和核对水岸、道路、LRC外立面与桥的连接类型；这些图片是原网站的链接，未获得摄影配准，因此不能据此修改校园绝对XY坐标。可独立关闭的两侧坡道、楼梯扶手沿旧 GLB 顶点数据中的真实三维曲线逐点放置；扶手高度为典型示意，非现场测量。3处 3D 高差（0.24/0.64/0.64 模型单位）仍以检查标记呈现，并非新造坡道。详情见 docs/PHOTO_CONNECTION_AUDIT_V72.md 和 evidence/connection_photos_v72.json。浏览三维模型完全离线；“证据和数据”里的远程照片缩略图需要联网后才会加载。切勿将这些示意扶手算入可用于鸟撞风险的玻璃面积。
 
-新增 v73：基于原 v67 约30米间隔的独立 DSM，在已有 3,737 段10米插值等高线上产生真实 glTF LINES 三维几何，共 7,474 顶点；原 DSM 顶点三角面及校园 GIS 全部不改。可关闭线段，仅为可视化抬高 0.5m。山体绝对 Z 与旧校园相对 Z 未配准，不作校园地形/道路/建筑物的测绘修复。\n\n源码：https://github.com/starright00631-dev/bird/tree/main/campus
+新增 v73：基于原 v67 约30米间隔的独立 DSM，在已有 3,737 段10米插值等高线上产生真实 glTF LINES 三维几何，共 7,474 顶点；原 DSM 顶点三角面及校园 GIS 全部不改。可关闭线段，仅为可视化抬高 0.5m。山体绝对 Z 与旧校园相对 Z 未配准，不作校园地形/道路/建筑物的测绘修复。\n\nv74 重点：全面核对 56 条道路/步道的 1,540 个组合与6条高架连桥至地面道路的336个组合。用 GLB 原始三角面计算实际连接端的相对 Z 值，保留47处3D排查标记、23张去重来源照片索引及详细证据说明；所有标记不是新造路/桥，不是现场测量。西岸仍有0.64相对模型高差，东岸坡道到WALK044实际局部高差约0.049而不是整坡道最大高差0.88。无法通过照片推断的实际坡道/道路/水岸不做补建。\n\n源码：https://github.com/starright00631-dev/bird/tree/main/campus
 """
 
 SERVER = '''"""Start a standard-library server on localhost only."""
@@ -185,6 +192,7 @@ def assemble_standalone(template,css,js):
         ("junction-meta","generated/BNBU_v71_CONNECTION_PROVENANCE.json"),
         ("profile-v72","generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json"),
         ("photos-v72","evidence/connection_photos_v72.json"),
+        ("v74-hotspots","generated/BNBU_v74_LOCAL_3D_JUNCTION_HOTSPOTS.geojson"),
     ]:
         content=(PACKAGE/rel).read_text(encoding="utf-8").replace("</script","<\\/script")
         tags.append('<script id="embedded-'+key+'" type="application/json">'+content+'</script>')
@@ -211,6 +219,12 @@ def validate():
     photos=json.loads((PACKAGE/"evidence/connection_photos_v72.json").read_text())
     assert len(grade["rail_profiles"])==4 and len(grade["height_disagreement_markers"])==3
     assert len(photos["photos"])==16 and grade["photo_count_inspected"]==16
+    v74=json.loads((PACKAGE/"generated/BNBU_v74_CONNECTION_RESEARCH_SUMMARY.json").read_text())
+    v74geo=json.loads((PACKAGE/"generated/BNBU_v74_LOCAL_3D_JUNCTION_HOTSPOTS.geojson").read_text())
+    v74images=json.loads((PACKAGE/"evidence/connection_comparison_sources_v74.json").read_text())
+    assert v74["total_pairwise_comparisons"]==1540 and v74["upper_level_cross_checks"]==336
+    assert v74["display_hotspot_count"]==len(v74geo["features"])==47
+    assert v74images["total_photos_reviewed"]==23
     for rel in ["generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
                 "generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
@@ -278,12 +292,15 @@ def build():
     make_packaged_src_portable()
     validate()
     manifest={
-        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v73 DSM contour lines; campus v71 remains unchanged","external_DSM":"v67",
+        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v74 junction forensic display and local-surface audit; campus v71 GLB unchanged","external_DSM":"v67",
         "mesh_count":1379,"original_mesh_count":1377,"GIS_feature_count":522,
         "v71_source_bounded_pavement_seams":2,"audited_junction_pairs":11,
         "v72_optional_source_height_rail_profiles":4,"v72_observed_distinct_photo_links":16,
         "v73_dsm_3d_interpolated_contour_segments":3737,"v73_dsm_3d_contour_vertices":7474,
         "v73_campus_geometry_edited":False,"v73_original_dsm_source_preserved":True,
+        "v74_pairwise_walk_road":1540,"v74_raised_bridge_ground_crosschecks":336,
+        "v74_photo_references_total":23,"v74_3d_junction_hotspots":47,
+        "v74_no_unregistered_physical_geometry":True,
         "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
         "original_geometry_edited":False,"new_geometry_approximate_and_unsurveyed":True,
