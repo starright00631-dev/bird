@@ -49,10 +49,10 @@ def build():
         ("viewer.html","./index.html")]:
         (PAGES/path).write_text(_redirect(target,path),encoding="utf-8")
     (PAGES/"404.html").write_text(
-        '<!doctype html><html><head><meta charset="utf-8"><title>BNBU Viewer</title>'
-        '</head><body><h1>Page not found</h1>'
-        '<p>The campus viewer is at <a href="'+PROJECT_URL+'">'+PROJECT_URL
-        '</a>.</p></body></html>',encoding="utf-8")
+        f'<!doctype html><html><head><meta charset="utf-8"><title>BNBU Viewer</title>'
+        f'</head><body><h1>Page not found</h1>'
+        f'<p>The campus viewer is at <a href="{PROJECT_URL}">{PROJECT_URL}</a>.</p></body></html>',
+        encoding="utf-8")
     (PAGES/".nojekyll").write_text("",encoding="utf-8")
     info={
         "project":"BNBU campus model","version":"v76",
