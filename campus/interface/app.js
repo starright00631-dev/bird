@@ -844,17 +844,95 @@ $('help-button').onclick=()=>$('help-dialog').showModal();
 $('close-help').onclick=()=>$('help-dialog').close();
 function animate(){requestAnimationFrame(animate);orbit.update();if(ripples){const t=performance.now()*0.000006;ripples.offset.set(t,t*.55);}renderer.render(scene,cam);}
 animate();
+
+/* v74 model-anchored junction research markers: not a physical path/bridge. */
+let v74Audit=null,v74Group=null;
+function v74Short(n){
+ if(n.startsWith('V52_LEVEL2_'))return '二层连桥 '+(n.match(/CONNECTION_(\\d+)/)?.[1]||'?');
+ if(n.startsWith('V61_P1_LRC_SHORE_PROMENADE'))return 'LRC平台 '+(n.match(/SLAB_(\\d+)/)?.[1]||'?');
+ if(n.startsWith('V60_P1_EASTLAKE'))return '主湖木栈道';
+ if(n.startsWith('V54_LAKE00_EAST'))return '东岸坡道';
+ return n.length>46?n.slice(0,45)+'…':n;
+}
+function v74IssueColor(p){
+ if(p.source_type==='upper_bridge_vs_ground')return 0x86aeed;
+ if(p.local_top_delta_m>.17)return 0xf47c67;
+ if(p.model_plan_overlap_m2>10)return 0xc896d1;
+ if(p.model_water_buffer_overlap_m2>.01)return 0xe27b7b;
+ return 0xe9ba62;
+}
+function renderV74Markers(){
+ if(v74Group||!campus||!v74Audit)return;
+ const root=campus.getObjectByName('world');
+ if(!root)throw Error('v74 source coordinate root missing');
+ const group=new THREE.Group();
+ group.name='BNBU_V74_JUNCTION_FORENSIC_MARKERS_NOT_SURVEYED';
+ group.userData={displayOnly:true,isSurveyed:false,physicalLink:false};
+ const sphere=new THREE.SphereGeometry(.18,8,6);
+ v74Audit.features.forEach((f,i)=>{
+   const p=f.properties,pts=p.local_points_z_up.map(v=>new THREE.Vector3(v[0],v[1],v[2]));
+   if(pts.length!==2||pts.some(v=>!Number.isFinite(v.x+v.y+v.z)))return;
+   const material=new THREE.MeshBasicMaterial({color:v74IssueColor(p),depthTest:false,transparent:true,opacity:.92});
+   const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({
+     color:v74IssueColor(p),depthTest:false,transparent:true,opacity:.85}));
+   line.name='JUNCTION_AUDIT_V74_'+i;line.userData={displayOnly:true,source_a:p.source_a,source_b:p.source_b};
+   group.add(line);
+   pts.forEach(point=>{
+     const dot=new THREE.Mesh(sphere,material);dot.position.copy(point);dot.userData={displayOnly:true};
+     group.add(dot);
+   });
+ });
+ root.add(group);group.visible=$('show-v74-junctions').checked;
+ v74Group=group;
+}
+function focusV74Junction(){
+ if(!v74Audit||!campus)return;
+ const i=Number($('v74-junction-select').value);
+ if(!Number.isInteger(i)||i<0||i>=v74Audit.features.length)return;
+ const p=v74Audit.features[i].properties;
+ const root=campus.getObjectByName('world');
+ root.updateWorldMatrix(true,false);
+ const pos=p.local_points_z_up.map(v=>root.localToWorld(new THREE.Vector3(v[0],v[1],v[2])));
+ const center=pos[0].clone().add(pos[1]).multiplyScalar(.5);
+ const radius=Math.max(5,Math.min(30,p.model_plan_gap_m*1.4+6));
+ fit(new THREE.Box3().setFromCenterAndSize(center,new THREE.Vector3(radius*2,Math.max(6,p.local_top_delta_m*4),radius*2)));
+ $('v74-junction-description').textContent=v74Short(p.source_a)+' → '+v74Short(p.source_b)
+  +' · 平面间隔 '+p.model_plan_gap_m.toFixed(2)+' / 重叠 '+p.model_plan_overlap_m2.toFixed(2)
+  +' 模型面积 · 局部三角面顶面高差 '+p.local_top_delta_m.toFixed(3)
+  +' · '+p.status+'。诊断标记非道路构件，也不是实测可通行性证据。';
+ redraw();
+}
+async function loadV74Junctions(){
+ const data=await loadJson('v74-hotspots','generated/BNBU_v74_LOCAL_3D_JUNCTION_HOTSPOTS.geojson');
+ if(!Array.isArray(data.features)||data.features.length!==47||data.meta?.total_pairwise_comparisons!==1540
+    ||data.meta?.upper_level_cross_checks!==336)throw Error('v74 junction evidence inconsistent');
+ v74Audit=data;
+ renderV74Markers();
+ const options=$('v74-junction-select');options.textContent='';
+ for(let i=0;i<data.features.length;i++){
+   const p=data.features[i].properties;
+   const op=document.createElement('option');op.value=String(i);
+   op.textContent=String(i+1).padStart(2,'0')+' · '+v74Short(p.source_a)+' → '+v74Short(p.source_b)+' · ΔZ '+p.local_top_delta_m.toFixed(2);
+   options.append(op);
+ }
+ $('v74-junction-status').textContent='1540 组道路步道比对 + 336 组二层廊桥比对；47 处3D热点可定位。未新造连接。';
+ focusV74Junction();
+}
+$('v74-junction-select').addEventListener('change',focusV74Junction);
+$('show-v74-junctions').addEventListener('change',()=>{if(v74Group)v74Group.visible=$('show-v74-junctions').checked;redraw();});
+
 async function start(){
  try{
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v73';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
+  window.__BNBU_VERSION__='v74';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
   loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
   loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});
   ensureJunctions().catch(e=>{$('junction-status').textContent='连接记录载入失败：'+e.message;console.warn(e)});
+  loadV74Junctions().catch(e=>{$('v74-junction-status').textContent='专项连接审核加载失败：'+e.message;console.warn(e)});
   loadLakefrontProxies().catch(e=>{$('lakefront-status').textContent='近岸示意加载失败：'+e.message;console.warn(e);});
  }catch(e){showError(e);}
 }
