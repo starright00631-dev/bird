@@ -23,14 +23,21 @@ jobs:
         run: python campus/unpack_assets.py
       - name: Verify unpacked scene is identical
         run: python campus/validate_scene.py
+      - name: Build coordinate-corrected v65 scene and reconcile references
+        run: python campus/build_v65.py
+      - name: Regression-test display scene and source provenance
+        run: python -m unittest discover -s campus -p 'test_v65.py' -v
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v64-scene-and-viewer
+          name: BNBU-v64-source-v65-display-and-viewer
           path: |
             campus/assets/BNBU_v64_ACTIVE.glb
             campus/assets/BNBU_v64_EDITABLE_GIS.gpkg
             campus/assets/BNBU_v64_ACTIVE.geojson
             campus/assets/BNBU_v64_ACTIVE.kml
+            campus/generated/BNBU_v65_DISPLAY_Y_UP.glb
+            campus/generated/BNBU_v65_RENDER_REFERENCES.geojson
+            campus/generated/v65_integrity_manifest.json
             campus/viewer.html
             campus/README.md
           retention-days: 30
