@@ -93,6 +93,12 @@ try:
                 selected=[f"{BASE}/{version}/peerj-10-14604-s004.csv"]
             for url in selected:
                 try:
+                    if url.startswith("s3://pmc-oa-opendata/"):
+                        # Official per-object metadata uses the s3:// scheme;
+                        # urllib supports HTTPS, not native S3 URIs.
+                        url=BASE+"/"+url[len("s3://pmc-oa-opendata/"):]
+                    elif not url.startswith(BASE+"/"):
+                        raise ValueError("Unexpected non-official media host")
                     blob=get(url,65536)
                     raw=blob.decode("utf-8-sig")
                     rdr=csv.DictReader(io.StringIO(raw))
