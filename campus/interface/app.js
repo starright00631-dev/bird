@@ -252,41 +252,31 @@ function periodicTexture(kind){
  tx.needsUpdate=true;
  return tx;
 }
-function setSourceSurfaceMaterial(mesh,material,periodX,periodY){
- if(!mesh.geometry.getAttribute('uv')){
-  const pos=mesh.geometry.getAttribute('position');
-  const uv=new Float32Array(pos.count*2);
-  for(let i=0;i<pos.count;i++){
-   uv[i*2]=pos.getX(i)/periodX;
-   uv[i*2+1]=pos.getY(i)/periodY;
-  }
-  mesh.geometry.setAttribute('uv',new THREE.BufferAttribute(uv,2));
- }
- mesh.material=material;
+// Source meshes are POSITION/COLOR only and contain no vertex normals.
+// Using MeshStandardMaterial with new UV maps made segments black in the
+// Chromium screenshot. Use robust, source-safe, unlit color finishes;
+// illustrative railings/real topological deck remain the structural detail.
+function setSourceSurfaceMaterial(mesh,color){
+ mesh.material=new THREE.MeshBasicMaterial({
+  color,side:THREE.DoubleSide,vertexColors:false,depthWrite:true
+ });
  mesh.userData.v70DisplayFinish=true;
  visualLandSurfaces++;
 }
 function styleExistingLakesideLand(){
- const wood=periodicTexture('wood');
- const grass=periodicTexture('grass');
- const stone=periodicTexture('stone');
  for(const m of meshes){
   if(m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'){
-   setSourceSurfaceMaterial(m,new THREE.MeshStandardMaterial({
-    map:wood,color:0xffffff,metalness:0.0,roughness:.85,side:THREE.DoubleSide
-   }),2.56,2.5);
-  }else if(m.name==='V13_PHASEI_GREEN_CORRECTED_lrc_lakeside_grass' ||
-            m.name==='V29_LRC_PHOTO_GROUNDFLOOR_CIRCULAR_GREEN_READING_ZONE'){
-   setSourceSurfaceMaterial(m,new THREE.MeshStandardMaterial({
-    map:grass,color:0xe5efd9,metalness:0,roughness:.97,side:THREE.DoubleSide
-   }),8,7.3);
+   setSourceSurfaceMaterial(m,0xb8875c);
+  }else if(m.name==='V13_PHASEI_GREEN_CORRECTED_lrc_lakeside_grass'){
+   setSourceSurfaceMaterial(m,0x83ad79);
+  }else if(m.name==='V29_LRC_PHOTO_GROUNDFLOOR_CIRCULAR_GREEN_READING_ZONE'){
+   setSourceSurfaceMaterial(m,0x86a974);
   }else if(m.name.startsWith('V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_')){
-   setSourceSurfaceMaterial(m,new THREE.MeshStandardMaterial({
-    map:stone,color:0xcbd0c7,metalness:0,roughness:.94,side:THREE.DoubleSide
-   }),6.4,5.8);
+   setSourceSurfaceMaterial(m,0xb6b7ad);
   }
  }
 }
+
 // The glTF 'world' node carries the original Z-up to browser Y-up rotation.
 // These new meshes are only visualization overlays, never members of the
 // 1,377-source-primitive mesh index or scientific geometry.
@@ -338,9 +328,7 @@ function renderModelBoundRailings(report){
   inst.instanceMatrix.needsUpdate=true;
   inst.frustumCulled=false;group.add(inst);
  }
- const mat=new THREE.MeshStandardMaterial({
-  color:0x829ba1,metalness:.43,roughness:.36,side:THREE.DoubleSide
- });
+ const mat=new THREE.MeshBasicMaterial({color:0xc6d0d0,side:THREE.DoubleSide});
  instanced(beams,.025,mat,'V70_ILLUSTRATIVE_DECK_HANDRAILS_FROM_SOURCE_BOUNDARY');
  instanced(posts,.026,mat,'V70_ILLUSTRATIVE_DECK_POSTS_FROM_SOURCE_BOUNDARY');
  railingBeamCount=beams.length+posts.length;
