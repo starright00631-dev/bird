@@ -493,7 +493,29 @@ $('show-v72-grade').addEventListener('change',e=>{
  if(gradeGroup)gradeGroup.visible=e.target.checked;
 });
 $('focus-v72-ramp').addEventListener('click',()=>viewJunctionSource('V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH'));
-$('focus-v72-stair').addEventListener('click',()=>viewJunctionSource('V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED'));
+function focusStairFromApproach(){
+ const stair=meshes.find(m=>m.name==='V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED');
+ const approach=meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH');
+ if(!stair||!approach)return;
+ // The actual inherited V16 walkway at the lower 18-tread landing gives
+ // a defensible *direction* from which to inspect the real model stair.
+ const stairBox=boxWorld(stair),approachBox=boxWorld(approach);
+ const target=stairBox.getCenter(new THREE.Vector3());
+ const ground=approachBox.getCenter(new THREE.Vector3());
+ const outward=ground.clone().sub(target);
+ outward.y=0;outward.normalize();
+ if(outward.lengthSq()<.01)throw new Error('source stair approach direction missing');
+ const cameraLocation=ground.clone().addScaledVector(outward,17);
+ cameraLocation.y=target.y+10.5;
+ orbit.target.copy(target);cam.up.set(0,1,0);
+ cam.position.copy(cameraLocation);
+ cam.near=.025;cam.far=3500;cam.updateProjectionMatrix();
+ cam.lookAt(target);orbit.update();
+ // Keep all facades visible in ordinary scene inspection. No arbitrary
+ // building geometry deletion or made-up stair pitch.
+ selectMesh(stair);
+}
+$('focus-v72-stair').addEventListener('click',focusStairFromApproach);
 $('focus-v72-west').addEventListener('click',()=>{
  viewJunctionSource('V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE');
  if(gradeGroup){gradeGroup.visible=true;$('show-v72-grade').checked=true;}
@@ -821,7 +843,7 @@ async function start(){
   await switchScene('campus');
   window.__BNBU_READY__=true;
   window.__BNBU_VERSION__='v72';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible};
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
   loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
   loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});
