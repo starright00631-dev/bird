@@ -1,0 +1,20 @@
+{
+  "version": "v64",
+  "pass": true,
+  "full_reimport_mesh_count": 1381,
+  "exactly_retained_original_meshes": 1377,
+  "source_terrain_meshes_replaced": 4,
+  "all_modified_watertight_and_winding": true,
+  "changed_terrain_triangle_count": 236032,
+  "max_abs_vertex_z_shift": 0.35000038146972656,
+  "maximum_original_xy_error": 0.0,
+  "parent_summits_and_terrain_xy_retained": true,
+  "parent_v63_GIS_features_unchanged": 527,
+  "GPKG_layers": 141,
+  "GeoJSON_features": 531,
+  "KML_placemarks": 531,
+  "prohibited_glazing_still_absent": true,
+  "DEM_attested": false,
+  "real_OSM_way_vertices_added": 0,
+  "warning": "Smoothing corrects visual/high-frequency facets only; no elevation survey, no independent photo registration."
+}
