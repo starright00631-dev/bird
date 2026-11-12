@@ -68,6 +68,17 @@ jobs:
               assert z.testzip() is None
           print('full package and standalone viewer complete:',len(m['files']),'files')
           PY
+      - name: Install Chromium and Playwright for actual interface QA
+        run: |
+          python -m pip install "playwright>=1.50,<2"
+          python -m playwright install chromium --with-deps
+      - name: Browser smoke test — standalone file and local HTTP viewer, offline
+        run: python campus/interface/test_browser.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BNBU-v68-browser-screenshots-and-report
+          path: dist/qa/
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: BNBU-v68-complete-offline-model-zip
