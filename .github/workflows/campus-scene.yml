@@ -1,0 +1,36 @@
+name: BNBU campus scene integrity
+on:
+  push:
+    paths:
+      - 'campus/**'
+      - '.github/workflows/campus-scene.yml'
+  pull_request:
+    paths:
+      - 'campus/**'
+      - '.github/workflows/campus-scene.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify compressed campus scene and evidence layers
+        run: python campus/validate_scene.py
+      - name: Unpack true GIS and GLB assets
+        run: python campus/unpack_assets.py
+      - name: Verify unpacked scene is identical
+        run: python campus/validate_scene.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BNBU-v64-scene-and-viewer
+          path: |
+            campus/assets/BNBU_v64_ACTIVE.glb
+            campus/assets/BNBU_v64_EDITABLE_GIS.gpkg
+            campus/assets/BNBU_v64_ACTIVE.geojson
+            campus/assets/BNBU_v64_ACTIVE.kml
+            campus/viewer.html
+            campus/README.md
+          retention-days: 30
