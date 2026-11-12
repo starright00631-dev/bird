@@ -1,4 +1,4 @@
-name: BNBU waterfront v70 photo and structure comparison CI
+name: BNBU v71 model-based land-road-building-bridge junction integrity and offline UI
 on:
   push:
     paths:
@@ -50,29 +50,36 @@ jobs:
           python campus/build_terrain_v67.py
           python campus/build_lakefront_v70.py
           python -m unittest discover -s campus -p 'test_lakefront_v70.py' -v
+          python campus/build_connection_v71.py
+          python -m unittest discover -s campus -p 'test_connection_v71.py' -v
       - name: Build audited full ZIP and zero-dependency standalone HTML
         run: |
           python campus/interface/build_package.py
           python - <<'PY'
           from pathlib import Path
           import json,zipfile
-          base=Path('dist/BNBU_Campus_Full_v70')
+          base=Path('dist/BNBU_Campus_Full_v71')
           m=json.loads((base/'manifest.json').read_text())
-          assert m['mesh_count']==1377 and m['GIS_feature_count']==522
+          assert m['mesh_count']==1379 and m['original_mesh_count']==1377 and m['GIS_feature_count']==522
           assert m['standalone_file_embeds_assets']
           html=(base/'双击查看_校园3D.html').read_text()
-          assert all('id="embedded-'+k+'"' in html for k in ('v69','dsm','gis','contours','dsm-meta','lakefront'))
+          assert all('id="embedded-'+k+'"' in html for k in ('v71','dsm','gis','contours','dsm-meta','lakefront','junctions','junction-patches','junction-meta'))
           assert 'cdn.jsdelivr' not in html and 'unpkg.com' not in html
           for needed in ('index.html','viewer.js','viewer.css','serve.py','启动查看器.bat',
                          'generated/BNBU_v66_SEMANTIC_Y_UP.glb',
                          'generated/BNBU_v69_WATERFRONT_REFINED.glb',
                          'generated/BNBU_v69_WATERFRONT_PROVENANCE.json',
                          'generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json',
+                         'generated/BNBU_v71_CONNECTED_LAKEFRONT.glb',
+                         'generated/BNBU_v71_CONNECTION_PATCHES.geojson',
+                         'generated/BNBU_v71_JUNCTION_AUDIT.geojson',
+                         'generated/BNBU_v71_CONNECTION_PROVENANCE.json',
+                         'docs/JUNCTION_V71_AUDIT.md',
                          'docs/LAKEFRONT_V70_CRITICAL_COMPARISON.md',
                          'generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb',
                          'source/v64/BNBU_v64_EDITABLE_GIS.gpkg'):
               assert (base/needed).is_file(),needed
-          with zipfile.ZipFile('dist/BNBU_Campus_Full_v70.zip') as z:
+          with zipfile.ZipFile('dist/BNBU_Campus_Full_v71.zip') as z:
               assert z.testzip() is None
           print('full package and standalone viewer complete:',len(m['files']),'files')
           PY
@@ -84,16 +91,16 @@ jobs:
         run: python campus/interface/test_browser.py
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v70-browser-screenshots-and-report
+          name: BNBU-v71-browser-screenshots-and-report
           path: dist/qa/
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v70-complete-offline-model-zip
-          path: dist/BNBU_Campus_Full_v70.zip
+          name: BNBU-v71-complete-offline-model-zip
+          path: dist/BNBU_Campus_Full_v71.zip
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v70-double-click-HTML
-          path: dist/BNBU_Campus_Full_v70/双击查看_校园3D.html
+          name: BNBU-v71-double-click-HTML
+          path: dist/BNBU_Campus_Full_v71/双击查看_校园3D.html
           retention-days: 30

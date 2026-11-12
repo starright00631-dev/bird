@@ -14,7 +14,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v70"
+NAME = "BNBU_Campus_Full_v71"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
@@ -22,6 +22,10 @@ ASSETS = {
     "generated/BNBU_v69_WATERFRONT_REFINED.glb": "generated/BNBU_v69_WATERFRONT_REFINED.glb",
     "generated/BNBU_v69_WATERFRONT_PROVENANCE.json": "generated/BNBU_v69_WATERFRONT_PROVENANCE.json",
     "generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json": "generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json",
+    "generated/BNBU_v71_CONNECTED_LAKEFRONT.glb": "generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
+    "generated/BNBU_v71_CONNECTION_PATCHES.geojson": "generated/BNBU_v71_CONNECTION_PATCHES.geojson",
+    "generated/BNBU_v71_JUNCTION_AUDIT.geojson": "generated/BNBU_v71_JUNCTION_AUDIT.geojson",
+    "generated/BNBU_v71_CONNECTION_PROVENANCE.json": "generated/BNBU_v71_CONNECTION_PROVENANCE.json",
     "generated/BNBU_v66_RESOLVED_REFERENCES.geojson": "generated/BNBU_v66_RESOLVED_REFERENCES.geojson",
     "generated/v66_provenance.json": "generated/v66_provenance.json",
     "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb": "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
@@ -44,6 +48,9 @@ ASSETS = {
     "src/build_v66.py": "build_v66.py",
     "src/refine_waterfront_v69.py": "refine_waterfront_v69.py",
     "src/build_lakefront_v70.py": "build_lakefront_v70.py",
+    "src/build_connection_v71.py": "build_connection_v71.py",
+    "src/test_connection_v71.py": "test_connection_v71.py",
+    "src/connection_v71_control.json": "connection_v71_control.json",
     "src/build_terrain_v67.py": "build_terrain_v67.py",
     "src/test_v65.py": "test_v65.py",
     "src/test_v66.py": "test_v66.py",
@@ -54,9 +61,10 @@ ASSETS = {
     "docs/README_source.md": "README.md",
     "docs/WATERFRONT_V69_EVIDENCE.md": "WATERFRONT_V69_EVIDENCE.md",
     "docs/LAKEFRONT_V70_CRITICAL_COMPARISON.md": "LAKEFRONT_V70_CRITICAL_COMPARISON.md",
+    "docs/JUNCTION_V71_AUDIT.md": "JUNCTION_V71_AUDIT.md",
 }
 
-README = """# BNBU 校园完整三维模型与查看器 v70
+README = """# BNBU 校园完整三维模型与查看器 v71
 
 ## 最简单的打开方式
 
@@ -79,16 +87,18 @@ README = """# BNBU 校园完整三维模型与查看器 v70
 - source/archives：v64 无损 XZ 源归档。
 - source/CTV_UNVERIFIED_DO_NOT_MERGE.*：隔离的 CTV 小建筑推测记录，非活动场景。
 - history：v65 坐标方向和节点关联版本。
-- generated：v66 原几何/GIS、v69 水面材质模型、v70 照片支持的可隐藏栏杆参考和证据叠加JSON；v67 ALOS 地形/插值等高线。
+- generated：v66 源GIS，v69 材质源，v70 独立栏杆参考，v71 增添两块基于继承 V61 几何的同标高陆地接缝（GLB、单独GIS、新11项关系审核），v67 独立 ALOS 地形。
 - src：源码及测试、来源记录；manifest.json：文件完整性 SHA-256。
 
-数据准确性：v69 继承 v66 的 1377 个三维网格是继承模型，不等于 1377
+数据准确性：v71 显示 1379 个三维网格，其中 v69 继承 v66 的 1377 个原有网格是继承模型，不等于 1377
 个已测量真实构件。湖岸、车行路边线、玻璃面积和山体相对标高未实测。
 CTV 附近小屋的身份和屋顶尺寸未得到独立核实。
 ALOS 约 30 m DSM 含植被和建筑，不等于裸地 DEM，不能直接与
 v69 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴露分母。
 
 新增 v70：使用校园湖岸照片对照，仅沿已有 V60 高架廊道多边形置入可关闭的栏杆视觉参考，现有 V13 草地改成草地表面材质、V61 实体临水平台改成石质铺装表面，均不调整范围和高度，渲染值不是实测。出于可追溯性，这些添加的栏杆从 1,377 个原始网格之外单独渲染，不用于鸟撞分析。\n\n原 v69：以原 SHORE 网格模型相对高程推导湿岸—植被岸材质渐变；将水面与历史湿地水面分开设定光学外观；并在查看器标出既有临水廊道轮廓与近岸视角。没有改变湖塘的平面轮廓、地形高程或新增建筑。学校官方于 2019 年记录东侧赤花山脚下湿地与两处淡水池塘，位置未经摄影测量配准；**不要把二期历史湿地模型当成那两处池塘**。
+
+新增 v71：针对湖岸平台与步道相交的真实照片类型，对照原GLB与GIS检查11对构件间关系。仅在原V61铺装层两个2.44/2.50模型单位间隙，新增两块顶面与原板一致的细小几何；**不代表精确实地测量**。另外有三处高度矛盾、两处较远的路线缺口仍保持未更改；桥东坡道与ROAD_000→WALK_040铺装拼缝已存在，不再额外造桥。全部原有1377网格数据与522条GIS边界不变。查看 docs/JUNCTION_V71_AUDIT.md。
 
 源码：https://github.com/starright00631-dev/bird/tree/main/campus
 """
@@ -148,7 +158,7 @@ def sha256(path: Path) -> str:
 def assemble_standalone(template,css,js):
     tags=[]
     for key,rel in [
-        ("v69","generated/BNBU_v69_WATERFRONT_REFINED.glb"),
+        ("v71","generated/BNBU_v71_CONNECTED_LAKEFRONT.glb"),
         ("dsm","generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb"),
     ]:
         b64=base64.b64encode((PACKAGE/rel).read_bytes()).decode("ascii")
@@ -158,6 +168,9 @@ def assemble_standalone(template,css,js):
         ("contours","generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson"),
         ("dsm-meta","generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json"),
         ("lakefront","generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json"),
+        ("junctions","generated/BNBU_v71_JUNCTION_AUDIT.geojson"),
+        ("junction-patches","generated/BNBU_v71_CONNECTION_PATCHES.geojson"),
+        ("junction-meta","generated/BNBU_v71_CONNECTION_PROVENANCE.json"),
     ]:
         content=(PACKAGE/rel).read_text(encoding="utf-8").replace("</script","<\\/script")
         tags.append('<script id="embedded-'+key+'" type="application/json">'+content+'</script>')
@@ -175,7 +188,13 @@ def validate():
     overlay=json.loads((PACKAGE/"generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json").read_text(encoding="utf-8"))
     assert overlay["role"]=="DISPLAY_ONLY_NO_METRIC_GEOMETRY"
     assert overlay["original_meshes"]==1377
-    for rel in ["generated/BNBU_v69_WATERFRONT_REFINED.glb",
+    joints=json.loads((PACKAGE/"generated/BNBU_v71_JUNCTION_AUDIT.geojson").read_text())
+    patches=json.loads((PACKAGE/"generated/BNBU_v71_CONNECTION_PATCHES.geojson").read_text())
+    details=json.loads((PACKAGE/"generated/BNBU_v71_CONNECTION_PROVENANCE.json").read_text())
+    assert len(joints["features"])==11 and len(patches["features"])==2
+    assert details["original_meshes"]==1377 and details["output_meshes"]==1379
+    for rel in ["generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
+                "generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
                 "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
                 "source/v64/BNBU_v64_ACTIVE.glb"]:
@@ -212,11 +231,13 @@ def build():
     sh.write_text(SH,encoding="utf-8");sh.chmod(sh.stat().st_mode|stat.S_IXUSR)
     validate()
     manifest={
-        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v70 viewer on v69 source","external_DSM":"v67",
-        "mesh_count":1377,"GIS_feature_count":522,
+        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v71: source v69 + 2 separately documented source-bound joins","external_DSM":"v67",
+        "mesh_count":1379,"original_mesh_count":1377,"GIS_feature_count":522,
+        "v71_source_bounded_pavement_seams":2,"audited_junction_pairs":11,
         "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
-        "physical_geometry_edited":False,"standalone_file_embeds_assets":True,
+        "original_geometry_edited":False,"new_geometry_approximate_and_unsurveyed":True,
+        "standalone_file_embeds_assets":True,
         "files":{str(p.relative_to(PACKAGE)):{"size":p.stat().st_size,"sha256":sha256(p)}
             for p in PACKAGE.rglob("*") if p.is_file()},
     }

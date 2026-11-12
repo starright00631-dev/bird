@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BNBU 校园 v70 · 实景对照水岸 3D / GIS</title>
+<title>BNBU 校园 v71 · 连接结构与空间关系检查</title>
 <link rel="stylesheet" href="./viewer.css">
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v70</span></div></div>
+  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v71</span></div></div>
   <div class="scene-switch" role="group" aria-label="场景切换"><button id="choose-campus" class="selected" type="button">校园三维模型</button><button id="choose-dsm" type="button">遥感山体参考</button></div>
   <div class="top-actions"><button id="help-button" type="button">使用说明</button><span id="health" role="status">准备载入</span></div>
 </header>
@@ -44,14 +44,28 @@
       <p><a href="https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg" target="_blank" rel="noopener">官方手绘校园图</a>（拓扑参考，非测绘）</p>
       <p><a href="https://www.4dmodel.com/UICcode/code/#/list" target="_blank" rel="noopener">学校互动影像</a>（待相机配准）</p>
       <p><a href="https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm" target="_blank" rel="noopener">JAXA AW3D30 数据集说明</a></p>
-      <p><strong>本轮 v70 实景对照：</strong>学校及媒体照片显示实际湖岸不是连续均质色带：木质高架步道有扶手、岸边有实体铺装和成片绿地。现在这些外观只附着在已有的 V60 步道、V61 亲水平台及原 V13 绿地区域，栏杆为可关闭的视觉参照，而非新增实测构件。</p><p><a href="https://uic.edu.cn/info/1078/108739.htm" target="_blank" rel="noopener">2025 近岸步道与栏杆照片</a> · <a href="https://co.bnbu.edu.cn/en/info/1131/2702.htm" target="_blank" rel="noopener">官方临水建筑 / 平台照片</a> · <a href="https://admission.bnbu.edu.cn/info/1732/1481.htm" target="_blank" rel="noopener">官方木质步道照片</a></p><p><strong>真实水体证据：</strong>学校 2019 年资料记载，东侧赤花山脚下有季节性自然湿地，与山上的两处淡水池塘相连；尚未获得足以将其准确配准进 3D 的坐标。二期“湿地旧模型”是历史假设，不能混同于这两处真实池塘。</p><p><a href="https://www.bnbu.edu.cn/info/1077/4589.htm" target="_blank" rel="noopener">学校生态调查：湿地与两处淡水池塘</a></p><p>CTV 附近独立小建筑及其“校长别墅”名称尚未独立核实。未将其加入正式场景。</p>
+      <p><strong>v71 严格核查：</strong>桥面↔地面的空间重叠不能忽略高度。V60 桥面与西岸 V61 平台顶面在模型中相差约 0.64 个单位，尚不能凭单张照片画无障碍坡道；二期 D1–D6 地面连接依旧不等于桥梁。两处 V61 板块之间 2.44/2.50 个模型单位的陆地空隙已以最小同标高几何补齐，轮廓基于原始模型，非实测。</p><p><a href="https://co.bnbu.edu.cn/en/info/1131/2702.htm" target="_blank" rel="noopener">官方 LRC / 湖边多层平台</a> · <a href="https://www.bnbu.edu.cn/campus_life/Landscape_and_Facilities.htm" target="_blank" rel="noopener">官方玻璃建筑及连桥</a></p><p><strong>本轮 v70 实景对照：</strong>学校及媒体照片显示实际湖岸不是连续均质色带：木质高架步道有扶手、岸边有实体铺装和成片绿地。现在这些外观只附着在已有的 V60 步道、V61 亲水平台及原 V13 绿地区域，栏杆为可关闭的视觉参照，而非新增实测构件。</p><p><a href="https://uic.edu.cn/info/1078/108739.htm" target="_blank" rel="noopener">2025 近岸步道与栏杆照片</a> · <a href="https://co.bnbu.edu.cn/en/info/1131/2702.htm" target="_blank" rel="noopener">官方临水建筑 / 平台照片</a> · <a href="https://admission.bnbu.edu.cn/info/1732/1481.htm" target="_blank" rel="noopener">官方木质步道照片</a></p><p><strong>真实水体证据：</strong>学校 2019 年资料记载，东侧赤花山脚下有季节性自然湿地，与山上的两处淡水池塘相连；尚未获得足以将其准确配准进 3D 的坐标。二期“湿地旧模型”是历史假设，不能混同于这两处真实池塘。</p><p><a href="https://www.bnbu.edu.cn/info/1077/4589.htm" target="_blank" rel="noopener">学校生态调查：湿地与两处淡水池塘</a></p><p>CTV 附近独立小建筑及其“校长别墅”名称尚未独立核实。未将其加入正式场景。</p>
     </section>
     <section class="layers-panel">
       <div class="section-header"><h2>显示图层</h2><div><button id="show-all" type="button">全选</button><button id="hide-all" type="button">隐藏</button></div></div>
       <div id="layers"></div>
     </section>
+    <section class="selected-panel" id="connection-section">
+      <div class="section-header"><h2>陆地 / 道路 / 建筑 / 廊桥连接</h2><small>11 对核查</small></div>
+      <p style="font-size:11px;color:#a7c5cf">基于继承模型验证两处相同标高的陆地铺装短间隙。任何 2D 相交都不等于 3D 高程相接。</p>
+      <div class="quick-grid">
+        <button id="focus-join-a" type="button">近岸接缝 A</button>
+        <button id="focus-join-b" type="button">近岸接缝 B</button>
+        <button id="focus-east-landfall" type="button">桥→东岸坡道</button>
+        <button id="focus-road-path" type="button">车道→步道</button>
+        <button id="focus-building-stair" type="button">建筑→室外楼梯</button>
+      </div>
+      <label style="display:block;font-size:11px;margin:8px 0 3px"><input id="show-model-joints" type="checkbox" checked> 显示新补的 2 块同标高铺装（模型推定）</label>
+      <label style="display:block;font-size:11px;margin:3px 0 8px"><input id="show-junction-graph" type="checkbox" checked> GIS：绿=已有连接，橙=新增短接，红=未核实</label>
+      <p id="junction-status" role="status" style="color:#9cd7c4;font-size:11px">连接结构核查记录载入中…</p>
+    </section>
     <section class="selected-panel"><div class="section-header"><h2>结构信息</h2><small id="match-count">0 项关联</small></div><div id="selection" class="selection-text">点击左侧 3D 网格查看名称、类型及 GIS 记录。</div></section>
-    <div class="disclaimer"><strong>照片证明类型 ≠ 测绘位置。</strong> 新栏杆的轨迹仅由旧版 V60 步道边界推得，护栏高与立柱间距为示意。水岸、绿地、道路与真实池塘边界均未摄影配准。所有新增视觉细节不可作为鸟撞玻璃面积或工程测量值。</div>
+    <div class="disclaimer"><strong>照片证明连接类型 ≠ 可测量高程及位置。</strong> v71 新增 2 处源模型同标高修复，不代表现场建造或测量。3 处桥面/铺装高差、两处远距离道路断裂、山地塘边轮廓仍待独立配准。<strong>照片证明类型 ≠ 测绘位置。</strong> 新栏杆的轨迹仅由旧版 V60 步道边界推得，护栏高与立柱间距为示意。水岸、绿地、道路与真实池塘边界均未摄影配准。所有新增视觉细节不可作为鸟撞玻璃面积或工程测量值。</div>
   </aside>
 </main>
 <dialog id="help-dialog"><h2>查看器操作</h2><p>直接双击独立 HTML 可离线打开（无需安装 Python，也不需要联网）。ZIP 内另有分文件版本，可通过「启动查看器.bat」打开。</p><p>左侧 3D：旋转 / 缩放 / 平移；右侧 GIS：拖拽移动、滚轮缩放。切换“遥感山体参考”可独立查看外部 DSM 高程，不会与建筑模型叠加。</p><button id="close-help" type="button">关闭</button></dialog>

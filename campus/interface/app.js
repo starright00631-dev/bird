@@ -22,7 +22,7 @@ const progress = text => { $('scene-status').textContent=text; $('health').textC
 const esc = str => String(str??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const reader = new GLTFLoader();
 const embed = key => $('embedded-'+key);
-const isStandalone = !!embed('v69');
+const isStandalone = !!embed('v71');
 
 async function loadBinary(key,rel){
  const script=embed(key);
@@ -73,6 +73,7 @@ let campus=null,dsm=null,current='campus',activeRoot=null;
 let meshes=[],groups=new Map(),gis=null,contours=null,dsmMeta=null,featuresByName=new Map();
 const visible=new Set(TYPES.map(t=>t[0]));
 let selectedName=null,outline=null,viewStatus='loading';
+let junctions=null,connectionMeta=null,patches=null;
 const boxWorld=obj=>new THREE.Box3().setFromObject(obj);
 function fit(box,top=false){
  if(!box || box.isEmpty())return;
@@ -112,7 +113,7 @@ function indexCampus(){
   }
   if(obj.isMesh){obj.userData.bnbuCategory=tag(obj);meshes.push(obj);}
  });
- if(meshes.length!==1377)throw new Error('场景数据完整性检查失败：预期 1377 个网格，读取到 '+meshes.length);
+ if(meshes.length!==1379)throw new Error('场景数据完整性检查失败：应为 1377 个原始网格 + 2 个来源匹配的岸边连接网格，读取到 '+meshes.length);
  for(const mesh of meshes){
   if(mesh.material){const list=Array.isArray(mesh.material)?mesh.material:[mesh.material];
    for(const mat of list){mat.side=THREE.DoubleSide;}
@@ -276,6 +277,12 @@ function styleExistingLakesideLand(){
    }
   }else if(/^V50_LAKE_0[01]_WATER_SHORE_015/.test(m.name)){
    m.material=new THREE.MeshBasicMaterial({color:0x9da89e,side:THREE.DoubleSide});
+  }else if(m.name==='V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH'){
+   // Existing model-derived deck-to-ground ramp: render distinct from bridge and grass.
+   setSourceSurfaceMaterial(m,0xb69a72);
+  }else if(m.name==='V54_PAVEMENT_SEAM_CLOSE_ROAD_000__WALK_040_MODEL_EDGE_MATCH'){
+   // Existing road-to-footpath seam, never a new elevated bridge.
+   setSourceSurfaceMaterial(m,0xb9b9b1);
   }else if(m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'){
    setSourceSurfaceMaterial(m,0xb8875c);
   }else if(m.name==='V13_PHASEI_GREEN_CORRECTED_lrc_lakeside_grass'){
@@ -356,6 +363,48 @@ async function loadLakefrontProxies(){
 $('show-photo-proxies').addEventListener('change',e=>{
  if(lakefrontProxy)lakefrontProxy.visible=e.target.checked;
 });
+
+const SEAM_NAMES=[
+ 'V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_01_NOT_SURVEYED',
+ 'V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_02_NOT_SURVEYED'
+];
+function viewJunctionSource(name){
+ if(current!=='campus'){$('choose-campus').click();return;}
+ const mesh=meshes.find(m=>m.name===name);
+ if(!mesh)return;
+ if(mesh.parent)mesh.parent.visible=true;
+ mesh.visible=true;
+ let target=boxWorld(mesh).getCenter(new THREE.Vector3());
+ orbit.target.copy(target);
+ cam.up.set(0,1,0);
+ // A close-up based on real inherited mesh centroids, not a fabricated ground location.
+ cam.position.copy(target).add(new THREE.Vector3(-14,11,23));
+ cam.near=.025;cam.far=3500;cam.updateProjectionMatrix();
+ cam.lookAt(target);orbit.update();
+ selectMesh(mesh);
+}
+$('focus-join-a').addEventListener('click',()=>viewJunctionSource(SEAM_NAMES[0]));
+$('focus-join-b').addEventListener('click',()=>viewJunctionSource(SEAM_NAMES[1]));
+$('focus-east-landfall').addEventListener('click',()=>viewJunctionSource('V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH'));
+$('focus-road-path').addEventListener('click',()=>viewJunctionSource('V54_PAVEMENT_SEAM_CLOSE_ROAD_000__WALK_040_MODEL_EDGE_MATCH'));
+$('focus-building-stair').addEventListener('click',()=>viewJunctionSource('V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED'));
+$('show-model-joints').addEventListener('change',e=>{
+ for(const mesh of meshes)if(SEAM_NAMES.includes(mesh.name))mesh.visible=e.target.checked;
+ redraw();
+});
+$('show-junction-graph').addEventListener('change',()=>redraw());
+async function ensureJunctions(){
+ const [graph,meta,joins]=await Promise.all([
+  loadJson('junctions','generated/BNBU_v71_JUNCTION_AUDIT.geojson'),
+  loadJson('junction-meta','generated/BNBU_v71_CONNECTION_PROVENANCE.json'),
+  loadJson('junction-patches','generated/BNBU_v71_CONNECTION_PATCHES.geojson'),
+ ]);
+ if(graph.features.length!==11||meta.original_meshes!==1377||meta.output_meshes!==1379||joins.features.length!==2)
+  throw new Error('连接审核资料与模型版本不一致');
+ junctions=graph;connectionMeta=meta;patches=joins;
+ $('junction-status').textContent='已核查 11 对空间关系；2 处陆地铺装小间隙已连接，3 处高差疑点保持未改。';
+ redraw();
+}
 
 function focusBoardwalkDetailed(){
  if(!campus)return;
@@ -444,7 +493,7 @@ $('choose-dsm').addEventListener('click',()=>switchScene('dsm').catch(showError)
 
 async function ensureCampus(){
  progress('读取完整校园网格…');
- const gltf=await loadScene('v69','generated/BNBU_v69_WATERFRONT_REFINED.glb');
+ const gltf=await loadScene('v71','generated/BNBU_v71_CONNECTED_LAKEFRONT.glb');
  campus=gltf.scene;scene.add(campus);indexCampus();improveWaterVisuals();styleExistingLakesideLand();campus.visible=current==='campus';
  for(const [key,g] of groups)g.visible=visible.has(key);
 }
@@ -598,6 +647,18 @@ function drawMap(){
    ctx.stroke();
   }
  }
+ if(current==='campus' && junctions && $('show-junction-graph').checked){
+  for(const f of junctions.features){
+   const status=f.properties.junction_status;
+   const col=status==='model_derived_pavement_join_added'?'#ffba5c':status.includes('unresolved')||status.startsWith('do_not_')?'#f36d69':'#7ad5b5';
+   const path=f.geometry.coordinates;
+   if(!path || path.length<2)continue;
+   const a=project(path[0]),b=project(path[1]);
+   ctx.strokeStyle=col;ctx.lineWidth=status==='model_derived_pavement_join_added'?3:1.7;
+   ctx.globalAlpha=.95;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();
+   ctx.fillStyle=col;ctx.beginPath();ctx.arc(a[0],a[1],status==='model_derived_pavement_join_added'?3.4:2.1,0,Math.PI*2);ctx.fill();
+  }
+ }
  ctx.globalAlpha=1;
  ctx.fillStyle='#b9d1e0';ctx.font='10px system-ui';
  ctx.fillText(current==='campus'?'522 条原模型 GIS 记录':'ALOS 30m DSM 推算等高线',10,h-10);
@@ -625,9 +686,10 @@ async function start(){
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v70';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target)};
+  window.__BNBU_VERSION__='v71';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible)};
   ensureGIS();
+  ensureJunctions().catch(e=>{$('junction-status').textContent='连接记录载入失败：'+e.message;console.warn(e)});
   loadLakefrontProxies().catch(e=>{$('lakefront-status').textContent='近岸示意加载失败：'+e.message;console.warn(e);});
  }catch(e){showError(e);}
 }
