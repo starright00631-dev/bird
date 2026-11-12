@@ -22,6 +22,8 @@ class TestV72(unittest.TestCase):
    self.assertGreater(pts[0][2],.7)
    self.assertLess(pts[-1][2],.25)
    self.assertTrue(all(317<=xyz[0]<=340 and -103<=xyz[1]<=-88 for xyz in pts))
+   # Longitudinal side rails must NEVER cross the 3.25 model-unit ramp entry/exit width.
+   self.assertTrue(all(b[0]>=a[0]-.015 for a,b in zip(pts,pts[1:])))
    self.assertTrue(p["guardrail_height_is_not_surveyed"])
  def test_lrc_stair_rails_follow_19_existing_levels(self):
   stairs=[x for x in self.data["rail_profiles"] if x["category"]=="building_to_ground_stair"]
