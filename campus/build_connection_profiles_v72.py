@@ -62,7 +62,9 @@ def ramp_lines(outer,vertices):
    assert len(out)<len(coords)+1
   return np.array(out)
  result=[]
- # The polygon boundary has two short transverse END CAPS. Never rail across\n # an entrance: trim the first cap from north side, last cap from south side.\n for side,poly in zip(("north_edge","south_edge"),(route(1)[1:],route(-1)[:-1])):
+ # The polygon boundary has two short transverse end caps. Never rail across
+ # an entrance: trim the first cap from north side, last cap from south side.
+ for side,poly in zip(("north_edge","south_edge"),(route(1)[1:],route(-1)[:-1])):
   # The outer polygon was generated from this exact mesh. Verify every
   # point is traceably within 0.05 model units of its original XY source.
   d=np.linalg.norm(poly[:,None,:]-vertices[None,:,:2],axis=2)
