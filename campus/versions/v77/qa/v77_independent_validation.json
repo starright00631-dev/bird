@@ -1,0 +1,18 @@
+{
+  "version": "v77",
+  "pass": true,
+  "GLB_nodes": 1382,
+  "unchanged_parent_GLBS_exact_mesh_vertices_faces_transforms_colors": 1379,
+  "cap_unchanged_XY_faces": true,
+  "cap_adjustment_z_model_m": 0.0219998779296875,
+  "post_repair_cap_gap_above_paver_model_m": -0.006000041961669922,
+  "new_watertight_opaque_seam_groups": 2,
+  "new_triangle_count": 320,
+  "max_seam_GIS_GLB_symmetric_difference_m2": 0.001998082899987522,
+  "gpkg_layers": 143,
+  "geojson_features": 569,
+  "kml_placemarks": 569,
+  "not_surveyed": true,
+  "no_new_GLASS_or_random_trees_or_guessed_roof_machinery": true,
+  "warning": "Photo-grounded seam presence; seam coordinates and count approximated without image registration or in-situ survey."
+}
