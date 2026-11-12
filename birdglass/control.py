@@ -69,7 +69,8 @@ def visible_glass_ids(position,heading,panes,max_forward_distance_m,
 
 def replay(start,velocity,destination,panes,recognition,draws,
            body_radius=.05,wingspan=.3,latency=.14,gain=4.5,
-           max_lateral_accel=12.,detection_range=7.,dt=.025,max_time=4.):
+           max_lateral_accel=12.,detection_range=7.,dt=.025,max_time=4.,
+           planner_strategy="geometric"):
     """First contact across every pane, using a time-delayed heading command.
 
     Draws are fixed per pane per trajectory and can be shared across policies.
@@ -79,6 +80,8 @@ def replay(start,velocity,destination,panes,recognition,draws,
         raise ValueError("invalid simulator inputs")
     if len({p.x for p in panes})!=1:
         raise ValueError("coplanar facade only")
+    if planner_strategy not in ("geometric","screened"):
+        raise ValueError("planner_strategy must be geometric or screened")
     p=np.asarray(start,float)
     h=unit(velocity)
     speed=float(np.linalg.norm(velocity))
@@ -90,6 +93,7 @@ def replay(start,velocity,destination,panes,recognition,draws,
     lag=int(round(latency/dt))
     commands=deque([h.copy() for _ in range(lag)])
     known=set()
+    planning_status="not_triggered"
     if len({pane.id for pane in panes})!=len(panes):
         raise ValueError("pane ids must be unique")
     for i in range(int(max_time/dt)):
@@ -98,7 +102,24 @@ def replay(start,velocity,destination,panes,recognition,draws,
             if pane.id not in candidates or pane.id in known:continue
             if draws.get(pane.id,1.)<recognition.get(pane.id,0.):
                 known.add(pane.id)
-                target=route(p,h,panes,goal,wingspan,body_radius)
+                if planner_strategy=="geometric":
+                    planning_status="geometric_unchecked"
+                    target=route(p,h,panes,goal,wingspan,body_radius)
+                else:
+                    # Import only at call time: reachability shares turn()
+                    # and contact() kernels with this controller.
+                    from .reachability import choose_reachable_gap
+                    decision=choose_reachable_gap(
+                        p,h*speed,goal,panes,latency_s=latency,
+                        gain_per_s=gain,
+                        max_lateral_accel_mps2=max_lateral_accel,
+                        body_radius_m=body_radius,wingspan_m=wingspan,
+                        dt=dt,max_candidates=12,max_time_s=max_time+2.)
+                    planning_status=decision.status
+                    if decision.target_xyz is not None:
+                        target=np.asarray(decision.target_xyz,float)
+                    # If finite search finds no physically verified crossing,
+                    # keep prior command, never claim a safe escape route.
         commands.append(unit(target-p))
         h=turn(h,commands.popleft(),dt,gain,max_lateral_accel,speed)
         nxt=p+h*speed*dt
@@ -106,10 +127,14 @@ def replay(start,velocity,destination,panes,recognition,draws,
         if contact:
             return {"outcome":contact.material,"pane":contact.pane_id,
                     "time_s":(i+contact.t)*dt,
-                    "end_xyz":tuple(p+(nxt-p)*contact.t)}
+                    "end_xyz":tuple(p+(nxt-p)*contact.t),
+                    "planning_status":planning_status}
         p=nxt
         if p[0]>panes[0].x+wingspan/2+.1:
-            return {"outcome":"passed","pane":None,"time_s":(i+1)*dt,"end_xyz":tuple(p)}
+            return {"outcome":"passed","pane":None,"time_s":(i+1)*dt,
+                    "end_xyz":tuple(p),"planning_status":planning_status}
         if abs(p[1])>100 or p[2]>100 or p[2]<-10:
-            return {"outcome":"diverted","pane":None,"time_s":(i+1)*dt}
-    return {"outcome":"unresolved","pane":None,"time_s":max_time,"end_xyz":tuple(p)}
+            return {"outcome":"diverted","pane":None,"time_s":(i+1)*dt,
+                    "end_xyz":tuple(p),"planning_status":planning_status}
+    return {"outcome":"unresolved","pane":None,"time_s":max_time,
+            "end_xyz":tuple(p),"planning_status":planning_status}

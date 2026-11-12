@@ -19,7 +19,8 @@ class Scenario:
     baseline_recognition:dict
     # These are assumptions, not fitted parameters.
 
-def assess(panes,flights,scenarios,policy_delta,seed=17,dt=.025):
+def assess(panes,flights,scenarios,policy_delta,seed=17,dt=.025,
+           planner_strategy="geometric"):
     """flights are (start, velocity, destination, body_radius, span, weight)."""
     if not flights or not scenarios:raise ValueError("need trials and scenarios")
     glass={x.id for x in panes if x.material=="glass"}
@@ -41,21 +42,30 @@ def assess(panes,flights,scenarios,policy_delta,seed=17,dt=.025):
                 val=replay(start,velocity,dest,panes,probs,draw,
                            body_radius=body,wingspan=span,latency=h.latency,
                            gain=h.gain,max_lateral_accel=h.max_lateral_accel,
-                           detection_range=h.detection_range,dt=dt)
-                outcomes.append((val["outcome"],val["pane"],float(weight)))
+                           detection_range=h.detection_range,dt=dt,
+                           planner_strategy=planner_strategy)
+                outcomes.append((val["outcome"],val["pane"],float(weight),
+                                 val["planning_status"]))
             per_policy.append(outcomes)
         base,changed=per_policy
         denom=sum(row[2] for row in base)
         def rate(rows,kind):
-            return sum(w for outcome,_,w in rows if outcome==kind)/denom
+            return sum(w for outcome,_,w,_ in rows if outcome==kind)/denom
         gb,ga=rate(base,"glass"),rate(changed,"glass")
         wb,wa=rate(base,"opaque"),rate(changed,"opaque")
         result.append({"scenario":h.name,"glass_before":gb,"glass_after":ga,
              "opaque_before":wb,"opaque_after":wa,
              "total_contact_reduction":(gb+wb)-(ga+wa),
-             "pane_transfer":{pane:sum(w for o,p,w in changed if o=="glass" and p==pane)/denom
-                               -sum(w for o,p,w in base if o=="glass" and p==pane)/denom
+             "pane_transfer":{pane:sum(w for o,p,w,_ in changed if o=="glass" and p==pane)/denom
+                               -sum(w for o,p,w,_ in base if o=="glass" and p==pane)/denom
                                for pane in glass},
+             "planning_strategy":planner_strategy,
+             "planning_no_crossing_baseline":sum(
+                 w for _,_,w,s in base
+                 if s=="no_crossing_found_in_tested_candidates")/denom,
+             "planning_no_crossing_policy":sum(
+                 w for _,_,w,s in changed
+                 if s=="no_crossing_found_in_tested_candidates")/denom,
              "verified_field_effect":False})
     return result
 
