@@ -48,6 +48,8 @@ html=html.replace('<div class="disclaimer">','<div class="disclaimer"><strong>v7
 js=(dst/'viewer.js').read_text()
 assert js.count('generated/BNBU_v71_CONNECTED_LAKEFRONT.glb')==1
 js=js.replace('generated/BNBU_v71_CONNECTED_LAKEFRONT.glb','generated/BNBU_v78_RECONCILED_MAIN.glb')
+assert js.count('it.length!==1379')==1
+js=js.replace('it.length!==1379','it.length!==1380')
 newfunc='''
 // v78 compatibility-gated integration. Branch-only paving seams are opt-in display-only.
 let v78SeamGroup=null;
@@ -87,6 +89,8 @@ modified,num=pattern2.subn(lambda m:m.group(1)+json.dumps(arch,ensure_ascii=Fals
 assert num==1
 modified=modified.replace('<script id="embedded-v76-edges"', '<script id="embedded-v78-seams" type="application/octet-stream">'+base64.b64encode(seams.read_bytes()).decode()+'</script>\n<script id="embedded-v76-edges"',1)
 modified=modified.replace('generated/BNBU_v71_CONNECTED_LAKEFRONT.glb','generated/BNBU_v78_RECONCILED_MAIN.glb',1)
+assert modified.count('it.length!==1379')==1
+modified=modified.replace('it.length!==1379','it.length!==1380')
 assert modified.count('async function ey(){')==1
 modified=modified.replace('async function ey(){',newfunc+'async function ey(){')
 modified=modified.replace('Ex(),Tx(),wx(),ut.visible=','Ex(),Tx(),wx(),v78SkyToggle(),v78LoadSeams().catch(i=>{K("v78-control-status").textContent="v78 未配准屋面缝加载失败："+i.message;console.warn(i)}),ut.visible=')
