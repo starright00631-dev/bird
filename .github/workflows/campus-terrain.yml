@@ -1,0 +1,65 @@
+name: BNBU v67 independent observed DSM reference
+on:
+  push:
+    paths:
+      - 'campus/build_terrain_v67.py'
+      - 'campus/test_terrain_v67.py'
+      - 'campus/test_terrain_viewer_v67.py'
+      - 'campus/terrain_reference.html'
+      - '.github/workflows/campus-terrain.yml'
+  pull_request:
+    paths:
+      - 'campus/build_terrain_v67.py'
+      - 'campus/test_terrain_v67.py'
+      - 'campus/test_terrain_viewer_v67.py'
+      - 'campus/terrain_reference.html'
+      - '.github/workflows/campus-terrain.yml'
+  workflow_dispatch:
+jobs:
+  build_observed_surface:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install exact WGS84 to UTM projection tool
+        run: python -m pip install 'pyproj>=3.6,<4'
+      - name: Validate source raster parsing, coordinate transforms and contour topology
+        run: python -m unittest discover -s campus -p 'test_terrain_v67.py' -v
+      - name: Validate standalone terrain evidence viewer
+        run: python campus/test_terrain_viewer_v67.py
+      - name: Download and inspect actual ALOS-derived ArduPilot 2022 source tile; generate separate evidence mesh
+        run: python campus/build_terrain_v67.py
+      - name: Check generated binary GLB and source integrity manifest
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, struct
+          root=Path('campus/generated')
+          glb=(root/'BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb').read_bytes()
+          c=json.loads((root/'BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson').read_text())
+          m=json.loads((root/'BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json').read_text())
+          assert glb.startswith(b'glTF') and struct.unpack_from('<II',glb,4)==(2,len(glb))
+          assert hashlib.sha256(glb).hexdigest()==m['terrain_glb_sha256']
+          assert m['triangle_count']>1000 and m['observed_vertices']>1000
+          assert m['void_vertices'] < .05*(m['grid_width']*m['grid_height'])
+          assert m['raw_raster_elevation_min_m'] < m['raw_raster_elevation_max_m']
+          assert c['type']=='FeatureCollection' and len(c['features'])==m['contour_segment_count']
+          assert not m['is_campus_registered'] and not m['is_bare_earth_dem']
+          assert not (root/'N22E113.hgt.zip').exists()
+          print('validated real externally sourced DSM:', {k:m[k] for k in ('observed_vertices','triangle_count','raw_raster_elevation_min_m','raw_raster_elevation_max_m')})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BNBU-v67-ALOS-derived-30m-DSM-separate-reference
+          path: |
+            campus/generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb
+            campus/generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson
+            campus/generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json
+            campus/terrain_reference.html
+            campus/build_terrain_v67.py
+          retention-days: 30
