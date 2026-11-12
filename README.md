@@ -1,3 +1,11 @@
+## BNBU 3D viewer — v68 complete offline release
+
+**The verified v68 interface and complete model ZIP are built and published by [BNBU complete offline interface and ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml).** Download the latest successful run's artifact named BNBU-v68-complete-offline-model-zip, then extract the nested BNBU_Campus_Full_v68.zip.
+
+Open the extracted **双击查看_校园3D.html** directly in a modern browser (Chrome/Edge): it contains all necessary three.js code, v66 GLB, GIS and independent v67 DSM **offline, with no server or CDN**. Alternatively launch 启动查看器.bat to serve index.html locally with Python 3.
+
+The reproducible viewer source lives in [campus/interface/](campus/interface/). A real Chromium browser CI tests both file:// and localhost startup, switching the campus/DSM scenes, all ten layers and the GIS data. Original v64 GLB/GPKG/GeoJSON/KML, v65 history, v66 model, v67 remotely sourced DSM, quarantined unverified CTV hypotheses, hashes and build code are included in the full ZIP. No new surveyed model geometry is asserted by the interface repair.
+
 # Bird–Glass Collision Research
 
 Mechanistic, **fixed-facade** research on birds navigating glass and surrounding architecture. We model how habitat cues, specular reflections and transmission, individual flight control, morphology and nearby solid structures can interact, then test whether a *joint* intervention changes the complete route. Replacing glass is outside the research scope.
