@@ -1,0 +1,64 @@
+{
+  "dataset": "BNBU_v71_SOURCE_BOUND_GRADE_JOINS",
+  "note": "Precomputed from shortest distances between inherited V61 polygons; verified no lake crossing; never use as field survey",
+  "source_glb_sha256": "a577e531c7e0f70b4335fe418abf3998a43a30d54c09157b00ba34cdf8460c1d",
+  "source_gis_sha256": "3490f41e80987209fe8cdc97c21339bd67cfd5b15a388138910807840419a68b",
+  "features": [
+    {
+      "name": "V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_01_NOT_SURVEYED",
+      "source_a": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_01_UNSURVEYED",
+      "source_b": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+      "local_polygon_xy": [
+        [
+          185.102842,
+          -94.135957
+        ],
+        [
+          185.751032,
+          -95.569197
+        ],
+        [
+          188.158557,
+          -94.480383
+        ],
+        [
+          187.510367,
+          -93.047142
+        ]
+      ],
+      "model_bottom_z": 0.09,
+      "model_top_z": 0.27,
+      "source_gap_m": 2.442,
+      "width_rule": "0.85 * 1.85003m inherited narrow V61 slab width",
+      "evidence_tier": "model_topology_only; photo supports hardscape type, not location"
+    },
+    {
+      "name": "V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_02_NOT_SURVEYED",
+      "source_a": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+      "source_b": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+      "local_polygon_xy": [
+        [
+          194.818071,
+          -91.497106
+        ],
+        [
+          195.145113,
+          -93.035733
+        ],
+        [
+          197.786116,
+          -92.474375
+        ],
+        [
+          197.459074,
+          -90.935749
+        ]
+      ],
+      "model_bottom_z": 0.09,
+      "model_top_z": 0.27,
+      "source_gap_m": 2.5,
+      "width_rule": "0.85 * 1.85003m inherited narrow V61 slab width",
+      "evidence_tier": "model_topology_only; photo supports hardscape type, not location"
+    }
+  ]
+}
