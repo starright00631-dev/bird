@@ -28,7 +28,10 @@ def test_direct_collision_requires_independent_contact_annotation():
     path=[(-2,0,1),(-1.2,0,1),(-.8,0,1),(-.4,0,1),
           (-.02,0,1),(.2,0,1)]
     unreviewed=run(path)
-    assert unreviewed.status=="unverified_contact_status"
+    assert unreviewed.status=="right_censored"
+    with_documented_camera_coverage=run(
+        path,annotation=VideoAnnotation(complete_video_coverage=True))
+    assert with_documented_camera_coverage.status=="unverified_contact_status"
     assert unreviewed.first_risk_pane=="G"
     assert unreviewed.ballistic_time_to_contact_s>0
     assert unreviewed.observed_geometry_first_contact=="G"
