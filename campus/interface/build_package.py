@@ -253,6 +253,9 @@ def validate():
     assert architecture["original_meshes"]==1379 and architecture["original_gis_features"]==522
     assert architecture["new_campus_triangles"]==0 and architecture["new_surveyed_glazing_area"]==0
     assert set(architecture["feature_edge_overlay"])=={"T","V","D","LRC"}
+    assert architecture["all_route_candidates_count"]==70 and architecture["phaseII_route_candidate_count"]==14
+    assert len(architecture["phaseII_network_disconnection_audit"])==6
+    assert all(case["do_not_extrude_missing_paths"] and not case["source_model_circulation_verified"] for case in architecture["phaseII_network_disconnection_audit"])
     for rel in ["generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
                 "generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
@@ -338,6 +341,8 @@ def build():
         "v76_architectural_buildings":30,"v76_teaching_T":8,"v76_residential_V":15,
         "v76_residential_D":6,"v76_unique_LRC":1,
         "v76_original_geometry_unchanged":True,"v76_no_new_surveyed_windows_balconies_or_paths":True,
+        "v76_complete_environment_candidates":70,"v76_phaseII_source_circulation_candidates":14,
+        "v76_phaseII_dormitory_network_gap_segments":12,
         "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
         "original_geometry_edited":False,"new_geometry_approximate_and_unsurveyed":True,
