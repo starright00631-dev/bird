@@ -32,8 +32,11 @@ simplification, and binary per-pane recognition is still an unfit state.
 
 ## Baseline and falsification protocol
 
-- **Oracle baseline (prior code):** search and reject using every real
-  pane, including unrecognized glass.
+- **Oracle baseline (prior code and preserved direct-call default):**
+  search and reject using every real pane, including unrecognized glass.
+  For backward compatibility, `route(...)` called without a
+  `recognized_glass` argument still computes this *oracle* baseline.
+  `replay` always passes its explicit recognition state instead.
 - **Recognition-gated model (this change):** route with only recognized
   glass and assumed-visible opaque geometry; measure actual physical
   contacts on all panes.

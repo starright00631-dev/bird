@@ -87,3 +87,13 @@ def test_zero_recognition_does_not_invoke_either_planner(monkeypatch):
                    {"hidden":0.},{"hidden":0.5},
                    planner_strategy=strategy)
         assert val["outcome"]=="glass"
+
+def test_legacy_direct_route_is_oracle_comparator_only():
+    window=RectPane("window",0,-1,1,0,2)
+    start=[-2,0,1]
+    goal=[2,0,1]
+    oracle=route(start,[1,0,0],[window],goal,.3,.05)
+    perceived=route(start,[1,0,0],[window],goal,.3,.05,
+                    recognized_glass=set())
+    assert not np.allclose(oracle,goal)
+    np.testing.assert_array_equal(perceived,goal)

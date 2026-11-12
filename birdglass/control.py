@@ -35,14 +35,21 @@ def perceived_surfaces(panes, recognized_glass):
     Opaque geometry is assumed visible (not an empirically calibrated vision
     model). Never pass this subset to the true physical contact calculation.
     """
+    if recognized_glass is None:
+        # Explicit oracle baseline for legacy direct callers, never for replay.
+        return list(panes)
     known=set(recognized_glass)
     return [pane for pane in panes if pane.material=="opaque"
             or (pane.material=="glass" and pane.id in known)]
 
 
 def route(position,heading,panes,destination,span,body,step=.3,
-          recognized_glass=()):
-    """Hypothetical gap search in perceived, not omniscient, geometry."""
+          recognized_glass=None):
+    """Hypothetical perceived-gap search, with a direct-call oracle baseline.
+
+    Omitted known state retains the legacy full-geometry baseline for
+    external callers; replay explicitly passes its recognition state.
+    """
     perceived=perceived_surfaces(panes,recognized_glass)
     if not perceived:
         return np.asarray(destination,float).copy()
