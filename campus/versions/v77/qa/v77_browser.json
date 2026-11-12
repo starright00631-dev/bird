@@ -1,0 +1,10 @@
+{
+  "test": "Full offline v77 GLB browser, visibility and focus control",
+  "pass": true,
+  "page_errors": [],
+  "reported_meshes": "1,382",
+  "paver_toggle_initial": true,
+  "unverified_LRC_joint_hidden": true,
+  "pavers_toggle_visible_mesh_delta": 2,
+  "screenshot_bytes": 486623
+}
