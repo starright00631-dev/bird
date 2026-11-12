@@ -76,6 +76,30 @@ class TestArchitectureV76(unittest.TestCase):
         self.assertEqual(len(self.report['published_evidence']),7)
         self.assertTrue(all(s['limits'] for s in self.report['published_evidence']))
 
+    def test_phaseii_inherited_routes_are_classified_without_fabricated_links(self):
+        self.assertEqual(self.report['phaseII_route_candidate_count'],14)
+        self.assertEqual(self.report['all_route_candidates_count'],70)
+        gaps=self.report['phaseII_network_disconnection_audit']
+        self.assertEqual(len(gaps),6)
+        for k,case in enumerate(gaps,1):
+            self.assertEqual(case['dorm'],f'D{k}')
+            self.assertGreater(case['dorm_to_radial_plan_gap_model_units'],15)
+            self.assertLess(case['dorm_to_radial_plan_gap_model_units'],30)
+            self.assertGreater(case['radial_to_central_ring_gap_model_units'],35)
+            self.assertLess(case['radial_to_central_ring_gap_model_units'],50)
+            self.assertAlmostEqual(case['inferred_connector_to_radial_gap_model_units'],0,places=4)
+            self.assertFalse(case['source_model_circulation_verified'])
+            self.assertTrue(case['do_not_extrude_missing_paths'])
+            for field in ('dorm_to_radial_local_points','radial_to_ring_local_points'):
+                p=case[field]
+                self.assertEqual(len(p),2)
+                self.assertTrue(all(len(x)==3 and all(np.isfinite(v) for v in x) for x in p))
+            rec=next(b for b in self.report['building_records'] if b['id']==f'D{k}')
+            self.assertGreater(rec['nearest_walk_or_road'][0]['xy_gap_model_units'],600)
+            self.assertLess(rec['nearest_approach_candidates'][0]['xy_gap_model_units'],30)
+            self.assertTrue(all(not x['physical_connection_verified'] for x in rec['nearest_approach_candidates']))
+            self.assertTrue(any(x['source_group']=='phaseII_GLTF_inferred' for x in rec['nearest_approach_candidates']))
+
     def test_determinism(self):
         old_atlas=ATLAS.read_bytes();old_lines=LINES.read_bytes()
         build()
