@@ -19,7 +19,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 def check(page,label,offline=False):
     failures=[];console=[]
     page.on("pageerror",lambda e:failures.append(str(e)))
-    page.on("console",lambda e:console.append(e.text) if e.type=="error" else None)
+    # Publisher-hosted photo thumbnails are intentionally offline-blocked here;
+    # do not mistake those expected HTTPS request failures for missing local GLB/GIS.
+    page.on("console",lambda e:console.append(e.text) if e.type=="error" and "net::ERR_FAILED" not in e.text and "net::ERR_BLOCKED_BY_CLIENT" not in e.text else None)
     page.wait_for_function("window.__BNBU_READY__ === true",timeout=130000)
     page.wait_for_function("window.__BNBU_DEBUG__?.hasGIS() === true",timeout=30000)
     state=page.evaluate("({n:window.__BNBU_DEBUG__.meshCount(),l:window.__BNBU_DEBUG__.layerCount(),gis:window.__BNBU_DEBUG__.hasGIS()})")
