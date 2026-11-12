@@ -14,7 +14,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v75"
+NAME = "BNBU_Campus_Full_v76"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
@@ -39,6 +39,8 @@ ASSETS = {
     "generated/BNBU_v74_CONNECTION_RESEARCH_SUMMARY.json": "generated/BNBU_v74_CONNECTION_RESEARCH_SUMMARY.json",
     "generated/BNBU_v75_BOARDWALK_GLASS_INFILL_DISPLAY_ONLY.glb": "generated/BNBU_v75_BOARDWALK_GLASS_INFILL_DISPLAY_ONLY.glb",
     "generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json": "generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json",
+    "generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json": "generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json",
+    "generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb": "generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb",
     "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson": "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson",
     "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json": "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json",
     "history/BNBU_v65_DISPLAY_Y_UP.glb": "generated/BNBU_v65_DISPLAY_Y_UP.glb",
@@ -70,6 +72,8 @@ ASSETS = {
     "src/test_connections_v74.py": "test_connections_v74.py",
     "src/build_bridges_v75.py": "build_bridges_v75.py",
     "src/test_bridges_v75.py": "test_bridges_v75.py",
+    "src/audit_architecture_v76.py": "audit_architecture_v76.py",
+    "src/test_architecture_v76.py": "test_architecture_v76.py",
     "src/test_v65.py": "test_v65.py",
     "src/test_v66.py": "test_v66.py",
     "src/test_waterfront_v69.py": "test_waterfront_v69.py",
@@ -84,9 +88,10 @@ ASSETS = {
     "docs/TERRAIN_3D_V73.md": "TERRAIN_3D_V73.md",
     "docs/JUNCTIONS_V74_DEEP_COMPARISON.md": "JUNCTIONS_V74_DEEP_COMPARISON.md",
     "docs/BRIDGE_WINDOW_COMPONENTS_V75.md": "BRIDGE_WINDOW_COMPONENTS_V75.md",
+    "docs/ARCHITECTURE_V76_RECOVERY.md": "ARCHITECTURE_V76_RECOVERY.md",
 }
 
-README = """# BNBU 校园完整三维模型与查看器 v75
+README = """# BNBU 校园完整三维模型与查看器 v76
 
 ## 最简单的打开方式
 
@@ -124,7 +129,7 @@ v69 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴�
 
 新增 v72：根据16张不同位置真实校园照片识别和核对水岸、道路、LRC外立面与桥的连接类型；这些图片是原网站的链接，未获得摄影配准，因此不能据此修改校园绝对XY坐标。可独立关闭的两侧坡道、楼梯扶手沿旧 GLB 顶点数据中的真实三维曲线逐点放置；扶手高度为典型示意，非现场测量。3处 3D 高差（0.24/0.64/0.64 模型单位）仍以检查标记呈现，并非新造坡道。详情见 docs/PHOTO_CONNECTION_AUDIT_V72.md 和 evidence/connection_photos_v72.json。浏览三维模型完全离线；“证据和数据”里的远程照片缩略图需要联网后才会加载。切勿将这些示意扶手算入可用于鸟撞风险的玻璃面积。
 
-新增 v73：基于原 v67 约30米间隔的独立 DSM，在已有 3,737 段10米插值等高线上产生真实 glTF LINES 三维几何，共 7,474 顶点；原 DSM 顶点三角面及校园 GIS 全部不改。可关闭线段，仅为可视化抬高 0.5m。山体绝对 Z 与旧校园相对 Z 未配准，不作校园地形/道路/建筑物的测绘修复。\n\nv74 重点：全面核对 56 条道路/步道的 1,540 个组合与6条高架连桥至地面道路的336个组合。用 GLB 原始三角面计算实际连接端的相对 Z 值，保留47处3D排查标记、23张去重来源照片索引及详细证据说明；所有标记不是新造路/桥，不是现场测量。西岸仍有0.64相对模型高差，东岸坡道到WALK044实际局部高差约0.049而不是整坡道最大高差0.88。无法通过照片推断的实际坡道/道路/水岸不做补建。\n\n新增 v75：区分有透明栏板的主湖水上步桥V60与六段仅有旧桥板模型的V52教学楼二层连接。依据官方开放日照片辨识湖桥玻璃栏板类型，沿已有340点栏杆边界生成可关闭的两侧半透明玻璃示意几何；高度、玻璃分格和尺寸非实测，不能用于鸟撞风险面积。逐个计算了V52 12处桥端的相对Z，按实际旧建筑轮廓修正四组旧端点标签倒置。V52_03两端源高程不同，严禁自动修平。全部新增玻璃独立于原1,379个源模型三角网格，原湖岸、道路、连桥及GIS不变。参见docs/BRIDGE_WINDOW_COMPONENTS_V75.md和generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json。\n\n源码：https://github.com/starright00631-dev/bird/tree/main/campus
+新增 v73：基于原 v67 约30米间隔的独立 DSM，在已有 3,737 段10米插值等高线上产生真实 glTF LINES 三维几何，共 7,474 顶点；原 DSM 顶点三角面及校园 GIS 全部不改。可关闭线段，仅为可视化抬高 0.5m。山体绝对 Z 与旧校园相对 Z 未配准，不作校园地形/道路/建筑物的测绘修复。\n\nv74 重点：全面核对 56 条道路/步道的 1,540 个组合与6条高架连桥至地面道路的336个组合。用 GLB 原始三角面计算实际连接端的相对 Z 值，保留47处3D排查标记、23张去重来源照片索引及详细证据说明；所有标记不是新造路/桥，不是现场测量。西岸仍有0.64相对模型高差，东岸坡道到WALK044实际局部高差约0.049而不是整坡道最大高差0.88。无法通过照片推断的实际坡道/道路/水岸不做补建。\n\n新增 v75：区分有透明栏板的主湖水上步桥V60与六段仅有旧桥板模型的V52教学楼二层连接。依据官方开放日照片辨识湖桥玻璃栏板类型，沿已有340点栏杆边界生成可关闭的两侧半透明玻璃示意几何；高度、玻璃分格和尺寸非实测，不能用于鸟撞风险面积。逐个计算了V52 12处桥端的相对Z，按实际旧建筑轮廓修正四组旧端点标签倒置。V52_03两端源高程不同，严禁自动修平。全部新增玻璃独立于原1,379个源模型三角网格，原湖岸、道路、连桥及GIS不变。参见docs/BRIDGE_WINDOW_COMPONENTS_V75.md和generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json。\n\n新增 v76：根据原1,379项源模型中的真实楼板/屋顶/外墙/框架和内部构件，在不更改任何原始三角网格的前提下，恢复T1-T8教学楼、V15-V29一期宿舍、D1-D6二期宿舍以及LRC共30栋建筑的类型差异与结构棱线。生成由源模型开放边/锐边提取的四类别线稿3D GLB，四类独立着色；不能把显示的线条当成建筑新材料或实地窗格。为每栋建筑比较与56段WALK/ROAD和5处旧模型湖面的平面距离，但这些只是建筑屋顶投影的候选周边关系，绝不声称实地门口连通。LRC白色斜撑、连续玻璃/悬挑立面，T教学楼窗带，V与D宿舍各自屋面和楼层边缘因此能独立查看；未证实的屋顶、门窗、阳台不凭空新增。资料和算法选择见docs/ARCHITECTURE_V76_RECOVERY.md。\n\n源码：https://github.com/starright00631-dev/bird/tree/main/campus
 """
 
 SERVER = '''"""Start a standard-library server on localhost only."""
@@ -185,6 +190,7 @@ def assemble_standalone(template,css,js):
         ("v71","generated/BNBU_v71_CONNECTED_LAKEFRONT.glb"),
         ("dsm","generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb"),
         ("v75-glass","generated/BNBU_v75_BOARDWALK_GLASS_INFILL_DISPLAY_ONLY.glb"),
+        ("v76-edges","generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb"),
     ]:
         b64=base64.b64encode((PACKAGE/rel).read_bytes()).decode("ascii")
         tags.append('<script id="embedded-'+key+'" type="application/octet-stream">'+b64+'</script>')
@@ -200,6 +206,7 @@ def assemble_standalone(template,css,js):
         ("photos-v72","evidence/connection_photos_v72.json"),
         ("v74-hotspots","generated/BNBU_v74_LOCAL_3D_JUNCTION_HOTSPOTS.geojson"),
         ("v75-atlas","generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json"),
+        ("v76-architecture","generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json"),
     ]:
         content=(PACKAGE/rel).read_text(encoding="utf-8").replace("</script","<\\/script")
         tags.append('<script id="embedded-'+key+'" type="application/json">'+content+'</script>')
@@ -241,12 +248,18 @@ def validate():
     assert atlas["v75_glass_infill"]["glass_panel_count_verified"] is None
     assert atlas["v60_lakefront_boardwalk"]["source_pier_model_count"]==13
     assert atlas["gates"]["bird_collision_input_added"] is False
+    architecture=json.loads((PACKAGE/"generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json").read_text())
+    assert architecture["version"]=="v76" and architecture["building_count"]==30
+    assert architecture["original_meshes"]==1379 and architecture["original_gis_features"]==522
+    assert architecture["new_campus_triangles"]==0 and architecture["new_surveyed_glazing_area"]==0
+    assert set(architecture["feature_edge_overlay"])=={"T","V","D","LRC"}
     for rel in ["generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
                 "generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
                 "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
                 "generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb",
                 "generated/BNBU_v75_BOARDWALK_GLASS_INFILL_DISPLAY_ONLY.glb",
+                "generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb",
                 "source/v64/BNBU_v64_ACTIVE.glb"]:
         data=(PACKAGE/rel).read_bytes()
         assert data[:4]==b"glTF" and struct.unpack_from("<II",data,4)==(2,len(data))
@@ -309,7 +322,7 @@ def build():
     make_packaged_src_portable()
     validate()
     manifest={
-        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v75 lakebridge transparent balustrade visual-only and 7-bridge component atlas; campus v71 geometry unchanged","external_DSM":"v67",
+        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v76 source-accurate crease edges and typed architectural materials + 30 building environment audit; campus v71 geometry unchanged","external_DSM":"v67",
         "mesh_count":1379,"original_mesh_count":1377,"GIS_feature_count":522,
         "v71_source_bounded_pavement_seams":2,"audited_junction_pairs":11,
         "v72_optional_source_height_rail_profiles":4,"v72_observed_distinct_photo_links":16,
@@ -322,6 +335,9 @@ def build():
         "v75_source_lakebridge_railing_points":340,"v75_illustrative_glass_mesh_quads_not_panes":339,
         "v75_source_lakebridge_pier_model_count":13,"v75_surveyed_glass_surface_count":0,
         "v75_original_campus_GLB_untouched":True,
+        "v76_architectural_buildings":30,"v76_teaching_T":8,"v76_residential_V":15,
+        "v76_residential_D":6,"v76_unique_LRC":1,
+        "v76_original_geometry_unchanged":True,"v76_no_new_surveyed_windows_balconies_or_paths":True,
         "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
         "original_geometry_edited":False,"new_geometry_approximate_and_unsurveyed":True,
