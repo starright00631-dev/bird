@@ -265,7 +265,18 @@ function setSourceSurfaceMaterial(mesh,color){
 }
 function styleExistingLakesideLand(){
  for(const m of meshes){
-  if(m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'){
+  if(m.name==='LAKE_00'||m.name==='LAKE_01'){
+   // Published campus images show olive-green water, rather than cyan fill.
+   // Display balancing only, not water reflectance measurement.
+   const materials=Array.isArray(m.material)?m.material:[m.material];
+   for(const mat of materials){
+    if(mat?.isMeshStandardMaterial){
+     mat.color.setHex(0x78917b);mat.roughness=.44;mat.metalness=.015;mat.needsUpdate=true;
+    }
+   }
+  }else if(/^V50_LAKE_0[01]_WATER_SHORE_015/.test(m.name)){
+   m.material=new THREE.MeshBasicMaterial({color:0x9da89e,side:THREE.DoubleSide});
+  }else if(m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'){
    setSourceSurfaceMaterial(m,0xb8875c);
   }else if(m.name==='V13_PHASEI_GREEN_CORRECTED_lrc_lakeside_grass'){
    setSourceSurfaceMaterial(m,0x83ad79);
@@ -346,6 +357,20 @@ $('show-photo-proxies').addEventListener('change',e=>{
  if(lakefrontProxy)lakefrontProxy.visible=e.target.checked;
 });
 
+function focusBoardwalkDetailed(){
+ if(!campus)return;
+ const deck=meshes.find(m=>m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE');
+ if(!deck)return;
+ const center=boxWorld(deck).getCenter(new THREE.Vector3());
+ const target=center.clone().add(new THREE.Vector3(0,1,0));
+ orbit.target.copy(target);
+ // Inspection camera only; not a modification of source structure.
+ cam.up.set(0,1,0);
+ cam.position.copy(target).add(new THREE.Vector3(-28,27,53));
+ cam.near=.03;cam.far=3000;cam.updateProjectionMatrix();
+ cam.lookAt(target);orbit.update();
+ if(gis)focusGIS(deck.name);
+}
 function focusWaterfront(name){
  if(!campus)return;
  const target=meshes.find(m=>m.name===name);
@@ -376,7 +401,7 @@ function focusPreset(key){
  if(key==='wetland'){focusWaterfront('V55_P2_ARCHIVED_WETLAND_RESTORED_WATER_NOT_SURVEYED');return;}
  if(key==='ridge'){focusGroup('terrain_unsurveyed');return;}
  if(key==='roads'){focusGroup('vehicle_roads_unsurveyed');return;}
- if(key==='boardwalk'){focusWaterfront('V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE');return;}
+ if(key==='boardwalk'){focusBoardwalkDetailed();return;}
  let subset=[];
  if(key==='cc')subset=meshes.filter(m=>/(^MAIN_CC$|^ROOF_(DECK|PARAPET)_CC$|STORYEDGE_CC_|_CC_)/i.test(m.name));
  if(key==='phase1'||key==='phase2'){
