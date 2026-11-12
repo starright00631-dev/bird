@@ -19,3 +19,38 @@ Independent official existence evidence:
 
 ## Geometry refinement gate
 For **each** change, commit together: source evidence + its precise reference and camera/geospatial control points, changed 3D meshes and GIS layers, before/after render, residual or uncertainty checks, and updated tests. Separate road surface, elevated deck, pedestrian bridge, shoreline, and hill volumes by actual geometry. Only promote excluded CTV geometry after verification of its location, identity, roof, and adjacent carriageway. This import preserves inherited inaccuracies openly; it does not claim reconstruction has been validated.
+
+## v65 coordinate/display integrity patch (not terrain reconstruction)
+
+The inherited v64 meshes use **X=easting, Y=northing, Z=relative altitude**, while glTF/Three.js expects **Y-up**. The former viewer displayed this scene without the required coordinate conversion. Run:
+
+```bash
+python campus/build_v65.py
+python -m unittest discover -s campus -p 'test_v65.py' -v
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000/campus/viewer.html`. The code generates
+`campus/generated/BNBU_v65_DISPLAY_Y_UP.glb` (GLB Y-up root transform),
+`BNBU_v65_RENDER_REFERENCES.geojson` (explicit render-node aliases),
+and `v65_integrity_manifest.json`. The compressed **v64 source is immutable**.
+A GitHub Actions artifact on each update includes the generated v65 scene.
+
+Ten old lake/shore GIS display-node names are reconciled against inherited
+`LAKE_00`–`LAKE_04` and `SHORE_00`–`SHORE_04` meshes. **102 unmatched
+legacy node references remain unresolved**, rather than being fabricated.
+No lake margins, mountain gradients, missing paths, CTV villa geometry, or
+glass panels have been invented. Root-axis repair is necessary for correct
+viewing but does **not** make the model topographically accurate.
+
+### Remaining evidence-gated reconstruction
+- Orthorectified aerial image + ground control to compare vehicle road and
+  pedestrian paving surfaces; classify roads/decks/bridges by level and support.
+- DEM or surveyed control points to revise ridge slope, vertical relief,
+  shore profile and water surface in the **same** vertical reference frame.
+- Registered CTV oblique imagery / overhead roof geometry to verify whether a
+  small building exists and whether a vehicle carriageway borders it.
+  The name “校长别墅” is **unverified**; keep its v64 source isolated.
+- Building-specific façade photos and camera registration before assigning
+  glazing, façade finish or collision-relevant transparent area.
+
