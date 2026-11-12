@@ -128,6 +128,27 @@ try:
                     print("FOUND CURRENT PMC S3:",url)
                     print("COLUMNS:",columns)
                     print("ROWS:",len(rows),"SHA256:",audit["sha256"])
+                    # The authors also publish their analysis code as
+                    # supplementary Word file 5. Read-only acquisition;
+                    # a DOCX container is validated, never executed.
+                    companion=[u for u in urls if "peerj-10-14604-s005.docx"
+                               in u.lower()]
+                    for doc in companion:
+                        try:
+                            if doc.startswith("s3://pmc-oa-opendata/"):
+                                doc=BASE+"/"+doc[len("s3://pmc-oa-opendata/"):]
+                            if not doc.startswith(BASE+"/"):
+                                raise ValueError("Unexpected document host")
+                            doc_bytes=get(doc,200000)
+                            if doc_bytes[:4]!=b"PK\x03\x04":
+                                raise ValueError("Companion is not an OOXML archive")
+                            (OUT/"peerj_14604_supp5_published_analysis.docx").write_bytes(doc_bytes)
+                            audit["published_code_source_url"]=doc
+                            audit["published_code_sha256"]=hashlib.sha256(doc_bytes).hexdigest()
+                            print("FOUND PUBLISHED ANALYSIS SCRIPT:",doc)
+                        except Exception as err:
+                            audit["attempts"].append({"companion":doc,
+                                "error":type(err).__name__+": "+str(err)[:160]})
                     break
                 except Exception as exc:
                     audit["attempts"].append({"url":url,
