@@ -74,7 +74,11 @@ def build():
     projector = Transformer.from_crs("EPSG:4326","EPSG:32649",always_xy=True).transform
     deck = transform(projector,shape(one_feature(data,BOARD)["geometry"]))
     lake = transform(projector,shape(one_feature(data,"LAKE_00","water_existing_v44_not_surveyed")["geometry"]))
-    stair = transform(projector,shape(one_feature(data,STAIR)["geometry"]))
+    stair_features=[f for f in data["features"] if f["properties"].get("model_node")==STAIR]
+    # Existing GIS contains stair body plus individual tread/edge records.
+    # Use the primary, largest 2D body polygon rather than repeated tread views.
+    assert len(stair_features)>=16
+    stair=max((transform(projector,shape(f["geometry"])) for f in stair_features),key=lambda g:g.area)
     assert deck.is_valid and lake.is_valid and stair.is_valid
     assert 485 < deck.area < 492 and 9500 < lake.area < 9700
     overlap = deck.intersection(lake).area
