@@ -1,6 +1,6 @@
 ## BNBU campus 3D viewer — current v76
 
-**[Open the current online campus viewer](https://starright00631-dev.github.io/bird/)** · [Offline ZIP and verified HTML builds](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml) · [3D modeling source and evidence](campus/README.md)
+**[Download the verified offline viewer/ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml)** · [Online viewer (requires Pages activation)](https://starright00631-dev.github.io/bird/) · [3D modeling source and evidence](campus/README.md)
 
 The repository's old `campus/viewer.html` pointed to missing generated files and a CDN-based v66 viewer. It has been replaced by a redirect to the **self-contained v76** site. The online viewer is built and tested by GitHub Actions from the same HTML as the verified offline download, not from raw GLB references in GitHub's code browser.
 
