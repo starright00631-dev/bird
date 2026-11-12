@@ -14,7 +14,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v72"
+NAME = "BNBU_Campus_Full_v73"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
@@ -31,6 +31,8 @@ ASSETS = {
     "generated/BNBU_v66_RESOLVED_REFERENCES.geojson": "generated/BNBU_v66_RESOLVED_REFERENCES.geojson",
     "generated/v66_provenance.json": "generated/v66_provenance.json",
     "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb": "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
+    "generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb": "generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb",
+    "generated/BNBU_v73_DSM_CONTOUR_PROVENANCE.json": "generated/BNBU_v73_DSM_CONTOUR_PROVENANCE.json",
     "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson": "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson",
     "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json": "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json",
     "history/BNBU_v65_DISPLAY_Y_UP.glb": "generated/BNBU_v65_DISPLAY_Y_UP.glb",
@@ -56,6 +58,8 @@ ASSETS = {
     "src/test_connection_profiles_v72.py": "test_connection_profiles_v72.py",
     "src/connection_v71_control.json": "connection_v71_control.json",
     "src/build_terrain_v67.py": "build_terrain_v67.py",
+    "src/build_terrain_contours_v73.py": "build_terrain_contours_v73.py",
+    "src/test_terrain_contours_v73.py": "test_terrain_contours_v73.py",
     "src/test_v65.py": "test_v65.py",
     "src/test_v66.py": "test_v66.py",
     "src/test_waterfront_v69.py": "test_waterfront_v69.py",
@@ -67,9 +71,10 @@ ASSETS = {
     "docs/LAKEFRONT_V70_CRITICAL_COMPARISON.md": "LAKEFRONT_V70_CRITICAL_COMPARISON.md",
     "docs/JUNCTION_V71_AUDIT.md": "JUNCTION_V71_AUDIT.md",
     "docs/PHOTO_CONNECTION_AUDIT_V72.md": "PHOTO_CONNECTION_AUDIT_V72.md",
+    "docs/TERRAIN_3D_V73.md": "TERRAIN_3D_V73.md",
 }
 
-README = """# BNBU 校园完整三维模型与查看器 v72
+README = """# BNBU 校园完整三维模型与查看器 v73
 
 ## 最简单的打开方式
 
@@ -107,7 +112,7 @@ v69 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴�
 
 新增 v72：根据16张不同位置真实校园照片识别和核对水岸、道路、LRC外立面与桥的连接类型；这些图片是原网站的链接，未获得摄影配准，因此不能据此修改校园绝对XY坐标。可独立关闭的两侧坡道、楼梯扶手沿旧 GLB 顶点数据中的真实三维曲线逐点放置；扶手高度为典型示意，非现场测量。3处 3D 高差（0.24/0.64/0.64 模型单位）仍以检查标记呈现，并非新造坡道。详情见 docs/PHOTO_CONNECTION_AUDIT_V72.md 和 evidence/connection_photos_v72.json。浏览三维模型完全离线；“证据和数据”里的远程照片缩略图需要联网后才会加载。切勿将这些示意扶手算入可用于鸟撞风险的玻璃面积。
 
-源码：https://github.com/starright00631-dev/bird/tree/main/campus
+新增 v73：基于原 v67 约30米间隔的独立 DSM，在已有 3,737 段10米插值等高线上产生真实 glTF LINES 三维几何，共 7,474 顶点；原 DSM 顶点三角面及校园 GIS 全部不改。可关闭线段，仅为可视化抬高 0.5m。山体绝对 Z 与旧校园相对 Z 未配准，不作校园地形/道路/建筑物的测绘修复。\n\n源码：https://github.com/starright00631-dev/bird/tree/main/campus
 """
 
 SERVER = '''"""Start a standard-library server on localhost only."""
@@ -166,7 +171,7 @@ def assemble_standalone(template,css,js):
     tags=[]
     for key,rel in [
         ("v71","generated/BNBU_v71_CONNECTED_LAKEFRONT.glb"),
-        ("dsm","generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb"),
+        ("dsm","generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb"),
     ]:
         b64=base64.b64encode((PACKAGE/rel).read_bytes()).decode("ascii")
         tags.append('<script id="embedded-'+key+'" type="application/octet-stream">'+b64+'</script>')
@@ -210,6 +215,7 @@ def validate():
                 "generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
                 "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
+                "generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb",
                 "source/v64/BNBU_v64_ACTIVE.glb"]:
         data=(PACKAGE/rel).read_bytes()
         assert data[:4]==b"glTF" and struct.unpack_from("<II",data,4)==(2,len(data))
@@ -217,6 +223,33 @@ def validate():
     archived=(PACKAGE/"source/archives/BNBU_v64_ACTIVE.glb.xz").read_bytes()
     assert lzma.decompress(archived)==(PACKAGE/"source/v64/BNBU_v64_ACTIVE.glb").read_bytes()
     assert (PACKAGE/"双击查看_校园3D.html").stat().st_size>18_000_000
+
+def make_packaged_src_portable():
+    """Make extracted src/ scripts work with the packaged generated/ and source/ layout."""
+    root_expr='(Path(__file__).resolve().parent.parent if (Path(__file__).resolve().parent.parent / "manifest.json").exists() else Path(__file__).resolve().parent)'
+    for f in (PACKAGE/"src").glob("*.py"):
+        s=f.read_text(encoding="utf-8")
+        if f.name=="build_terrain_contours_v73.py":
+            s=s.replace('DATA=HERE/"generated"','DATA=HERE/"generated" if (HERE/"generated").exists() else HERE.parent/"generated"')
+        elif f.name=="test_terrain_contours_v73.py":
+            pass
+        else:
+            s=s.replace("ROOT=Path(__file__).resolve().parent","ROOT="+root_expr)
+            s=s.replace("ROOT = Path(__file__).resolve().parent","ROOT = "+root_expr)
+            s=s.replace('OUT = Path(__file__).resolve().parent / "generated"','OUT = '+root_expr+' / "generated"')
+            if f.name=="build_v65.py":
+                s=s.replace('ASSETS = ROOT / "assets"','ASSETS = ROOT / "assets" if (ROOT / "assets").exists() else ROOT / "source" / "archives"')
+            if f.name=="build_terrain_v67.py":
+                s=s.replace('SOURCE_GEOJSON = ROOT / "assets" / "BNBU_v64_ACTIVE.geojson.xz"','SOURCE_GEOJSON = (ROOT / "assets" if (ROOT / "assets").exists() else ROOT / "source" / "archives") / "BNBU_v64_ACTIVE.geojson.xz"')
+                s=s.replace('uncompressed = ROOT / "assets" / "BNBU_v64_ACTIVE.geojson"','uncompressed = (ROOT / "assets" if (ROOT / "assets").exists() else ROOT / "source" / "v64") / "BNBU_v64_ACTIVE.geojson"')
+            if f.name=="build_connection_v71.py":
+                s=s.replace('CONTROL=ROOT/"connection_v71_control.json"','CONTROL=(ROOT/"connection_v71_control.json" if (ROOT/"connection_v71_control.json").exists() else ROOT/"src"/"connection_v71_control.json")')
+            if f.name=="build_connection_profiles_v72.py":
+                s=s.replace('PHOTOS=ROOT/"connection_photos_v72.json"','PHOTOS=(ROOT/"connection_photos_v72.json" if (ROOT/"connection_photos_v72.json").exists() else ROOT/"evidence"/"connection_photos_v72.json")')
+            if f.name=="validate_scene.py":
+                s=s.replace("A = Path(__file__).resolve().parent / 'assets'",'ROOT = '+root_expr+"\nA = ROOT / 'assets' if (ROOT / 'assets').exists() else ROOT / 'source' / 'v64'")
+                s=s.replace('def raw(name):\n    p = A / name','def raw(name):\n    p = A / name')
+        f.write_text(s,encoding="utf-8")
 
 def build():
     bundled=HERE/"dist/viewer.bundle.js"
@@ -242,12 +275,15 @@ def build():
     (PACKAGE/"启动查看器.bat").write_text(BAT,encoding="utf-8")
     sh=PACKAGE/"start_viewer.sh"
     sh.write_text(SH,encoding="utf-8");sh.chmod(sh.stat().st_mode|stat.S_IXUSR)
+    make_packaged_src_portable()
     validate()
     manifest={
-        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v72 viewer plus model v71 exact GLB + 4 source-sampled handrails; no source geometry edits","external_DSM":"v67",
+        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v73 DSM contour lines; campus v71 remains unchanged","external_DSM":"v67",
         "mesh_count":1379,"original_mesh_count":1377,"GIS_feature_count":522,
         "v71_source_bounded_pavement_seams":2,"audited_junction_pairs":11,
         "v72_optional_source_height_rail_profiles":4,"v72_observed_distinct_photo_links":16,
+        "v73_dsm_3d_interpolated_contour_segments":3737,"v73_dsm_3d_contour_vertices":7474,
+        "v73_campus_geometry_edited":False,"v73_original_dsm_source_preserved":True,
         "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
         "original_geometry_edited":False,"new_geometry_approximate_and_unsurveyed":True,
