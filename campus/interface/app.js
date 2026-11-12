@@ -649,6 +649,7 @@ async function switchScene(which){
 }
 $('choose-campus').addEventListener('click',()=>switchScene('campus').catch(showError));
 $('choose-dsm').addEventListener('click',()=>switchScene('dsm').catch(showError));
+$('show-v73-dsm-contours').addEventListener('change',()=>{if(dsm){const c=dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED');if(c)c.visible=$('show-v73-dsm-contours').checked;}redraw();});
 
 async function ensureCampus(){
  progress('读取完整校园网格…');
@@ -658,8 +659,11 @@ async function ensureCampus(){
 }
 async function ensureDSM(){
  progress('读取遥感地形参考…');
- const gltf=await loadScene('dsm','generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb');
+ const gltf=await loadScene('dsm','generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb');
  dsm=gltf.scene;scene.add(dsm);
+ const contourMesh=dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED');
+ if(!contourMesh)throw new Error('v73 3D contour geometry missing');
+ contourMesh.visible=$('show-v73-dsm-contours').checked;
  dsm.visible=current==='dsm';
  dsmMeta=await loadJson('dsm-meta','generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json');
  try{contours=await loadJson('contours','generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson');}catch(e){console.warn('DSM contour unavailable',e);}
@@ -845,8 +849,8 @@ async function start(){
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v72';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
+  window.__BNBU_VERSION__='v73';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
   loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
   loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});
