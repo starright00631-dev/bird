@@ -16,6 +16,9 @@ Mechanistic, **fixed-facade** research on birds navigating glass and surrounding
 | `birdglass/behavior_fit.py` | Lag/gain estimation with **held-out individual birds**, equal time support across lags, and two baselines |
 | `birdglass/pose_contact.py` | Column-mapped, metric 3D tracked head/wing/body landmarks and first contact of measured moving keypoint envelopes |
 | `birdglass/risk.py` | Event observation identifiability: approach traffic × conditional contact × observer discovery |
+| `birdglass/reachability.py` | Optional forward-screened gap planning, with finite latency/acceleration and full structural collision checks |
+| `birdglass/source_splits.py` | Real 3D-POP trial/video/subject overlap graph and leakage-safe source folds |
+| `birdglass/stereo_tracks.py` | Published 2026 bird-flight wide-CSV schema to metric pose tracks, strictly separating mm positions and pixel sizes |
 
 Reproduce unit and regression checks:
 
@@ -35,6 +38,8 @@ The following are **different** types of evidence and cannot be collapsed into a
 - External metric 3D flight/keypoint data, with required field mapping in `docs/MEASURED_WING_POSE_ADAPTER.md`.
 - Behavior parameter estimation protocol in `docs/BEHAVIOR_FIT_PROTOCOL.md`; unit tests recover known synthetic values, but **no real independent annotated gap-aim flight records have been fitted here**.
 - Selected historical numerical sensitivity tests and provenance in `results/` and `docs/`. These are scenario evidence, not BNBU glass-specific forecasts.
+
+The 3D-POP source is mainly pigeon **ground/locomotor posture**, not flight or glass avoidance. Its real metadata are used **only to audit evaluation leakage**. The 2026 stereo bird-flight CSVs have a schema adapter but the raw files are not yet in this repository.
 
 The archived larger v0.4 multi-module simulator is **not fully migrated**. See `docs/IMPORT_STATUS.md`. Current source code, not archived numerical output or documentation alone, defines the reproducible implementation.
 

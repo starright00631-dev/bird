@@ -12,6 +12,13 @@ archived historical research code has **not** been imported.
   spectral R/T and species cone catches remain explicit external inputs.
 - A simplified delayed heading/gap controller with corrected zero-delay
   command behavior and physical rectangular pane attention.
+- Two explicit planning modes (geometric baseline and dynamically screened),
+  with non-finding abstention and paired whole-structure risk accounting.
+- Real 59-row 3D-POP source metadata overlap audit and source-graph folds;
+  this dataset primarily documents pigeon ground locomotion, NOT flight.
+- Published wide 2026 stereo-bird flight CSV schema adapter (mm 3D points,
+  pixel box sizes excluded), with missingness and identity-certification gates.
+  Raw flight records have NOT been acquired.
 - A paired whole-facade policy evaluation of *both* glass and opaque contact,
   without converting unmeasured cue effects into efficacy estimates.
 - Strict schema for individual-held-out lag/gain estimation with matched

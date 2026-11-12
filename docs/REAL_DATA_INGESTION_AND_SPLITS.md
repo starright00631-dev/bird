@@ -2,6 +2,13 @@
 
 ## 1. Genuine 3D-POP source audit (not synthetic data)
 
+**Domain restriction:** Naik et al.'s 3D-POP primarily records freely walking
+pigeons, not recorded mid-air approaches to windows. A subsequent dataset
+description explicitly calls these birds "freely-moving (i.e. walking)".
+Source: https://link.springer.com/article/10.1007/s11263-024-02074-y .
+Only the metadata format and leakage graph are used here; these recordings
+must NOT calibrate flight velocity, wingbeat dynamics, or glass perception.
+
 The included `data/external/3dpop_public_metadata.csv` is copied with
 attribution from the published open repository
 `alexhang212/Dataset-3DPOP/Dataset/Pop3DMetadata.csv`, Naik et al.,
