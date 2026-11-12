@@ -31,6 +31,8 @@ jobs:
         run: python campus/build_v66.py
       - name: Verify all 1377 meshes remain unchanged and all 102 historical GIS links resolve
         run: python -m unittest discover -s campus -p 'test_v66.py' -v
+      - name: Check HTML viewer module syntax and generated-asset links
+        run: python campus/test_viewer_v66.py
       - uses: actions/upload-artifact@v4
         with:
           name: BNBU-v64-source-v66-layered-scene-and-viewer
