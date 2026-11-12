@@ -1,8 +1,9 @@
-name: BNBU v76 building identity, source edge reconstruction and environment connection verification
+name: BNBU v76 online viewer deployment, offline QA and campus integrity
 on:
   push:
     paths:
       - "campus/interface/**"
+      - "campus/viewer.html"
       - "campus/build_connection_profiles_v72.py"
       - "campus/test_connection_profiles_v72.py"
       - "campus/build_terrain_contours_v73.py"
@@ -24,6 +25,7 @@ on:
   pull_request:
     paths:
       - "campus/interface/**"
+      - "campus/viewer.html"
       - ".github/workflows/campus-package.yml"
   workflow_dispatch:
 
@@ -152,6 +154,16 @@ jobs:
           python -m playwright install chromium --with-deps
       - name: Browser smoke test — standalone file and local HTTP viewer, offline
         run: python campus/interface/test_browser.py
+      - name: Construct hosted viewer and validate Pages URLs in real Chromium
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          python campus/interface/build_pages_site.py
+          python campus/interface/test_pages_site.py
+      - name: Upload self-contained GitHub Pages viewer
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/pages-site
       - uses: actions/upload-artifact@v4
         with:
           name: BNBU-v76-browser-screenshots-and-report
@@ -167,3 +179,23 @@ jobs:
           name: BNBU-v76-double-click-HTML
           path: dist/BNBU_Campus_Full_v76/双击查看_校园3D.html
           retention-days: 30
+
+
+  deploy-pages:
+    name: Deploy verified v76 viewer to GitHub Pages
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build-and-verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check GitHub Pages setup
+        uses: actions/configure-pages@v5
+      - name: Deploy exact HTML tested by offline and hosted-path Chromium QA
+        id: deployment
+        uses: actions/deploy-pages@v4
