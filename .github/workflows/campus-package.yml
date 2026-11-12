@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: bnbu-v72-viewer-${{ github.head_ref || github.ref }}
+  group: bnbu-v72-viewer-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 permissions:
