@@ -66,8 +66,8 @@ class TestArchitectureV76(unittest.TestCase):
         # A representative edge may only use vertices on the original mesh.
         edges=feature_edges(source.triangles('LRC_DIAGONAL_BRACE_0_0_16'))
         old=source.triangles('LRC_DIAGONAL_BRACE_0_0_16').reshape(-1,3)
-        source_vertices=set(map(tuple,np.round(old,4)))
-        self.assertTrue(all(tuple(v) in source_vertices for v in np.round(edges,4)))
+        # Quantized 4-decimal vertices become float32 in the GLB; compare in model units.
+        self.assertTrue(all(np.linalg.norm(old-v,axis=1).min()<.00025 for v in edges))
 
     def test_evidence_does_not_certify_unregistered_facades(self):
         self.assertEqual(self.report['window_panel_count_measured'],None)
