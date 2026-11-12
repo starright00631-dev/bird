@@ -9,7 +9,7 @@ from pathlib import Path
 import threading
 from playwright.sync_api import sync_playwright
 
-PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v68"
+PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v69"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
@@ -25,13 +25,15 @@ def check(page,label,offline=False):
     state=page.evaluate("({n:window.__BNBU_DEBUG__.meshCount(),l:window.__BNBU_DEBUG__.layerCount(),gis:window.__BNBU_DEBUG__.hasGIS()})")
     assert state=={"n":1377,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
+    page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
+    assert page.evaluate("window.__BNBU_VERSION__")==="v69"
     assert page.locator("#layers input[type=checkbox]").count()==10
     page.screenshot(path=str(RESULT/(label+"_campus.png")),full_page=True,timeout=45000)
     page.locator("#part-water_unsurveyed").uncheck()
     assert page.evaluate("window.__BNBU_DEBUG__.layerVisible('water_unsurveyed')") is False
     page.locator("#part-water_unsurveyed").check()
     assert page.evaluate("window.__BNBU_DEBUG__.layerVisible('water_unsurveyed')") is True
-    page.locator("button[data-focus=lake]").click()
+    page.locator("button[data-focus=lakefront]").click()
     page.locator("button[data-focus=phase2]").click()
     page.locator("#choose-dsm").click()
     page.wait_for_function("window.__BNBU_DEBUG__?.hasDSM()===true",timeout=65000)
