@@ -1,3 +1,13 @@
+## BNBU v70 — photo-audited lakefront and near-land structure (current)
+
+The [v70 source comparison and complete offline viewer, PR #7](https://github.com/starright00631-dev/bird/pull/7) refine the existing lakefront using real campus-photo **structural typologies**: a reversible, source-boardwalk-footprint-bound railing overlay, distinct model-owned deck/lawn/promenade material finishes, greener lake water, a muted bank join and a tighter boardwalk inspection view. The source 1,377 campus mesh positions and 522 GIS geometries remain unchanged; the rail is **a display-only proxy**, not surveyed geometry.
+
+Read the [critical lakefront photo/data comparison](campus/LAKEFRONT_V70_CRITICAL_COMPARISON.md) for model-only areas, photo evidence, the flagged stair-vs-lake plan overlap, and explicit uncertainty. The real Chihua Hill two freshwater ponds are not independently georegistered and have **not** been invented.
+
+The [v70 GitHub Actions workflow](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml) publishes **BNBU-v70-complete-offline-model-zip** and a self-contained HTML viewer, tested by actual Chromium in both standalone `file://` and localhost modes. Extract the nested `BNBU_Campus_Full_v70.zip`, then double-click `双击查看_校园3D.html`. The ZIP includes original v64 GIS/GLB, v65/v66, v69 water appearance, the independent v67 DSM, evidence audit, source scripts and SHA-256 manifest.
+
+---
+
 ## BNBU v69 — evidence-aware waterfront refinements (current)
 
 The [v69 full offline release](https://github.com/starright00631-dev/bird/actions/runs/43143405025) now packages the complete model, a single double-click HTML viewer, and source/evidence/metadata for reproducibility. Download the CI artifact named **BNBU-v69-complete-offline-model-zip**, extract the nested `BNBU_Campus_Full_v69.zip`, then open `双击查看_校园3D.html` locally. Browser tests pass for both a standalone offline file and localhost viewer. The source changes are in [PR #6](https://github.com/starright00631-dev/bird/pull/6).
