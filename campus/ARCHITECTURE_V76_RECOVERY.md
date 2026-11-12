@@ -1,6 +1,6 @@
 ## v76.1 Phase II dormitory environment correction
 
-The earlier proximity audit mistakenly restricted itself to 56 `WALK_###` / `ROAD_###` GIS objects. That wrongly put the nearest recorded path for all D1–D6 approximately 700+ inherited model units away. Fourteen separate **source GLB** objects were omitted: six Phase II radial paving meshes, six V49 inferred ground-link meshes, an inner-college ring paving surface and a west road-concept surface. The corrected atlas keeps the original 56-route baseline separately and adds a transparent 70-candidate proximity register.
+The earlier proximity audit mistakenly restricted itself to 56 `WALK_###` / `ROAD_###` GIS objects. That wrongly put the nearest recorded path for all D1–D6 approximately hundreds of inherited model units away. Fourteen separate **source GLB** objects were omitted: six Phase II radial paving meshes, six V49 inferred ground-link meshes, an inner-college ring paving surface and a west road-concept surface. The corrected atlas keeps the original 56-route baseline separately and adds a transparent 70-candidate proximity register.
 
 Exact source-mesh polygon analysis identifies, for each D1–D6 residence, two distinct unregistered connection gaps:
 
