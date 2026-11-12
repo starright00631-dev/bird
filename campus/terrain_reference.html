@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BNBU v67 - ALOS DSM reference / raw elevation evidence</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+:root{font:13px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:#ecf2f8;background:#0c1926}
+*{box-sizing:border-box}body{margin:0}header{height:58px;padding:10px 14px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #374c5f}header b{font-size:15px}a{color:#9fe1ff}small{color:#b9cadb}main{display:grid;grid-template-columns:minmax(0,1fr) minmax(350px,1fr);height:calc(100vh - 58px)}
+#scene3d{position:relative;min-width:0}#map{min-width:0;border-left:1px solid #3e566e}canvas{display:block}#panel{position:absolute;top:12px;left:12px;max-width:320px;padding:15px;background:#142337eb;border:1px solid #526b7e;border-radius:12px;max-height:calc(100% - 24px);overflow-y:auto}
+button{background:#2b425c;color:white;border:1px solid #537393;padding:6px 9px;border-radius:6px;cursor:pointer}button:focus-visible{outline:2px solid #9fe1ff}p{margin:9px 0}code{font-size:11px}#readout{padding:8px;background:#223c48;border-radius:6px;word-wrap:break-word}.warning{color:#ffdca1}#bottom{position:absolute;right:12px;bottom:12px;background:#12263adf;padding:6px 10px;color:#d2dce6;max-width:340px;font-size:11px}
+@media(max-width:900px){main{display:grid;grid-template-columns:1fr;grid-template-rows:65% 35%;height:calc(100vh - 58px)}#map{border-left:0;border-top:1px solid #3e566e}#panel{max-width:270px;max-height:85%}}
+</style></head>
+<body>
+<header><b>BNBU 山体实测数据参照 · v67</b><small>ALOS-derived DSM · 原始约 30m 网格 · 非校园测绘高程</small><span style="flex:1"></span><a href="./viewer.html">回到校园 v66 全景</a></header>
+<main><div id="scene3d">
+<section id="panel"><b>独立地表高程检查</b>
+<p class="warning">这是遥感地表模型（DSM），包含可能的建筑和树冠，<strong>不是裸地 DEM</strong>；垂直基准没有与 v66 建筑标高配准。因此不允许直接把两张 3D 模型叠加。</p>
+<p><button id="oblique">三维视角</button> <button id="top">垂直俯视</button></p>
+<p id="readout">等待地形 GLB 与来源清单…</p>
+<p><a target="_blank" rel="noopener" href="https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm">JAXA AW3D30 官方说明</a> · <a target="_blank" rel="noopener" href="https://docs.ardupilot.org/plane/docs/common-terrain-following.html">ArduPilot 数据解释</a></p>
+<p><small>来源为 2022 镜像，不等于 JAXA 2024 更新的最新 v4.1。右侧等高线是从 30m 网格线性插值得到的 10m 等值线，并非额外测量数据。颜色仅表示相对高程，不是植被或道路分类。</small></p>
+</section>
+<div id="bottom">左：原始 DSM 格点高程三角网；右：卫星底图＋由这些格点推算的等高线。点击左侧曲面读取高度。</div>
+</div><div id="map"></div></main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const host=document.getElementById('scene3d'),out=document.getElementById('readout');
+const scene=new THREE.Scene();scene.background=new THREE.Color('#c8dce7');
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));host.insertBefore(renderer.domElement,host.firstChild);
+const cam=new THREE.PerspectiveCamera(47,1,0.1,20000),orbit=new OrbitControls(cam,renderer.domElement);orbit.enableDamping=true;
+scene.add(new THREE.HemisphereLight(0xffffff,0x7b8791,2.5));
+const light=new THREE.DirectionalLight(0xffffff,2.6);light.position.set(-300,650,300);scene.add(light);
+let terrain=null,center=new THREE.Vector3(),range=1500,metadata=null;
+function fit(plan=false){if(!terrain)return;cam.up.set(0,plan?0:1,plan?-1:0);orbit.target.copy(center);cam.position.copy(center).add(plan?new THREE.Vector3(0,range*2.5,0):new THREE.Vector3(range*.95,range*.78,range*1.05));cam.lookAt(center);cam.near=.1;cam.far=range*30;cam.updateProjectionMatrix();orbit.update()}
+document.getElementById('oblique').onclick=()=>fit(false);document.getElementById('top').onclick=()=>fit(true);
+new ResizeObserver(()=>{const r=host.getBoundingClientRect();if(r.width>0&&r.height>0){renderer.setSize(r.width,r.height);cam.aspect=r.width/r.height;cam.updateProjectionMatrix()}}).observe(host);
+const data=fetch('./generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json').then(r=>{if(!r.ok)throw Error('来源清单 HTTP '+r.status);return r.json()}).then(p=>{metadata=p;out.textContent='原始网格：'+p.grid_width+' × '+p.grid_height+'；DSM 高程 '+p.raw_raster_elevation_min_m+'–'+p.raw_raster_elevation_max_m+' 米（独立高程基准）';return p}).catch(e=>{out.textContent='源数据不可读取：'+e.message;throw e});
+new GLTFLoader().load('./generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb',g=>{terrain=g.scene;scene.add(terrain);const b=new THREE.Box3().setFromObject(terrain);center=b.getCenter(new THREE.Vector3());range=Math.max(b.getSize(new THREE.Vector3()).length()*.72,300);fit(false)},e=>{if(e.total&&!metadata)out.textContent='GLB 加载：'+Math.round(e.loaded/e.total*100)+'%'},e=>out.textContent='DSM GLB 载入失败，请运行 python campus/build_terrain_v67.py：'+e.message);
+const ray=new THREE.Raycaster(),p=new THREE.Vector2();renderer.domElement.addEventListener('click',ev=>{if(!terrain)return;const r=renderer.domElement.getBoundingClientRect();p.set((ev.clientX-r.left)/r.width*2-1,-(ev.clientY-r.top)/r.height*2+1);ray.setFromCamera(p,cam);const hits=ray.intersectObject(terrain,true);if(hits.length){const q=hits[0].point;out.textContent='DSM 插值点高程（不是直接像元测量）≈ '+q.y.toFixed(1)+'m；模型平面坐标 E='+(q.x+758940).toFixed(1)+' / N='+(-q.z+2474080).toFixed(1)+' (UTM49N)。'}});
+if(window.L){const map=L.map('map').setView([22.3567,113.5135],16);const imagery=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri'}).addTo(map);const osm=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'});L.control.layers({'卫星':imagery,'OSM':osm},null,{position:'topright'}).addTo(map);fetch('./generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson').then(r=>r.json()).then(doc=>{const contours=L.geoJSON(doc,{style:{color:'#ffe3a3',weight:1,opacity:.65},onEachFeature:(f,l)=>l.bindTooltip('DSM '+f.properties.elevation_m_interpolated+' m（10m 插值线）')}).addTo(map);const b=contours.getBounds();if(b.isValid())map.fitBounds(b.pad(.08));}).catch(e=>out.textContent='GIS 等高线读取失败：'+e.message);}
+else{document.getElementById('map').textContent='地图组件不可用；独立三维 DSM 仍可查看。'}
+(function loop(){requestAnimationFrame(loop);orbit.update();renderer.render(scene,cam)})();
+</script></body></html>
