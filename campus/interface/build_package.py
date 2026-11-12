@@ -14,11 +14,13 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v68"
+NAME = "BNBU_Campus_Full_v69"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
     "generated/BNBU_v66_SEMANTIC_Y_UP.glb": "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
+    "generated/BNBU_v69_WATERFRONT_REFINED.glb": "generated/BNBU_v69_WATERFRONT_REFINED.glb",
+    "generated/BNBU_v69_WATERFRONT_PROVENANCE.json": "generated/BNBU_v69_WATERFRONT_PROVENANCE.json",
     "generated/BNBU_v66_RESOLVED_REFERENCES.geojson": "generated/BNBU_v66_RESOLVED_REFERENCES.geojson",
     "generated/v66_provenance.json": "generated/v66_provenance.json",
     "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb": "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
@@ -39,15 +41,17 @@ ASSETS = {
     "source/CTV_UNVERIFIED_DO_NOT_MERGE.glb.xz": "assets/BNBU_v64_CTV_UNVERIFIED_GEOMETRY_DO_NOT_USE_AS_SURVEY.glb.xz",
     "src/build_v65.py": "build_v65.py",
     "src/build_v66.py": "build_v66.py",
+    "src/refine_waterfront_v69.py": "refine_waterfront_v69.py",
     "src/build_terrain_v67.py": "build_terrain_v67.py",
     "src/test_v65.py": "test_v65.py",
     "src/test_v66.py": "test_v66.py",
+    "src/test_waterfront_v69.py": "test_waterfront_v69.py",
     "src/test_terrain_v67.py": "test_terrain_v67.py",
     "src/validate_scene.py": "validate_scene.py",
     "docs/README_source.md": "README.md",
 }
 
-README = """# BNBU 校园完整三维模型与查看器 v68
+README = """# BNBU 校园完整三维模型与查看器 v69
 
 ## 最简单的打开方式
 
@@ -60,7 +64,7 @@ README = """# BNBU 校园完整三维模型与查看器 v68
 ## 功能
 
 三维旋转、缩放、平移、点击查看构件，10 类要素切换，
-一期 / 二期 / 湖面 / 山体 / 车道 / 临水廊道 / CC 区域定位，
+一期 / 二期 / 主湖近岸 / 湿地历史模型 / 山体 / 临水廊道定位，
 原有 522 条 GIS 矢量轮廓离线预览，独立的 ALOS DSM 场景。
 建筑模型与遥感地形模型的标高未配准，绝不直接叠加。
 
@@ -70,14 +74,16 @@ README = """# BNBU 校园完整三维模型与查看器 v68
 - source/archives：v64 无损 XZ 源归档。
 - source/CTV_UNVERIFIED_DO_NOT_MERGE.*：隔离的 CTV 小建筑推测记录，非活动场景。
 - history：v65 坐标方向和节点关联版本。
-- generated：v66 完整分层三维 GLB / GIS；v67 ALOS 地形和推算等高线。
+- generated：v66 原几何与 GIS，v69 水岸反射材质 / 连续岸坡颜色版本；v67 ALOS 地形与插值等高线。
 - src：源码及测试、来源记录；manifest.json：文件完整性 SHA-256。
 
-数据准确性：v66 的 1377 个三维网格是继承模型，不等于 1377
+数据准确性：v69 继承 v66 的 1377 个三维网格是继承模型，不等于 1377
 个已测量真实构件。湖岸、车行路边线、玻璃面积和山体相对标高未实测。
 CTV 附近小屋的身份和屋顶尺寸未得到独立核实。
 ALOS 约 30 m DSM 含植被和建筑，不等于裸地 DEM，不能直接与
-v66 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴露分母。
+v69 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴露分母。
+
+新增 v69：以原 SHORE 网格模型相对高程推导湿岸—植被岸材质渐变；将水面与历史湿地水面分开设定光学外观；并在查看器标出既有临水廊道轮廓与近岸视角。没有改变湖塘的平面轮廓、地形高程或新增建筑。学校官方于 2019 年记录东侧赤花山脚下湿地与两处淡水池塘，位置未经摄影测量配准；**不要把二期历史湿地模型当成那两处池塘**。
 
 源码：https://github.com/starright00631-dev/bird/tree/main/campus
 """
@@ -137,7 +143,7 @@ def sha256(path: Path) -> str:
 def assemble_standalone(template,css,js):
     tags=[]
     for key,rel in [
-        ("v66","generated/BNBU_v66_SEMANTIC_Y_UP.glb"),
+        ("v69","generated/BNBU_v69_WATERFRONT_REFINED.glb"),
         ("dsm","generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb"),
     ]:
         b64=base64.b64encode((PACKAGE/rel).read_bytes()).decode("ascii")
@@ -160,7 +166,8 @@ def assemble_standalone(template,css,js):
 def validate():
     gis=json.loads((PACKAGE/"generated/BNBU_v66_RESOLVED_REFERENCES.geojson").read_text(encoding="utf-8"))
     assert len(gis["features"])==522
-    for rel in ["generated/BNBU_v66_SEMANTIC_Y_UP.glb",
+    for rel in ["generated/BNBU_v69_WATERFRONT_REFINED.glb",
+                "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
                 "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
                 "source/v64/BNBU_v64_ACTIVE.glb"]:
         data=(PACKAGE/rel).read_bytes()
@@ -196,8 +203,9 @@ def build():
     sh.write_text(SH,encoding="utf-8");sh.chmod(sh.stat().st_mode|stat.S_IXUSR)
     validate()
     manifest={
-        "name":NAME,"source_model":"v64","scene":"v66","external_DSM":"v67",
+        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v69","external_DSM":"v67",
         "mesh_count":1377,"GIS_feature_count":522,
+        "v69_material_and_shore_color_refinement":True,
         "physical_geometry_edited":False,"standalone_file_embeds_assets":True,
         "files":{str(p.relative_to(PACKAGE)):{"size":p.stat().st_size,"sha256":sha256(p)}
             for p in PACKAGE.rglob("*") if p.is_file()},
