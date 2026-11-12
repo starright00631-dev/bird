@@ -1,0 +1,17 @@
+{
+  "name": "bnbu-campus-offline-viewer",
+  "private": true,
+  "version": "0.68.0",
+  "description": "Offline research viewer for verified BNBU GLB and GIS exports",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild app.js --bundle --platform=browser --format=iife --target=es2020 --minify --outfile=dist/viewer.bundle.js",
+    "check": "node --check app.js"
+  },
+  "dependencies": {
+    "three": "0.169.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.2"
+  }
+}
