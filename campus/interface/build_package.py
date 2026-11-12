@@ -14,7 +14,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v71"
+NAME = "BNBU_Campus_Full_v72"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
@@ -26,6 +26,8 @@ ASSETS = {
     "generated/BNBU_v71_CONNECTION_PATCHES.geojson": "generated/BNBU_v71_CONNECTION_PATCHES.geojson",
     "generated/BNBU_v71_JUNCTION_AUDIT.geojson": "generated/BNBU_v71_JUNCTION_AUDIT.geojson",
     "generated/BNBU_v71_CONNECTION_PROVENANCE.json": "generated/BNBU_v71_CONNECTION_PROVENANCE.json",
+    "generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json": "generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json",
+    "evidence/connection_photos_v72.json": "connection_photos_v72.json",
     "generated/BNBU_v66_RESOLVED_REFERENCES.geojson": "generated/BNBU_v66_RESOLVED_REFERENCES.geojson",
     "generated/v66_provenance.json": "generated/v66_provenance.json",
     "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb": "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
@@ -50,6 +52,8 @@ ASSETS = {
     "src/build_lakefront_v70.py": "build_lakefront_v70.py",
     "src/build_connection_v71.py": "build_connection_v71.py",
     "src/test_connection_v71.py": "test_connection_v71.py",
+    "src/build_connection_profiles_v72.py": "build_connection_profiles_v72.py",
+    "src/test_connection_profiles_v72.py": "test_connection_profiles_v72.py",
     "src/connection_v71_control.json": "connection_v71_control.json",
     "src/build_terrain_v67.py": "build_terrain_v67.py",
     "src/test_v65.py": "test_v65.py",
@@ -62,9 +66,10 @@ ASSETS = {
     "docs/WATERFRONT_V69_EVIDENCE.md": "WATERFRONT_V69_EVIDENCE.md",
     "docs/LAKEFRONT_V70_CRITICAL_COMPARISON.md": "LAKEFRONT_V70_CRITICAL_COMPARISON.md",
     "docs/JUNCTION_V71_AUDIT.md": "JUNCTION_V71_AUDIT.md",
+    "docs/PHOTO_CONNECTION_AUDIT_V72.md": "PHOTO_CONNECTION_AUDIT_V72.md",
 }
 
-README = """# BNBU 校园完整三维模型与查看器 v71
+README = """# BNBU 校园完整三维模型与查看器 v72
 
 ## 最简单的打开方式
 
@@ -87,7 +92,7 @@ README = """# BNBU 校园完整三维模型与查看器 v71
 - source/archives：v64 无损 XZ 源归档。
 - source/CTV_UNVERIFIED_DO_NOT_MERGE.*：隔离的 CTV 小建筑推测记录，非活动场景。
 - history：v65 坐标方向和节点关联版本。
-- generated：v66 源GIS，v69 材质源，v70 独立栏杆参考，v71 增添两块基于继承 V61 几何的同标高陆地接缝（GLB、单独GIS、新11项关系审核），v67 独立 ALOS 地形。
+- generated：v66 源GIS，v69 材质源，v70 独立桥栏杆，v71 两块源模型拼接（GLB+GIS+11项关系审核），v72 沿真实 122 顶点既有斜坡/19级既有楼梯的四组来源采样轨迹；v67 独立 ALOS 地形。
 - src：源码及测试、来源记录；manifest.json：文件完整性 SHA-256。
 
 数据准确性：v71 显示 1379 个三维网格，其中 v69 继承 v66 的 1377 个原有网格是继承模型，不等于 1377
@@ -99,6 +104,8 @@ v69 建筑的相对 Z 标高合并。不得将模型作为定量鸟撞玻璃暴�
 新增 v70：使用校园湖岸照片对照，仅沿已有 V60 高架廊道多边形置入可关闭的栏杆视觉参考，现有 V13 草地改成草地表面材质、V61 实体临水平台改成石质铺装表面，均不调整范围和高度，渲染值不是实测。出于可追溯性，这些添加的栏杆从 1,377 个原始网格之外单独渲染，不用于鸟撞分析。\n\n原 v69：以原 SHORE 网格模型相对高程推导湿岸—植被岸材质渐变；将水面与历史湿地水面分开设定光学外观；并在查看器标出既有临水廊道轮廓与近岸视角。没有改变湖塘的平面轮廓、地形高程或新增建筑。学校官方于 2019 年记录东侧赤花山脚下湿地与两处淡水池塘，位置未经摄影测量配准；**不要把二期历史湿地模型当成那两处池塘**。
 
 新增 v71：针对湖岸平台与步道相交的真实照片类型，对照原GLB与GIS检查11对构件间关系。仅在原V61铺装层两个2.44/2.50模型单位间隙，新增两块顶面与原板一致的细小几何；**不代表精确实地测量**。另外有三处高度矛盾、两处较远的路线缺口仍保持未更改；桥东坡道与ROAD_000→WALK_040铺装拼缝已存在，不再额外造桥。全部原有1377网格数据与522条GIS边界不变。查看 docs/JUNCTION_V71_AUDIT.md。
+
+新增 v72：根据16张不同位置真实校园照片识别和核对水岸、道路、LRC外立面与桥的连接类型；这些图片是原网站的链接，未获得摄影配准，因此不能据此修改校园绝对XY坐标。可独立关闭的两侧坡道、楼梯扶手沿旧 GLB 顶点数据中的真实三维曲线逐点放置；扶手高度为典型示意，非现场测量。3处 3D 高差（0.24/0.64/0.64 模型单位）仍以检查标记呈现，并非新造坡道。详情见 docs/PHOTO_CONNECTION_AUDIT_V72.md 和 evidence/connection_photos_v72.json。浏览三维模型完全离线；“证据和数据”里的远程照片缩略图需要联网后才会加载。切勿将这些示意扶手算入可用于鸟撞风险的玻璃面积。
 
 源码：https://github.com/starright00631-dev/bird/tree/main/campus
 """
@@ -171,6 +178,8 @@ def assemble_standalone(template,css,js):
         ("junctions","generated/BNBU_v71_JUNCTION_AUDIT.geojson"),
         ("junction-patches","generated/BNBU_v71_CONNECTION_PATCHES.geojson"),
         ("junction-meta","generated/BNBU_v71_CONNECTION_PROVENANCE.json"),
+        ("profile-v72","generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json"),
+        ("photos-v72","evidence/connection_photos_v72.json"),
     ]:
         content=(PACKAGE/rel).read_text(encoding="utf-8").replace("</script","<\\/script")
         tags.append('<script id="embedded-'+key+'" type="application/json">'+content+'</script>')
@@ -193,6 +202,10 @@ def validate():
     details=json.loads((PACKAGE/"generated/BNBU_v71_CONNECTION_PROVENANCE.json").read_text())
     assert len(joints["features"])==11 and len(patches["features"])==2
     assert details["original_meshes"]==1377 and details["output_meshes"]==1379
+    grade=json.loads((PACKAGE/"generated/BNBU_v72_SOURCE_ELEVATION_PROFILES.json").read_text())
+    photos=json.loads((PACKAGE/"evidence/connection_photos_v72.json").read_text())
+    assert len(grade["rail_profiles"])==4 and len(grade["height_disagreement_markers"])==3
+    assert len(photos["photos"])==16 and grade["photo_count_inspected"]==16
     for rel in ["generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
                 "generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
@@ -231,9 +244,10 @@ def build():
     sh.write_text(SH,encoding="utf-8");sh.chmod(sh.stat().st_mode|stat.S_IXUSR)
     validate()
     manifest={
-        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v71: source v69 + 2 separately documented source-bound joins","external_DSM":"v67",
+        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v72 viewer plus model v71 exact GLB + 4 source-sampled handrails; no source geometry edits","external_DSM":"v67",
         "mesh_count":1379,"original_mesh_count":1377,"GIS_feature_count":522,
         "v71_source_bounded_pavement_seams":2,"audited_junction_pairs":11,
+        "v72_optional_source_height_rail_profiles":4,"v72_observed_distinct_photo_links":16,
         "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
         "original_geometry_edited":False,"new_geometry_approximate_and_unsurveyed":True,
