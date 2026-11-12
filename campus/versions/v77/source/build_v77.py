@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """BNBU v77: phase-II round pavilion roof intersection repair + photo-derived paving seams.
 No windows, new glazing, random trees or roof equipment. Preserve v76 elsewhere exactly.
-Official 2025-06-26 BNBU photo confirms square rooftop pavers and central raised disk;
+BNBU official landscape photo (publication date unspecified) confirms square rooftop pavers and central raised disk;
 seam count, seam dimensions, and 3D material offsets are nonmetric hypotheses.
 """
 from pathlib import Path
@@ -14,7 +14,7 @@ from fiona.crs import CRS
 
 R=Path(__file__).resolve().parents[1];I=R/'input';O=R/'model';D=R/'data';Q=R/'qa'
 for p in (O,D,Q):p.mkdir(parents=True,exist_ok=True)
-SRC='https://www.uic.edu.cn/en/info/1076/12578.htm'
+SRC='https://www.bnbu.edu.cn/en/campus_life/Landscape_and_Facilities/1.htm'
 OFFICIALMAP='https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg'
 scene=trimesh.load(I/'BNBU_v76_FULL_EDITABLE.glb',force='scene',process=False)
 original=list(scene.graph.nodes_geometry)
@@ -110,7 +110,7 @@ capfoot=Point(center).buffer(radius,quad_segs=72)
 recs=[]
 for nm,p,kind in [(CENTRAL,capfoot,'existing_opaque_cap_z_contact_corrected'),(nV,vertical,'photo_typology_paving_seams_NS'),(nH,horizontal,'photo_typology_paving_seams_EW')]:
     props={'model_node':nm,'asset':kind,'building':'phaseII_round_pavilion','material':'opaque_non_glass',
-    'source_official_photo':SRC,'source_official_photo_date':'2025-06-26','source_2025_handdrawn_structural':OFFICIALMAP,
+    'source_official_photo':SRC,'source_official_photo_date':'NOT_PUBLISHED_IN_PHOTO_GALLERY','source_2025_handdrawn_structural':OFFICIALMAP,
     'source_geometry':'Inherited v76 square roof/cap XY and model-relative Z',
     'confidence_presence':'HIGH photo shows central disk and grid paving',
     'confidence_position':'LOW inherited proxy not orthorectified',
