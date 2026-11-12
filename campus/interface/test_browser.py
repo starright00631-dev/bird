@@ -9,7 +9,7 @@ from pathlib import Path
 import threading
 from playwright.sync_api import sync_playwright
 
-PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v69"
+PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v70"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
@@ -26,8 +26,18 @@ def check(page,label,offline=False):
     assert state=={"n":1377,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
-    assert page.evaluate("window.__BNBU_VERSION__")=="v69"
+    assert page.evaluate("window.__BNBU_VERSION__")=="v70"
     assert page.locator("#layers input[type=checkbox]").count()==10
+    page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
+    assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==6
+    assert page.evaluate("window.__BNBU_DEBUG__.railingProxyCount()")>250
+    assert page.locator("#show-photo-proxies").is_checked()
+    page.locator("#show-photo-proxies").uncheck()
+    assert page.evaluate("window.__BNBU_DEBUG__.photoProxyVisible()") is False
+    page.locator("#show-photo-proxies").check()
+    assert page.evaluate("window.__BNBU_DEBUG__.photoProxyVisible()") is True
+    page.locator("button[data-focus=boardwalk]").click()
+    page.screenshot(path=str(RESULT/(label+"_lakefront_detail.png")),full_page=True,timeout=45000)
     page.screenshot(path=str(RESULT/(label+"_campus.png")),full_page=True,timeout=45000)
     page.locator("#part-water_unsurveyed").uncheck()
     assert page.evaluate("window.__BNBU_DEBUG__.layerVisible('water_unsurveyed')") is False
