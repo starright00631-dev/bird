@@ -26,3 +26,15 @@ paths, with measured species, control and scene parameters. Evaluation
 must also show whether conservative routing increases contact with
 unmodeled posts, rails, terrain, or vegetation. The digital campus model
 is not a surveyed source of collision surfaces.
+
+## Perceived scene versus physical screening (2026-11-12)
+
+Both strategies invoked **within** `control.replay` are now recognition-gated:
+the bird model proposes/simulates candidate movement around assumed-visible
+opaque objects and previously recognized glass only. This corrects an
+oracle-knowledge leak in the former full-facade planners. Direct callers of
+`reachability.choose_reachable_gap` may still deliberately supply an
+omniscient map as an **oracle baseline**; it must not be described as avian
+sensory perception. True first contact remains tested on all glass and opaque
+patches after the bird's action, so an apparently safe gap may strike
+unrecognized neighboring glazing. See `docs/VISIBILITY_GATED_MAP.md`.

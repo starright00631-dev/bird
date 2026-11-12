@@ -29,16 +29,33 @@ def turn(heading,target,dt,gain,amax,speed):
     theta=min(angle,dt*gain*angle,dt*amax/speed)
     return unit(a*cos(theta)+tangent*sin(theta))
 
-def route(position,heading,panes,destination,span,body,step=.3):
-    """Finite-search baseline over physically open passages around facade."""
-    x=panes[0].x
-    ys=np.arange(min(p.ymin for p in panes)-2,max(p.ymax for p in panes)+2,step)
-    zs=np.arange(max(0,min(p.zmin for p in panes)-1.5),max(p.zmax for p in panes)+2,step)
+def perceived_surfaces(panes, recognized_glass):
+    """Structural knowledge state: opaque facade plus recognized glazing.
+
+    Opaque geometry is assumed visible (not an empirically calibrated vision
+    model). Never pass this subset to the true physical contact calculation.
+    """
+    known=set(recognized_glass)
+    return [pane for pane in panes if pane.material=="opaque"
+            or (pane.material=="glass" and pane.id in known)]
+
+
+def route(position,heading,panes,destination,span,body,step=.3,
+          recognized_glass=()):
+    """Hypothetical gap search in perceived, not omniscient, geometry."""
+    perceived=perceived_surfaces(panes,recognized_glass)
+    if not perceived:
+        return np.asarray(destination,float).copy()
+    x=perceived[0].x
+    ys=np.arange(min(p.ymin for p in perceived)-2,
+                 max(p.ymax for p in perceived)+2,step)
+    zs=np.arange(max(0,min(p.zmin for p in perceived)-1.5),
+                 max(p.zmax for p in perceived)+2,step)
     proposals=[]
     for y in ys:
         for z in zs:
             if any(p.ymin-span/2<=y<=p.ymax+span/2 and
-                   p.zmin-body<=z<=p.zmax+body for p in panes):continue
+                   p.zmin-body<=z<=p.zmax+body for p in perceived):continue
             point=np.array([x+.3,y,z])
             ang=acos(float(np.clip(unit(point-position)@heading,-1,1)))
             if ang>1.2:continue
@@ -104,13 +121,18 @@ def replay(start,velocity,destination,panes,recognition,draws,
                 known.add(pane.id)
                 if planner_strategy=="geometric":
                     planning_status="geometric_unchecked"
-                    target=route(p,h,panes,goal,wingspan,body_radius)
+                    target=route(p,h,panes,goal,wingspan,body_radius,
+                                 recognized_glass=known)
                 else:
                     # Import only at call time: reachability shares turn()
                     # and contact() kernels with this controller.
                     from .reachability import choose_reachable_gap
+                    # Screen candidate actions against the *perceived* map,
+                    # not hidden glass. True first_contact below still
+                    # checks every physical facade patch and transfer.
                     decision=choose_reachable_gap(
-                        p,h*speed,goal,panes,latency_s=latency,
+                        p,h*speed,goal,perceived_surfaces(panes,known),
+                        latency_s=latency,
                         gain_per_s=gain,
                         max_lateral_accel_mps2=max_lateral_accel,
                         body_radius_m=body_radius,wingspan_m=wingspan,
