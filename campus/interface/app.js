@@ -921,18 +921,95 @@ async function loadV74Junctions(){
 $('v74-junction-select').addEventListener('change',focusV74Junction);
 $('show-v74-junctions').addEventListener('change',()=>{if(v74Group)v74Group.visible=$('show-v74-junctions').checked;redraw();});
 
+
+// v75: bridge component register and optional visual-only transparent
+// balustrade infill. NEVER merge into campus meshes or bird exposure data.
+let bridgeAtlas75=null,bridgeGlass75=null;
+const bridgeLakesideName='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE';
+const bridgeGlassNode75='BNBU_V75_LAKEBRIDGE_TRANSPARENT_INFILL_UNSURVEYED_NOT_RISK_GLASS';
+
+function bridge75Choose(){
+ if(!bridgeAtlas75)return;
+ const id=$('bridge-v75-select').value;
+ const b=id==='lake'?bridgeAtlas75.v60_lakefront_boardwalk:
+   bridgeAtlas75.v52_elevated_academic_bridges.find(x=>x.id===id);
+ if(!b)return;
+ if(id==='lake'){
+  const details=b.component_status.map(x=>x.name+' — '+x.status);
+  $('bridge-v75-detail').textContent=
+   '主湖人行桥 V60：旧模型保留 13 组桥墩/横梁、340 点栏杆边界。透明玻璃栏板仅为照片类型与模型边界结合的视觉参考；没有实测窗格数量或玻璃面积。\n'+details.join('\n');
+ }else{
+  const ends=b.endpoints.map(e=>
+   e.end+' → '+e.linked_building_candidate+'，局部源模型高程 '+e.model_top_height_m.toFixed(3)
+   +'；连接门槛、实际窗格均未配准');
+  $('bridge-v75-detail').textContent=
+   b.id+' 二层连接，旧 GLB 中仅有结构板，建筑相邻来自模型投影。\n'+ends.join('\n')
+   +'\n构件：'+b.components.map(x=>x.name+'('+x.status+')').join('、');
+ }
+ if(current!=='campus')return;
+ const meshName=id==='lake'?bridgeLakesideName:b.node;
+ const sourceMesh=meshes.find(m=>m.name===meshName);
+ if(!sourceMesh)return;
+ const bounds=boxWorld(sourceMesh);
+ const center=bounds.getCenter(new THREE.Vector3());
+ const side=Math.max(12,bounds.getSize(new THREE.Vector3()).length()*.64);
+ fit(new THREE.Box3().setFromCenterAndSize(center,new THREE.Vector3(side,Math.max(8,side*.45),side)));
+ redraw();
+}
+
+async function loadBridgeComponents75(){
+ const [catalog,gltf]=await Promise.all([
+  loadJson('v75-atlas','generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json'),
+  loadScene('v75-glass','generated/BNBU_v75_BOARDWALK_GLASS_INFILL_DISPLAY_ONLY.glb')
+ ]);
+ if(catalog.version!=='v75'||catalog.system_count!==7||
+    catalog.v52_elevated_academic_bridges?.length!==6||
+    catalog.v60_lakefront_boardwalk?.source_pier_model_count!==13||
+    catalog.v75_glass_infill?.railing_source_points!==340||
+    catalog.v75_glass_infill?.glass_panel_count_verified!==null||
+    catalog.gates?.bird_collision_input_added!==false)
+   throw Error('v75 bridge evidence gate failed');
+ const n=gltf.scene.getObjectByName(bridgeGlassNode75);
+ if(!n||!n.isMesh||n.geometry.getAttribute('position')?.count!==1356)
+   throw Error('v75 transparent infill GLB missing or inconsistent');
+ const root=campus?.getObjectByName('world');
+ if(!root)throw Error('v75 source-world coordinate parent missing');
+ root.add(gltf.scene);
+ gltf.scene.name='BNBU_V75_GLASS_BALUSTRADE_MODEL_ANCHORED_DISPLAY_ONLY';
+ gltf.scene.traverse(obj=>{obj.userData.displayOnly=true;obj.userData.birdGlassDenominator=false;});
+ bridgeGlass75=gltf.scene;
+ bridgeGlass75.visible=$('show-v75-glass').checked;
+ bridgeAtlas75=catalog;
+ const choice=$('bridge-v75-select');
+ choice.textContent='';
+ for(const [value,label] of [['lake','V60 · 主湖连桥 / 透明栏板'],
+   ...catalog.v52_elevated_academic_bridges.map(b=>[b.id,b.id+' · '+b.adjacent_academic_blocks_model_inference.join(' ↔ ')])]){
+  const op=document.createElement('option');op.value=value;op.textContent=label;choice.add(op);
+ }
+ // Do not force the opening camera away from the existing lake view.
+ $('bridge-v75-status').textContent='7 组桥梁 / 12 处二层桥端、13 组湖桥支承；独立透明栏板已加载。所有模型均非现场测绘。';
+ $('bridge-v75-detail').textContent='请选择桥梁逐项查看：旧模型甲板、支承、桥端、窗格类型及证据缺口。';
+ redraw();
+}
+$('show-v75-glass').addEventListener('change',()=>{
+ if(bridgeGlass75)bridgeGlass75.visible=$('show-v75-glass').checked;
+ redraw();
+});
+$('bridge-v75-select').addEventListener('change',bridge75Choose);
+
 async function start(){
  try{
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v74';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
+  window.__BNBU_VERSION__='v75';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,v75BridgeCount:()=>bridgeAtlas75?.system_count||0,v75GlassVisible:()=>!!bridgeGlass75&&bridgeGlass75.visible,v75GlassVertices:()=>bridgeGlass75?.getObjectByName(bridgeGlassNode75)?.geometry?.getAttribute('position')?.count||0,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
   loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
   loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});
   ensureJunctions().catch(e=>{$('junction-status').textContent='连接记录载入失败：'+e.message;console.warn(e)});
   loadV74Junctions().catch(e=>{$('v74-junction-status').textContent='专项连接审核加载失败：'+e.message;console.warn(e)});
+  loadBridgeComponents75().catch(e=>{$('bridge-v75-status').textContent='桥梁细部加载失败：'+e.message;console.warn(e);});
   loadLakefrontProxies().catch(e=>{$('lakefront-status').textContent='近岸示意加载失败：'+e.message;console.warn(e);});
  }catch(e){showError(e);}
 }
