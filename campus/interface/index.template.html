@@ -40,7 +40,9 @@
       <select id="architecture-v76-select" style="display:block;width:100%;padding:7px;margin:6px 0;background:#19394a;border:1px solid #416475;color:#e1edf0;border-radius:5px"></select>
       <label style="display:block;font-size:11px;margin-top:7px"><input type="checkbox" id="show-v76-facades" checked> 区分原有 T 教学楼 / V 一期宿舍 / D 二期宿舍 / LRC 结构的材质</label>
       <label style="display:block;font-size:11px;margin:5px 0 8px"><input type="checkbox" id="show-v76-edges" checked> 显示由真实 GLB 三角面提取的建筑棱线（可关闭）</label>
+      <label style="display:block;font-size:11px;margin:5px 0 8px"><input type="checkbox" id="show-v76-phaseii-gaps"> 二期宿舍连接问题：12 段源模型缺口定位（诊断，不是新道路）</label>
       <p id="architecture-v76-detail" style="font-size:10px;color:#c6d4d8;white-space:pre-wrap;line-height:1.5">30 栋建筑逐个核对；建筑轮廓 / 入口 / 阳台 / 玻璃面积均未测绘确认。</p>
+      <p style="font-size:10px;color:#eabca6">二期模型含 6 条径向铺装、6 条推定地面连接，以及中央环路/西侧概念路。缺口依据现存 GLB 和 GIS，不能据此假定真实校园断路。</p>
       <p style="font-size:10px;color:#9db5bd">算法为源网格二面角与开放边提取；建模材料只是建筑类型判读。楼顶投影和道路的接近不能证明入口连通。<a href="https://fbm.bnbu.edu.cn/en/about_us/contact_us.htm" target="_blank" rel="noopener">T1</a> · <a href="https://www.bnbu.edu.cn/info/1076/6575.htm" target="_blank" rel="noopener">一期住宿</a> · <a href="https://bnbu.edu.cn/en/info/1255/10522.htm" target="_blank" rel="noopener">二期住宿</a> · <a href="https://co.bnbu.edu.cn/" target="_blank" rel="noopener">LRC</a></p>
     </section>
     <div class="tab-row"><button id="tab-map" class="active" type="button">GIS 平面</button><button id="tab-source" type="button">证据和数据</button></div>
