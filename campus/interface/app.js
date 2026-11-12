@@ -499,7 +499,7 @@ $('focus-v72-west').addEventListener('click',()=>{
  if(gradeGroup){gradeGroup.visible=true;$('show-v72-grade').checked=true;}
 });
 async function loadV72PhotoCatalog(){
- const data=await loadJson('photos-v72','connection_photos_v72.json');
+ const data=await loadJson('photos-v72','evidence/connection_photos_v72.json');
  if(data.photos?.length!==16||new Set(data.photos.map(p=>p.image_url)).size!==16)
   throw new Error('photo set changed, inspect and register each image before use');
  photoCatalog=data;
