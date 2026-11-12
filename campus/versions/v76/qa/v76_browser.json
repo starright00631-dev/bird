@@ -1,0 +1,10 @@
+{
+  "test": "full offline v76 embedded GLB and skylight layer toggle",
+  "pass": true,
+  "page_errors": [],
+  "reported_meshes": "1,380",
+  "skylight_toggle_initial": true,
+  "uncertain_LRC_join_default_hidden": true,
+  "skylight_toggle_visible_mesh_delta": 1,
+  "screenshot_bytes": 747029
+}
