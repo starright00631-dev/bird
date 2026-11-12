@@ -9,7 +9,7 @@ from pathlib import Path
 import threading
 from playwright.sync_api import sync_playwright
 
-PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v74"
+PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v75"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
@@ -28,7 +28,7 @@ def check(page,label,offline=False):
     assert state=={"n":1379,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
-    assert page.evaluate("window.__BNBU_VERSION__")=="v74"
+    assert page.evaluate("window.__BNBU_VERSION__")=="v75"
     assert page.locator("#layers input[type=checkbox]").count()==10
     page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
     assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==12
@@ -42,6 +42,23 @@ def check(page,label,offline=False):
     assert page.evaluate("window.__BNBU_DEBUG__.cameraDistance()")<70
     page.wait_for_function("window.__BNBU_DEBUG__.junctionCount()===11",timeout=35000)
     page.wait_for_function("window.__BNBU_DEBUG__.v74CaseCount()===47",timeout=45000)
+    # v75 independent windows/glass data: keep source scientific mesh count 1379.
+    page.wait_for_function("window.__BNBU_DEBUG__.v75BridgeCount()===7",timeout=50000)
+    assert page.locator("#bridge-v75-select option").count()==7
+    assert page.evaluate("window.__BNBU_DEBUG__.v75GlassVertices()")==1356
+    assert page.locator("#show-v75-glass").is_checked()
+    assert page.evaluate("window.__BNBU_DEBUG__.v75GlassVisible()") is True
+    page.locator("#bridge-v75-select").select_option("V52_03")
+    description=page.locator("#bridge-v75-detail").inner_text()
+    assert "T8" in description and "T7" in description and "3.709" in description
+    page.locator("#bridge-v75-select").select_option("lake")
+    assert "340" in page.locator("#bridge-v75-detail").inner_text()
+    page.screenshot(path=str(RESULT/(label+"_v75_bridge_glass.png")),full_page=True,timeout=45000)
+    page.locator("#show-v75-glass").uncheck()
+    assert page.evaluate("window.__BNBU_DEBUG__.v75GlassVisible()") is False
+    page.locator("#show-v75-glass").check()
+    assert page.evaluate("window.__BNBU_DEBUG__.v75GlassVisible()") is True
+
     assert page.locator("#v74-junction-select option").count()==47
     assert not page.locator("#show-v74-junctions").is_checked()
     page.locator("#show-v74-junctions").check()
@@ -127,6 +144,7 @@ def check(page,label,offline=False):
             "junctions_checked":11,"short_at_grade_connections_added":2,
             "model_source_profiles":4,"distinct_photo_references":16,"unresolved_grade_markers":3,
             "gis_features":522,"independent_dsm":True,"v74_junction_hotspots":47,"v74_pairs":1876,
+            "v75_glass_balustrade_source_points":340,"v75_bridge_systems":7,"v75_ends":12,
             "browser_errors":failures,"console_errors":console}
 
 def main():
