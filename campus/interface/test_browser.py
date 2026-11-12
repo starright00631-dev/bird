@@ -35,6 +35,7 @@ def check(page,label,offline=False):
     page.locator("button[data-focus=phase2]").click()
     page.locator("#choose-dsm").click()
     page.wait_for_function("window.__BNBU_DEBUG__?.hasDSM()===true",timeout=65000)
+    page.wait_for_function("document.querySelector('#scene-status').textContent.includes('DSM')",timeout=30000)
     assert "DSM" in page.locator("#scene-status").inner_text()
     page.screenshot(path=str(RESULT/(label+"_dsm.png")),full_page=True,timeout=45000)
     page.locator("#choose-campus").click()
