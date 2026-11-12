@@ -22,7 +22,7 @@ const progress = text => { $('scene-status').textContent=text; $('health').textC
 const esc = str => String(str??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const reader = new GLTFLoader();
 const embed = key => $('embedded-'+key);
-const isStandalone = !!embed('v66');
+const isStandalone = !!embed('v69');
 
 async function loadBinary(key,rel){
  const script=embed(key);
@@ -56,7 +56,7 @@ try{
  renderer.setClearColor(0xd0e1e8,1);
  renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;
- renderer.toneMappingExposure=1.32;
+ renderer.toneMappingExposure=1.10;
  host.append(renderer.domElement);
 }catch(err){
  $('render-error').hidden=false;
@@ -66,8 +66,8 @@ try{
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0xcddfe7);
 const cam=new THREE.PerspectiveCamera(47,1,.05,50000);
-scene.add(new THREE.HemisphereLight(0xffffff,0x6b8a9b,2.8));
-const sun=new THREE.DirectionalLight(0xffffff,2.1);sun.position.set(300,650,180);scene.add(sun);
+scene.add(new THREE.HemisphereLight(0xffffff,0x789e91,1.85));
+const sun=new THREE.DirectionalLight(0xfff9e9,1.45);sun.position.set(300,650,180);scene.add(sun);
 const orbit=new OrbitControls(cam,renderer.domElement);orbit.enableDamping=true;orbit.dampingFactor=.08;orbit.minDistance=1;
 let campus=null,dsm=null,current='campus',activeRoot=null;
 let meshes=[],groups=new Map(),gis=null,contours=null,dsmMeta=null,featuresByName=new Map();
@@ -150,6 +150,7 @@ function focusGroup(key){
 
 // v69 visual controls: geospatial positions and waterlines stay unchanged.
 let waterfrontAppearanceCount=0;
+let lakefrontProxy=null,lakefrontOverlayReport=null,visualLandSurfaces=0,railingBeamCount=0;
 let ripples=null;
 function buildRippleNormalTexture(){
  const side=128,pixels=new Uint8Array(side*side*4);
@@ -212,6 +213,164 @@ function improveWaterVisuals(){
   }
  }
 }
+
+// v70: actual photo comparison supports deck/railing TYPES, never surveyed
+// positions. All overlay coordinates come from *existing* v60 model footprint.
+// Materials apply to EXISTING surfaces without moving any building, road or pond.
+function periodicTexture(kind){
+ const w=128,h=128,pixels=new Uint8Array(w*h*4);
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+  const v=(y*w+x)*4;
+  const grain=((x*73+y*43+(x*y)%13)%17)-8;
+  let r,g,b;
+  if(kind==='wood'){
+   const plank=Math.floor(x/16)%8;
+   const seam=x%16===0 || x%16===15;
+   const variation=(plank*7)%19-9;
+   r=seam?77:154+variation+grain*.6;
+   g=seam?61:110+variation+grain*.4;
+   b=seam?52:78+variation*.7+grain*.3;
+  }else if(kind==='grass'){
+   const a=((x*29+y*61+(x^y)*13)%29)-14;
+   r=119+a*.7;g=150+a*.75;b=95+a*.55;
+  }else{
+   const seam=(x%32===0 || y%32===0);
+   const a=((x*11+y*17)%11)-5;
+   r=seam?128:187+a;g=seam?129:187+a;b=seam?123:175+a;
+  }
+  pixels[v]=Math.max(0,Math.min(255,r));
+  pixels[v+1]=Math.max(0,Math.min(255,g));
+  pixels[v+2]=Math.max(0,Math.min(255,b));
+  pixels[v+3]=255;
+ }
+ const tx=new THREE.DataTexture(pixels,w,h,THREE.RGBAFormat);
+ tx.colorSpace=THREE.SRGBColorSpace;
+ tx.wrapS=tx.wrapT=THREE.RepeatWrapping;
+ tx.minFilter=THREE.LinearMipmapLinearFilter;
+ tx.magFilter=THREE.LinearFilter;
+ tx.generateMipmaps=true;
+ tx.needsUpdate=true;
+ return tx;
+}
+// Source meshes are POSITION/COLOR only and contain no vertex normals.
+// Using MeshStandardMaterial with new UV maps made segments black in the
+// Chromium screenshot. Use robust, source-safe, unlit color finishes;
+// illustrative railings/real topological deck remain the structural detail.
+function setSourceSurfaceMaterial(mesh,color){
+ mesh.material=new THREE.MeshBasicMaterial({
+  color,side:THREE.DoubleSide,vertexColors:false,depthWrite:true
+ });
+ mesh.userData.v70DisplayFinish=true;
+ visualLandSurfaces++;
+}
+function styleExistingLakesideLand(){
+ for(const m of meshes){
+  if(m.name==='LAKE_00'||m.name==='LAKE_01'){
+   // Published campus images show olive-green water, rather than cyan fill.
+   // Display balancing only, not water reflectance measurement.
+   const materials=Array.isArray(m.material)?m.material:[m.material];
+   for(const mat of materials){
+    if(mat?.isMeshStandardMaterial){
+     mat.color.setHex(0x78917b);mat.roughness=.44;mat.metalness=.015;mat.needsUpdate=true;
+    }
+   }
+  }else if(/^V50_LAKE_0[01]_WATER_SHORE_015/.test(m.name)){
+   m.material=new THREE.MeshBasicMaterial({color:0x9da89e,side:THREE.DoubleSide});
+  }else if(m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'){
+   setSourceSurfaceMaterial(m,0xb8875c);
+  }else if(m.name==='V13_PHASEI_GREEN_CORRECTED_lrc_lakeside_grass'){
+   setSourceSurfaceMaterial(m,0x83ad79);
+  }else if(m.name==='V29_LRC_PHOTO_GROUNDFLOOR_CIRCULAR_GREEN_READING_ZONE'){
+   setSourceSurfaceMaterial(m,0x86a974);
+  }else if(m.name.startsWith('V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_')){
+   setSourceSurfaceMaterial(m,0xb6b7ad);
+  }
+ }
+}
+
+// The glTF 'world' node carries the original Z-up to browser Y-up rotation.
+// These new meshes are only visualization overlays, never members of the
+// 1,377-source-primitive mesh index or scientific geometry.
+function renderModelBoundRailings(report){
+ if(lakefrontProxy) return;
+ const source=campus?.getObjectByName('world');
+ if(!source)throw new Error('源模型的 world 坐标根节点缺失');
+ if(report.existing_deck_node!=='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'
+    || report.original_meshes!==1377 || !report.railing_xy_polylines_local?.length)
+    throw new Error('水岸可视化几何来源校验失败');
+ const group=new THREE.Group();
+ group.name='BNBU_v70_VISUAL_REFERENCE_ONLY_RAILING_NOT_SURVEY';
+ group.userData={displayOnly:true,evidence:"official photo typology; inherited boardwalk footprint; approximate rail heights"};
+ const beams=[],posts=[];
+ const up=report.visual_rail_height_above_existing_deck_m;
+ const postSpacing=report.visual_post_spacing_m;
+ for(const line of report.railing_xy_polylines_local){
+  if(line.length<2)continue;
+  let traveled=0;
+  let lastPost=-postSpacing;
+  for(let i=0;i<line.length-1;i++){
+   const a=new THREE.Vector3(...line[i]),b=new THREE.Vector3(...line[i+1]);
+   const delta=b.clone().sub(a),len=Math.hypot(delta.x,delta.y);
+   if(!(len>.01))continue;
+   for(const height of [.42,up]){
+    const p=a.clone(),q=b.clone();p.z+=height;q.z+=height;
+    beams.push([p,q]);
+   }
+   if(traveled-lastPost>=postSpacing){
+    const q=a.clone(),r=a.clone();q.z+=.02;r.z+=up;
+    posts.push([q,r]);
+    lastPost=traveled;
+   }
+   traveled+=len;
+  }
+ }
+ function instanced(items,radius,mat,name){
+  const geo=new THREE.CylinderGeometry(1,1,1,6,1,false);
+  const inst=new THREE.InstancedMesh(geo,mat,items.length);
+  inst.name=name;inst.userData.displayOnly=true;
+  const dummy=new THREE.Object3D(),axis=new THREE.Vector3(0,1,0);
+  items.forEach(([a,b],i)=>{
+   const d=b.clone().sub(a),length=d.length();
+   dummy.position.copy(a).add(b).multiplyScalar(.5);
+   dummy.scale.set(radius,length,radius);
+   dummy.quaternion.setFromUnitVectors(axis,d.normalize());
+   dummy.updateMatrix();inst.setMatrixAt(i,dummy.matrix);
+  });
+  inst.instanceMatrix.needsUpdate=true;
+  inst.frustumCulled=false;group.add(inst);
+ }
+ const mat=new THREE.MeshBasicMaterial({color:0xc6d0d0,side:THREE.DoubleSide});
+ instanced(beams,.025,mat,'V70_ILLUSTRATIVE_DECK_HANDRAILS_FROM_SOURCE_BOUNDARY');
+ instanced(posts,.026,mat,'V70_ILLUSTRATIVE_DECK_POSTS_FROM_SOURCE_BOUNDARY');
+ railingBeamCount=beams.length+posts.length;
+ source.add(group);lakefrontProxy=group;
+ lakefrontOverlayReport=report;
+ $('show-photo-proxies').checked=true;
+}
+async function loadLakefrontProxies(){
+ const report=await loadJson('lakefront','generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json');
+ if(report.role!=='DISPLAY_ONLY_NO_METRIC_GEOMETRY') throw new Error('缺失非测绘标识');
+ renderModelBoundRailings(report);
+ return report;
+}
+$('show-photo-proxies').addEventListener('change',e=>{
+ if(lakefrontProxy)lakefrontProxy.visible=e.target.checked;
+});
+
+function focusBoardwalkDetailed(){
+ if(!campus)return;
+ const deck=meshes.find(m=>m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE');
+ if(!deck)return;
+ const center=boxWorld(deck).getCenter(new THREE.Vector3());
+ const target=center.clone().add(new THREE.Vector3(0,1,0));
+ orbit.target.copy(target);
+ // Inspection camera only; not a modification of source structure.
+ cam.up.set(0,1,0);
+ cam.position.copy(target).add(new THREE.Vector3(-28,27,53));
+ cam.near=.03;cam.far=3000;cam.updateProjectionMatrix();
+ cam.lookAt(target);orbit.update();
+ if(gis)focusGIS(deck.name);
+}
 function focusWaterfront(name){
  if(!campus)return;
  const target=meshes.find(m=>m.name===name);
@@ -242,7 +401,7 @@ function focusPreset(key){
  if(key==='wetland'){focusWaterfront('V55_P2_ARCHIVED_WETLAND_RESTORED_WATER_NOT_SURVEYED');return;}
  if(key==='ridge'){focusGroup('terrain_unsurveyed');return;}
  if(key==='roads'){focusGroup('vehicle_roads_unsurveyed');return;}
- if(key==='boardwalk'){focusGroup('elevated_boardwalk_unsurveyed');return;}
+ if(key==='boardwalk'){focusBoardwalkDetailed();return;}
  let subset=[];
  if(key==='cc')subset=meshes.filter(m=>/(^MAIN_CC$|^ROOF_(DECK|PARAPET)_CC$|STORYEDGE_CC_|_CC_)/i.test(m.name));
  if(key==='phase1'||key==='phase2'){
@@ -286,7 +445,7 @@ $('choose-dsm').addEventListener('click',()=>switchScene('dsm').catch(showError)
 async function ensureCampus(){
  progress('读取完整校园网格…');
  const gltf=await loadScene('v69','generated/BNBU_v69_WATERFRONT_REFINED.glb');
- campus=gltf.scene;scene.add(campus);indexCampus();improveWaterVisuals();campus.visible=current==='campus';
+ campus=gltf.scene;scene.add(campus);indexCampus();improveWaterVisuals();styleExistingLakesideLand();campus.visible=current==='campus';
  for(const [key,g] of groups)g.visible=visible.has(key);
 }
 async function ensureDSM(){
@@ -466,9 +625,10 @@ async function start(){
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v69';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray()};
+  window.__BNBU_VERSION__='v70';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target)};
   ensureGIS();
+  loadLakefrontProxies().catch(e=>{$('lakefront-status').textContent='近岸示意加载失败：'+e.message;console.warn(e);});
  }catch(e){showError(e);}
 }
 start();

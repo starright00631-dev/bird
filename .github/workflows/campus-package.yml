@@ -1,4 +1,4 @@
-name: BNBU waterfront v69 complete offline ZIP and browser QA
+name: BNBU waterfront v70 photo and structure comparison CI
 on:
   push:
     paths:
@@ -45,30 +45,34 @@ jobs:
           python -m unittest discover -s campus -p 'test_waterfront_v69.py' -v
       - name: Install geodetic dependency and reconstruct independent real DSM
         run: |
-          python -m pip install "pyproj>=3.6,<4"
+          python -m pip install "pyproj>=3.6,<4" "shapely>=2,<3"
           python -m unittest discover -s campus -p 'test_terrain_v67.py' -v
           python campus/build_terrain_v67.py
+          python campus/build_lakefront_v70.py
+          python -m unittest discover -s campus -p 'test_lakefront_v70.py' -v
       - name: Build audited full ZIP and zero-dependency standalone HTML
         run: |
           python campus/interface/build_package.py
           python - <<'PY'
           from pathlib import Path
           import json,zipfile
-          base=Path('dist/BNBU_Campus_Full_v69')
+          base=Path('dist/BNBU_Campus_Full_v70')
           m=json.loads((base/'manifest.json').read_text())
           assert m['mesh_count']==1377 and m['GIS_feature_count']==522
           assert m['standalone_file_embeds_assets']
           html=(base/'双击查看_校园3D.html').read_text()
-          assert all('id="embedded-'+k+'"' in html for k in ('v69','dsm','gis','contours','dsm-meta'))
+          assert all('id="embedded-'+k+'"' in html for k in ('v69','dsm','gis','contours','dsm-meta','lakefront'))
           assert 'cdn.jsdelivr' not in html and 'unpkg.com' not in html
           for needed in ('index.html','viewer.js','viewer.css','serve.py','启动查看器.bat',
                          'generated/BNBU_v66_SEMANTIC_Y_UP.glb',
                          'generated/BNBU_v69_WATERFRONT_REFINED.glb',
                          'generated/BNBU_v69_WATERFRONT_PROVENANCE.json',
+                         'generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json',
+                         'docs/LAKEFRONT_V70_CRITICAL_COMPARISON.md',
                          'generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb',
                          'source/v64/BNBU_v64_EDITABLE_GIS.gpkg'):
               assert (base/needed).is_file(),needed
-          with zipfile.ZipFile('dist/BNBU_Campus_Full_v69.zip') as z:
+          with zipfile.ZipFile('dist/BNBU_Campus_Full_v70.zip') as z:
               assert z.testzip() is None
           print('full package and standalone viewer complete:',len(m['files']),'files')
           PY
@@ -80,16 +84,16 @@ jobs:
         run: python campus/interface/test_browser.py
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v69-browser-screenshots-and-report
+          name: BNBU-v70-browser-screenshots-and-report
           path: dist/qa/
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v69-complete-offline-model-zip
-          path: dist/BNBU_Campus_Full_v69.zip
+          name: BNBU-v70-complete-offline-model-zip
+          path: dist/BNBU_Campus_Full_v70.zip
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v69-double-click-HTML
-          path: dist/BNBU_Campus_Full_v69/双击查看_校园3D.html
+          name: BNBU-v70-double-click-HTML
+          path: dist/BNBU_Campus_Full_v70/双击查看_校园3D.html
           retention-days: 30
