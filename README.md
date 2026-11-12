@@ -1,3 +1,13 @@
+## BNBU campus 3D viewer — current v76
+
+**[Open the current online campus viewer](https://starright00631-dev.github.io/bird/)** · [Offline ZIP and verified HTML builds](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml) · [3D modeling source and evidence](campus/README.md)
+
+The repository's old `campus/viewer.html` pointed to missing generated files and a CDN-based v66 viewer. It has been replaced by a redirect to the **self-contained v76** site. The online viewer is built and tested by GitHub Actions from the same HTML as the verified offline download, not from raw GLB references in GitHub's code browser.
+
+GitHub Pages must have **Settings → Pages → Build and deployment → Source: GitHub Actions** selected once. If the online URL is not yet available, obtain the downloadable `BNBU-v76-complete-offline-model-zip` artifact from the workflow link; extract it and open `双击查看_校园3D.html`. A GitHub file preview is not an interactive website.
+
+---
+
 ## BNBU v72 — 16-photo evidence audit and source-height-matched junction details (current)
 
 The [verified v72 update (PR #9)](https://github.com/starright00631-dev/bird/pull/9) substantially expands the photo evidence underlying land/road/building/bridge connections: **16 distinct sourced BNBU and Zhuhai photographs**, classified by specific visible junction type and supplied with original-publisher links, plus three additional BNBU multi-image collections. Explore the source photos online in the viewer's *Evidence & Data* panel; they are **not copied** into the ZIP and are **not camera-registered** survey data. See [the critical image-by-image 3D comparison](campus/PHOTO_CONNECTION_AUDIT_V72.md) and [machine-readable photo register](campus/connection_photos_v72.json).
