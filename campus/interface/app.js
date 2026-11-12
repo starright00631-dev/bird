@@ -190,12 +190,12 @@ function improveWaterVisuals(){
    for(const mat of mats){
     if(!mat?.isMeshStandardMaterial)continue;
     mat.normalMap=ripples;
-    mat.normalScale=new THREE.Vector2(isWetland?.035:.075,isWetland?.035:.075);
-    mat.roughness=isWetland?.43:.19;
-    mat.metalness=isWetland?.025:.065;
+    mat.normalScale=new THREE.Vector2(isWetland?.03:.045,isWetland?.03:.045);
+    mat.roughness=isWetland?.49:.34;
+    mat.metalness=isWetland?.012:.018;
     if(mat.isMeshPhysicalMaterial){
-     mat.clearcoat=isWetland?.35:.78;
-     mat.clearcoatRoughness=isWetland?.27:.12;
+     mat.clearcoat=isWetland?.25:.42;
+     mat.clearcoatRoughness=isWetland?.27:.24;
     }
     mat.side=THREE.DoubleSide;
     mat.needsUpdate=true;
