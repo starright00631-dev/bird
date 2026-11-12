@@ -1,4 +1,4 @@
-name: BNBU v74 3D junction local-contact audit and portable evidence viewer
+name: BNBU v75 bridge-glazing source atlas and 3D connection integrity
 on:
   push:
     paths:
@@ -12,6 +12,9 @@ on:
       - "campus/test_connections_v74.py"
       - "campus/connection_comparison_sources_v74.json"
       - "campus/JUNCTIONS_V74_DEEP_COMPARISON.md"
+      - "campus/build_bridges_v75.py"
+      - "campus/test_bridges_v75.py"
+      - "campus/BRIDGE_WINDOW_COMPONENTS_V75.md"
       - "campus/connection_photos_v72.json"
       - "campus/PHOTO_CONNECTION_AUDIT_V72.md"
       - ".github/workflows/campus-package.yml"
@@ -22,7 +25,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: bnbu-v74-viewer-${{ github.head_ref || github.ref_name }}
+  group: bnbu-v75-viewer-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 permissions:
@@ -73,13 +76,15 @@ jobs:
           python -m unittest discover -s campus -p 'test_connection_profiles_v72.py' -v
           python campus/audit_connections_v74.py
           python -m unittest discover -s campus -p 'test_connections_v74.py' -v
+          python campus/build_bridges_v75.py
+          python -m unittest discover -s campus -p 'test_bridges_v75.py' -v
       - name: Build audited full ZIP and zero-dependency standalone HTML
         run: |
           python campus/interface/build_package.py
           python - <<'PY'
           from pathlib import Path
           import json,zipfile
-          base=Path('dist/BNBU_Campus_Full_v74')
+          base=Path('dist/BNBU_Campus_Full_v75')
           m=json.loads((base/'manifest.json').read_text())
           assert m['mesh_count']==1379 and m['original_mesh_count']==1377 and m['GIS_feature_count']==522
           assert m['v72_optional_source_height_rail_profiles']==4 and m['v72_observed_distinct_photo_links']==16
@@ -90,8 +95,13 @@ jobs:
           assert m['v74_pairwise_walk_road']==1540 and m['v74_raised_bridge_ground_crosschecks']==336
           assert m['v74_3d_junction_hotspots']==47 and m['v74_photo_references_total']==23
           assert m['v74_no_unregistered_physical_geometry']
+          assert m['v75_bridge_system_count']==7 and m['v75_academic_bridge_endpoints']==12
+          assert m['v75_source_lakebridge_railing_points']==340
+          assert m['v75_illustrative_glass_mesh_quads_not_panes']==339
+          assert m['v75_source_lakebridge_pier_model_count']==13
+          assert m['v75_surveyed_glass_surface_count']==0 and m['v75_original_campus_GLB_untouched']
           html=(base/'双击查看_校园3D.html').read_text()
-          assert all('id="embedded-'+k+'"' in html for k in ('v71','dsm','gis','contours','dsm-meta','lakefront','junctions','junction-patches','junction-meta','profile-v72','photos-v72','v74-hotspots'))
+          assert all('id="embedded-'+k+'"' in html for k in ('v71','dsm','gis','contours','dsm-meta','lakefront','junctions','junction-patches','junction-meta','profile-v72','photos-v72','v74-hotspots','v75-glass','v75-atlas'))
           assert 'cdn.jsdelivr' not in html and 'unpkg.com' not in html
           for needed in ('index.html','viewer.js','viewer.css','serve.py','启动查看器.bat',
                          'generated/BNBU_v66_SEMANTIC_Y_UP.glb',
@@ -116,9 +126,12 @@ jobs:
                          'generated/BNBU_v74_CONNECTION_RESEARCH_SUMMARY.json',
                          'evidence/connection_comparison_sources_v74.json',
                          'docs/JUNCTIONS_V74_DEEP_COMPARISON.md',
+                         'docs/BRIDGE_WINDOW_COMPONENTS_V75.md',
+                         'generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json',
+                         'generated/BNBU_v75_BOARDWALK_GLASS_INFILL_DISPLAY_ONLY.glb',
                          'source/v64/BNBU_v64_EDITABLE_GIS.gpkg'):
               assert (base/needed).is_file(),needed
-          with zipfile.ZipFile('dist/BNBU_Campus_Full_v74.zip') as z:
+          with zipfile.ZipFile('dist/BNBU_Campus_Full_v75.zip') as z:
               assert z.testzip() is None
           print('full package and standalone viewer complete:',len(m['files']),'files')
           PY
@@ -130,16 +143,16 @@ jobs:
         run: python campus/interface/test_browser.py
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v74-browser-screenshots-and-report
+          name: BNBU-v75-browser-screenshots-and-report
           path: dist/qa/
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v74-complete-offline-model-zip
-          path: dist/BNBU_Campus_Full_v74.zip
+          name: BNBU-v75-complete-offline-model-zip
+          path: dist/BNBU_Campus_Full_v75.zip
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
-          name: BNBU-v74-double-click-HTML
-          path: dist/BNBU_Campus_Full_v74/双击查看_校园3D.html
+          name: BNBU-v75-double-click-HTML
+          path: dist/BNBU_Campus_Full_v75/双击查看_校园3D.html
           retention-days: 30
