@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BNBU 校园 v73 · 山体等高线与湖岸高差核查</title>
+<title>BNBU 校园 v74 · 连接处三维局部高差与多图比对</title>
 <link rel="stylesheet" href="./viewer.css">
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v73</span></div></div>
+  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v74</span></div></div>
   <div class="scene-switch" role="group" aria-label="场景切换"><button id="choose-campus" class="selected" type="button">校园三维模型</button><button id="choose-dsm" type="button">遥感山体参考</button></div>
   <div class="top-actions"><button id="help-button" type="button">使用说明</button><span id="health" role="status">准备载入</span></div>
 </header>
@@ -77,6 +77,15 @@
       <label style="display:block;font-size:11px;margin:8px 0 3px"><input id="show-model-joints" type="checkbox" checked> 显示新补的 2 块同标高铺装（模型推定）</label>
       <label style="display:block;font-size:11px;margin:3px 0 8px"><input id="show-junction-graph" type="checkbox" checked> GIS：绿=已有连接，橙=新增短接，红=未核实</label>
       <p id="junction-status" role="status" style="color:#9cd7c4;font-size:11px">连接结构核查记录载入中…</p>
+      <div id="v74-junction-section" style="border:1px solid #3a5866;border-radius:8px;margin:9px 0;padding:9px;background:#102b37">
+       <strong style="color:#eedbaf;font-size:11px">v74：连接处专项多源比对 · 真实模型局部三角面高度</strong>
+       <p id="v74-junction-status" role="status" style="font-size:10px;color:#9cd7c4">读取 1,876 组拓扑比对与 3D 热点中…</p>
+       <label for="v74-junction-select" style="font-size:10px;color:#c9e1dc">按源构件定位逐个连接位置（不自动修补）</label>
+       <select id="v74-junction-select" style="width:100%;max-width:100%;padding:6px;background:#19394a;border:1px solid #416475;color:#e1edf0;border-radius:5px;margin-top:5px"></select>
+       <label style="display:block;font-size:11px;margin:7px 0"><input type="checkbox" id="show-v74-junctions"> 在三维校园显示 47 组连接诊断端点 / 局部高差（可隐藏，非建筑构件）</label>
+       <p id="v74-junction-description" style="font-size:10px;color:#b8ccca">可从下拉框逐个聚焦。照片无法替代现场配准；断面高差为模型单位。</p>
+       <p style="font-size:10px;color:#8daba9">23 张独立来源照片视角（含 v72 的16张） + 官方设计说明。保留真实坡度与分层关系，不因平面重叠误造桥和步道。</p>
+      </div>
       <div style="border-top:1px solid #32475a;margin-top:9px;padding-top:9px">
         <strong style="color:#c2ecde;font-size:11px">v72：已有坡道与台阶，沿真实网格高程细化</strong>
         <div class="quick-grid" style="margin-top:7px">
