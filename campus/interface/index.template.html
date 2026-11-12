@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BNBU 校园 v74 · 连接处三维局部高差与多图比对</title>
+<title>BNBU 校园 v75 · 湖桥玻璃栏板与七桥逐构件复核</title>
 <link rel="stylesheet" href="./viewer.css">
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v74</span></div></div>
+  <div class="brand"><div class="mark">B</div><div><strong>BNBU 校园空间模型</strong><span>3D / GIS evidence viewer · v75</span></div></div>
   <div class="scene-switch" role="group" aria-label="场景切换"><button id="choose-campus" class="selected" type="button">校园三维模型</button><button id="choose-dsm" type="button">遥感山体参考</button></div>
   <div class="top-actions"><button id="help-button" type="button">使用说明</button><span id="health" role="status">准备载入</span></div>
 </header>
@@ -27,7 +27,7 @@
         <button type="button" data-focus="boardwalk">廊道结构近景</button>
         <button type="button" data-focus="ridge">山体</button>
       </div>
-      <label class="dsm-contour-setting" style="display:block;font-size:11px;color:#f4d49f;margin-top:9px"><input type="checkbox" id="show-v73-dsm-contours" checked> 遥感山体：3D 10米等高线（插值参考，可隐藏）</label><div style="font-size:10px;color:#b6b8a2">由30米 DSM 插值的3,737段3D线；与建筑高程未配准。</div><div class="camera-row"><button id="top-view" type="button">俯视</button><button id="reset-view" type="button">重置视角</button></div><label style="display:block;font-size:11px;color:#bdd6cd;margin-top:8px"><input id="show-photo-proxies" type="checkbox" checked> 实景类型参考：廊道栏杆（可隐藏，非实测）</label><div id="lakefront-status" style="font-size:10px;color:#99aaae">图片确认结构类型，但尺寸与位置依旧来自原模型</div>
+      <label class="dsm-contour-setting" style="display:block;font-size:11px;color:#f4d49f;margin-top:9px"><input type="checkbox" id="show-v73-dsm-contours" checked> 遥感山体：3D 10米等高线（插值参考，可隐藏）</label><div style="font-size:10px;color:#b6b8a2">由30米 DSM 插值的3,737段3D线；与建筑高程未配准。</div><div class="camera-row"><button id="top-view" type="button">俯视</button><button id="reset-view" type="button">重置视角</button></div><label style="display:block;font-size:11px;color:#bdd6cd;margin-top:8px"><input id="show-photo-proxies" type="checkbox" checked> 实景类型参考：廊道栏杆（可隐藏，非实测）</label><label style="display:block;font-size:11px;color:#9be2e4;margin-top:5px"><input id="show-v75-glass" type="checkbox" checked> v75 主湖连桥透明栏板（窗格视觉示意，可关闭）</label><div style="font-size:10px;color:#b9d5df">依据学校公开照片的透明护栏类型与旧桥模型边界；非实测玻璃尺寸、窗格数或鸟撞风险面积。</div><div id="lakefront-status" style="font-size:10px;color:#99aaae">图片确认结构类型，但尺寸与位置依旧来自原模型</div>
     </div>
     <div id="render-error" hidden role="alert"></div>
     <div class="bottom-bar"><span id="scene-status">正在读取模型资源…</span><span id="mouse-hint">鼠标左键旋转 · 滚轮缩放 · 右键平移 · 点击检查结构</span></div>
@@ -77,6 +77,14 @@
       <label style="display:block;font-size:11px;margin:8px 0 3px"><input id="show-model-joints" type="checkbox" checked> 显示新补的 2 块同标高铺装（模型推定）</label>
       <label style="display:block;font-size:11px;margin:3px 0 8px"><input id="show-junction-graph" type="checkbox" checked> GIS：绿=已有连接，橙=新增短接，红=未核实</label>
       <p id="junction-status" role="status" style="color:#9cd7c4;font-size:11px">连接结构核查记录载入中…</p>
+      <div id="v75-bridge-component-section" style="border:1px solid #365e71;border-radius:8px;margin:9px 0;padding:9px;background:#142d39">
+        <strong style="color:#b0e8ea;font-size:11px">v75：桥梁逐构件核对 · 玻璃栏板 / 桥端 / 立面窗格</strong>
+        <p id="bridge-v75-status" role="status" style="font-size:10px;color:#9cd7c4">七组桥梁证据和窗格模型加载中…</p>
+        <label for="bridge-v75-select" style="font-size:10px;color:#c9e1dc">选择桥梁（V60 湖桥 + 六段二层连接）</label>
+        <select id="bridge-v75-select" style="width:100%;padding:6px;background:#19394a;border:1px solid #416475;color:#e1edf0;border-radius:5px;margin-top:5px"></select>
+        <p id="bridge-v75-detail" style="font-size:10px;color:#c6d4d8;white-space:pre-wrap;line-height:1.5">桥面与支承有源模型；玻璃栏板为照片类型可关闭图层，六段二层连接的真实窗格数量尚无配准证据。</p>
+        <p style="font-size:10px;color:#9db4bb"><a href="https://www.uic.edu.cn/info/1075/106799.htm" target="_blank" rel="noopener">玻璃护栏照片</a> · <a href="https://fst.bnbu.edu.cn/mscbs_en/index.htm" target="_blank" rel="noopener">湖桥全景照片</a> · <a href="https://rlp.asia/en/project/beijing-normal-university-hong-kong-baptist-university-united-international-college/" target="_blank" rel="noopener">设计方关于错层连桥的说明</a></p>
+      </div>
       <div id="v74-junction-section" style="border:1px solid #3a5866;border-radius:8px;margin:9px 0;padding:9px;background:#102b37">
        <strong style="color:#eedbaf;font-size:11px">v74：连接处专项多源比对 · 真实模型局部三角面高度</strong>
        <p id="v74-junction-status" role="status" style="font-size:10px;color:#9cd7c4">读取 1,876 组拓扑比对与 3D 热点中…</p>
@@ -99,7 +107,7 @@
       </div>
     </section>
     <section class="selected-panel"><div class="section-header"><h2>结构信息</h2><small id="match-count">0 项关联</small></div><div id="selection" class="selection-text">点击左侧 3D 网格查看名称、类型及 GIS 记录。</div></section>
-    <div class="disclaimer"><strong>照片证明连接类型 ≠ 可测量高程及位置。</strong> v71 新增 2 处源模型同标高修复；v72 从已有 122 顶点东坡道及 19 级 LRC 台阶提取扶手轨迹，高度只是可关闭的类型示意，不代表现场建造或测量。3 处桥面/铺装高差、两处远距离道路断裂、山地塘边轮廓仍待独立配准。<strong>照片证明类型 ≠ 测绘位置。</strong> 新栏杆的轨迹仅由旧版 V60 步道边界推得，护栏高与立柱间距为示意。水岸、绿地、道路与真实池塘边界均未摄影配准。所有新增视觉细节不可作为鸟撞玻璃面积或工程测量值。</div>
+    <div class="disclaimer"><strong>v75 透明栏板 ≠ 校准窗格或可计入鸟撞暴露的玻璃面积。</strong> 六段二层连接的具体窗户尚未通过摄影配准，保留无窗玻璃实体的原模型及可逐构件核对的记录。<strong>照片证明连接类型 ≠ 可测量高程及位置。</strong> v71 新增 2 处源模型同标高修复；v72 从已有 122 顶点东坡道及 19 级 LRC 台阶提取扶手轨迹，高度只是可关闭的类型示意，不代表现场建造或测量。3 处桥面/铺装高差、两处远距离道路断裂、山地塘边轮廓仍待独立配准。<strong>照片证明类型 ≠ 测绘位置。</strong> 新栏杆的轨迹仅由旧版 V60 步道边界推得，护栏高与立柱间距为示意。水岸、绿地、道路与真实池塘边界均未摄影配准。所有新增视觉细节不可作为鸟撞玻璃面积或工程测量值。</div>
   </aside>
 </main>
 <dialog id="help-dialog"><h2>查看器操作</h2><p>直接双击独立 HTML 可离线打开（无需安装 Python，也不需要联网）。ZIP 内另有分文件版本，可通过「启动查看器.bat」打开。</p><p>左侧 3D：旋转 / 缩放 / 平移；右侧 GIS：拖拽移动、滚轮缩放。切换“遥感山体参考”可独立查看外部 DSM 高程，不会与建筑模型叠加。</p><button id="close-help" type="button">关闭</button></dialog>
