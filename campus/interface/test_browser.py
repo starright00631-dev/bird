@@ -67,6 +67,8 @@ def check(page,label,offline=False):
     page.locator("#focus-v72-ramp").click()
     page.screenshot(path=str(RESULT/(label+"_v72_ramp_rail.png")),full_page=True,timeout=45000)
     page.locator("#focus-v72-stair").click()
+    cam_and_ground=page.evaluate("({cam:window.__BNBU_DEBUG__.cameraWorld(),ground:window.__BNBU_DEBUG__.stairApproachWorld()})")
+    assert cam_and_ground["cam"][2] < cam_and_ground["ground"][2]-10,cam_and_ground
     page.screenshot(path=str(RESULT/(label+"_v72_LRC_stair.png")),full_page=True,timeout=45000)
     page.locator("#focus-v72-west").click()
     page.screenshot(path=str(RESULT/(label+"_v72_west_grade_unresolved.png")),full_page=True,timeout=45000)
