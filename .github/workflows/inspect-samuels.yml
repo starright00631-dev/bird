@@ -5,20 +5,31 @@ on:
     paths:
       - scripts/inspect_samuels_supplement.py
       - .github/workflows/inspect-samuels.yml
+      - birdglass/video_case_benchmark.py
+      - tests/test_real_video_cases.py
 permissions:
   contents: read
 jobs:
   source-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Download or mark inaccessible
+      - name: Install inspectable research tests
+        run: python -m pip install -r requirements.txt
+      - name: Retrieve original coded supplement and original author code
         run: python scripts/inspect_samuels_supplement.py
-      - name: Save audit, and public coded table if accessible
+      - name: Validate real case rows and grouped baseline
+        env:
+          BIRDGLASS_PEERJ_2022_CSV: results/external/samuels_2022/peerj_14604_supp4_coded_events.csv
+        run: |
+          test -f "$BIRDGLASS_PEERJ_2022_CSV"
+          python -m pytest -q tests/test_real_video_cases.py
+          python -m birdglass.video_case_benchmark --input "$BIRDGLASS_PEERJ_2022_CSV" --output results/external/samuels_2022/grouped_benchmark.json
+      - name: Save real table, published analysis and independent report
         if: always()
         uses: actions/upload-artifact@v4
         with:
