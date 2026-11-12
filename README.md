@@ -59,3 +59,31 @@ No personal campus incident reports, identifying respondent details, access cred
 The complete inherited v64 campus meshes and editable GIS source are stored in [`campus/`](campus/README.md). The v66 builder produces a physically categorized GLB with ten named scene layers, retaining the original 1,377 meshes and restoring 112 render associations (10 water/shore + 96 stair + 6 at-grade links). This is a scene-structure and source-link repair, **not a surveyed reconstruction**. The CTV “校长别墅” candidate remains excluded. Hill elevations are relative, water boundaries and driveways are not independently surveyed, and no glass area is calibrated.
 
 Run `python campus/build_v66.py && python -m unittest discover -s campus -p 'test_v66.py' -v`, then `python -m http.server 8000`; open `http://localhost:8000/campus/viewer.html` to inspect the complete layered 3D model and GIS evidence. GitHub Actions produces downloadable generated GLB, GIS and provenance artifacts.
+
+
+## Verified external bird–window video benchmark
+
+The source-audited 2022 PeerJ study's **38 selected cases** (29 contacts,
+9 near misses; only 36 rows with complete speed/angle/time predictors) are
+reprocessed directly from the NIH PMC versioned public supplement and
+cross-checked with the authors' published R-analysis file. The source has
+the exact SHA-256 \`0e33f97b007bb5f479ebe45abd76680c2ff36ea92f0280f6ead48e708af6cf35\`.
+
+**Falsification result:** when species are held out in entire groups, a
+speed+angle+hour logistic model yields Brier 0.2386 versus 0.2170 for
+the smoothed train-only intercept. Leave-calendar-year-out is 0.2568
+versus 0.1939. This means that **this small selected case table does not
+support a transferable predictive classifier**, let alone a panel-level
+collision probability. Real 3D approach/avoidance tracks and independent
+bird-visible optical conditions remain mandatory.
+
+- Analysis, original paper discrepancy and full limits:
+  [real video case benchmark](docs/REAL_CASE_VIDEO_BENCHMARK.md).
+- Executable code: \`python -m birdglass.video_case_benchmark --input ORIGINAL.csv --output report.json\`.
+- [Evidence workflow](https://github.com/starright00631-dev/bird/actions/workflows/inspect-samuels.yml)
+  retrieves/checksums the original public CSV and published R code,
+  validates source rows and publishes the inspectable output artifact.
+- \`birdglass/approach_events.py\` operationalizes at-risk approach
+  gates, finite-3D-facade ballistic intercepts, source-video verified
+  outcomes and **right-censoring** for missing camera coverage.
+  It does not infer behavior or site risk from a mirror ray alone.
