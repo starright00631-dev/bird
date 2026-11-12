@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "version": "v76",
+  "complete_meshes": 1380,
+  "parent_meshes_vertex_face_transform_colors_exact": 1379,
+  "new_mesh_count": 1,
+  "new_mesh_triangles": 34816,
+  "watertight": true,
+  "consistent_normals": true,
+  "transparent_PBR_material_alpha_mode": "BLEND",
+  "rooftop_original_hole_retained": true,
+  "new_skylight_boundary_matches_existing_rim_model_m2": 2.3186132299102966e-08,
+  "model_glass_surface_area_m2_not_measured": 401.01175697379165,
+  "gis_polygon_matches_GLBrim": true,
+  "gpkg_layers": 142,
+  "active_geojson_features": 566,
+  "kml_placemarks": 566,
+  "forbidden_690_faux_glazing_6_rails_5_roofrooms_not_reintroduced": true,
+  "is_surveyed": false,
+  "birdstrike_area_eligible": false,
+  "remaining_hard_gaps": [
+    "official orthophoto registration",
+    "camera poses",
+    "groundway OSM nodes",
+    "DEM vertical",
+    "roof glass physical dimensions"
+  ]
+}
