@@ -9,7 +9,7 @@ from pathlib import Path
 import threading
 from playwright.sync_api import sync_playwright
 
-PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v73"
+PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v74"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
@@ -28,7 +28,7 @@ def check(page,label,offline=False):
     assert state=={"n":1379,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
-    assert page.evaluate("window.__BNBU_VERSION__")=="v73"
+    assert page.evaluate("window.__BNBU_VERSION__")=="v74"
     assert page.locator("#layers input[type=checkbox]").count()==10
     page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
     assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==12
@@ -41,6 +41,17 @@ def check(page,label,offline=False):
     page.locator("button[data-focus=boardwalk]").click()
     assert page.evaluate("window.__BNBU_DEBUG__.cameraDistance()")<70
     page.wait_for_function("window.__BNBU_DEBUG__.junctionCount()===11",timeout=35000)
+    page.wait_for_function("window.__BNBU_DEBUG__.v74CaseCount()===47",timeout=45000)
+    assert page.locator("#v74-junction-select option").count()==47
+    assert not page.locator("#show-v74-junctions").is_checked()
+    page.locator("#show-v74-junctions").check()
+    assert page.evaluate("window.__BNBU_DEBUG__.v74MarkersVisible()") is True
+    page.locator("#v74-junction-select").select_option("38")
+    assert "局部三角面顶面高差" in page.locator("#v74-junction-description").inner_text()
+    page.screenshot(path=str(RESULT/(label+"_v74_junction_detail.png")),full_page=True,timeout=45000)
+    page.locator("#show-v74-junctions").uncheck()
+    assert page.evaluate("window.__BNBU_DEBUG__.v74MarkersVisible()") is False
+
     page.wait_for_function("window.__BNBU_DEBUG__.photoCount()===16",timeout=35000)
     page.locator("#tab-source").click()
     assert page.locator("#photo-cards article").count()==16
@@ -115,7 +126,7 @@ def check(page,label,offline=False):
     return {"entry":label,"status":"pass","campus_meshes":1379,"layers":10,
             "junctions_checked":11,"short_at_grade_connections_added":2,
             "model_source_profiles":4,"distinct_photo_references":16,"unresolved_grade_markers":3,
-            "gis_features":522,"independent_dsm":True,
+            "gis_features":522,"independent_dsm":True,"v74_junction_hotspots":47,"v74_pairs":1876,
             "browser_errors":failures,"console_errors":console}
 
 def main():
