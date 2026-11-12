@@ -1,0 +1,29 @@
+{
+  "source": "BNBU_v81_Boardwalk_Source_Triangles_Inspector.html",
+  "loaded": true,
+  "errors": [],
+  "visible_states": [
+    {
+      "state": "deck_only",
+      "meshes": 1,
+      "faces": 796
+    },
+    {
+      "state": "showSupports",
+      "meshes": 27,
+      "faces": 3032
+    },
+    {
+      "state": "showRamp",
+      "meshes": 28,
+      "faces": 3272
+    }
+  ],
+  "full_viewer_webgl_test": "blocked by runtime policy (file/http navigation)",
+  "canvas_size": {
+    "x": 300,
+    "y": 70,
+    "width": 940,
+    "height": 660
+  }
+}

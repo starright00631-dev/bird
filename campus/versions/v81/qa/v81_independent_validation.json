@@ -1,0 +1,20 @@
+{
+  "pass": true,
+  "version": "v81",
+  "parent_mesh_count": 1374,
+  "active_mesh_count": 1347,
+  "display_only_mesh_count": 27,
+  "display_only_triangles": 2476,
+  "parent_unmodified_meshes": 1347,
+  "archived_exactly": 27,
+  "active_deck_kept": true,
+  "lrc_skylight_kept": true,
+  "geojson": 534,
+  "display_only_geojson": 27,
+  "kml_active": 534,
+  "gpkg_layers": 146,
+  "primary_glb_sha256": "39ef62e54d7d993dcfb6ece21e7ad5af907ca4a5be6e65f572f53263f43844e4",
+  "full_webgl_browser_verified": false,
+  "coordinate_precision": "inherited proxy XY, non-surveyed model relative Z",
+  "error_budget": "No new ground truth; no physical river crossings inferred"
+}
