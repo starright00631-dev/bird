@@ -43,6 +43,10 @@ jobs:
           unzip -q "$V76_ZIP" -d /tmp/v88-work
           PKG_DIR=$(find /tmp/v88-work -type f -name 'index.html' -print -quit | xargs dirname)
           test -f "$PKG_DIR/generated/BNBU_v71_CONNECTED_LAKEFRONT.glb"
+          PKG_PARENT=$(dirname "$PKG_DIR")
+          V88_DIR="$PKG_PARENT/BNBU_Campus_Full_v88"
+          mv "$PKG_DIR" "$V88_DIR"
+          PKG_DIR="$V88_DIR"
           echo "PKG_DIR=$PKG_DIR" >> "$GITHUB_ENV"
       - name: Overlay v88 registry, viewer, source and QA into the complete package
         run: |
