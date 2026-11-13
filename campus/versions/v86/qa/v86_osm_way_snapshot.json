@@ -1,0 +1,118 @@
+{
+  "source_url": "https://u-map.haotian22.top/poi.json",
+  "timestamp_osm_base": "2026-11-10T19:09:14Z",
+  "query_url": "https://github.com/HaoTian22/BNBU-Map/blob/main/Overpass.txt",
+  "output_directive": "out center",
+  "geometry_available": false,
+  "note": "Way node references and bbox centres are from the same Overpass POI snapshot; node coordinates/full way polygon were not returned by this query.",
+  "ways": {
+    "T1": {
+      "type": "way",
+      "id": 664082910,
+      "center": {
+        "lat": 22.351915,
+        "lon": 113.5152254
+      },
+      "nodes": [
+        6215834955,
+        6215741197,
+        6215741196,
+        6215741206,
+        11264480669,
+        11264478566,
+        11264480670,
+        6215741205,
+        6215741204,
+        6215741203,
+        6215741202,
+        6215741201,
+        6215834956,
+        6215834957,
+        11264480671,
+        6215834952,
+        6215834953,
+        6215834954,
+        6215834955
+      ],
+      "tags": {
+        "building": "university",
+        "building:levels": "6",
+        "name": "T1 厚德楼",
+        "name:en": "T1 Business and Management Building",
+        "name:zh": "T1 厚德楼"
+      }
+    },
+    "T2": {
+      "type": "way",
+      "id": 664082908,
+      "center": {
+        "lat": 22.3523537,
+        "lon": 113.5148681
+      },
+      "nodes": [
+        6215834946,
+        6215834947,
+        6215834948,
+        6215834949,
+        11264480673,
+        6215834950,
+        6215834951,
+        6215735377,
+        6215735378,
+        6215735379,
+        6215735380,
+        6215735381,
+        6215834957,
+        11264480671,
+        6215834952,
+        6215735382,
+        6215735372,
+        6215735373,
+        6215735374,
+        6215834946
+      ],
+      "tags": {
+        "building": "university",
+        "building:levels": "6",
+        "layer": "1",
+        "name": "T2 人文楼",
+        "name:en": "T2 Humanities Building",
+        "name:zh": "T2 人文楼"
+      }
+    },
+    "T3": {
+      "type": "way",
+      "id": 664082909,
+      "center": {
+        "lat": 22.3527163,
+        "lon": 113.5145511
+      },
+      "nodes": [
+        6215834942,
+        6215834943,
+        6215834944,
+        6215834945,
+        6215741190,
+        6215741191,
+        6215741192,
+        6215741193,
+        6215741194,
+        6215834950,
+        11264480673,
+        6215834949,
+        6215741195,
+        6215735383,
+        6215735384,
+        6215741185,
+        6215834942
+      ],
+      "tags": {
+        "building": "university",
+        "building:levels": "6",
+        "name": "T3 格物楼",
+        "name:en": "T3 Science Building",
+        "name:zh": "T3 格物楼"
+      }
+    }
+  }
+}
