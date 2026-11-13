@@ -1,0 +1,61 @@
+{
+  "node_check": "PASS",
+  "self_contained": true,
+  "browser": "Chromium set_content",
+  "success": true,
+  "baseline": {
+    "ready": true,
+    "meshCount": 173,
+    "sourceTriangles": 10700,
+    "renderedFaces": 10700,
+    "mode": "baseline",
+    "focus": "ALL",
+    "webgl": false
+  },
+  "candidate": {
+    "ready": true,
+    "meshCount": 173,
+    "sourceTriangles": 10700,
+    "renderedFaces": 10700,
+    "mode": "candidate",
+    "focus": "ALL",
+    "webgl": false
+  },
+  "overlay": {
+    "ready": true,
+    "meshCount": 173,
+    "sourceTriangles": 10700,
+    "renderedFaces": 21400,
+    "mode": "overlay",
+    "focus": "ALL",
+    "webgl": false
+  },
+  "focus_tests": [
+    {
+      "focus": "T1",
+      "meshCount": 24,
+      "sourceTriangles": 1196
+    },
+    {
+      "focus": "T2",
+      "meshCount": 89,
+      "sourceTriangles": 5302
+    },
+    {
+      "focus": "T3",
+      "meshCount": 58,
+      "sourceTriangles": 3698
+    },
+    {
+      "focus": "V52_04",
+      "meshCount": 1,
+      "sourceTriangles": 252
+    },
+    {
+      "focus": "V52_05",
+      "meshCount": 1,
+      "sourceTriangles": 252
+    }
+  ],
+  "page_errors": []
+}
