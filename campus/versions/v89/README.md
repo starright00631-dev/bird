@@ -1,6 +1,10 @@
 # BNBU v89 — building feature audit
 
-This is the first building-by-building audit pass against the v88 whole-campus release. It is intentionally **audit-only**: no GLB, GIS, viewer, or physical geometry was changed.
+This branch now contains two distinct passes:
+- **Inventory audit:** resolve every building component reference in the v88 scene and identify missing or asymmetric feature categories.
+- **Reference-first visual gap audit:** compare identified official/credible building photos against the actual current source meshes, and record concrete appearance mismatches.
+
+The audit remains **read-only**: no GLB, GIS, viewer, or physical geometry was changed.
 
 ## Scope checked
 
@@ -9,17 +13,15 @@ This is the first building-by-building audit pass against the v88 whole-campus r
 - 1 official but unmapped Phase-II Learning Resource Centre and Laboratory Complex.
 - 1 quarantined CTV-adjacent small-house hypothesis.
 
-The audit resolves every component name in the v76 architecture atlas against the active v88 scene and records per-building mesh counts, triangle counts, transforms/bounds, Z levels, story-edge nodes, transparent glazing surfaces, opaque frames/returns, stairs and roof cross-ribs.
-
 ## Highest-priority findings
 
-1. **Phase-II LRC/Laboratory Complex is not mapped to any active mesh.** It is a distinct official building and must not be substituted with the circular commons.
-2. **V25 is a geometry-resolution outlier:** 62 vertices, 120 triangles, and only two primary-mesh Z levels. It needs building-specific imagery before repair.
-3. **V15–V29 have no separately identified glazing, balcony or railing components**, despite official Phase-I dormitory exterior imagery showing window bays and recessed balcony/guardrail features. The photograph is not registered to an individual V block, so no sibling pattern is copied.
-4. **T1 has zero explicit glazing-surface nodes**, while the official T1 facade photo clearly shows horizontal ribbon glazing and lower-level glazing. T2/T3/T4 contain only 7/3/4 transparent glazing surfaces respectively; opaque mullions, jambs and returns are classified separately.
-5. **D1–D6 have no separately identified glazing, balcony/rail or stair components** in the building registry. Official Phase-II dormitory imagery shows a deep recessed facade grid, window/balcony bays and open guardrails, but the exact D-building assignment is unresolved.
-6. Only 8 of 15 V buildings have separate V63 story-edge meshes. This is an inventory asymmetry, not yet proof that the other seven lack floor bands in their primary mesh.
-7. The optional LRC skylight shell remains outside the default physical master as an unsurveyed candidate.
+1. **T1:** the official T1 photograph shows horizontal ribbon glazing, projecting white frames, lower-level glazing and a canopy. The current T1 component set has no separately registered glazing surfaces or canopy.
+2. **V29:** an identified V29 photograph shows six storeys, windows, recessed balconies and strong projecting frames; the current V29 model has only the opaque primary mass, roof and story-edge strips.
+3. **V15–V29:** seven records have only three registered components each; none has separately identified glazing, balconies or railings. V25 is a major resolution outlier (62 vertices / 120 triangles in its primary mass).
+4. **D1–D6:** each has roof cross-ribs, but no separately identified facade glazing, balconies/rails or stairs. Official Phase-II dormitory imagery shows a much richer facade grid; exact assignment needs building-specific views.
+5. **Phase-II LRC/Laboratory Complex:** official building, still unmapped in the physical master, and distinct from the circular commons.
+
+See [the reference-first visual gap audit](qa/REFERENCE_FIRST_VISUAL_GAP_AUDIT_V89.md) for exact GLB nodes, mesh evidence, image sources, confidence and reconstruction gates.
 
 ## Reproduce
 
@@ -35,10 +37,13 @@ Dependencies: `numpy`, `trimesh` (both are included in the v88 release requireme
 ## Evidence references
 
 - T1 official facade page: https://fbm.bnbu.edu.cn/en/about_us/contact_us.htm
+- T2 official photo: https://mpro.bnbu.edu.cn/info/1086/4347.htm
+- T3 official photo: https://fst.bnbu.edu.cn/en/info/1162/5820.htm
 - Phase-I dormitory exterior: https://admission.bnbu.edu.cn/info/1734/1470.htm
+- V29 identified photo: https://www.eol.cn/guangdong/gdgd/202406/t20240624_2619031.shtml
 - Phase-II dormitory exterior: https://admission.bnbu.edu.cn/info/1734/1469.htm
 - Phase-II LRC/Laboratory Complex: https://www.bnbu.edu.cn/en/info/1076/12578.htm
-- Aedas No.2 Campus design page: https://www.aedas.com/en/project/learning-resources-center-at-beijing-normal-hong-kong-baptist-university-bnbu-no-2-campus/
-- V15–V29 official hall identity mapping is recorded in `qa/building_feature_audit_v89.json`.
+- Aedas No.2 Campus design page: https://www.aedas.com/en/project/bnu-hkbu-united-international-college-uic-no-2-campus/
+- V15–V29 official hall identity mapping is recorded in the building registry.
 
 All photos are typological evidence unless explicitly identified to a building; none is treated as a calibrated as-built survey.
