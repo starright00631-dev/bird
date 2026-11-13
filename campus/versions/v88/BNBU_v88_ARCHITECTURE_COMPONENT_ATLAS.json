@@ -1,0 +1,4670 @@
+{
+  "version": "v76",
+  "source": "immutable inherited v71 GLB + v66 GIS",
+  "source_glb_sha256": "2bb36b25a1b91a3e853b96df9cd8f3ffd0d86dd595ac6c9e9ccc1b4281c5271e",
+  "original_meshes": 1379,
+  "original_gis_features": 522,
+  "families": {
+    "T": {
+      "source_building_count": 8,
+      "building_ids": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8"
+      ]
+    },
+    "V": {
+      "source_building_count": 15,
+      "building_ids": [
+        "V15",
+        "V16",
+        "V17",
+        "V18",
+        "V19",
+        "V20",
+        "V21",
+        "V22",
+        "V23",
+        "V24",
+        "V25",
+        "V26",
+        "V27",
+        "V28",
+        "V29"
+      ]
+    },
+    "D": {
+      "source_building_count": 6,
+      "building_ids": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ]
+    },
+    "LRC": {
+      "source_building_count": 1,
+      "building_ids": [
+        "LRC"
+      ]
+    }
+  },
+  "feature_edge_overlay": {
+    "T": {
+      "source_component_meshes": 140,
+      "source_sharp_open_edge_segments": 7298,
+      "not_new_architectural_members": true
+    },
+    "V": {
+      "source_component_meshes": 96,
+      "source_sharp_open_edge_segments": 3806,
+      "not_new_architectural_members": true
+    },
+    "D": {
+      "source_component_meshes": 96,
+      "source_sharp_open_edge_segments": 3264,
+      "not_new_architectural_members": true
+    },
+    "LRC": {
+      "source_component_meshes": 125,
+      "source_sharp_open_edge_segments": 8160,
+      "not_new_architectural_members": true
+    }
+  },
+  "building_count": 30,
+  "building_records": [
+    {
+      "id": "T1",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T1",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1345.48,
+      "source_bbox_utm_xy": [
+        759010.625,
+        2473922.396,
+        759065.891,
+        2473972.982
+      ],
+      "source_mesh_z_range": [
+        21.62,
+        21.78
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T1_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T1_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T1_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T1_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T1_5_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T1_6_0",
+        "ROOF_DECK_T1",
+        "ROOF_PARAPET_T1",
+        "V25_P1_T1_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T1_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T1_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T1_LEVEL_04_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T1_LEVEL_05_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T1_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V34_MODULE_V26_T1_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T1_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T1_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T1_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T1_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V34_MODULE_V26_T1_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__06",
+        "V34_MODULE_V26_T1_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__07",
+        "V40_MAIN_T1_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T1_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T1_ROOF_FACING"
+      ],
+      "existing_component_count": 24,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_022",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_020",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_021",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_019",
+          "xy_gap_model_units": 2.2
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_022",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_020",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_021",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_019",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 83.654
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 205.088
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Business and Management Building",
+      "display_label": "T1 · Business and Management Building",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "T2",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T2",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1548.54,
+      "source_bbox_utm_xy": [
+        758971.59,
+        2473966.717,
+        759029.149,
+        2474022.383
+      ],
+      "source_mesh_z_range": [
+        21.62,
+        21.78
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_5_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_6_0",
+        "ROOF_DECK_T2",
+        "ROOF_PARAPET_T2",
+        "V23_T2_MODEL_PORTICO_COLUMN_01",
+        "V23_T2_MODEL_PORTICO_COLUMN_02",
+        "V23_T2_MODEL_PORTICO_COLUMN_03",
+        "V23_T2_MODEL_PORTICO_COLUMN_04",
+        "V23_T2_MODEL_PORTICO_COLUMN_05",
+        "V23_T2_MODEL_PORTICO_COLUMN_06",
+        "V25_P1_T2_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T2_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T2_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T2_LEVEL_04_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T2_LEVEL_05_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T2_CENTRAL_BAY_OPAQUE_FRAME_RETURN_1",
+        "V26_T2_CENTRAL_BAY_OPAQUE_FRAME_RETURN_2",
+        "V26_T2_CENTRAL_BAY_OPAQUE_HEAD_BEAM",
+        "V26_T2_CENTRAL_PHOTO_SUPPORTED_UNDIVIDED_GLAZING",
+        "V26_T2_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V27_T2_LEVEL01_OPAQUE_GALLERY_EDGE",
+        "V27_T2_LEVEL02_OPAQUE_GALLERY_EDGE",
+        "V27_T2_LEVEL03_OPAQUE_GALLERY_EDGE",
+        "V27_T2_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS",
+        "V27_T2_PHOTO_RIBBON_LEVEL1_SEG2_CONTINUOUS_GLASS",
+        "V27_T2_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS",
+        "V27_T2_PHOTO_RIBBON_LEVEL2_SEG2_CONTINUOUS_GLASS",
+        "V27_T2_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS",
+        "V27_T2_PHOTO_RIBBON_LEVEL3_SEG2_CONTINUOUS_GLASS",
+        "V30_T2_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL1_SEG2_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL1_SEG2_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL2_SEG2_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL2_SEG2_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL3_SEG2_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T2_PHOTO_RIBBON_LEVEL3_SEG2_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V34_MODULE_V26_T2_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T2_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T2_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T2_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T2_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V34_MODULE_V32_T2_CENTRAL_GLASS_PHOTO_FORM_HORIZONTAL_OPAQUE_MULLION_GROUP__01",
+        "V34_MODULE_V32_T2_CENTRAL_GLASS_PHOTO_FORM_HORIZONTAL_OPAQUE_MULLION_GROUP__02",
+        "V34_MODULE_V32_T2_CENTRAL_GLASS_PHOTO_FORM_HORIZONTAL_OPAQUE_MULLION_GROUP__03",
+        "V34_MODULE_V32_T2_CENTRAL_GLASS_PHOTO_FORM_HORIZONTAL_OPAQUE_MULLION_GROUP__04",
+        "V34_MODULE_V32_T2_CENTRAL_GLASS_PHOTO_FORM_VERTICAL_OPAQUE_MULLION_GROUP__01",
+        "V34_MODULE_V32_T2_CENTRAL_GLASS_PHOTO_FORM_VERTICAL_OPAQUE_MULLION_GROUP__02",
+        "V34_MODULE_V32_T2_CENTRAL_GLASS_PHOTO_FORM_VERTICAL_OPAQUE_MULLION_GROUP__03",
+        "V37_P1_T2_BAY_01_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_01_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_02_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_02_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_03_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_03_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_04_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_04_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_05_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_05_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_06_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T2_BAY_06_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V40_MAIN_T2_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T2_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T2_ROOF_FACING",
+        "V41_EXISTING_GLASS_END_JAMB_V26_T2_CENTRAL_PHOTO_SUPPORTED_UNDIVIDED_GLAZING_1",
+        "V41_EXISTING_GLASS_END_JAMB_V26_T2_CENTRAL_PHOTO_SUPPORTED_UNDIVIDED_GLAZING_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL1_SEG2_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL1_SEG2_CONTINUOUS_GLASS_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL2_SEG2_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL2_SEG2_CONTINUOUS_GLASS_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL3_SEG2_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T2_PHOTO_RIBBON_LEVEL3_SEG2_CONTINUOUS_GLASS_2",
+        "V41_T2_PHOTO_CENTRAL_GLASS_FLOORLINE_1",
+        "V41_T2_PHOTO_CENTRAL_GLASS_FLOORLINE_2",
+        "V41_T2_PHOTO_CENTRAL_GLASS_FLOORLINE_3"
+      ],
+      "existing_component_count": 89,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_022",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_023",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_021",
+          "xy_gap_model_units": 26.554
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 33.919
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_022",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_023",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_021",
+          "xy_gap_model_units": 26.554,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 33.919,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 112.814
+        },
+        {
+          "node": "LAKE_04",
+          "xy_gap_model_units": 200.316
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Humanities Building",
+      "display_label": "T2 · Humanities Building",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "T3",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T3",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1378.69,
+      "source_bbox_utm_xy": [
+        758939.219,
+        2474007.969,
+        758994.209,
+        2474061.511
+      ],
+      "source_mesh_z_range": [
+        21.62,
+        21.78
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T3_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T3_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T3_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T3_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T3_5_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T3_6_0",
+        "ROOF_DECK_T3",
+        "ROOF_PARAPET_T3",
+        "V23_T3_MODEL_PORTICO_COLUMN_01",
+        "V23_T3_MODEL_PORTICO_COLUMN_02",
+        "V23_T3_MODEL_PORTICO_COLUMN_03",
+        "V23_T3_MODEL_PORTICO_COLUMN_04",
+        "V23_T3_MODEL_PORTICO_COLUMN_05",
+        "V23_T3_MODEL_PORTICO_COLUMN_06",
+        "V25_P1_T3_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T3_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T3_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T3_LEVEL_04_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T3_LEVEL_05_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T3_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V27_T3_LEVEL01_OPAQUE_GALLERY_EDGE",
+        "V27_T3_LEVEL02_OPAQUE_GALLERY_EDGE",
+        "V27_T3_LEVEL03_OPAQUE_GALLERY_EDGE",
+        "V27_T3_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS",
+        "V27_T3_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS",
+        "V27_T3_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS",
+        "V30_T3_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T3_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V30_T3_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T3_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V30_T3_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_HEAD_OPAQUE_RETURN",
+        "V30_T3_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_SILL_OPAQUE_RETURN",
+        "V34_MODULE_V26_T3_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T3_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T3_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T3_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T3_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V37_P1_T3_BAY_01_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_01_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_02_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_02_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_03_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_03_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_04_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_04_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_05_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_05_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_06_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "V37_P1_T3_BAY_06_PILOTIS_PAVED_GROUND_PHOTO_AND_PREEXISTING_MESH",
+        "V40_MAIN_T3_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T3_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T3_ROOF_FACING",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T3_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T3_PHOTO_RIBBON_LEVEL1_SEG1_CONTINUOUS_GLASS_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T3_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T3_PHOTO_RIBBON_LEVEL2_SEG1_CONTINUOUS_GLASS_2",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T3_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_1",
+        "V41_EXISTING_GLASS_END_JAMB_V27_T3_PHOTO_RIBBON_LEVEL3_SEG1_CONTINUOUS_GLASS_2"
+      ],
+      "existing_component_count": 58,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_003",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_023",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 14.234
+        },
+        {
+          "node": "WALK_022",
+          "xy_gap_model_units": 43.773
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_003",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_023",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 14.234,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_022",
+          "xy_gap_model_units": 43.773,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 151.395
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 181.913
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Science Building",
+      "display_label": "T3 · Science Building",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "T4",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T4",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 833.15,
+      "source_bbox_utm_xy": [
+        759180.559,
+        2474038.219,
+        759213.39,
+        2474095.876
+      ],
+      "source_mesh_z_range": [
+        16.82,
+        16.98
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T4_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T4_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T4_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T4_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T4_5_0",
+        "ROOF_DECK_T4",
+        "ROOF_PARAPET_T4",
+        "V13_EXISTING_OUTLINE_OPAQUE_T4_2F_TERRACE",
+        "V13_STAIR_BOTTOM_LANDING_T4",
+        "V25_P1_T4_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T4_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T4_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T4_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V27_T4_LEVEL02_OPAQUE_GALLERY_EDGE",
+        "V27_T4_LEVEL03_OPAQUE_GALLERY_EDGE",
+        "V31_T4_PHOTO_RIBBON_01_CONTINUOUS_GLAZING_NOT_PANE_GRID",
+        "V31_T4_PHOTO_RIBBON_02_CONTINUOUS_GLAZING_NOT_PANE_GRID",
+        "V31_T4_PHOTO_RIBBON_03_CONTINUOUS_GLAZING_NOT_PANE_GRID",
+        "V31_T4_PHOTO_RIBBON_04_CONTINUOUS_GLAZING_NOT_PANE_GRID",
+        "V34_MODULE_V26_T4_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T4_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T4_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T4_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T4_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V40_MAIN_T4_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T4_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T4_ROOF_FACING",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_01_CONTINUOUS_GLAZING_NOT_PANE_GRID_1",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_01_CONTINUOUS_GLAZING_NOT_PANE_GRID_2",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_02_CONTINUOUS_GLAZING_NOT_PANE_GRID_1",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_02_CONTINUOUS_GLAZING_NOT_PANE_GRID_2",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_03_CONTINUOUS_GLAZING_NOT_PANE_GRID_1",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_03_CONTINUOUS_GLAZING_NOT_PANE_GRID_2",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_04_CONTINUOUS_GLAZING_NOT_PANE_GRID_1",
+        "V41_EXISTING_GLASS_END_JAMB_V31_T4_PHOTO_RIBBON_04_CONTINUOUS_GLAZING_NOT_PANE_GRID_2",
+        "V49_P1_T4_16_TREAD_STAIR_MATCH_MODEL_FIRST_FLOOR_NOT_SURVEYED"
+      ],
+      "existing_component_count": 36,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_049",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_048",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_043",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_050",
+          "xy_gap_model_units": 2.2
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_049",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_048",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_043",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_050",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 3.8
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 37.902
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Teaching Building T4",
+      "display_label": "T4 · Teaching Building T4",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "T5",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T5",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 818.23,
+      "source_bbox_utm_xy": [
+        759130.949,
+        2474057.798,
+        759163.421,
+        2474114.521
+      ],
+      "source_mesh_z_range": [
+        16.82,
+        16.98
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T5_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T5_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T5_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T5_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T5_5_0",
+        "ROOF_DECK_T5",
+        "ROOF_PARAPET_T5",
+        "V13_EXISTING_OUTLINE_OPAQUE_T5_2F_TERRACE",
+        "V25_P1_T5_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T5_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T5_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T5_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V27_T5_LEVEL02_OPAQUE_GALLERY_EDGE",
+        "V27_T5_LEVEL03_OPAQUE_GALLERY_EDGE",
+        "V34_MODULE_V26_T5_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T5_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T5_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T5_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T5_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V40_MAIN_T5_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T5_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T5_ROOF_FACING"
+      ],
+      "existing_component_count": 22,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_025",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_050",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_048",
+          "xy_gap_model_units": 15.983
+        },
+        {
+          "node": "WALK_046",
+          "xy_gap_model_units": 35.504
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_025",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_050",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_048",
+          "xy_gap_model_units": 15.983,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_046",
+          "xy_gap_model_units": 35.504,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 37.57
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 86.876
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Teaching Building T5",
+      "display_label": "T5 · Teaching Building T5",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "T6",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T6",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 892.9,
+      "source_bbox_utm_xy": [
+        759075.35,
+        2474073.545,
+        759109.211,
+        2474132.394
+      ],
+      "source_mesh_z_range": [
+        16.82,
+        16.98
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T6_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T6_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T6_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T6_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T6_5_0",
+        "ROOF_DECK_T6",
+        "ROOF_PARAPET_T6",
+        "V13_EXISTING_OUTLINE_OPAQUE_T6_2F_TERRACE",
+        "V13_STAIR_BOTTOM_LANDING_T6",
+        "V25_P1_T6_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T6_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T6_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T6_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V27_T6_LEVEL02_OPAQUE_GALLERY_EDGE",
+        "V27_T6_LEVEL03_OPAQUE_GALLERY_EDGE",
+        "V34_MODULE_V26_T6_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T6_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T6_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T6_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T6_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V40_MAIN_T6_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T6_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T6_ROOF_FACING",
+        "V49_P1_T6_16_TREAD_STAIR_MATCH_MODEL_FIRST_FLOOR_NOT_SURVEYED"
+      ],
+      "existing_component_count": 24,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_027",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_025",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_026",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 38.036
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_027",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_025",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_026",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 38.036,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 80.065
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 142.363
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Teaching Building T6",
+      "display_label": "T6 · Teaching Building T6",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "T7",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T7",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 877.19,
+      "source_bbox_utm_xy": [
+        759027.256,
+        2474100.978,
+        759061.588,
+        2474158.761
+      ],
+      "source_mesh_z_range": [
+        16.82,
+        16.98
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T7_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T7_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T7_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T7_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T7_5_0",
+        "ROOF_DECK_T7",
+        "ROOF_PARAPET_T7",
+        "V13_EXISTING_OUTLINE_OPAQUE_T7_2F_TERRACE",
+        "V25_P1_T7_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T7_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T7_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T7_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V27_T7_LEVEL02_OPAQUE_GALLERY_EDGE",
+        "V27_T7_LEVEL03_OPAQUE_GALLERY_EDGE",
+        "V34_MODULE_V26_T7_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T7_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T7_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T7_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T7_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V40_MAIN_T7_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T7_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T7_ROOF_FACING"
+      ],
+      "existing_component_count": 22,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_029",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_027",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_028",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_026",
+          "xy_gap_model_units": 2.2
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_029",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_027",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_028",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_026",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 133.877
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 193.962
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Teaching Building T7",
+      "display_label": "T7 · Teaching Building T7",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "T8",
+      "family": "T",
+      "source_anchor_node": "ROOF_DECK_T8",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 955.72,
+      "source_bbox_utm_xy": [
+        758973.384,
+        2474121.043,
+        759009.589,
+        2474183.462
+      ],
+      "source_mesh_z_range": [
+        18.54,
+        18.7
+      ],
+      "existing_component_names": [
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T8_1_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T8_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T8_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T8_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T8_5_0",
+        "ROOF_DECK_T8",
+        "ROOF_PARAPET_T8",
+        "V13_EXISTING_OUTLINE_OPAQUE_T8_2F_TERRACE",
+        "V13_STAIR_BOTTOM_LANDING_T8",
+        "V25_P1_T8_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T8_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T8_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T8_LEVEL_04_OPAQUE_RECESSED_GALLERY_DECK",
+        "V26_T8_EXTERIOR_GALLERY_TOP_SPANDREL",
+        "V27_T8_LEVEL02_OPAQUE_GALLERY_EDGE",
+        "V27_T8_LEVEL03_OPAQUE_GALLERY_EDGE",
+        "V27_T8_LEVEL04_OPAQUE_GALLERY_EDGE",
+        "V34_MODULE_V26_T8_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__01",
+        "V34_MODULE_V26_T8_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__02",
+        "V34_MODULE_V26_T8_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__03",
+        "V34_MODULE_V26_T8_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__04",
+        "V34_MODULE_V26_T8_EVIDENCE_BOUNDED_GALLERY_PIER_GROUP__05",
+        "V40_MAIN_T8_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_T8_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_T8_ROOF_FACING",
+        "V49_P1_T8_16_TREAD_STAIR_MATCH_MODEL_FIRST_FLOOR_NOT_SURVEYED"
+      ],
+      "existing_component_count": 26,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_029",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_030",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 2.2
+        },
+        {
+          "node": "WALK_009",
+          "xy_gap_model_units": 2.2
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_029",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_030",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_009",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 178.164
+        },
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 188.405
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "CEFC Building",
+      "display_label": "T8 · CEFC Building",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V15",
+      "family": "V",
+      "source_anchor_node": "MAIN_V15",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1097.93,
+      "source_bbox_utm_xy": [
+        759169.731,
+        2474183.718,
+        759219.663,
+        2474229.662
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V15",
+        "ROOF_DECK_V15",
+        "ROOF_PARAPET_V15"
+      ],
+      "existing_component_count": 3,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 0.899
+        },
+        {
+          "node": "WALK_053",
+          "xy_gap_model_units": 33.39
+        },
+        {
+          "node": "WALK_052",
+          "xy_gap_model_units": 45.347
+        },
+        {
+          "node": "WALK_032",
+          "xy_gap_model_units": 74.469
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 0.899,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_053",
+          "xy_gap_model_units": 33.39,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_052",
+          "xy_gap_model_units": 45.347,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_032",
+          "xy_gap_model_units": 74.469,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 89.988
+        },
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 146.015
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Ming Xin House",
+      "display_label": "V15 · Ming Xin House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V16",
+      "family": "V",
+      "source_anchor_node": "MAIN_V16",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1175.0,
+      "source_bbox_utm_xy": [
+        759188.896,
+        2474137.897,
+        759238.924,
+        2474189.553
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "existing_component_names": [
+        "MAIN_V16",
+        "ROOF_DECK_V16",
+        "ROOF_PARAPET_V16",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V16_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V16_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V16_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V16_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V16_5_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V16_6_0"
+      ],
+      "existing_component_count": 9,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_052",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_053",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 34.247
+        },
+        {
+          "node": "WALK_051",
+          "xy_gap_model_units": 49.108
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_052",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_053",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 34.247,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_051",
+          "xy_gap_model_units": 49.108,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 49.37
+        },
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 99.949
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Shang Xian House",
+      "display_label": "V16 · Shang Xian House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V17",
+      "family": "V",
+      "source_anchor_node": "MAIN_V17",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1113.84,
+      "source_bbox_utm_xy": [
+        759079.148,
+        2474234.606,
+        759129.228,
+        2474280.15
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V17",
+        "ROOF_DECK_V17",
+        "ROOF_PARAPET_V17"
+      ],
+      "existing_component_count": 3,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_035",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_032",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 50.141
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_035",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_032",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 50.141,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 189.326
+        },
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 213.5
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Ren Ai House",
+      "display_label": "V17 · Ren Ai House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V18",
+      "family": "V",
+      "source_anchor_node": "MAIN_V18",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 990.0,
+      "source_bbox_utm_xy": [
+        759092.639,
+        2474167.69,
+        759138.417,
+        2474216.303
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        24.8
+      ],
+      "existing_component_names": [
+        "MAIN_V18",
+        "ROOF_DECK_V18",
+        "ROOF_PARAPET_V18",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V18_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V18_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V18_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V18_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V18_5_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V18_6_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V18_7_0"
+      ],
+      "existing_component_count": 10,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 0.999
+        },
+        {
+          "node": "WALK_053",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_032",
+          "xy_gap_model_units": 22.056
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 31.402
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 0.999,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_053",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_032",
+          "xy_gap_model_units": 22.056,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 31.402,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 144.154
+        },
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 149.354
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Bao Pu House",
+      "display_label": "V18 · Bao Pu House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V19",
+      "family": "V",
+      "source_anchor_node": "MAIN_V19",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1034.28,
+      "source_bbox_utm_xy": [
+        759002.742,
+        2474237.662,
+        759050.936,
+        2474282.727
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V19",
+        "ROOF_DECK_V19",
+        "ROOF_PARAPET_V19"
+      ],
+      "existing_component_count": 3,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_034",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_035",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_033",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 9.273
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_034",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_035",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_033",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 9.273,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 214.014
+        },
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 251.359
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Zhen Zhi House",
+      "display_label": "V19 · Zhen Zhi House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V20",
+      "family": "V",
+      "source_anchor_node": "MAIN_V20",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 924.0,
+      "source_bbox_utm_xy": [
+        759009.284,
+        2474187.132,
+        759052.13,
+        2474233.914
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V20",
+        "ROOF_DECK_V20",
+        "ROOF_PARAPET_V20",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V20_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V20_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V20_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V20_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V20_5_0"
+      ],
+      "existing_component_count": 8,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 5.462
+        },
+        {
+          "node": "WALK_033",
+          "xy_gap_model_units": 7.379
+        },
+        {
+          "node": "WALK_011",
+          "xy_gap_model_units": 20.322
+        },
+        {
+          "node": "WALK_029",
+          "xy_gap_model_units": 28.35
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_031",
+          "xy_gap_model_units": 5.462,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_033",
+          "xy_gap_model_units": 7.379,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_011",
+          "xy_gap_model_units": 20.322,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_029",
+          "xy_gap_model_units": 28.35,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 207.216
+        },
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 210.629
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Du Xing House",
+      "display_label": "V20 · Du Xing House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V21",
+      "family": "V",
+      "source_anchor_node": "MAIN_V21",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 912.29,
+      "source_bbox_utm_xy": [
+        758935.151,
+        2474235.205,
+        758980.537,
+        2474277.955
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V21",
+        "ROOF_DECK_V21",
+        "ROOF_PARAPET_V21"
+      ],
+      "existing_component_count": 3,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_016",
+          "xy_gap_model_units": 0.899
+        },
+        {
+          "node": "WALK_034",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_015",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 14.045
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_016",
+          "xy_gap_model_units": 0.899,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_034",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_015",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 14.045,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 149.48
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 243.186
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Bo Wen House",
+      "display_label": "V21 · Bo Wen House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V22",
+      "family": "V",
+      "source_anchor_node": "MAIN_V22",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 861.0,
+      "source_bbox_utm_xy": [
+        758935.837,
+        2474184.377,
+        758977.283,
+        2474229.759
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V22",
+        "ROOF_DECK_V22",
+        "ROOF_PARAPET_V22",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V22_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V22_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V22_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V22_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V22_5_0"
+      ],
+      "existing_component_count": 8,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_010",
+          "xy_gap_model_units": 0.999
+        },
+        {
+          "node": "WALK_011",
+          "xy_gap_model_units": 0.999
+        },
+        {
+          "node": "WALK_015",
+          "xy_gap_model_units": 9.447
+        },
+        {
+          "node": "WALK_030",
+          "xy_gap_model_units": 11.334
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_010",
+          "xy_gap_model_units": 0.999,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_011",
+          "xy_gap_model_units": 0.999,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_015",
+          "xy_gap_model_units": 9.447,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_030",
+          "xy_gap_model_units": 11.334,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 137.296
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 218.958
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Ya Zhi House",
+      "display_label": "V22 · Ya Zhi House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V23",
+      "family": "V",
+      "source_anchor_node": "MAIN_V23",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 719.58,
+      "source_bbox_utm_xy": [
+        758857.882,
+        2474208.658,
+        758897.998,
+        2474245.941
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V23",
+        "ROOF_DECK_V23",
+        "ROOF_PARAPET_V23"
+      ],
+      "existing_component_count": 3,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_014",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_016",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 7.8
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 28.848
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_014",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_016",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 7.8,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 28.848,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 67.738
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 166.48
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Xue Qin House",
+      "display_label": "V23 · Xue Qin House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V24",
+      "family": "V",
+      "source_anchor_node": "MAIN_V24",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 760.0,
+      "source_bbox_utm_xy": [
+        758820.462,
+        2474189.534,
+        758859.618,
+        2474231.791
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "existing_component_names": [
+        "MAIN_V24",
+        "ROOF_DECK_V24",
+        "ROOF_PARAPET_V24",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V24_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V24_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V24_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V24_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V24_5_0"
+      ],
+      "existing_component_count": 8,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_014",
+          "xy_gap_model_units": 0.899
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 18.774
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 19.304
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_014",
+          "xy_gap_model_units": 0.899,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 18.774,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 19.304,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 27.508
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 130.107
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Yang Ming House",
+      "display_label": "V24 · Yang Ming House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V25",
+      "family": "V",
+      "source_anchor_node": "MAIN_V25",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1135.62,
+      "source_bbox_utm_xy": [
+        758876.957,
+        2474055.387,
+        758920.899,
+        2474106.185
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        24.8
+      ],
+      "existing_component_names": [
+        "MAIN_V25",
+        "ROOF_DECK_V25",
+        "ROOF_PARAPET_V25"
+      ],
+      "existing_component_count": 3,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_004",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 47.36
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 49.341
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_004",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 47.36,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 49.341,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 116.274
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 124.577
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Dong Po House",
+      "display_label": "V25 · Dong Po House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V26",
+      "family": "V",
+      "source_anchor_node": "MAIN_V26",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1050.0,
+      "source_bbox_utm_xy": [
+        758824.084,
+        2474075.537,
+        758865.876,
+        2474124.357
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "existing_component_names": [
+        "MAIN_V26",
+        "ROOF_DECK_V26",
+        "ROOF_PARAPET_V26",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V26_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V26_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V26_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V26_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V26_5_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V26_6_0"
+      ],
+      "existing_component_count": 9,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 21.065
+        },
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 33.833
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 34.697
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 21.065,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 33.833,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 34.697,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 64.94
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 80.106
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Goethe House",
+      "display_label": "V26 · Goethe House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V27",
+      "family": "V",
+      "source_anchor_node": "MAIN_V27",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1237.6,
+      "source_bbox_utm_xy": [
+        758745.29,
+        2474095.165,
+        758799.868,
+        2474143.19
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "existing_component_names": [
+        "MAIN_V27",
+        "ROOF_DECK_V27",
+        "ROOF_PARAPET_V27"
+      ],
+      "existing_component_count": 3,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_007",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 29.18
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 42.95
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_007",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 29.18,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 42.95,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 8.968
+        },
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 16.574
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Hugo House",
+      "display_label": "V27 · Hugo House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V28",
+      "family": "V",
+      "source_anchor_node": "MAIN_V28",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1104.0,
+      "source_bbox_utm_xy": [
+        758851.442,
+        2473974.998,
+        758897.486,
+        2474026.445
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "existing_component_names": [
+        "MAIN_V28",
+        "ROOF_DECK_V28",
+        "ROOF_PARAPET_V28",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V28_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V28_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V28_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V28_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V28_5_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V28_6_0"
+      ],
+      "existing_component_count": 9,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_004",
+          "xy_gap_model_units": 38.237
+        },
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 58.329
+        },
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 73.279
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_004",
+          "xy_gap_model_units": 38.237,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 58.329,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 73.279,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 99.176
+        },
+        {
+          "node": "LAKE_04",
+          "xy_gap_model_units": 130.66
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Shakespeare House",
+      "display_label": "V28 · Shakespeare House",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "V29",
+      "family": "V",
+      "source_anchor_node": "MAIN_V29",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 1080.0,
+      "source_bbox_utm_xy": [
+        758801.421,
+        2474032.562,
+        758848.731,
+        2474082.461
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "existing_component_names": [
+        "MAIN_V29",
+        "ROOF_DECK_V29",
+        "ROOF_PARAPET_V29",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V29_1_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V29_2_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V29_3_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V29_4_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V29_5_0",
+        "V63_RETOPOLOGIZED_OPAQUE_STORYEDGE_V29_6_0"
+      ],
+      "existing_component_count": 9,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 0.9
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 1.0
+        },
+        {
+          "node": "WALK_004",
+          "xy_gap_model_units": 47.347
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 57.198
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 0.9,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 1.0,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_004",
+          "xy_gap_model_units": 47.347,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 57.198,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 48.245
+        },
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 92.425
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Yung Wing House",
+      "display_label": "V29 · Yung Wing House",
+      "identity_source_url": "https://sao.bnbu.edu.cn/en/campus/hostel_life/hostel_life/details_of_hall/Moral_Education_Hall.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "D1",
+      "family": "D",
+      "source_anchor_node": "PHASEII_DORM_D1",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 3102.22,
+      "source_bbox_utm_xy": [
+        758597.397,
+        2474990.186,
+        758696.404,
+        2475086.659
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        32.0
+      ],
+      "existing_component_names": [
+        "PHASEII_DORM_D1",
+        "PHASEII_V12_ROOF_DECK_PROXY_D1",
+        "V24_D1_AERIAL_INFORMED_CONTINUOUS_DARK_ROOF_FIELD_NONPV",
+        "V24_D1_ROOF_FIELD_SINGLE_OPAQUE_FRAME",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_01_00",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_01_01",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_02_00",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_02_01",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_03_00",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_03_01",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_04_00",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_04_01",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_05_00",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_05_01",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_06_00",
+        "V32_D1_AERIAL_OPAQUE_ROOF_CROSSRIB_06_01",
+        "V49_PHASEII_D1_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+      ],
+      "existing_component_count": 17,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 721.375
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 744.832
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 750.077
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 769.042
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 1.0,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D1_surface",
+          "xy_gap_model_units": 20.619,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D1_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 25.772,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D2_surface",
+          "xy_gap_model_units": 45.609,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 771.526
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 890.513
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "D1, Residence Cluster of Phase II Campus",
+      "display_label": "D1 · D1, Residence Cluster of Phase II Campus",
+      "identity_source_url": "https://ar.bnbu.edu.cn/Classroom%20Lab%20Seating%20Capacity%20Furniture%20and%20IT%20Equipment_20250901.pdf",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "D2",
+      "family": "D",
+      "source_anchor_node": "PHASEII_DORM_D2",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 2689.5,
+      "source_bbox_utm_xy": [
+        758636.306,
+        2474900.083,
+        758701.959,
+        2474982.5
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        32.0
+      ],
+      "existing_component_names": [
+        "PHASEII_DORM_D2",
+        "PHASEII_V12_ROOF_DECK_PROXY_D2",
+        "V24_D2_AERIAL_INFORMED_CONTINUOUS_DARK_ROOF_FIELD_NONPV",
+        "V24_D2_ROOF_FIELD_SINGLE_OPAQUE_FRAME",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_01_00",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_01_01",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_02_00",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_02_01",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_03_00",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_03_01",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_04_00",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_04_01",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_05_00",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_05_01",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_06_00",
+        "V32_D2_AERIAL_OPAQUE_ROOF_CROSSRIB_06_01",
+        "V49_PHASEII_D2_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+      ],
+      "existing_component_count": 17,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 625.732
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 649.133
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 656.063
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 673.963
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 1.0,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D2_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 18.647,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D2_surface",
+          "xy_gap_model_units": 19.744,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D3_surface",
+          "xy_gap_model_units": 27.004,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 678.437
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 798.676
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "D2, Residence Cluster of Phase II Campus",
+      "display_label": "D2 · D2, Residence Cluster of Phase II Campus",
+      "identity_source_url": "https://ar.bnbu.edu.cn/Classroom%20Lab%20Seating%20Capacity%20Furniture%20and%20IT%20Equipment_20250901.pdf",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "D3",
+      "family": "D",
+      "source_anchor_node": "PHASEII_DORM_D3",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 2894.88,
+      "source_bbox_utm_xy": [
+        758580.491,
+        2474819.355,
+        758673.818,
+        2474906.711
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        32.0
+      ],
+      "existing_component_names": [
+        "PHASEII_DORM_D3",
+        "PHASEII_V12_ROOF_DECK_PROXY_D3",
+        "V24_D3_AERIAL_INFORMED_CONTINUOUS_DARK_ROOF_FIELD_NONPV",
+        "V24_D3_ROOF_FIELD_SINGLE_OPAQUE_FRAME",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_01_00",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_01_01",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_02_00",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_02_01",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_03_00",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_03_01",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_04_00",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_04_01",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_05_00",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_05_01",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_06_00",
+        "V32_D3_AERIAL_OPAQUE_ROOF_CROSSRIB_06_01",
+        "V49_PHASEII_D3_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+      ],
+      "existing_component_count": 17,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 579.99
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 594.837
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 604.28
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 620.321
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 1.0,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D3_surface",
+          "xy_gap_model_units": 19.453,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D3_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 23.625,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D2_surface",
+          "xy_gap_model_units": 37.027,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 612.052
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 725.737
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "D3, Residence Cluster of Phase II Campus",
+      "display_label": "D3 · D3, Residence Cluster of Phase II Campus",
+      "identity_source_url": "https://ar.bnbu.edu.cn/Classroom%20Lab%20Seating%20Capacity%20Furniture%20and%20IT%20Equipment_20250901.pdf",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "D4",
+      "family": "D",
+      "source_anchor_node": "PHASEII_DORM_D4",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 2962.04,
+      "source_bbox_utm_xy": [
+        758464.132,
+        2474824.032,
+        758561.12,
+        2474918.156
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        32.0
+      ],
+      "existing_component_names": [
+        "PHASEII_DORM_D4",
+        "PHASEII_V12_ROOF_DECK_PROXY_D4",
+        "V24_D4_AERIAL_INFORMED_CONTINUOUS_DARK_ROOF_FIELD_NONPV",
+        "V24_D4_ROOF_FIELD_SINGLE_OPAQUE_FRAME",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_01_00",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_01_01",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_02_00",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_02_01",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_03_00",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_03_01",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_04_00",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_04_01",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_05_00",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_05_01",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_06_00",
+        "V32_D4_AERIAL_OPAQUE_ROOF_CROSSRIB_06_01",
+        "V49_PHASEII_D4_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+      ],
+      "existing_component_count": 17,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 624.013
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 628.685
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 649.889
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 659.539
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 1.0,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D4_surface",
+          "xy_gap_model_units": 20.329,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D4_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 26.086,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D5_surface",
+          "xy_gap_model_units": 47.482,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 641.107
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 747.193
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "D4, Residence Cluster of Phase II Campus",
+      "display_label": "D4 · D4, Residence Cluster of Phase II Campus",
+      "identity_source_url": "https://ar.bnbu.edu.cn/Classroom%20Lab%20Seating%20Capacity%20Furniture%20and%20IT%20Equipment_20250901.pdf",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "D5",
+      "family": "D",
+      "source_anchor_node": "PHASEII_DORM_D5",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 2592.35,
+      "source_bbox_utm_xy": [
+        758456.1,
+        2474929.846,
+        758522.592,
+        2475008.786
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        32.0
+      ],
+      "existing_component_names": [
+        "PHASEII_DORM_D5",
+        "PHASEII_V12_ROOF_DECK_PROXY_D5",
+        "V24_D5_AERIAL_INFORMED_CONTINUOUS_DARK_ROOF_FIELD_NONPV",
+        "V24_D5_ROOF_FIELD_SINGLE_OPAQUE_FRAME",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_01_00",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_01_01",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_02_00",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_02_01",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_03_00",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_03_01",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_04_00",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_04_01",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_05_00",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_05_01",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_06_00",
+        "V32_D5_AERIAL_OPAQUE_ROOF_CROSSRIB_06_01",
+        "V49_PHASEII_D5_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+      ],
+      "existing_component_count": 17,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 722.804
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 731.22
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 747.235
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 760.05
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 1.0,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D5_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 17.549,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D5_surface",
+          "xy_gap_model_units": 18.584,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D6_surface",
+          "xy_gap_model_units": 27.382,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 745.133
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 852.94
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "D5, Residence Cluster of Phase II Campus",
+      "display_label": "D5 · D5, Residence Cluster of Phase II Campus",
+      "identity_source_url": "https://ar.bnbu.edu.cn/Classroom%20Lab%20Seating%20Capacity%20Furniture%20and%20IT%20Equipment_20250901.pdf",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "D6",
+      "family": "D",
+      "source_anchor_node": "PHASEII_DORM_D6",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 2923.57,
+      "source_bbox_utm_xy": [
+        758483.984,
+        2475002.68,
+        758578.702,
+        2475090.253
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        32.0
+      ],
+      "existing_component_names": [
+        "PHASEII_DORM_D6",
+        "PHASEII_V12_ROOF_DECK_PROXY_D6",
+        "V24_D6_AERIAL_INFORMED_CONTINUOUS_DARK_ROOF_FIELD_NONPV",
+        "V24_D6_ROOF_FIELD_SINGLE_OPAQUE_FRAME",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_01_00",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_01_01",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_02_00",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_02_01",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_03_00",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_03_01",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_04_00",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_04_01",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_05_00",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_05_01",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_06_00",
+        "V32_D6_AERIAL_OPAQUE_ROOF_CROSSRIB_06_01",
+        "V49_PHASEII_D6_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+      ],
+      "existing_component_count": 17,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_036",
+          "xy_gap_model_units": 787.203
+        },
+        {
+          "node": "WALK_012",
+          "xy_gap_model_units": 799.351
+        },
+        {
+          "node": "WALK_017",
+          "xy_gap_model_units": 811.516
+        },
+        {
+          "node": "WALK_013",
+          "xy_gap_model_units": 826.595
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 1.0,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D6_surface",
+          "xy_gap_model_units": 20.033,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D6_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 24.301,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D5_surface",
+          "xy_gap_model_units": 36.286,
+          "source_group": "phaseII_GLTF_inferred",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 814.46
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 923.836
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "D6, Residence Cluster of Phase II Campus",
+      "display_label": "D6 · D6, Residence Cluster of Phase II Campus",
+      "identity_source_url": "https://ar.bnbu.edu.cn/Classroom%20Lab%20Seating%20Capacity%20Furniture%20and%20IT%20Equipment_20250901.pdf",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "id": "LRC",
+      "family": "LRC",
+      "source_anchor_node": "ROOF_DECK_LRC",
+      "source_plan_geometry": "projection_of_inherited_roof_or_building_mass_not_field_footprint",
+      "source_plan_area_sq_model_units": 3711.98,
+      "source_bbox_utm_xy": [
+        759047.128,
+        2473972.191,
+        759140.637,
+        2474042.863
+      ],
+      "source_mesh_z_range": [
+        17.22,
+        17.38
+      ],
+      "existing_component_names": [
+        "LRC_DIAGONAL_BRACE_0_0_16",
+        "LRC_DIAGONAL_BRACE_0_0_3",
+        "LRC_DIAGONAL_BRACE_10_0_16",
+        "LRC_DIAGONAL_BRACE_10_0_3",
+        "LRC_DIAGONAL_BRACE_12_0_16",
+        "LRC_DIAGONAL_BRACE_12_0_3",
+        "LRC_DIAGONAL_BRACE_14_0_16",
+        "LRC_DIAGONAL_BRACE_14_0_3",
+        "LRC_DIAGONAL_BRACE_15_0_16",
+        "LRC_DIAGONAL_BRACE_15_0_3",
+        "LRC_DIAGONAL_BRACE_15_1_16",
+        "LRC_DIAGONAL_BRACE_15_1_3",
+        "LRC_DIAGONAL_BRACE_15_2_16",
+        "LRC_DIAGONAL_BRACE_15_2_3",
+        "LRC_DIAGONAL_BRACE_1_0_16",
+        "LRC_DIAGONAL_BRACE_1_0_3",
+        "LRC_DIAGONAL_BRACE_2_0_16",
+        "LRC_DIAGONAL_BRACE_2_0_3",
+        "LRC_DIAGONAL_BRACE_4_0_16",
+        "LRC_DIAGONAL_BRACE_4_0_3",
+        "LRC_DIAGONAL_BRACE_6_0_16",
+        "LRC_DIAGONAL_BRACE_6_0_3",
+        "LRC_DIAGONAL_BRACE_7_0_16",
+        "LRC_DIAGONAL_BRACE_7_0_3",
+        "LRC_DIAGONAL_BRACE_7_1_16",
+        "LRC_DIAGONAL_BRACE_7_1_3",
+        "LRC_DIAGONAL_BRACE_7_2_16",
+        "LRC_DIAGONAL_BRACE_7_2_3",
+        "LRC_DIAGONAL_BRACE_8_0_16",
+        "LRC_DIAGONAL_BRACE_8_0_3",
+        "LRC_DIAGONAL_BRACE_9_0_16",
+        "LRC_DIAGONAL_BRACE_9_0_3",
+        "LRC_DOME_GLAZING_APPROX",
+        "LRC_GLASS_06",
+        "LRC_INT_LEVEL_02_PLATE_AROUND_ATRIUM",
+        "LRC_INT_LEVEL_03_PLATE_AROUND_ATRIUM",
+        "LRC_INT_LEVEL_04_PLATE_AROUND_ATRIUM",
+        "LRC_INT_STAIR_FL1_OPAQUE_CARRIAGE_1",
+        "LRC_INT_STAIR_FL1_OPAQUE_CARRIAGE_2",
+        "LRC_INT_STAIR_FL1_TREAD_01",
+        "LRC_INT_STAIR_FL1_TREAD_02",
+        "LRC_INT_STAIR_FL1_TREAD_03",
+        "LRC_INT_STAIR_FL1_TREAD_04",
+        "LRC_INT_STAIR_FL1_TREAD_05",
+        "LRC_INT_STAIR_FL1_TREAD_06",
+        "LRC_INT_STAIR_FL1_TREAD_07",
+        "LRC_INT_STAIR_FL1_TREAD_08",
+        "LRC_INT_STAIR_FL1_TREAD_09",
+        "LRC_INT_STAIR_FL1_TREAD_10",
+        "LRC_INT_STAIR_FL1_TREAD_11",
+        "LRC_INT_STAIR_FL1_TREAD_12",
+        "LRC_INT_STAIR_FL1_TREAD_13",
+        "LRC_INT_STAIR_FL1_TREAD_14",
+        "LRC_INT_STAIR_FL1_TREAD_15",
+        "LRC_INT_STAIR_FL1_TREAD_16",
+        "LRC_INT_STAIR_FL1_TREAD_17",
+        "LRC_INT_STAIR_FL1_TREAD_18",
+        "LRC_INT_STAIR_FL1_TREAD_19",
+        "LRC_INT_STAIR_FL1_TREAD_20",
+        "LRC_INT_STAIR_FL1_TREAD_21",
+        "LRC_INT_STAIR_FL1_TREAD_22",
+        "LRC_INT_STAIR_FL1_TREAD_23",
+        "LRC_INT_STAIR_FL1_TREAD_24",
+        "LRC_INT_STAIR_FL2_OPAQUE_CARRIAGE_1",
+        "LRC_INT_STAIR_FL2_OPAQUE_CARRIAGE_2",
+        "LRC_INT_STAIR_FL2_TREAD_01",
+        "LRC_INT_STAIR_FL2_TREAD_02",
+        "LRC_INT_STAIR_FL2_TREAD_03",
+        "LRC_INT_STAIR_FL2_TREAD_04",
+        "LRC_INT_STAIR_FL2_TREAD_05",
+        "LRC_INT_STAIR_FL2_TREAD_06",
+        "LRC_INT_STAIR_FL2_TREAD_07",
+        "LRC_INT_STAIR_FL2_TREAD_08",
+        "LRC_INT_STAIR_FL2_TREAD_09",
+        "LRC_INT_STAIR_FL2_TREAD_10",
+        "LRC_INT_STAIR_FL2_TREAD_11",
+        "LRC_INT_STAIR_FL2_TREAD_12",
+        "LRC_INT_STAIR_FL2_TREAD_13",
+        "LRC_INT_STAIR_FL2_TREAD_14",
+        "LRC_INT_STAIR_FL2_TREAD_15",
+        "LRC_INT_STAIR_FL2_TREAD_16",
+        "LRC_INT_STAIR_FL2_TREAD_17",
+        "LRC_INT_STAIR_FL2_TREAD_18",
+        "LRC_INT_STAIR_FL2_TREAD_19",
+        "LRC_INT_STAIR_FL2_TREAD_20",
+        "LRC_INT_STAIR_FL2_TREAD_21",
+        "LRC_INT_STAIR_FL2_TREAD_22",
+        "LRC_INT_STAIR_FL2_TREAD_23",
+        "LRC_INT_STAIR_FL2_TREAD_24",
+        "LRC_INT_STAIR_FL3_OPAQUE_CARRIAGE_1",
+        "LRC_INT_STAIR_FL3_OPAQUE_CARRIAGE_2",
+        "LRC_INT_STAIR_FL3_TREAD_01",
+        "LRC_INT_STAIR_FL3_TREAD_02",
+        "LRC_INT_STAIR_FL3_TREAD_03",
+        "LRC_INT_STAIR_FL3_TREAD_04",
+        "LRC_INT_STAIR_FL3_TREAD_05",
+        "LRC_INT_STAIR_FL3_TREAD_06",
+        "LRC_INT_STAIR_FL3_TREAD_07",
+        "LRC_INT_STAIR_FL3_TREAD_08",
+        "LRC_INT_STAIR_FL3_TREAD_09",
+        "LRC_INT_STAIR_FL3_TREAD_10",
+        "LRC_INT_STAIR_FL3_TREAD_11",
+        "LRC_INT_STAIR_FL3_TREAD_12",
+        "LRC_INT_STAIR_FL3_TREAD_13",
+        "LRC_INT_STAIR_FL3_TREAD_14",
+        "LRC_INT_STAIR_FL3_TREAD_15",
+        "LRC_INT_STAIR_FL3_TREAD_16",
+        "LRC_INT_STAIR_FL3_TREAD_17",
+        "LRC_INT_STAIR_FL3_TREAD_18",
+        "LRC_INT_STAIR_FL3_TREAD_19",
+        "LRC_INT_STAIR_FL3_TREAD_20",
+        "LRC_INT_STAIR_FL3_TREAD_21",
+        "LRC_INT_STAIR_FL3_TREAD_22",
+        "LRC_INT_STAIR_FL3_TREAD_23",
+        "LRC_INT_STAIR_FL3_TREAD_24",
+        "LRC_SKYLIGHT_RIM",
+        "LRC_STILT_0_1",
+        "LRC_STILT_1_0",
+        "LRC_STILT_1_1",
+        "LRC_STILT_2_1",
+        "LRC_STILT_3_1",
+        "LRC_STILT_3_2",
+        "LRC_STILT_4_1",
+        "ROOF_DECK_LRC",
+        "ROOF_PARAPET_LRC",
+        "V16_LRC_NORTH_STAIR_BOTTOM_LANDING",
+        "V16_LRC_NORTH_STAIR_TOP_LANDING",
+        "V16_LRC_STAIR_GROUND_APPROACH",
+        "V16_LRC_STAIR_OPAQUE_SUPPORT_1",
+        "V16_LRC_STAIR_OPAQUE_SUPPORT_2",
+        "V26_LRC_OVAL_SKYLIGHT_OPAQUE_MULLIONS_EASTWEST",
+        "V26_LRC_OVAL_SKYLIGHT_OPAQUE_MULLIONS_NORTHSOUTH",
+        "V29_LRC_PHOTO_GROUNDFLOOR_CIRCULAR_GREEN_READING_ZONE",
+        "V32_LRC_WATERFRONT_00_PHOTO_FORM_OPAQUE_GROUND_LEVEL_CANTILEVER_CANOPY",
+        "V32_LRC_WATERFRONT_15_PHOTO_FORM_OPAQUE_GROUND_LEVEL_CANTILEVER_CANOPY",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__04",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__05",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__06",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__07",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__08",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__09",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__10",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__11",
+        "V34_MODULE_V32_LRC_GLASS_00_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__12",
+        "V34_MODULE_V32_LRC_GLASS_01_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_01_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_01_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_01_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_01_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__04",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__05",
+        "V34_MODULE_V32_LRC_GLASS_03_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__06",
+        "V34_MODULE_V32_LRC_GLASS_05_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_05_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_05_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_05_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_05_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_05_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__04",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__05",
+        "V34_MODULE_V32_LRC_GLASS_06_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__06",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__04",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__05",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__06",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__07",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__08",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__09",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__10",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__11",
+        "V34_MODULE_V32_LRC_GLASS_08_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__12",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__04",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__05",
+        "V34_MODULE_V32_LRC_GLASS_11_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__06",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_HORIZONTAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__01",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__02",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__03",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__04",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__05",
+        "V34_MODULE_V32_LRC_GLASS_14_PHOTO_FORM_VERTICAL_OPAQUE_FRAME_GROUP__06",
+        "V40_MAIN_LRC_FACADE_AND_SIDEWALLS",
+        "V40_MAIN_LRC_GROUND_OR_SOFFIT_FACING",
+        "V40_MAIN_LRC_ROOF_FACING",
+        "V41_LRC_GLASS_00_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_00_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_00_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_00_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_01_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_01_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_01_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_01_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_02_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_02_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_02_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_02_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_03_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_03_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_03_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_03_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_04_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_04_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_04_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_04_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_05_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_05_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_05_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_05_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_07_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_07_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_07_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_07_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_08_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_08_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_08_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_08_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_09_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_09_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_09_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_09_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_10_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_10_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_10_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_10_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_11_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_11_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_11_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_11_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_12_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_12_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_12_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_12_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_13_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_13_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_13_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_13_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_14_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_14_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_14_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_14_STORY_04_EXISTING_GLASS",
+        "V41_LRC_GLASS_15_STORY_01_EXISTING_GLASS",
+        "V41_LRC_GLASS_15_STORY_02_EXISTING_GLASS",
+        "V41_LRC_GLASS_15_STORY_03_EXISTING_GLASS",
+        "V41_LRC_GLASS_15_STORY_04_EXISTING_GLASS",
+        "V41_LRC_LEVEL_02_LRC_GLASS_00_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_01_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_02_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_03_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_04_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_05_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_07_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_08_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_09_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_10_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_11_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_12_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_13_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_14_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_02_LRC_GLASS_15_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_00_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_01_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_02_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_03_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_04_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_05_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_07_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_08_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_09_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_10_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_11_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_12_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_13_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_14_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_03_LRC_GLASS_15_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_00_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_01_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_02_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_03_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_04_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_05_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_07_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_08_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_09_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_10_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_11_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_12_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_13_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_14_OPAQUE_TRANSOM",
+        "V41_LRC_LEVEL_04_LRC_GLASS_15_OPAQUE_TRANSOM",
+        "V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_01_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_02_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_03_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_04_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_05_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_06_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_07_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_08_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_09_UNSURVEYED",
+        "V50_LRC_FACADE_00_OPAQUE_VERTICAL_FRAME_10_UNSURVEYED",
+        "V50_LRC_FACADE_00_STORY_01_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_00_STORY_02_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_00_STORY_03_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_00_STORY_04_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_14_OPAQUE_VERTICAL_FRAME_01_UNSURVEYED",
+        "V50_LRC_FACADE_14_OPAQUE_VERTICAL_FRAME_02_UNSURVEYED",
+        "V50_LRC_FACADE_14_OPAQUE_VERTICAL_FRAME_03_UNSURVEYED",
+        "V50_LRC_FACADE_14_OPAQUE_VERTICAL_FRAME_04_UNSURVEYED",
+        "V50_LRC_FACADE_14_OPAQUE_VERTICAL_FRAME_05_UNSURVEYED",
+        "V50_LRC_FACADE_14_STORY_01_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_14_STORY_02_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_14_STORY_03_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_14_STORY_04_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_15_OPAQUE_VERTICAL_FRAME_01_UNSURVEYED",
+        "V50_LRC_FACADE_15_OPAQUE_VERTICAL_FRAME_02_UNSURVEYED",
+        "V50_LRC_FACADE_15_STORY_01_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_15_STORY_02_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_15_STORY_03_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V50_LRC_FACADE_15_STORY_04_OPAQUE_MIDHEIGHT_TRANSOM_UNSURVEYED",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_LRC_1_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_LRC_2_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_LRC_3_0"
+      ],
+      "existing_component_count": 353,
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_046",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_045",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 2.1
+        },
+        {
+          "node": "WALK_048",
+          "xy_gap_model_units": 2.2
+        }
+      ],
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_046",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_045",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_024",
+          "xy_gap_model_units": 2.1,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_048",
+          "xy_gap_model_units": 2.2,
+          "source_group": "GIS_WALK_ROAD_inherited",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 3.834
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 115.501
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "notes": "Planar proximity only. A source roof projection is not a known entrance; no accessibility or glass area claim.",
+      "official_name": "Phase I Learning Resource Centre",
+      "display_label": "LRC · Phase I Learning Resource Centre",
+      "identity_source_url": "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+      "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false
+    }
+  ],
+  "published_evidence": [
+    {
+      "category": "T",
+      "url": "https://fbm.bnbu.edu.cn/en/about_us/contact_us.htm",
+      "role": "BNBU official T1 warm masonry, long recessed glazing, projecting floor-level edges",
+      "limits": "Cannot assign a window count, pane width or facade orientation to each T1–T8 block"
+    },
+    {
+      "category": "V",
+      "url": "https://www.bnbu.edu.cn/info/1076/6575.htm",
+      "role": "Official 2014 Cultural Village description: residential common rooms and semi-open sky gardens",
+      "limits": "V15–V29 sky garden bay and exact position not surveyed; do not copy phase-II balcony plans"
+    },
+    {
+      "category": "V",
+      "url": "https://www.bnbu.edu.cn/info/1078/9214.htm",
+      "role": "2017 school building-system description distinguishes T teaching from V residential buildings",
+      "limits": "Historical building names and present-day hall names may differ"
+    },
+    {
+      "category": "D",
+      "url": "https://bnbu.edu.cn/en/info/1255/10522.htm",
+      "role": "Official Phase-II residence photos show balconies, open corridor railings and distinct exterior",
+      "limits": "No image-to-D1…D6 calibrated viewpoint or balcony dimensions"
+    },
+    {
+      "category": "D",
+      "url": "https://www.bnbu.edu.cn/en/info/1255/10406.htm",
+      "role": "Official construction report: six residence halls with balcony accommodation typology",
+      "limits": "Rendering and pre-occupation information are not as-built pane/door dimensions"
+    },
+    {
+      "category": "LRC",
+      "url": "https://co.bnbu.edu.cn/",
+      "role": "BNBU official Learning Resource Centre façade: white diagonal braces, blue glass, raised canopy and entrance",
+      "limits": "Photo provides material and structural type, not measured LRC placement"
+    },
+    {
+      "category": "LRC",
+      "url": "https://rlp.asia/en/project/beijing-normal-university-hong-kong-baptist-university-united-international-college/",
+      "role": "Design office confirms offset bridges, stairs and a lake-centered multilevel public space",
+      "limits": "No surveyed threshold heights or precise faceted envelope"
+    }
+  ],
+  "algorithm": "source-surface crease/boundary extraction at 34 degrees, 0.0001 source-local vertex quantization",
+  "spatial_environment": "30 buildings x (56 GIS WALK/ROAD + 14 Phase-II GLB radial/ring/grade candidates) and 5 lakes; source XY proximity is NEVER a verified door connection",
+  "phaseII_route_candidate_count": 14,
+  "all_route_candidates_count": 70,
+  "phaseII_network_disconnection_audit": [
+    {
+      "dorm": "D1",
+      "dorm_to_radial_local_points": [
+        [
+          -294.6814,
+          920.4832,
+          0.0
+        ],
+        [
+          -310.7295,
+          933.4294,
+          0.044
+        ]
+      ],
+      "radial_to_ring_local_points": [
+        [
+          -313.8403,
+          935.944,
+          0.044
+        ],
+        [
+          -333.8903,
+          971.5895,
+          0.044
+        ]
+      ],
+      "dorm_to_radial_plan_gap_model_units": 20.6191,
+      "radial_to_central_ring_gap_model_units": 40.8975,
+      "inferred_connector_to_radial_gap_model_units": 0.0,
+      "inferred_connector_to_dorm_gap_model_units": 25.7721,
+      "source_model_circulation_verified": false,
+      "do_not_extrude_missing_paths": true
+    },
+    {
+      "dorm": "D2",
+      "dorm_to_radial_local_points": [
+        [
+          -294.7842,
+          886.9295,
+          0.0
+        ],
+        [
+          -297.7729,
+          867.4129,
+          0.044
+        ]
+      ],
+      "radial_to_ring_local_points": [
+        [
+          -298.3744,
+          863.4584,
+          0.044
+        ],
+        [
+          -273.7247,
+          822.7834,
+          0.044
+        ]
+      ],
+      "dorm_to_radial_plan_gap_model_units": 19.7441,
+      "radial_to_central_ring_gap_model_units": 47.5611,
+      "inferred_connector_to_radial_gap_model_units": 0.0,
+      "inferred_connector_to_dorm_gap_model_units": 18.6474,
+      "source_model_circulation_verified": false,
+      "do_not_extrude_missing_paths": true
+    },
+    {
+      "dorm": "D3",
+      "dorm_to_radial_local_points": [
+        [
+          -307.6299,
+          819.5474,
+          0.0
+        ],
+        [
+          -324.9023,
+          810.5983,
+          0.044
+        ]
+      ],
+      "radial_to_ring_local_points": [
+        [
+          -328.452,
+          808.7545,
+          0.044
+        ],
+        [
+          -351.7246,
+          775.4446,
+          0.044
+        ]
+      ],
+      "dorm_to_radial_plan_gap_model_units": 19.4531,
+      "radial_to_central_ring_gap_model_units": 40.6344,
+      "inferred_connector_to_radial_gap_model_units": 0.0,
+      "inferred_connector_to_dorm_gap_model_units": 23.6252,
+      "source_model_circulation_verified": false,
+      "do_not_extrude_missing_paths": true
+    },
+    {
+      "dorm": "D4",
+      "dorm_to_radial_local_points": [
+        [
+          -391.5274,
+          800.2542,
+          0.0
+        ],
+        [
+          -407.4154,
+          812.9365,
+          0.044
+        ]
+      ],
+      "radial_to_ring_local_points": [
+        [
+          -407.4154,
+          812.9365,
+          0.044
+        ],
+        [
+          -387.0938,
+          778.263,
+          0.044
+        ]
+      ],
+      "dorm_to_radial_plan_gap_model_units": 20.3291,
+      "radial_to_central_ring_gap_model_units": 40.1898,
+      "inferred_connector_to_radial_gap_model_units": 0.0,
+      "inferred_connector_to_dorm_gap_model_units": 26.0856,
+      "source_model_circulation_verified": false,
+      "do_not_extrude_missing_paths": true
+    },
+    {
+      "dorm": "D5",
+      "dorm_to_radial_local_points": [
+        [
+          -419.7583,
+          905.2343,
+          0.0
+        ],
+        [
+          -422.6681,
+          886.8795,
+          0.044
+        ]
+      ],
+      "radial_to_ring_local_points": [
+        [
+          -422.6681,
+          886.8795,
+          0.044
+        ],
+        [
+          -448.2005,
+          925.886,
+          0.044
+        ]
+      ],
+      "dorm_to_radial_plan_gap_model_units": 18.584,
+      "radial_to_central_ring_gap_model_units": 46.62,
+      "inferred_connector_to_radial_gap_model_units": 0.0,
+      "inferred_connector_to_dorm_gap_model_units": 17.549,
+      "source_model_circulation_verified": false,
+      "do_not_extrude_missing_paths": true
+    },
+    {
+      "dorm": "D6",
+      "dorm_to_radial_local_points": [
+        [
+          -375.4274,
+          950.5983,
+          0.0
+        ],
+        [
+          -393.1537,
+          941.2652,
+          0.044
+        ]
+      ],
+      "radial_to_ring_local_points": [
+        [
+          -393.1537,
+          941.2652,
+          0.044
+        ],
+        [
+          -368.8363,
+          974.5229,
+          0.044
+        ]
+      ],
+      "dorm_to_radial_plan_gap_model_units": 20.0332,
+      "radial_to_central_ring_gap_model_units": 41.1996,
+      "inferred_connector_to_radial_gap_model_units": 0.0,
+      "inferred_connector_to_dorm_gap_model_units": 24.301,
+      "source_model_circulation_verified": false,
+      "do_not_extrude_missing_paths": true
+    }
+  ],
+  "approach_glb_unchanged": true,
+  "window_panel_count_measured": null,
+  "dorm_balcony_number_measured": null,
+  "lrc_fins_measured": null,
+  "new_campus_triangles": 0,
+  "new_physical_windows_or_routes": 0,
+  "new_surveyed_glazing_area": 0,
+  "display_edge_lines_are_architecture_members": false,
+  "critical_gaps": [
+    "T ribbons and storeys do not determine exact window grid",
+    "V15–V29 not identical to Phase-II D1–D6 dormitory architecture",
+    "LRC diagonal braces and oval skylight source-model shape not independently surveyed",
+    "Source roof-to-WALK proximity is not a valid door or floor-level connection",
+    "Six D dormitories are 18-21 model units from inherited radial paving and radial links are 40-48 from the central ring; source does not prove entrances",
+    "Interbuilding elevated V52 span ends and v74 shoreline grade conflicts remain pending"
+  ],
+  "future_validation": [
+    "Match 3+ distinct images per facade sector for COLMAP/pycolmap SfM",
+    "Infer vanishing point axes and optimize image reprojection with source footprint anchors",
+    "Do piecewise planar image/line constraints and test against withheld photograph",
+    "Only after registration, add individually measured window openings and balconies",
+    "Separate depiction-only materials from bird strike glass exposure denominator"
+  ],
+  "extended_records": [
+    {
+      "id": "T29",
+      "family": "OTHER",
+      "display_label": "T29 · Teaching Building Block 29 / T29教学楼",
+      "official_name": "Teaching Building Block 29",
+      "source_anchor_node": "ROOF_DECK_T29",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 2221.194,
+      "source_bbox_utm_xy": [
+        758866.154,
+        2474128.821,
+        758924.695,
+        2474205.61
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        22.05
+      ],
+      "existing_component_names": [
+        "V25_P1_T29_LEVEL_05_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T29_LEVEL_04_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T29_LEVEL_03_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T29_LEVEL_02_OPAQUE_RECESSED_GALLERY_DECK",
+        "V25_P1_T29_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "V13_EXISTING_OUTLINE_OPAQUE_T29_PODIUM_LEDGE",
+        "ROOF_PARAPET_T29",
+        "ROOF_DECK_T29",
+        "MAIN_T29",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T29_6_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T29_5_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T29_4_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T29_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T29_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_T29_1_0"
+      ],
+      "existing_component_count": 15,
+      "existing_component_triangles": 924,
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_010",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_016",
+          "xy_gap_model_units": 32.098,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_006",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_010",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_008",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_016",
+          "xy_gap_model_units": 32.098,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 76.789
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 133.911
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "official_id_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [
+        "https://www.bnbu.edu.cn/en/info/1077/3043.htm",
+        "https://ar.bnbu.edu.cn/Classroom%20Lab%20Seating%20Capacity%20Furniture%20and%20IT%20Equipment_20250901.pdf"
+      ],
+      "notes": "Officially named teaching building; omitted from the v76 core-30 selector, although MAIN_T29 and 14 building components already exist in the source GLB."
+    },
+    {
+      "id": "ADMIN",
+      "family": "OTHER",
+      "display_label": "Administration Building / 行政楼",
+      "official_name": "Administration Building / 行政楼",
+      "source_anchor_node": "ROOF_DECK_ADMIN",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 644.16,
+      "source_bbox_utm_xy": [
+        759109.468,
+        2473821.802,
+        759154.005,
+        2473855.841
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        21.45
+      ],
+      "existing_component_names": [
+        "MAIN_ADMIN",
+        "ROOF_DECK_ADMIN",
+        "ROOF_PARAPET_ADMIN",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_ADMIN_5_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_ADMIN_4_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_ADMIN_3_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_ADMIN_2_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_ADMIN_1_0"
+      ],
+      "existing_component_count": 8,
+      "existing_component_triangles": 216,
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_038",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_037",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_018",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "ROAD_000",
+          "xy_gap_model_units": 33.163,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_038",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_037",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_018",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "ROAD_000",
+          "xy_gap_model_units": 33.163,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 89.212
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 213.691
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "official_facility_id_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [
+        "https://itsc.bnbu.edu.cn/BNBU%20Wireless%20Network%20Connection%20Guide%20--SSID%20BNBU.pdf"
+      ],
+      "notes": "Official campus facility identity is supported; model anchor is an inherited roof/mass projection, not a surveyed ground footprint."
+    },
+    {
+      "id": "HALL",
+      "family": "OTHER",
+      "display_label": "University Hall / 大学会堂",
+      "official_name": "University Hall / 大学会堂",
+      "source_anchor_node": "ROOF_DECK_HALL",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 1088.174,
+      "source_bbox_utm_xy": [
+        759070.614,
+        2473825.894,
+        759120.363,
+        2473872.697
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        15.45
+      ],
+      "existing_component_names": [
+        "MAIN_HALL",
+        "ROOF_DECK_HALL",
+        "ROOF_PARAPET_HALL",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_HALL_4_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_HALL_3_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_HALL_2_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_HALL_1_0"
+      ],
+      "existing_component_count": 7,
+      "existing_component_triangles": 376,
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_018",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_037",
+          "xy_gap_model_units": 25.411,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_038",
+          "xy_gap_model_units": 29.545,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "ROAD_000",
+          "xy_gap_model_units": 36.693,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_018",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_037",
+          "xy_gap_model_units": 25.411,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_038",
+          "xy_gap_model_units": 29.545,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "ROAD_000",
+          "xy_gap_model_units": 36.693,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 89.192
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 224.582
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "official_facility_id_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [
+        "https://www.bnbu.edu.cn/en/info/1077/3043.htm"
+      ],
+      "notes": "Official campus facility identity is supported; model anchor is an inherited roof/mass projection, not a surveyed ground footprint."
+    },
+    {
+      "id": "SPORT",
+      "family": "OTHER",
+      "display_label": "Sports Complex / 体育馆",
+      "official_name": "Sports Complex / 体育馆",
+      "source_anchor_node": "ROOF_DECK_SPORT",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 2975.439,
+      "source_bbox_utm_xy": [
+        758946.658,
+        2473860.197,
+        759024.071,
+        2473943.297
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        18.45
+      ],
+      "existing_component_names": [
+        "MAIN_SPORT",
+        "ROOF_DECK_SPORT",
+        "ROOF_PARAPET_SPORT",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_SPORT_4_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_SPORT_3_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_SPORT_2_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_SPORT_1_0"
+      ],
+      "existing_component_count": 7,
+      "existing_component_triangles": 376,
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_021",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_001",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_000",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_019",
+          "xy_gap_model_units": 26.459,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_021",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_001",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_000",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_019",
+          "xy_gap_model_units": 26.459,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 131.936
+        },
+        {
+          "node": "LAKE_04",
+          "xy_gap_model_units": 132.655
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "official_facility_id_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [
+        "https://www.bnbu.edu.cn/en/info/1077/3043.htm"
+      ],
+      "notes": "Official campus facility identity is supported; model anchor is an inherited roof/mass projection, not a surveyed ground footprint."
+    },
+    {
+      "id": "THEATRE",
+      "family": "OTHER",
+      "display_label": "Performance Theatre / 表演剧场",
+      "official_name": "Performance Theatre / 表演剧场",
+      "source_anchor_node": "ROOF_DECK_THEATRE",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 1046.592,
+      "source_bbox_utm_xy": [
+        759131.8,
+        2473865.34,
+        759185.794,
+        2473911.698
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        12.45
+      ],
+      "existing_component_names": [
+        "MAIN_THEATRE",
+        "ROOF_DECK_THEATRE",
+        "ROOF_PARAPET_THEATRE",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_THEATRE_3_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_THEATRE_2_0",
+        "FLOOR_EDGE_NOT_GLASS_STORYBAND_THEATRE_1_0"
+      ],
+      "existing_component_count": 6,
+      "existing_component_triangles": 226,
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_020",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_039",
+          "xy_gap_model_units": 0.371,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_038",
+          "xy_gap_model_units": 3.543,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_037",
+          "xy_gap_model_units": 34.636,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_020",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_039",
+          "xy_gap_model_units": 0.371,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_038",
+          "xy_gap_model_units": 3.543,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_037",
+          "xy_gap_model_units": 34.636,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 31.503
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 155.691
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "official_facility_id_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [
+        "https://www.bnbu.edu.cn/en/info/1077/3043.htm"
+      ],
+      "notes": "Official campus facility identity is supported; model anchor is an inherited roof/mass projection, not a surveyed ground footprint."
+    },
+    {
+      "id": "CC",
+      "family": "OTHER",
+      "display_label": "Cultural Creativity Clusters / 文化创意群落",
+      "official_name": "Cultural Creativity Clusters / 文化创意群落",
+      "source_anchor_node": "ROOF_DECK_CC",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 4021.602,
+      "source_bbox_utm_xy": [
+        759217.601,
+        2473893.885,
+        759318.652,
+        2473977.115
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        20.45
+      ],
+      "existing_component_names": [
+        "MAIN_CC",
+        "ROOF_DECK_CC",
+        "ROOF_PARAPET_CC",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_CC_5_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_CC_4_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_CC_3_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_CC_2_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_CC_1_0"
+      ],
+      "existing_component_count": 8,
+      "existing_component_triangles": 400,
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_042",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_041",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_044",
+          "xy_gap_model_units": 2.259,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_020",
+          "xy_gap_model_units": 3.992,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_042",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_041",
+          "xy_gap_model_units": 2.2,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_044",
+          "xy_gap_model_units": 2.259,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_020",
+          "xy_gap_model_units": 3.992,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_00",
+          "xy_gap_model_units": 3.987
+        },
+        {
+          "node": "LAKE_01",
+          "xy_gap_model_units": 61.846
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "official_facility_id_model_anchor_not_surveyed",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [
+        "https://www.bnbu.edu.cn/en/info/1077/3043.htm"
+      ],
+      "notes": "Official campus facility identity is supported; model anchor is an inherited roof/mass projection, not a surveyed ground footprint."
+    },
+    {
+      "id": "YUZHAN",
+      "family": "OTHER",
+      "display_label": "YUZHAN · model label, official identity unresolved",
+      "official_name": null,
+      "source_anchor_node": "ROOF_DECK_YUZHAN",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 204.16,
+      "source_bbox_utm_xy": [
+        758746.051,
+        2474063.961,
+        758766.731,
+        2474078.641
+      ],
+      "source_mesh_z_range": [
+        0.0,
+        13.65
+      ],
+      "existing_component_names": [
+        "MAIN_YUZHAN",
+        "ROOF_DECK_YUZHAN",
+        "ROOF_PARAPET_YUZHAN",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_YUZHAN_3_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_YUZHAN_2_0",
+        "V62_RETOPOLOGIZED_OPAQUE_STORYEDGE_YUZHAN_1_0"
+      ],
+      "existing_component_count": 6,
+      "existing_component_triangles": 152,
+      "nearest_approach_candidates": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 22.29,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "ROAD_001",
+          "xy_gap_model_units": 57.191,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_007",
+          "xy_gap_model_units": 63.428,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 67.344,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "WALK_005",
+          "xy_gap_model_units": 22.29,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "ROAD_001",
+          "xy_gap_model_units": 57.191,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_007",
+          "xy_gap_model_units": 63.428,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "WALK_002",
+          "xy_gap_model_units": 67.344,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 0.0
+        },
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 80.431
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "model_semantic_label_official_identity_unresolved",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [],
+      "notes": "Retained as an existing source-model asset; do not assign a real-world building name without evidence."
+    },
+    {
+      "id": "P2_CIRCULAR_COMMONS",
+      "family": "OTHER",
+      "display_label": "Phase II circular commons · model label only",
+      "official_name": null,
+      "source_anchor_node": "V24_P2_CIRCULAR_COMMONS_01_BASE_PLINTH",
+      "source_plan_geometry": "convex_hull_of_inherited_roof_or_mass_anchor_xy_not_field_footprint",
+      "source_plan_area_sq_model_units": 538.912,
+      "source_bbox_utm_xy": [
+        758564.783,
+        2474940.302,
+        758594.083,
+        2474969.602
+      ],
+      "source_mesh_z_range": [
+        -0.06,
+        7.75
+      ],
+      "existing_component_names": [
+        "V24_P2_CIRCULAR_COMMONS_10_MID_LEVEL_HORIZONTAL_EAVE",
+        "V24_P2_CIRCULAR_COMMONS_09_LOW_CENTRAL_ROOF_CIRCLE",
+        "V24_P2_CIRCULAR_COMMONS_08_OPAQUE_ROOF_PERIMETER",
+        "V24_P2_CIRCULAR_COMMONS_07_TOP_OVERRUN_ROOF_SLAB",
+        "V24_P2_CIRCULAR_COMMONS_06_UPPER_TAN_SOLID_BAND",
+        "V24_P2_CIRCULAR_COMMONS_04_UPPER_FLOOR_DECK",
+        "V24_P2_CIRCULAR_COMMONS_03_LOWER_TAN_SOLID_BAND",
+        "V24_P2_CIRCULAR_COMMONS_01_BASE_PLINTH",
+        "V24_P2_CIRCULAR_COMMONS_05_UPPER_CONTINUOUS_GLASS_ENVELOPE",
+        "V24_P2_CIRCULAR_COMMONS_02_LOWER_CONTINUOUS_GLASS_ENVELOPE",
+        "V24_P2_CIRCULAR_COMMONS_11_CIRCUMFERENTIAL_GROUND_PAVING"
+      ],
+      "existing_component_count": 11,
+      "existing_component_triangles": 30720,
+      "nearest_approach_candidates": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D3_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 23.025,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D6_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 23.098,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D2_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 40.023,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_walk_or_road": [
+        {
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "xy_gap_model_units": 0.0,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D3_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 23.025,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D6_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 23.098,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        },
+        {
+          "node": "V49_PHASEII_D2_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+          "xy_gap_model_units": 40.023,
+          "source_group": "v76_70_route_candidates",
+          "physical_connection_verified": false
+        }
+      ],
+      "nearest_lake": [
+        {
+          "node": "LAKE_02",
+          "xy_gap_model_units": 737.514
+        },
+        {
+          "node": "LAKE_03",
+          "xy_gap_model_units": 851.023
+        }
+      ],
+      "no_measured_entry_doors": true,
+      "no_photo_registered_windows": true,
+      "not_proof_of_accessible_connection": true,
+      "identity_status": "model_semantic_label_official_identity_unresolved",
+      "is_surveyed": false,
+      "is_building_footprint": false,
+      "is_routable": false,
+      "birdstrike_area_eligible": false,
+      "source_urls": [],
+      "notes": "The inherited model labels this as a circular commons. Do not map it to the official Phase II Learning Resource Centre and Laboratory Complex: the official 2025 source describes that separate facility as a distinctive cubic building."
+    }
+  ],
+  "extended_asset_count": 8,
+  "mapped_asset_count": 38,
+  "unmapped_official_assets": [
+    {
+      "id": "P2_LRC_LAB_COMPLEX",
+      "display_label": "Phase II Learning Resource Centre and Laboratory Complex / 二期学习资源中心与实验综合楼",
+      "official_name": "Learning Resource Centre and Laboratory Complex of BNBU Phase II Campus",
+      "identity_status": "official_asset_exists_model_mapping_unresolved",
+      "source_urls": [
+        "https://www.bnbu.edu.cn/en/info/1076/12578.htm"
+      ],
+      "geometry_status": "no_verified_mesh_mapping",
+      "model_nodes": [],
+      "design_evidence": "Official 2025 published project images describe a distinctive cubic form, multifunctional library, laboratories, shared public service spaces and sky garden. Published project images are not surveyed as-built measurements.",
+      "do_not_map_to": [
+        "P2_CIRCULAR_COMMONS",
+        "V24_P2_CIRCULAR_COMMONS_01_BASE_PLINTH"
+      ],
+      "is_surveyed": false,
+      "is_birdstrike_eligible": false,
+      "is_routable": false
+    }
+  ],
+  "quarantined_hypotheses": [
+    {
+      "id": "CTV_SMALL_HOUSE",
+      "display_label": "CTV-nearby small building · unverified hypothesis",
+      "identity_status": "user_reported_location_name_unconfirmed",
+      "source_urls": [],
+      "geometry_status": "quarantined_not_in_physical_master",
+      "model_nodes": [],
+      "name_hypothesis": "Possibly called 校长别墅, but the name and identity have not been verified.",
+      "nearby_context": "User reports a small house near CTV and a driveway. No source photo, OSM way or verified coordinates currently establish its identity.",
+      "is_surveyed": false,
+      "is_birdstrike_eligible": false,
+      "is_routable": false
+    }
+  ],
+  "asset_registry_version": "v88",
+  "v88_physical_scene_mesh_nodes": 1378,
+  "v88_removed_redundant_overlay": "V42_FACET_SIDE_ROAD_000",
+  "v88_removed_redundant_overlay_triangles": 314,
+  "v88_unique_road_surface_retained": "ROAD_000",
+  "v88_no_new_physical_building_geometry": true,
+  "v88_phaseII_LRC_LabComplex_mapping": "unresolved; do not map to V24_P2_CIRCULAR_COMMONS"
+}

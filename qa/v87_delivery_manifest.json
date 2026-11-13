@@ -1,0 +1,117 @@
+{
+  "version": "v87",
+  "package": "BNBU_campus_v87_2026-11-12.zip",
+  "direct_parent": "v86 checkpoint; physical master v84",
+  "parent_glb_sha256": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848",
+  "physical_master_modified": false,
+  "physical_gpkg_modified": false,
+  "active_geojson_modified": false,
+  "active_kml_modified": false,
+  "new_scientific_geometry_count": 0,
+  "candidate_is_display_only": true,
+  "osm_source": {
+    "retrieved_at_utc": "2026-11-13T00:59:04Z",
+    "raw_elements_sha256": "11997f1ae0ede0d3cd6cadf570ef5038d41ab4d72e39b6e16c3a27c01e02bf87",
+    "ways": {
+      "T1": {
+        "way_id": 664082910,
+        "version": 8,
+        "timestamp": "2026-02-08T04:55:27Z",
+        "node_count": 19
+      },
+      "T2": {
+        "way_id": 664082908,
+        "version": 9,
+        "timestamp": "2026-02-08T04:55:27Z",
+        "node_count": 20
+      },
+      "T3": {
+        "way_id": 664082909,
+        "version": 8,
+        "timestamp": "2026-02-08T04:55:27Z",
+        "node_count": 17
+      }
+    }
+  },
+  "registration": {
+    "method": "independent per-building trimmed boundary ICP from full OSM way polygons to dominant polygonized loops derived from inherited V40 facade/sidewall source triangles",
+    "v86_shift_xy_m": [
+      -0.18237966543529183,
+      -4.07057631528005
+    ],
+    "per_building_icp": {
+      "T1": {
+        "rotation_deg": -73.73490952949297,
+        "mean_boundary_distance_m": 5.0959673330918,
+        "p95_boundary_distance_m": 18.895837140072793,
+        "baseline_iou": 0.2930549388365544,
+        "v86_bbox_candidate_iou": 0.29640425198795584,
+        "icp_aligned_iou": 0.49895422922128
+      },
+      "T2": {
+        "rotation_deg": 110.14314130917086,
+        "mean_boundary_distance_m": 3.1238174013631923,
+        "p95_boundary_distance_m": 12.791819292288622,
+        "baseline_iou": 0.30612335762946896,
+        "v86_bbox_candidate_iou": 0.3027509042945278,
+        "icp_aligned_iou": 0.7051760791085483
+      },
+      "T3": {
+        "rotation_deg": 110.28022658705082,
+        "mean_boundary_distance_m": 2.9401934271516414,
+        "p95_boundary_distance_m": 12.96404300483103,
+        "baseline_iou": 0.23602171052376117,
+        "v86_bbox_candidate_iou": 0.23817904822674255,
+        "icp_aligned_iou": 0.7095984282009566
+      }
+    }
+  },
+  "geometry": {
+    "parent_meshes": 1346,
+    "parent_triangles": 691593,
+    "candidate_meshes": 171,
+    "candidate_triangles": 10196,
+    "comparison_meshes": 517,
+    "comparison_triangles": 31596,
+    "v52_04_05": "baseline-only; excluded from per-building ICP"
+  },
+  "gis": {
+    "physical_gpkg_layers": 146,
+    "active_features": 534,
+    "qa_gpkg_layers": [
+      "osm_way_footprint",
+      "model_shell_baseline",
+      "model_shell_v86_bbox_candidate",
+      "model_shell_v87_individual_icp",
+      "centroid_residual_baseline"
+    ],
+    "qa_gpkg_features": 15,
+    "birdstrike_area_eligible": false
+  },
+  "browser": {
+    "v87_viewer_success": true,
+    "v87_node_check": "PASS",
+    "v87_file_navigation": "BLOCKED_BY_EXECUTION_ENVIRONMENT",
+    "v87_http_navigation": "BLOCKED_BY_EXECUTION_ENVIRONMENT",
+    "v87_page_errors": 0,
+    "v84_cpu_viewer_success": true,
+    "v84_cpu_meshes": 1346,
+    "v84_cpu_triangles": 691593
+  },
+  "rebuild_commands": [
+    "python src/analyze_osm_footprints_v87.py",
+    "python src/build_v87_viewer.py",
+    "python src/test_v87_browser.py --set-content-only",
+    "python src/test_v84_cpu_viewer.py",
+    "python -m unittest discover -s tests -v",
+    "python src/verify_v87.py"
+  ],
+  "important_limitations": [
+    "OSM ways are community-mapped building outlines, not survey control polygons.",
+    "Model plan outlines are derived from projected inherited facade/sidewall triangles, not surveyed ground footprints.",
+    "Each T building is independently transformed; this is not one coherent campus-wide coordinate transform.",
+    "V52_04 and V52_05 are intentionally not transformed because their physical landing assignments are unverified.",
+    "Boundary ICP metrics are shape-fit diagnostics, not photogrammetric validation or proof of correct building identity.",
+    "No geometry is promoted into the scientific master or bird-strike exposure denominator."
+  ]
+}

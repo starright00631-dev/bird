@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "browser": "headless Chromium Canvas 2D (no WebGL required)",
+  "fully_offline": true,
+  "interactive_cases": 65,
+  "change_test_indices": [
+    0,
+    10,
+    46,
+    47,
+    52,
+    53,
+    58,
+    59,
+    64
+  ],
+  "orbit_drag": true,
+  "zoom_wheel": true,
+  "source_facets_rendered": true,
+  "page_errors": [],
+  "full_campus_WebGL": "NOT verified; browser context unavailable",
+  "screenshot": "qa/BNBU_v79_3D_Viewer_Chromium.png"
+}

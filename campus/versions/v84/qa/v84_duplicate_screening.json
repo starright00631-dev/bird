@@ -1,0 +1,22 @@
+[
+  {
+    "name": "V42_FACET_SIDE_ROAD_000",
+    "parent": "ROAD_000",
+    "source_faces": 416,
+    "redundant_faces": 314,
+    "max_surface_error": 1.246625132784085e-08,
+    "parent_rgba": [
+      129.0,
+      135.0,
+      135.0,
+      255.0
+    ],
+    "overlay_rgba": [
+      129.0,
+      135.0,
+      135.0,
+      255.0
+    ],
+    "source_nodes_equal_transform": true
+  }
+]

@@ -1,6 +1,8 @@
 name: BNBU v67 independent observed DSM reference
 on:
   push:
+    branches:
+      - main
     paths:
       - 'campus/build_terrain_v67.py'
       - 'campus/test_terrain_v67.py'
@@ -8,6 +10,8 @@ on:
       - 'campus/terrain_reference.html'
       - '.github/workflows/campus-terrain.yml'
   pull_request:
+    branches:
+      - main
     paths:
       - 'campus/build_terrain_v67.py'
       - 'campus/test_terrain_v67.py'
@@ -15,6 +19,10 @@ on:
       - 'campus/terrain_reference.html'
       - '.github/workflows/campus-terrain.yml'
   workflow_dispatch:
+concurrency:
+  group: campus-terrain-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build_observed_surface:
     runs-on: ubuntu-latest

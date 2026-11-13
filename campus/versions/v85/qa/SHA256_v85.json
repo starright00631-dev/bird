@@ -1,0 +1,78 @@
+{
+  "version": "v85",
+  "parent_version": "v84",
+  "files": {
+    "README.md": {
+      "sha256": "256c566a5c6bc6b66446e8833427d7d9a3171cad91e0ba829fe8bc88eaf1531a",
+      "bytes": 4942
+    },
+    "data/BNBU_v84_ACTIVE.geojson": {
+      "sha256": "a2cf23094f388eb1004a58c206862773161a3a7866d4b25791dd8f34800f08fa",
+      "bytes": 2600770
+    },
+    "data/BNBU_v84_ACTIVE.kml": {
+      "sha256": "a81286cb18108ff56b61a4b22ca689a36c60f04974055592674759e0d05a50b3",
+      "bytes": 1116192
+    },
+    "data/BNBU_v84_EDITABLE_GIS.gpkg": {
+      "sha256": "6bf8807eea0c7811b18c1569551bd806e117d518ba50f6ad0979686a29d78374",
+      "bytes": 14352384
+    },
+    "figures/BNBU_v85_V60_E_source_Chromium.png": {
+      "sha256": "cde9aa952728c39af84552667c4a49e06258074d015bdd08f6a4ae90adabbe34",
+      "bytes": 157049
+    },
+    "model/BNBU_v84_FULL_EDITABLE.glb": {
+      "sha256": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848",
+      "bytes": 13905924
+    },
+    "model/BNBU_v84_REDUNDANT_ROAD000_SIDE_DISPLAY_ONLY.glb": {
+      "sha256": "71735f7962e3ceefd7a85a1293f7e28cfea99f0a99cc579c678519826e882274",
+      "bytes": 8220
+    },
+    "qa/v83_v52_probe.json": {
+      "sha256": "252a466c6f6405cf4319c89987933a19fd21c6ddbdf9359f43eb9de2d0e52f39",
+      "bytes": 46906
+    },
+    "qa/v85_browser_validation.json": {
+      "sha256": "b3a3e7d359b1e28ce1cc4fd58e6213be1b424d78cd8a7eb1a81b3787b8d5694d",
+      "bytes": 747
+    },
+    "qa/v85_v60_endpoints_3d.json": {
+      "sha256": "9f4ae32d3f04213ca53b7cd903d6d8c2bad9280b6a2c1e191d1820e35c0396fd",
+      "bytes": 15210
+    },
+    "requirements.txt": {
+      "sha256": "7664bd203553247f27098dc1d7cc3dabaea2f526610a908d012c04d6576a9282",
+      "bytes": 45
+    },
+    "src/build_v85_v60_probe.py": {
+      "sha256": "df23da542c3bd4c1382f2861a411c586093ad3666569e5625b7deeee66b3056e",
+      "bytes": 10987
+    },
+    "src/test_v85_browser.py": {
+      "sha256": "7ca11e9a17fec096604a6adc025c7ff680b8bcae4689988eb21c33a8dfed51f7",
+      "bytes": 2676
+    },
+    "src/verify_delivery_v85.py": {
+      "sha256": "16b150a00be6905e083d8d6f15b0a0a22ef70446160287715f13971584654c7d",
+      "bytes": 1085
+    },
+    "viewer/BNBU_Campus_3D_CPU_v84.html": {
+      "sha256": "7543cf22aa6ed90daeec20a2c7d9f1a2062c518f67bf02cac470e80aeaad72be",
+      "bytes": 1913308
+    },
+    "viewer/BNBU_Campus_3D_Offline_v84.html": {
+      "sha256": "c214baf49a8f7e7e50fca596850a0a7e8b3cb536d9065547745a01a004e36a8d",
+      "bytes": 26011217
+    },
+    "viewer/BNBU_v84_V52_Actual_Triangle_3D_Inspector.html": {
+      "sha256": "f7c603ae9fa92a4e66d64d5726f82bb5c9269cc570bb8bc57c4d50b860bcc6bd",
+      "bytes": 268767
+    },
+    "viewer/BNBU_v85_V52_V60_Actual_SourceTriangle_3D_Inspector.html": {
+      "sha256": "4a86234d5063b933ed3a856e83e7b44e4dba45ec0ca87e1f9c5dcdefae84e1e6",
+      "bytes": 413015
+    }
+  }
+}

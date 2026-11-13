@@ -1,0 +1,48 @@
+{
+  "version": "v88",
+  "selected_physical_master": "mainline v76.1 full-campus package",
+  "main_v76_parent": {
+    "active_mesh_nodes": 1379,
+    "triangles": 659793,
+    "gis_features": 522,
+    "core_buildings": 30,
+    "route_candidates": 70,
+    "junction_hotspots": 47,
+    "bridge_systems": 7,
+    "academic_bridge_endpoints": 12
+  },
+  "v88_mainline_master": {
+    "active_mesh_nodes": 1378,
+    "triangles": 659479,
+    "gis_features": 522,
+    "core_buildings": 30,
+    "extended_mapped_assets": 8,
+    "unmapped_official_assets": 1,
+    "quarantined_hypotheses": 1
+  },
+  "alternate_v84_v87_lineage": {
+    "active_mesh_nodes": 1346,
+    "triangles": 691593,
+    "gis_features": 534,
+    "status": "separate research lineage, not a superset of main v76.1"
+  },
+  "v84_v87_lineage_diff_vs_main_v76_parent": {
+    "common_node_names": 1308,
+    "main_only_node_names": 71,
+    "alternate_only_node_names": 38,
+    "common_nodes_exact_geometry_transform": 1305,
+    "common_nodes_changed": 3,
+    "main_only_categories": [
+      "37 original FLOOR_EDGE_NOT_GLASS_STORYBAND nodes",
+      "V42_FACET_SIDE_ROAD_000 duplicate overlay",
+      "6 V49 Phase II inferred ground connectors",
+      "V54 lake east crossing ramp",
+      "26 V60 boardwalk piers/crossbeams"
+    ],
+    "alternate_only_categories": [
+      "37 V75 closed opaque storytrim replacements",
+      "1 V76 LRC skylight glass shell"
+    ]
+  },
+  "decision": "Keep main v76.1 as the whole-campus master. Retain v84-v87 as a separate diagnostic branch. Only the exact V42/ROAD_000 duplicate overlay cleanup is ported to the main master after independent surface containment validation."
+}

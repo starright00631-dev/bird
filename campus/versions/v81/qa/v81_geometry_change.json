@@ -1,0 +1,486 @@
+{
+  "version": "v81",
+  "parent": "v80",
+  "original_meshes": 1374,
+  "primary_meshes": 1347,
+  "quarantined_meshes": 27,
+  "v60_piers": 13,
+  "v60_crossbeams": 13,
+  "v54_inferred_ramps": 1,
+  "quarantined_triangles": 2476,
+  "v60_boardwalk_deck_retained": true,
+  "v76_lrc_skylight_retained": true,
+  "active_geojson_features": 534,
+  "archived_geojson_features": 27,
+  "gpkg_layers": 146,
+  "source_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+  "source_photo": "https://co.bnbu.edu.cn/en/images/banner2.jpg",
+  "source_limitation": "photo confirms deck and support type, not number, coordinates, spacing or landing elevation",
+  "GLB_frame": "EPSG:32649 local XY = UTM minus (758940,2474080), Z model relative",
+  "GIS_frame": "EPSG:4326, inherited coordinates NOT survey",
+  "new_surveyed_geometry": 0,
+  "new_glass_or_random_tree": 0,
+  "source_model_sha256": "07099bad0d9960bc28dd04674cdcef86e0a1dfc827217d418edb35f37ff6dca9",
+  "main_model_sha256": "39ef62e54d7d993dcfb6ece21e7ad5af907ca4a5be6e65f572f53263f43844e4",
+  "quarantined_nodes": [
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_13_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        312.777008,
+        -91.954453,
+        0.52
+      ],
+      "max_xyz": [
+        313.222992,
+        -89.08403,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_13_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        312.81488,
+        -91.651825,
+        -0.46
+      ],
+      "max_xyz": [
+        313.18512,
+        -89.38665,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_12_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        304.21756,
+        -91.195137,
+        0.52
+      ],
+      "max_xyz": [
+        304.78244,
+        -88.325035,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_12_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        304.272156,
+        -90.888824,
+        -0.46
+      ],
+      "max_xyz": [
+        304.727844,
+        -88.631348,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_11_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        295.672882,
+        -90.09201,
+        0.52
+      ],
+      "max_xyz": [
+        296.327118,
+        -87.225533,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_11_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        295.739929,
+        -89.783401,
+        -0.46
+      ],
+      "max_xyz": [
+        296.260071,
+        -87.534142,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_10_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        287.192627,
+        -88.901184,
+        0.52
+      ],
+      "max_xyz": [
+        287.807373,
+        -86.032745,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_10_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        287.254181,
+        -88.593544,
+        -0.46
+      ],
+      "max_xyz": [
+        287.745819,
+        -86.340385,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_09_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        278.793121,
+        -88.07148,
+        0.52
+      ],
+      "max_xyz": [
+        279.206879,
+        -85.201843,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_09_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        278.826447,
+        -87.769974,
+        -0.46
+      ],
+      "max_xyz": [
+        279.173553,
+        -85.503342,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_08_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        270.303375,
+        -88.011147,
+        0.52
+      ],
+      "max_xyz": [
+        270.696625,
+        -85.142204,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_08_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        270.333801,
+        -87.710388,
+        -0.46
+      ],
+      "max_xyz": [
+        270.666199,
+        -85.442963,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_07_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        261.677734,
+        -88.834236,
+        0.52
+      ],
+      "max_xyz": [
+        262.322266,
+        -85.967224,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_07_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        261.743439,
+        -88.525856,
+        -0.46
+      ],
+      "max_xyz": [
+        262.256561,
+        -86.275604,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_06_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        253.119385,
+        -90.256485,
+        0.52
+      ],
+      "max_xyz": [
+        253.880615,
+        -87.398247,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_06_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        253.201218,
+        -89.945679,
+        -0.46
+      ],
+      "max_xyz": [
+        253.798782,
+        -87.709061,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_05_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        244.653931,
+        -91.746521,
+        0.52
+      ],
+      "max_xyz": [
+        245.346069,
+        -88.882469,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_05_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        244.726227,
+        -91.437065,
+        -0.46
+      ],
+      "max_xyz": [
+        245.273773,
+        -89.191933,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_04_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        236.26712,
+        -92.763268,
+        0.52
+      ],
+      "max_xyz": [
+        236.73288,
+        -89.892548,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_04_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        236.3078,
+        -92.459984,
+        -0.46
+      ],
+      "max_xyz": [
+        236.6922,
+        -90.195831,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_03_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        227.856461,
+        -93.033531,
+        0.52
+      ],
+      "max_xyz": [
+        228.143539,
+        -90.170532,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_03_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        227.871765,
+        -92.736946,
+        -0.46
+      ],
+      "max_xyz": [
+        228.128235,
+        -90.467117,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_02_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        219.28624,
+        -92.689537,
+        0.52
+      ],
+      "max_xyz": [
+        219.71376,
+        -89.819519,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_02_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        219.321518,
+        -92.38755,
+        -0.46
+      ],
+      "max_xyz": [
+        219.678482,
+        -90.121506,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_OPAQUE_UNDERDECK_CROSSBEAM_01_PHOTO_TYPE",
+      "triangles": 12,
+      "vertices": 8,
+      "min_xyz": [
+        210.786591,
+        -92.118866,
+        0.52
+      ],
+      "max_xyz": [
+        211.213409,
+        -89.248871,
+        0.66
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V60_P1_EASTLAKE_BOARDWALK_PAIRED_PIER_01_PHOTO_SUPPORT_TYPE_UNSURVEYED",
+      "triangles": 160,
+      "vertices": 84,
+      "min_xyz": [
+        210.821762,
+        -91.81691,
+        -0.46
+      ],
+      "max_xyz": [
+        211.178238,
+        -89.550835,
+        0.675
+      ],
+      "certainty": "type/photo supported only",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    },
+    {
+      "model_node": "V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH",
+      "triangles": 240,
+      "vertices": 122,
+      "min_xyz": [
+        317.93219,
+        -102.009148,
+        -0.14
+      ],
+      "max_xyz": [
+        339.615936,
+        -89.17141,
+        0.91
+      ],
+      "certainty": "landing location inferred",
+      "status": "DISPLAY_ONLY_UNVERIFIED_NOT_ROUTABLE"
+    }
+  ]
+}

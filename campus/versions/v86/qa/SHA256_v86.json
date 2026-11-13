@@ -1,0 +1,191 @@
+{
+  "version": "v86",
+  "file_count": 37,
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 8780,
+      "sha256": "c6a65039d771529ec9a2805a471fa967fea90ae94586e920528c5238699aad0f"
+    },
+    {
+      "path": "data/BNBU_v84_ACTIVE.geojson",
+      "size_bytes": 2600770,
+      "sha256": "a2cf23094f388eb1004a58c206862773161a3a7866d4b25791dd8f34800f08fa"
+    },
+    {
+      "path": "data/BNBU_v84_ACTIVE.kml",
+      "size_bytes": 1116192,
+      "sha256": "a81286cb18108ff56b61a4b22ca689a36c60f04974055592674759e0d05a50b3"
+    },
+    {
+      "path": "data/BNBU_v84_EDITABLE_GIS.gpkg",
+      "size_bytes": 14352384,
+      "sha256": "6bf8807eea0c7811b18c1569551bd806e117d518ba50f6ad0979686a29d78374"
+    },
+    {
+      "path": "data/BNBU_v86_REGISTRATION_QA_ONLY.geojson",
+      "size_bytes": 13851,
+      "sha256": "2e8ce50d4001dbbc4f5496d2b0ae223cd559323a1fbb9c58d66f49f9f6cae4c4"
+    },
+    {
+      "path": "data/BNBU_v86_REGISTRATION_QA_ONLY.gpkg",
+      "size_bytes": 143360,
+      "sha256": "c754ca3d0def9e3aecbfb63e5810c695aaac76879e7ea07c829831729f167d09"
+    },
+    {
+      "path": "figures/BNBU_v85_V60_E_source_Chromium.png",
+      "size_bytes": 157194,
+      "sha256": "c8579597e2220a5775d76b22105dac7a45a07b5066d5765ab46269aa04b1f265"
+    },
+    {
+      "path": "figures/BNBU_v86_registration_overlay_Chromium.png",
+      "size_bytes": 772234,
+      "sha256": "034f2a6a18dfb0b23dc3c657ffbc21b8e3b06b62025cfbeede9c4d7011c63243"
+    },
+    {
+      "path": "model/BNBU_v84_FULL_EDITABLE.glb",
+      "size_bytes": 13905924,
+      "sha256": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848"
+    },
+    {
+      "path": "model/BNBU_v84_REDUNDANT_ROAD000_SIDE_DISPLAY_ONLY.glb",
+      "size_bytes": 8220,
+      "sha256": "71735f7962e3ceefd7a85a1293f7e28cfea99f0a99cc579c678519826e882274"
+    },
+    {
+      "path": "model/BNBU_v84_ROAD000_RETAINED_ONLY.glb",
+      "size_bytes": 9412,
+      "sha256": "749a9cf4a11f0946eb5313deecdcb1c5b91cc1f2112109f2f6bf9530e2c06e84"
+    },
+    {
+      "path": "model/BNBU_v86_T1_T3_V52_04_05_BASELINE_AND_CANDIDATE.glb",
+      "size_bytes": 613380,
+      "sha256": "a43850b433d09111afc70890b6d83dd6991e7e53174ecf3de146ea5635410e51"
+    },
+    {
+      "path": "model/BNBU_v86_T1_T3_V52_04_05_TRANSLATED_DISPLAY_ONLY.glb",
+      "size_bytes": 557120,
+      "sha256": "11931b67429d45f6ccb1652d34adb3ea27cf458223e15706c6eb0ed898ca27b2"
+    },
+    {
+      "path": "qa/SHA256_v85.json",
+      "size_bytes": 2850,
+      "sha256": "0e9e7e2be366fadc0ede1011f89c26be17beb573eb4a57ccafb0dc60bd789593"
+    },
+    {
+      "path": "qa/build_v86.log",
+      "size_bytes": 25321,
+      "sha256": "d1d6bc99856328db2fbd618f9d032aa70adb63ba788f00bc89453811389beab2"
+    },
+    {
+      "path": "qa/v83_v52_probe.json",
+      "size_bytes": 46906,
+      "sha256": "252a466c6f6405cf4319c89987933a19fd21c6ddbdf9359f43eb9de2d0e52f39"
+    },
+    {
+      "path": "qa/v85_browser_validation.json",
+      "size_bytes": 747,
+      "sha256": "b3a3e7d359b1e28ce1cc4fd58e6213be1b424d78cd8a7eb1a81b3787b8d5694d"
+    },
+    {
+      "path": "qa/v85_v60_endpoints_3d.json",
+      "size_bytes": 15210,
+      "sha256": "9f4ae32d3f04213ca53b7cd903d6d8c2bad9280b6a2c1e191d1820e35c0396fd"
+    },
+    {
+      "path": "qa/v86_browser_validation.json",
+      "size_bytes": 1140,
+      "sha256": "fbea6d4277fe29f8b195fee8af55f38bbca0b53c4cf8b7a017f8025eca47c911"
+    },
+    {
+      "path": "qa/v86_component_manifest.json",
+      "size_bytes": 269563,
+      "sha256": "7e913769cce3c4ec4f61d124391c0e1e6510a4157ab7bec33b45469eab455216"
+    },
+    {
+      "path": "qa/v86_delivery_manifest.json",
+      "size_bytes": 1209,
+      "sha256": "fae8c2dac7a3c8cc2c6fa128f32cd5ab4927b056191a59479de49df366105248"
+    },
+    {
+      "path": "qa/v86_osm_way_snapshot.json",
+      "size_bytes": 2694,
+      "sha256": "eb2f15230ff52e30948b65101c7ded1b310b67f04565546fa785044067e052d1"
+    },
+    {
+      "path": "qa/v86_registration_audit.json",
+      "size_bytes": 5474,
+      "sha256": "e2373bb23500611c562d48ebd1f8e816bbda6ee9a33cc336070a899f4d23a3b7"
+    },
+    {
+      "path": "qa/v86_v52_04_05_endpoint_recheck.json",
+      "size_bytes": 39135,
+      "sha256": "ac48b14e32f8dbed459152da94f9dbe775f9cf2afea14c5fbd655053a4bcf528"
+    },
+    {
+      "path": "reference/README_v85.md",
+      "size_bytes": 4942,
+      "sha256": "256c566a5c6bc6b66446e8833427d7d9a3171cad91e0ba829fe8bc88eaf1531a"
+    },
+    {
+      "path": "requirements.txt",
+      "size_bytes": 86,
+      "sha256": "3e61230b58f2112b29bef33d979f6bda2dc254639a0d9649ffa8d062c8f7bd08"
+    },
+    {
+      "path": "src/build_v85_v60_probe.py",
+      "size_bytes": 10987,
+      "sha256": "df23da542c3bd4c1382f2861a411c586093ad3666569e5625b7deeee66b3056e"
+    },
+    {
+      "path": "src/build_v86_registration_candidate.py",
+      "size_bytes": 29960,
+      "sha256": "a80c451a465011eedf1677b0cd51cc7e161b97a0b9425c1fc8514388928f6047"
+    },
+    {
+      "path": "src/test_v85_browser.py",
+      "size_bytes": 2676,
+      "sha256": "7ca11e9a17fec096604a6adc025c7ff680b8bcae4689988eb21c33a8dfed51f7"
+    },
+    {
+      "path": "src/test_v86_browser.py",
+      "size_bytes": 2989,
+      "sha256": "562c1d582ff4c5dab50cd2836d98e385a2b08d6e99a1d1088f4794d154fe43fc"
+    },
+    {
+      "path": "src/verify_delivery_v85.py",
+      "size_bytes": 1085,
+      "sha256": "16b150a00be6905e083d8d6f15b0a0a22ef70446160287715f13971584654c7d"
+    },
+    {
+      "path": "src/verify_v86.py",
+      "size_bytes": 5361,
+      "sha256": "7849ae8a5f07c98632b3691f57bb9e69127d556f95fda0275d0832b6e7a4e794"
+    },
+    {
+      "path": "viewer/BNBU_Campus_3D_CPU_v84.html",
+      "size_bytes": 1913308,
+      "sha256": "7543cf22aa6ed90daeec20a2c7d9f1a2062c518f67bf02cac470e80aeaad72be"
+    },
+    {
+      "path": "viewer/BNBU_Campus_3D_Offline_v84.html",
+      "size_bytes": 26011217,
+      "sha256": "c214baf49a8f7e7e50fca596850a0a7e8b3cb536d9065547745a01a004e36a8d"
+    },
+    {
+      "path": "viewer/BNBU_v84_V52_Actual_Triangle_3D_Inspector.html",
+      "size_bytes": 268767,
+      "sha256": "f7c603ae9fa92a4e66d64d5726f82bb5c9269cc570bb8bc57c4d50b860bcc6bd"
+    },
+    {
+      "path": "viewer/BNBU_v85_V52_V60_Actual_SourceTriangle_3D_Inspector.html",
+      "size_bytes": 413015,
+      "sha256": "4a86234d5063b933ed3a856e83e7b44e4dba45ec0ca87e1f9c5dcdefae84e1e6"
+    },
+    {
+      "path": "viewer/BNBU_v86_T1_T3_OSM_Registration_Comparison.html",
+      "size_bytes": 1015426,
+      "sha256": "8e0f70772049fdddc63056065db715a96501af475bbcb964896dd6dccc712219"
+    }
+  ]
+}

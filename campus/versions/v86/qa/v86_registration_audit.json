@@ -1,0 +1,159 @@
+{
+  "version": "v86",
+  "parent_version": "v84 (carried in v85)",
+  "parent_glb_sha256": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848",
+  "parent_meshes": 1346,
+  "parent_triangles": 691593,
+  "selection_rule": "all source node names with standalone T1/T2/T3 token, plus exact V52 connections 04 and 05",
+  "candidate_components": 173,
+  "candidate_triangles": 10700,
+  "candidate_translation_utm49n_m": [
+    -0.18237966543529183,
+    -4.07057631528005,
+    0.0
+  ],
+  "candidate_translation_rounded_m": [
+    -0.1824,
+    -4.0706,
+    0.0
+  ],
+  "fit_method": "unweighted least-squares XY translation = mean of three OSM way bbox-centre minus model bbox-centre vectors",
+  "buildings": {
+    "T1": {
+      "osm_way_id": 664082910,
+      "osm_name": "T1 Business and Management Building",
+      "osm_bbox_center_wgs84": [
+        113.5152254,
+        22.351915
+      ],
+      "osm_bbox_center_utm49n_m": [
+        759037.7932584657,
+        2473943.0639192667
+      ],
+      "model_bbox_center_local_xy_m": [
+        98.25796890258789,
+        -132.31096649169922
+      ],
+      "model_bbox_center_utm49n_m": [
+        759038.2579689026,
+        2473947.6890335083
+      ],
+      "observed_osm_minus_model_delta_m": [
+        -0.46471043687779456,
+        -4.625114241614938
+      ],
+      "candidate_residual_after_mean_translation_m": [
+        -0.28233077144250274,
+        -0.5545379263348877
+      ],
+      "candidate_residual_norm_m": 0.6222724292840847,
+      "osm_way_node_reference_count_in_snapshot": 19
+    },
+    "T2": {
+      "osm_way_id": 664082908,
+      "osm_name": "T2 Humanities Building",
+      "osm_bbox_center_wgs84": [
+        113.5148681,
+        22.3523537
+      ],
+      "osm_bbox_center_utm49n_m": [
+        759000.1670965389,
+        2473991.042486667
+      ],
+      "model_bbox_center_local_xy_m": [
+        60.36970901489258,
+        -85.44973182678223
+      ],
+      "model_bbox_center_utm49n_m": [
+        759000.3697090149,
+        2473994.550268173
+      ],
+      "observed_osm_minus_model_delta_m": [
+        -0.20261247595772147,
+        -3.507781506050378
+      ],
+      "candidate_residual_after_mean_translation_m": [
+        -0.020232810522429645,
+        0.562794809229672
+      ],
+      "candidate_residual_norm_m": 0.5631583826220643,
+      "osm_way_node_reference_count_in_snapshot": 20
+    },
+    "T3": {
+      "osm_way_id": 664082909,
+      "osm_name": "T3 Science Building",
+      "osm_bbox_center_wgs84": [
+        113.5145511,
+        22.3527163
+      ],
+      "osm_bbox_center_utm49n_m": [
+        758966.8342346863,
+        2474030.661098862
+      ],
+      "model_bbox_center_local_xy_m": [
+        26.714050769805908,
+        -45.2600679397583
+      ],
+      "model_bbox_center_utm49n_m": [
+        758966.7140507698,
+        2474034.7399320602
+      ],
+      "observed_osm_minus_model_delta_m": [
+        0.12018391652964056,
+        -4.078833198174834
+      ],
+      "candidate_residual_after_mean_translation_m": [
+        0.3025635819649324,
+        -0.008256882894784212
+      ],
+      "candidate_residual_norm_m": 0.3026762251095856,
+      "osm_way_node_reference_count_in_snapshot": 17
+    }
+  },
+  "fit_rms_residual_m": 0.5150997435485041,
+  "fit_max_residual_m": 0.6222724292840847,
+  "baseline_mean_residual_m": 4.080877739926499,
+  "osm_snapshot": {
+    "url": "https://u-map.haotian22.top/poi.json",
+    "timestamp_osm_base": "2026-11-10T19:09:14Z",
+    "license": "OpenStreetMap ODbL",
+    "generator": "Overpass API 0.7.62.11",
+    "query_url": "https://github.com/HaoTian22/BNBU-Map/blob/main/Overpass.txt",
+    "query_output": "out center; bounding-box centres only; no polygon geometry in this POI snapshot"
+  },
+  "coordinate_frame": "GLB local XY + UTM offset (758940,2474080) = EPSG:32649; Z model-relative; GIS EPSG:4326",
+  "candidate_is_surveyed": false,
+  "candidate_is_photogrammetric": false,
+  "osm_centres_are_surveyed_controls": false,
+  "polygon_boundary_fit_performed": false,
+  "camera_calibration_performed": false,
+  "master_glb_modified": false,
+  "master_gpkg_modified": false,
+  "new_scientific_geometry_count": 0,
+  "display_only_candidate_meshes": 173,
+  "shape_vertices_or_face_indices_changed": false,
+  "candidate_z_shift_m": 0.0,
+  "roundtrip_validation": {
+    "baseline_meshes_checked": 173,
+    "candidate_meshes_checked": 173,
+    "max_baseline_vertex_error_m": 0.0,
+    "max_candidate_translation_error_m": 0.0,
+    "face_index_arrays_identical": true,
+    "vertex_count_identical": true
+  },
+  "candidate_glb_sha256": "11931b67429d45f6ccb1652d34adb3ea27cf458223e15706c6eb0ed898ca27b2",
+  "comparison_glb_sha256": "a43850b433d09111afc70890b6d83dd6991e7e53174ecf3de146ea5635410e51",
+  "comparison_viewer_sha256": "8e0f70772049fdddc63056065db715a96501af475bbcb964896dd6dccc712219",
+  "parent_gis_sha256": {
+    "BNBU_v84_EDITABLE_GIS.gpkg": "6bf8807eea0c7811b18c1569551bd806e117d518ba50f6ad0979686a29d78374",
+    "BNBU_v84_ACTIVE.geojson": "a2cf23094f388eb1004a58c206862773161a3a7866d4b25791dd8f34800f08fa",
+    "BNBU_v84_ACTIVE.kml": "a81286cb18108ff56b61a4b22ca689a36c60f04974055592674759e0d05a50b3"
+  },
+  "candidate_gpkg_layers": [
+    "registration_centres",
+    "registration_residuals",
+    "candidate_shift_vectors"
+  ],
+  "routable_bridge_endpoints_certified": 0,
+  "warning": "The three OSM bbox centres were used to estimate the translation and also evaluate its residuals. Residuals are in-sample fit statistics, not independent validation."
+}

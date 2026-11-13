@@ -1,0 +1,516 @@
+{
+  "type": "FeatureCollection",
+  "name": "BNBU_v86_REGISTRATION_QA_ONLY",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5152254,
+          22.351915
+        ]
+      },
+      "properties": {
+        "building": "T1",
+        "osm_way_id": 664082910,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "osm_bbox_center",
+        "utm_x": 759037.7932584657,
+        "utm_y": 2473943.0639192667,
+        "longitude": 113.5152254,
+        "latitude": 22.351915
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51523065862634,
+          22.351956673585
+        ]
+      },
+      "properties": {
+        "building": "T1",
+        "osm_way_id": 664082910,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "model_baseline",
+        "utm_x": 759038.2579689026,
+        "utm_y": 2473947.6890335083,
+        "longitude": 113.51523065862634,
+        "latitude": 22.351956673585
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5152282292569,
+          22.351919962375966
+        ]
+      },
+      "properties": {
+        "building": "T1",
+        "osm_way_id": 664082910,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "model_candidate",
+        "utm_x": 759038.0755892372,
+        "utm_y": 2473943.618457193,
+        "longitude": 113.5152282292569,
+        "latitude": 22.351919962375966
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.51523065862634,
+            22.351956673585
+          ],
+          [
+            113.5152254,
+            22.351915
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T1",
+        "osm_way_id": 664082910,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "baseline_to_osm",
+        "dx_to_osm_m": -0.46471043687779456,
+        "dy_to_osm_m": -4.625114241614938,
+        "distance_m": 4.6484016111059585,
+        "geometry_kind": "bbox-centre residual, not surveyed control"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.5152282292569,
+            22.351919962375966
+          ],
+          [
+            113.5152254,
+            22.351915
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T1",
+        "osm_way_id": 664082910,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "candidate_to_osm",
+        "dx_to_osm_m": -0.28233077144250274,
+        "dy_to_osm_m": -0.5545379263348877,
+        "distance_m": 0.6222724292840847,
+        "geometry_kind": "bbox-centre residual, not surveyed control"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.51523065862634,
+            22.351956673585
+          ],
+          [
+            113.5152282292569,
+            22.351919962375966
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T1",
+        "osm_way_id": 664082910,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "candidate_translation",
+        "dx_m": -0.18237966543529183,
+        "dy_m": -4.07057631528005,
+        "distance_m": 4.074659971197989,
+        "geometry_kind": "display-only rigid translation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5148681,
+          22.3523537
+        ]
+      },
+      "properties": {
+        "building": "T2",
+        "osm_way_id": 664082908,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "osm_bbox_center",
+        "utm_x": 759000.1670965389,
+        "utm_y": 2473991.042486667,
+        "longitude": 113.5148681,
+        "latitude": 22.3523537
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5148706343975,
+          22.352385328703445
+        ]
+      },
+      "properties": {
+        "building": "T2",
+        "osm_way_id": 664082908,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "model_baseline",
+        "utm_x": 759000.3697090149,
+        "utm_y": 2473994.550268173,
+        "longitude": 113.5148706343975,
+        "latitude": 22.352385328703445
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5148682051025,
+          22.352348617482715
+        ]
+      },
+      "properties": {
+        "building": "T2",
+        "osm_way_id": 664082908,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "model_candidate",
+        "utm_x": 759000.1873293495,
+        "utm_y": 2473990.479691858,
+        "longitude": 113.5148682051025,
+        "latitude": 22.352348617482715
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.5148706343975,
+            22.352385328703445
+          ],
+          [
+            113.5148681,
+            22.3523537
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T2",
+        "osm_way_id": 664082908,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "baseline_to_osm",
+        "dx_to_osm_m": -0.20261247595772147,
+        "dy_to_osm_m": -3.507781506050378,
+        "distance_m": 3.513628168944855,
+        "geometry_kind": "bbox-centre residual, not surveyed control"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.5148682051025,
+            22.352348617482715
+          ],
+          [
+            113.5148681,
+            22.3523537
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T2",
+        "osm_way_id": 664082908,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "candidate_to_osm",
+        "dx_to_osm_m": -0.020232810522429645,
+        "dy_to_osm_m": 0.562794809229672,
+        "distance_m": 0.5631583826220643,
+        "geometry_kind": "bbox-centre residual, not surveyed control"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.5148706343975,
+            22.352385328703445
+          ],
+          [
+            113.5148682051025,
+            22.352348617482715
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T2",
+        "osm_way_id": 664082908,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "candidate_translation",
+        "dx_m": -0.18237966543529183,
+        "dy_m": -4.07057631528005,
+        "distance_m": 4.074659971197989,
+        "geometry_kind": "display-only rigid translation"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5145511,
+          22.3527163
+        ]
+      },
+      "properties": {
+        "building": "T3",
+        "osm_way_id": 664082909,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "osm_bbox_center",
+        "utm_x": 758966.8342346863,
+        "utm_y": 2474030.661098862,
+        "longitude": 113.5145511,
+        "latitude": 22.3527163
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51455059486193,
+          22.35275313136105
+        ]
+      },
+      "properties": {
+        "building": "T3",
+        "osm_way_id": 664082909,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "model_baseline",
+        "utm_x": 758966.7140507698,
+        "utm_y": 2474034.7399320602,
+        "longitude": 113.51455059486193,
+        "latitude": 22.35275313136105
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51454816563373,
+          22.352716420129866
+        ]
+      },
+      "properties": {
+        "building": "T3",
+        "osm_way_id": 664082909,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "model_candidate",
+        "utm_x": 758966.5316711044,
+        "utm_y": 2474030.669355745,
+        "longitude": 113.51454816563373,
+        "latitude": 22.352716420129866
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.51455059486193,
+            22.35275313136105
+          ],
+          [
+            113.5145511,
+            22.3527163
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T3",
+        "osm_way_id": 664082909,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "baseline_to_osm",
+        "dx_to_osm_m": 0.12018391652964056,
+        "dy_to_osm_m": -4.078833198174834,
+        "distance_m": 4.080603439728682,
+        "geometry_kind": "bbox-centre residual, not surveyed control"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.51454816563373,
+            22.352716420129866
+          ],
+          [
+            113.5145511,
+            22.3527163
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T3",
+        "osm_way_id": 664082909,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "candidate_to_osm",
+        "dx_to_osm_m": 0.3025635819649324,
+        "dy_to_osm_m": -0.008256882894784212,
+        "distance_m": 0.3026762251095856,
+        "geometry_kind": "bbox-centre residual, not surveyed control"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            113.51455059486193,
+            22.35275313136105
+          ],
+          [
+            113.51454816563373,
+            22.352716420129866
+          ]
+        ]
+      },
+      "properties": {
+        "building": "T3",
+        "osm_way_id": 664082909,
+        "osm_timestamp": "2026-11-10T19:09:14Z",
+        "source_type": "Overpass out center (bounding-box center)",
+        "surveyed": false,
+        "is_surveyed": 0,
+        "display_only": true,
+        "is_routable": 0,
+        "state": "candidate_translation",
+        "dx_m": -0.18237966543529183,
+        "dy_m": -4.07057631528005,
+        "distance_m": 4.074659971197989,
+        "geometry_kind": "display-only rigid translation"
+      }
+    }
+  ]
+}

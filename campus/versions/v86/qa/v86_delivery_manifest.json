@@ -1,0 +1,35 @@
+{
+  "version": "v86",
+  "parent": "v85 checkpoint (v84 physical master)",
+  "parent_glb_sha256": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848",
+  "candidate_translation_xy_m": [
+    -0.18237966543529183,
+    -4.07057631528005
+  ],
+  "candidate_components": 173,
+  "candidate_triangles": 10700,
+  "candidate_glb_meshes": 173,
+  "comparison_glb_meshes": 346,
+  "comparison_glb_triangles": 21400,
+  "master_glb_modified": false,
+  "master_gpkg_modified": false,
+  "new_scientific_geometry_count": 0,
+  "candidate_is_photogrammetric": false,
+  "candidate_is_surveyed": false,
+  "candidate_is_display_only": true,
+  "checks": {
+    "v85_parent_integrity": "PASS",
+    "v85_browser": "PASS",
+    "v86_glb_roundtrip": "PASS",
+    "v86_vertex_color_parity": "PASS",
+    "v86_gis_byte_parity": "PASS",
+    "v86_qa_gpkg": "PASS",
+    "v86_node_syntax": "PASS",
+    "v86_chromium_cpu_viewer": "PASS",
+    "v86_page_errors": 0,
+    "native_webgl": "NOT_TESTED",
+    "github_pages": "NOT_CONFIGURED"
+  },
+  "source_note": "Three Overpass out-center bbox centres used both to fit and assess translation; in-sample residuals are not independent validation.",
+  "sha256_inventory": "qa/SHA256_v86.json"
+}

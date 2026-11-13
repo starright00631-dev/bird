@@ -1,0 +1,2129 @@
+[
+  {
+    "id": "00_A",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "A",
+    "xyz_local_model": [
+      241.252659533167,
+      -29.61965708271329,
+      4.300000190734863
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51663474854455,
+      22.35286194005748
+    ],
+    "source_face_index": 7,
+    "source_triangle_xyz": [
+      [
+        241.4712067,
+        -29.7061996,
+        4.3000002
+      ],
+      [
+        241.5782013,
+        -29.4799805,
+        4.3000002
+      ],
+      [
+        238.3093262,
+        -30.8825207,
+        4.3000002
+      ]
+    ],
+    "source_face_normal_xyz": [
+      0.0,
+      -0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 284,
+    "model_z": 4.300000190734863,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T4_ROOF_FACING",
+        "distance_3d_model_m": 0.1,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          241.25266,
+          -29.619657,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            244.1681519,
+            -15.6197796,
+            4.2000003
+          ],
+          [
+            239.0936584,
+            -28.8392792,
+            4.2000003
+          ],
+          [
+            241.9690857,
+            -29.9430504,
+            4.2000003
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T4_2F_TERRACE",
+        "distance_3d_model_m": 0.34668,
+        "source_face_index": 409,
+        "nearest_point_xyz_model": [
+          241.537379,
+          -29.790307,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            241.9690857,
+            -29.9430485,
+            4.1999998
+          ],
+          [
+            241.5437012,
+            -29.7797585,
+            4.1999998
+          ],
+          [
+            241.4283295,
+            -29.97225,
+            4.1999998
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T4_1_0",
+        "distance_3d_model_m": 1.03,
+        "source_face_index": 66,
+        "nearest_point_xyz_model": [
+          241.25266,
+          -29.619657,
+          3.27
+        ],
+        "delta_z_model_m": -1.03,
+        "face_normal": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            241.5304718,
+            -30.1383209,
+            3.27
+          ],
+          [
+            242.0847473,
+            -29.8915615,
+            3.27
+          ],
+          [
+            239.2093201,
+            -28.7877865,
+            3.27
+          ]
+        ]
+      },
+      {
+        "node": "PLATFORM_2F_00",
+        "distance_3d_model_m": 2.29952,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          239.109857,
+          -28.797113,
+          4.44
+        ],
+        "delta_z_model_m": 0.14,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            208.8965302,
+            -20.0765896,
+            4.4400001
+          ],
+          [
+            238.1472168,
+            -31.3048801,
+            4.4400001
+          ],
+          [
+            240.2974243,
+            -25.7033901,
+            4.4400001
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.1,
+    "closest_model_3d_neighbor": "V40_MAIN_T4_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "00_B",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "B",
+    "xyz_local_model": [
+      207.94129093471045,
+      -16.16033513138854,
+      4.300000190734863
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51631371883666,
+      22.352988441295064
+    ],
+    "source_face_index": 59,
+    "source_triangle_xyz": [
+      [
+        207.7227325,
+        -16.0737896,
+        4.3000002
+      ],
+      [
+        207.6157532,
+        -16.3000107,
+        4.3000002
+      ],
+      [
+        210.884613,
+        -14.8974705,
+        4.3000002
+      ]
+    ],
+    "source_face_normal_xyz": [
+      -0.0,
+      0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 284,
+    "model_z": 4.300000190734863,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T5_ROOF_FACING",
+        "distance_3d_model_m": 0.1,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          207.941291,
+          -16.160335,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            207.0962067,
+            -16.1720791,
+            4.2000003
+          ],
+          [
+            209.9716339,
+            -17.2758503,
+            4.2000003
+          ],
+          [
+            212.0846863,
+            -3.17664,
+            4.2000003
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T5_2F_TERRACE",
+        "distance_3d_model_m": 0.48233,
+        "source_face_index": 849,
+        "nearest_point_xyz_model": [
+          207.499863,
+          -16.32703,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            207.4998627,
+            -16.3270302,
+            4.1999998
+          ],
+          [
+            207.0962067,
+            -16.172081,
+            4.1999998
+          ],
+          [
+            207.4372864,
+            -16.5019379,
+            4.1999998
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T5_1_0",
+        "distance_3d_model_m": 1.05414,
+        "source_face_index": 22,
+        "nearest_point_xyz_model": [
+          207.860904,
+          -16.369747,
+          3.27
+        ],
+        "delta_z_model_m": -1.03,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            207.0447235,
+            -16.0564404,
+            3.27
+          ],
+          [
+            207.2915497,
+            -16.6106987,
+            3.27
+          ],
+          [
+            209.9201508,
+            -17.1602306,
+            3.27
+          ]
+        ]
+      },
+      {
+        "node": "PLATFORM_2F_00",
+        "distance_3d_model_m": 2.29952,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          210.084094,
+          -16.982881,
+          4.44
+        ],
+        "delta_z_model_m": 0.14,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            240.2974243,
+            -25.7033901,
+            4.4400001
+          ],
+          [
+            211.0467377,
+            -14.4751101,
+            4.4400001
+          ],
+          [
+            208.8965302,
+            -20.0765896,
+            4.4400001
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.1,
+    "closest_model_3d_neighbor": "V40_MAIN_T5_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "01_A",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "A",
+    "xyz_local_model": [
+      194.0739983777405,
+      -0.9280486092767672,
+      4.300000190734863
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51618163766929,
+      22.353128010897027
+    ],
+    "source_face_index": 50,
+    "source_triangle_xyz": [
+      [
+        193.8211823,
+        2.04017,
+        4.3000002
+      ],
+      [
+        191.995224,
+        -2.7165999,
+        4.3000002
+      ],
+      [
+        194.2102051,
+        -2.5272,
+        4.3000002
+      ]
+    ],
+    "source_face_normal_xyz": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 236,
+    "model_z": 4.300000190734863,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T5_ROOF_FACING",
+        "distance_3d_model_m": 0.1,
+        "source_face_index": 6,
+        "nearest_point_xyz_model": [
+          194.073998,
+          -0.928049,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            197.2967834,
+            2.4999101,
+            4.2000003
+          ],
+          [
+            194.4213562,
+            3.6036799,
+            4.2000003
+          ],
+          [
+            192.3083038,
+            -10.4955301,
+            4.2000003
+          ]
+        ]
+      },
+      {
+        "node": "PLATFORM_2F_01",
+        "distance_3d_model_m": 1.30726,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          192.860584,
+          -0.462262,
+          4.44
+        ],
+        "delta_z_model_m": 0.14,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            159.3614349,
+            9.3257504,
+            4.4400001
+          ],
+          [
+            191.8330994,
+            -3.1389501,
+            4.4400001
+          ],
+          [
+            193.9833069,
+            2.4625299,
+            4.4400001
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T5_1_0",
+        "distance_3d_model_m": 1.5892,
+        "source_face_index": 67,
+        "nearest_point_xyz_model": [
+          192.944148,
+          -0.494338,
+          3.27
+        ],
+        "delta_z_model_m": -1.03,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            194.4728546,
+            3.4880643,
+            3.27
+          ],
+          [
+            194.226059,
+            4.0422835,
+            3.27
+          ],
+          [
+            189.5484924,
+            -9.3402929,
+            3.27
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T5_2F_TERRACE",
+        "distance_3d_model_m": 2.83465,
+        "source_face_index": 833,
+        "nearest_point_xyz_model": [
+          191.958527,
+          -2.812201,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            189.4328613,
+            -9.3917589,
+            4.1999998
+          ],
+          [
+            191.9585266,
+            -2.8122015,
+            4.1999998
+          ],
+          [
+            189.8112946,
+            -1.9879552,
+            4.1999998
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.1,
+    "closest_model_3d_neighbor": "V40_MAIN_T5_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "01_B",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "B",
+    "xyz_local_model": [
+      158.26397634435799,
+      12.676149595051047,
+      4.300000190734863
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51583638643673,
+      22.353256195740872
+    ],
+    "source_face_index": 52,
+    "source_triangle_xyz": [
+      [
+        157.9963379,
+        12.8667097,
+        4.3000002
+      ],
+      [
+        159.5235596,
+        9.7481003,
+        4.3000002
+      ],
+      [
+        158.0806427,
+        13.1023302,
+        4.3000002
+      ]
+    ],
+    "source_face_normal_xyz": [
+      -0.0,
+      0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 236,
+    "model_z": 4.300000190734863,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T6_ROOF_FACING",
+        "distance_3d_model_m": 0.1,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          158.263976,
+          12.67615,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            155.2760468,
+            -1.31707,
+            4.2000003
+          ],
+          [
+            160.4365387,
+            12.1264896,
+            4.2000003
+          ],
+          [
+            157.4304047,
+            13.2804298,
+            4.2000003
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T6_2F_TERRACE",
+        "distance_3d_model_m": 0.50878,
+        "source_face_index": 129,
+        "nearest_point_xyz_model": [
+          157.964767,
+          13.075312,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            157.4304047,
+            13.2804337,
+            4.1999998
+          ],
+          [
+            157.9647675,
+            13.0753117,
+            4.1999998
+          ],
+          [
+            157.986496,
+            13.1360207,
+            4.1999998
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T6_1_0",
+        "distance_3d_model_m": 1.04492,
+        "source_face_index": 19,
+        "nearest_point_xyz_model": [
+          158.327023,
+          12.840392,
+          3.27
+        ],
+        "delta_z_model_m": -1.03,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            157.8697052,
+            13.4754639,
+            3.27
+          ],
+          [
+            157.3154602,
+            13.228694,
+            3.27
+          ],
+          [
+            160.3208923,
+            12.075017,
+            3.27
+          ]
+        ]
+      },
+      {
+        "node": "V25_P1_T6_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "distance_3d_model_m": 1.93992,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          157.932114,
+          14.587442,
+          4.31
+        ],
+        "delta_z_model_m": 0.01,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            155.8782501,
+            15.3758526,
+            4.3099999
+          ],
+          [
+            157.9321136,
+            14.5874424,
+            4.3099999
+          ],
+          [
+            170.2599945,
+            46.7026176,
+            4.3099999
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.1,
+    "closest_model_3d_neighbor": "V40_MAIN_T6_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "02_A",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "A",
+    "xyz_local_model": [
+      140.99055223391056,
+      19.255002614159846,
+      4.300000190734863
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51566985252654,
+      22.353318177767363
+    ],
+    "source_face_index": 7,
+    "source_triangle_xyz": [
+      [
+        141.213089,
+        19.1668892,
+        4.3000002
+      ],
+      [
+        141.3200836,
+        19.3931103,
+        4.3000002
+      ],
+      [
+        138.0093231,
+        18.0055599,
+        4.3000002
+      ]
+    ],
+    "source_face_normal_xyz": [
+      0.0,
+      -0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 240,
+    "model_z": 4.300000190734863,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T6_ROOF_FACING",
+        "distance_3d_model_m": 0.1,
+        "source_face_index": 4,
+        "nearest_point_xyz_model": [
+          140.990552,
+          19.255003,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            141.9703217,
+            19.2150097,
+            4.2000003
+          ],
+          [
+            138.9641876,
+            20.3689499,
+            4.2000003
+          ],
+          [
+            136.8098145,
+            5.77145,
+            4.2000003
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T6_2F_TERRACE",
+        "distance_3d_model_m": 0.48544,
+        "source_face_index": 137,
+        "nearest_point_xyz_model": [
+          141.435959,
+          19.420128,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            141.4359589,
+            19.4201279,
+            4.1999998
+          ],
+          [
+            141.9703217,
+            19.2150078,
+            4.1999998
+          ],
+          [
+            141.4985352,
+            19.5950375,
+            4.1999998
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T6_1_0",
+        "distance_3d_model_m": 1.05414,
+        "source_face_index": 63,
+        "nearest_point_xyz_model": [
+          141.070928,
+          19.464394,
+          3.27
+        ],
+        "delta_z_model_m": -1.03,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            142.0211487,
+            19.0996475,
+            3.27
+          ],
+          [
+            141.774353,
+            19.6538658,
+            3.27
+          ],
+          [
+            139.0156403,
+            20.2533245,
+            3.27
+          ]
+        ]
+      },
+      {
+        "node": "PLATFORM_2F_02",
+        "distance_3d_model_m": 2.30037,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          138.861642,
+          20.115143,
+          4.44
+        ],
+        "delta_z_model_m": 0.14,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            140.0880127,
+            23.1504993,
+            4.4400001
+          ],
+          [
+            110.8095779,
+            34.9797592,
+            4.4400001
+          ],
+          [
+            137.8403625,
+            17.5874004,
+            4.4400001
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.1,
+    "closest_model_3d_neighbor": "V40_MAIN_T6_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "02_B",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "B",
+    "xyz_local_model": [
+      108.330608125,
+      32.75701375,
+      4.300000190734863
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.515355148309,
+      22.35344496431912
+    ],
+    "source_face_index": 22,
+    "source_triangle_xyz": [
+      [
+        108.4224777,
+        34.4104118,
+        4.3000002
+      ],
+      [
+        107.2394638,
+        31.4823399,
+        4.3000002
+      ],
+      [
+        108.7308884,
+        29.8348103,
+        4.3000002
+      ]
+    ],
+    "source_face_normal_xyz": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 240,
+    "model_z": 4.300000190734863,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T7_ROOF_FACING",
+        "distance_3d_model_m": 0.1,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          108.330608,
+          32.757014,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            107.1281891,
+            25.8680096,
+            4.2000003
+          ],
+          [
+            112.4326172,
+            38.9969292,
+            4.2000003
+          ],
+          [
+            109.4470901,
+            40.2031593,
+            4.2000003
+          ]
+        ]
+      },
+      {
+        "node": "PLATFORM_2F_02",
+        "distance_3d_model_m": 1.47248,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          109.689683,
+          32.207914,
+          4.44
+        ],
+        "delta_z_model_m": 0.14,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            108.5619431,
+            29.4166508,
+            4.4400001
+          ],
+          [
+            137.8403625,
+            17.5874004,
+            4.4400001
+          ],
+          [
+            110.8095779,
+            34.9797592,
+            4.4400001
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T7_1_0",
+        "distance_3d_model_m": 1.71902,
+        "source_face_index": 23,
+        "nearest_point_xyz_model": [
+          109.606671,
+          32.241451,
+          3.27
+        ],
+        "delta_z_model_m": -1.03,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            112.8745956,
+            39.1845322,
+            3.27
+          ],
+          [
+            112.3160782,
+            38.9474716,
+            3.27
+          ],
+          [
+            107.0787048,
+            25.9845104,
+            3.27
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T7_2F_TERRACE",
+        "distance_3d_model_m": 3.02088,
+        "source_face_index": 185,
+        "nearest_point_xyz_model": [
+          110.678467,
+          34.655243,
+          4.2
+        ],
+        "delta_z_model_m": -0.1,
+        "face_normal": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            112.8109894,
+            33.7936478,
+            4.1999998
+          ],
+          [
+            114.5651474,
+            38.135334,
+            4.1999998
+          ],
+          [
+            110.6784668,
+            34.6552429,
+            4.1999998
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.1,
+    "closest_model_3d_neighbor": "V40_MAIN_T7_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "03_A",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_03_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "A",
+    "xyz_local_model": [
+      87.98045812459195,
+      33.93332878678693,
+      4.293968772640443
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51515788527436,
+      22.353458649570708
+    ],
+    "source_face_index": 7,
+    "source_triangle_xyz": [
+      [
+        88.1588593,
+        33.5081215,
+        4.2968574
+      ],
+      [
+        88.2431564,
+        33.7437286,
+        4.2982221
+      ],
+      [
+        86.757843,
+        36.8473511,
+        4.2741728
+      ]
+    ],
+    "source_face_normal_xyz": [
+      -0.0161883,
+      4e-07,
+      0.999869
+    ],
+    "parent_mesh_triangle_count": 288,
+    "model_z": 4.293968772640443,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T7_ROOF_FACING",
+        "distance_3d_model_m": 0.09397,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          87.980458,
+          33.933329,
+          4.2
+        ],
+        "delta_z_model_m": -0.09397,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            91.1073914,
+            47.6128807,
+            4.2000003
+          ],
+          [
+            85.8029633,
+            34.4839592,
+            4.2000003
+          ],
+          [
+            88.7884979,
+            33.277729,
+            4.2000003
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T7_2F_TERRACE",
+        "distance_3d_model_m": 0.53069,
+        "source_face_index": 833,
+        "nearest_point_xyz_model": [
+          88.259155,
+          33.491592,
+          4.2
+        ],
+        "delta_z_model_m": -0.09397,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            88.7884979,
+            33.2777252,
+            4.1999998
+          ],
+          [
+            88.2591553,
+            33.4915924,
+            4.1999998
+          ],
+          [
+            88.2530136,
+            33.4744263,
+            4.1999998
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T7_1_0",
+        "distance_3d_model_m": 1.04644,
+        "source_face_index": 66,
+        "nearest_point_xyz_model": [
+          87.899662,
+          33.733352,
+          3.27
+        ],
+        "delta_z_model_m": -1.02397,
+        "face_normal": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            88.3465118,
+            33.0901222,
+            3.27
+          ],
+          [
+            88.9049911,
+            33.3271713,
+            3.27
+          ],
+          [
+            85.9194565,
+            34.5334091,
+            3.27
+          ]
+        ]
+      },
+      {
+        "node": "PLATFORM_2F_03",
+        "distance_3d_model_m": 2.23,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          85.917278,
+          34.766909,
+          4.44
+        ],
+        "delta_z_model_m": 0.14603,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            86.9267807,
+            37.2655106,
+            4.4400001
+          ],
+          [
+            54.9702606,
+            50.1767883,
+            4.4400001
+          ],
+          [
+            84.6791382,
+            31.7024097,
+            4.4400001
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.09397,
+    "closest_model_3d_neighbor": "V40_MAIN_T7_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "03_B",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_03_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "B",
+    "xyz_local_model": [
+      51.811766333087256,
+      48.221799125369174,
+      3.7083439882806926
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51480926287961,
+      22.353593062310406
+    ],
+    "source_face_index": 23,
+    "source_triangle_xyz": [
+      [
+        51.3087196,
+        47.6451797,
+        3.7001989
+      ],
+      [
+        51.2964401,
+        47.3952293,
+        3.7
+      ],
+      [
+        52.4128494,
+        49.1859207,
+        3.7180765
+      ]
+    ],
+    "source_face_normal_xyz": [
+      -0.0161893,
+      -1e-07,
+      0.9998689
+    ],
+    "parent_mesh_triangle_count": 288,
+    "model_z": 3.7083439882806926,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T8_ROOF_FACING",
+        "distance_3d_model_m": 0.10834,
+        "source_face_index": 7,
+        "nearest_point_xyz_model": [
+          51.811766,
+          48.221799,
+          3.6
+        ],
+        "delta_z_model_m": -0.10834,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            50.5324707,
+            47.7885704,
+            3.6000001
+          ],
+          [
+            53.5180092,
+            46.5823402,
+            3.6000001
+          ],
+          [
+            56.2864304,
+            62.0301094,
+            3.6000001
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T8_1_0",
+        "distance_3d_model_m": 0.93755,
+        "source_face_index": 22,
+        "nearest_point_xyz_model": [
+          51.515291,
+          47.487998,
+          3.205714
+        ],
+        "delta_z_model_m": -0.50263,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            50.4830017,
+            47.9050713,
+            3.2057142
+          ],
+          [
+            50.7200851,
+            47.346611,
+            3.2057142
+          ],
+          [
+            53.4685364,
+            46.6988335,
+            3.2057142
+          ]
+        ]
+      },
+      {
+        "node": "V13_EXISTING_OUTLINE_OPAQUE_T8_2F_TERRACE",
+        "distance_3d_model_m": 1.05288,
+        "source_face_index": 193,
+        "nearest_point_xyz_model": [
+          51.202343,
+          47.517925,
+          4.2
+        ],
+        "delta_z_model_m": 0.49166,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            51.202343,
+            47.5179253,
+            4.1999998
+          ],
+          [
+            50.5324745,
+            47.7885704,
+            4.1999998
+          ],
+          [
+            51.1965561,
+            47.4001389,
+            4.1999998
+          ]
+        ]
+      },
+      {
+        "node": "PLATFORM_2F_03",
+        "distance_3d_model_m": 2.31482,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          53.848003,
+          47.399105,
+          4.44
+        ],
+        "delta_z_model_m": 0.73166,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            52.7226181,
+            44.6136818,
+            4.4400001
+          ],
+          [
+            84.6791382,
+            31.7024097,
+            4.4400001
+          ],
+          [
+            54.9702606,
+            50.1767883,
+            4.4400001
+          ]
+        ]
+      },
+      {
+        "node": "V49_P1_T8_16_TREAD_STAIR_MATCH_MODEL_FIRST_FLOOR_NOT_SURVEYED",
+        "distance_3d_model_m": 6.89915,
+        "source_face_index": 95,
+        "nearest_point_xyz_model": [
+          51.811766,
+          41.323502,
+          3.6
+        ],
+        "delta_z_model_m": -0.10834,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            49.4863281,
+            40.7635002,
+            3.5999999
+          ],
+          [
+            53.4863281,
+            41.3235016,
+            3.5999999
+          ],
+          [
+            49.4863281,
+            41.3235016,
+            3.5999999
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.10834,
+    "closest_model_3d_neighbor": "V40_MAIN_T8_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "04_A",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "A",
+    "xyz_local_model": [
+      88.34037187499999,
+      -124.77956812500004,
+      3.799999713897705
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51513565175756,
+      22.352026142997712
+    ],
+    "source_face_index": 5,
+    "source_triangle_xyz": [
+      [
+        88.0466003,
+        -125.8923798,
+        3.7999997
+      ],
+      [
+        89.3111267,
+        -124.2738495,
+        3.7999997
+      ],
+      [
+        88.4856262,
+        -122.0819092,
+        3.7999997
+      ]
+    ],
+    "source_face_normal_xyz": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 252,
+    "model_z": 3.799999713897705,
+    "candidate_model_neighbors": [
+      {
+        "node": "V25_P1_T1_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "distance_3d_model_m": 0.09,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          88.340372,
+          -124.779568,
+          3.71
+        ],
+        "delta_z_model_m": -0.09,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            101.7579193,
+            -108.0178452,
+            3.71
+          ],
+          [
+            100.3395004,
+            -106.9096527,
+            3.71
+          ],
+          [
+            71.5904999,
+            -146.6303711,
+            3.71
+          ]
+        ]
+      },
+      {
+        "node": "V40_MAIN_T1_ROOF_FACING",
+        "distance_3d_model_m": 0.2,
+        "source_face_index": 3,
+        "nearest_point_xyz_model": [
+          88.340372,
+          -124.779568,
+          3.6
+        ],
+        "delta_z_model_m": -0.2,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            68.9407578,
+            -147.0982056,
+            3.6000001
+          ],
+          [
+            94.0060883,
+            -147.1765747,
+            3.6000001
+          ],
+          [
+            101.5708237,
+            -105.3336334,
+            3.6000001
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T1_1_0",
+        "distance_3d_model_m": 1.57344,
+        "source_face_index": 15,
+        "nearest_point_xyz_model": [
+          87.192321,
+          -123.882613,
+          3.205714
+        ],
+        "delta_z_model_m": -0.59429,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            68.4642029,
+            -147.1567078,
+            3.2057142
+          ],
+          [
+            69.0663757,
+            -147.0827789,
+            3.2057142
+          ],
+          [
+            101.5862198,
+            -105.4592514,
+            3.2057142
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.09,
+    "closest_model_3d_neighbor": "V25_P1_T1_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "04_B",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "B",
+    "xyz_local_model": [
+      66.70701376283796,
+      -107.61729150452406,
+      3.799999713897705
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51492853089916,
+      22.35218430148312
+    ],
+    "source_face_index": 21,
+    "source_triangle_xyz": [
+      [
+        66.593338,
+        -107.4825516,
+        3.7999997
+      ],
+      [
+        66.4450531,
+        -107.6461487,
+        3.7999997
+      ],
+      [
+        69.5683289,
+        -107.3020935,
+        3.7999997
+      ]
+    ],
+    "source_face_normal_xyz": [
+      -0.0,
+      0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 252,
+    "model_z": 3.799999713897705,
+    "candidate_model_neighbors": [
+      {
+        "node": "V40_MAIN_T2_ROOF_FACING",
+        "distance_3d_model_m": 0.15,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          66.707014,
+          -107.617292,
+          3.65
+        ],
+        "delta_z_model_m": -0.15,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            56.5778008,
+            -101.2448349,
+            3.6500001
+          ],
+          [
+            68.1843262,
+            -109.0735397,
+            3.6500001
+          ],
+          [
+            90.8148651,
+            -75.5223846,
+            3.6500001
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_1_0",
+        "distance_3d_model_m": 0.66201,
+        "source_face_index": 14,
+        "nearest_point_xyz_model": [
+          66.543906,
+          -107.859108,
+          3.205714
+        ],
+        "delta_z_model_m": -0.59429,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            56.5536613,
+            -101.1205902,
+            3.2057142
+          ],
+          [
+            56.6694336,
+            -101.7161484,
+            3.2057142
+          ],
+          [
+            68.1601715,
+            -108.949295,
+            3.2057142
+          ]
+        ]
+      },
+      {
+        "node": "V25_P1_T2_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "distance_3d_model_m": 1.63687,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          67.810448,
+          -106.40892,
+          3.76
+        ],
+        "delta_z_model_m": -0.04,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            88.2042084,
+            -76.173912,
+            3.76
+          ],
+          [
+            67.8104477,
+            -106.4089203,
+            3.76
+          ],
+          [
+            69.3027115,
+            -107.4154663,
+            3.76
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.15,
+    "closest_model_3d_neighbor": "V40_MAIN_T2_ROOF_FACING",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "05_A",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "A",
+    "xyz_local_model": [
+      63.403963482911514,
+      -57.25034383501579,
+      3.799999713897705
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51490464531352,
+      22.352639382957666
+    ],
+    "source_face_index": 34,
+    "source_triangle_xyz": [
+      [
+        63.5378189,
+        -57.3780212,
+        3.7999997
+      ],
+      [
+        63.6693611,
+        -57.2006683,
+        3.7999997
+      ],
+      [
+        60.509079,
+        -57.7921906,
+        3.7999997
+      ]
+    ],
+    "source_face_normal_xyz": [
+      0.0,
+      -0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 252,
+    "model_z": 3.799999713897705,
+    "candidate_model_neighbors": [
+      {
+        "node": "V37_P1_T2_BAY_06_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "distance_3d_model_m": 0.15,
+        "source_face_index": 4,
+        "nearest_point_xyz_model": [
+          63.403963,
+          -57.250344,
+          3.65
+        ],
+        "delta_z_model_m": -0.15,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            65.6121216,
+            -58.5229225,
+            3.6500001
+          ],
+          [
+            61.7985497,
+            -55.950634,
+            3.6500001
+          ],
+          [
+            56.0612297,
+            -64.4565582,
+            3.6500001
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T2_1_0",
+        "distance_3d_model_m": 0.6011,
+        "source_face_index": 19,
+        "nearest_point_xyz_model": [
+          63.45444,
+          -57.175509,
+          3.205714
+        ],
+        "delta_z_model_m": -0.59429,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            61.7069206,
+            -55.4793243,
+            3.2057142
+          ],
+          [
+            61.8226814,
+            -56.0748749,
+            3.2057142
+          ],
+          [
+            90.6906357,
+            -75.5465317,
+            3.2057142
+          ]
+        ]
+      },
+      {
+        "node": "V23_T2_MODEL_PORTICO_COLUMN_06",
+        "distance_3d_model_m": 5.23779,
+        "source_face_index": 15,
+        "nearest_point_xyz_model": [
+          60.662937,
+          -61.711147,
+          3.65
+        ],
+        "delta_z_model_m": -0.15,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            60.7229958,
+            -61.7572327,
+            3.6500001
+          ],
+          [
+            60.6629372,
+            -61.7111473,
+            3.6500001
+          ],
+          [
+            60.5179367,
+            -61.9622917,
+            3.6500001
+          ]
+        ]
+      },
+      {
+        "node": "V37_P1_T2_BAY_05_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+        "distance_3d_model_m": 10.08134,
+        "source_face_index": 2,
+        "nearest_point_xyz_model": [
+          57.767169,
+          -65.60723,
+          3.65
+        ],
+        "delta_z_model_m": -0.15,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            56.0612297,
+            -64.4565582,
+            3.6500001
+          ],
+          [
+            54.7749634,
+            -74.5896683,
+            3.6500001
+          ],
+          [
+            59.8748016,
+            -67.0288467,
+            3.6500001
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.15,
+    "closest_model_3d_neighbor": "V37_P1_T2_BAY_06_PILOTIS_OPAQUE_SOFFIT_PHOTO_AND_PREEXISTING_MESH",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  },
+  {
+    "id": "05_B",
+    "bridge_node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+    "end": "B",
+    "xyz_local_model": [
+      46.63285307692307,
+      -45.46702153846154,
+      3.799999713897705
+    ],
+    "approx_lonlat_from_inherited_crs": [
+      113.51474382887879,
+      22.352748260868832
+    ],
+    "source_face_index": 52,
+    "source_triangle_xyz": [
+      [
+        45.8384895,
+        -46.0266914,
+        3.7999997
+      ],
+      [
+        49.354229,
+        -44.4925804,
+        3.7999997
+      ],
+      [
+        47.0168686,
+        -44.3437805,
+        3.7999997
+      ]
+    ],
+    "source_face_normal_xyz": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "parent_mesh_triangle_count": 252,
+    "model_z": 3.799999713897705,
+    "candidate_model_neighbors": [
+      {
+        "node": "V25_P1_T3_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+        "distance_3d_model_m": 0.04,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          46.632853,
+          -45.467022,
+          3.76
+        ],
+        "delta_z_model_m": -0.04,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            55.0776176,
+            -36.3187332,
+            3.76
+          ],
+          [
+            53.6031418,
+            -35.2862968,
+            3.76
+          ],
+          [
+            32.403759,
+            -65.5621567,
+            3.76
+          ]
+        ]
+      },
+      {
+        "node": "V40_MAIN_T3_ROOF_FACING",
+        "distance_3d_model_m": 0.15,
+        "source_face_index": 0,
+        "nearest_point_xyz_model": [
+          46.632853,
+          -45.467022,
+          3.65
+        ],
+        "delta_z_model_m": -0.15,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            22.5900803,
+            -60.3996277,
+            3.6500001
+          ],
+          [
+            33.0752258,
+            -67.7414093,
+            3.6500001
+          ],
+          [
+            55.8806229,
+            -35.1719208,
+            3.6500001
+          ]
+        ]
+      },
+      {
+        "node": "FLOOR_EDGE_NOT_GLASS_STORYBAND_T3_1_0",
+        "distance_3d_model_m": 1.6888,
+        "source_face_index": 20,
+        "nearest_point_xyz_model": [
+          47.927755,
+          -46.373721,
+          3.205714
+        ],
+        "delta_z_model_m": -0.59429,
+        "face_normal": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            55.7559471,
+            -35.1939011,
+            3.2057142
+          ],
+          [
+            33.0532227,
+            -67.6167603,
+            3.2057142
+          ],
+          [
+            56.3534279,
+            -35.0885544,
+            3.2057142
+          ]
+        ]
+      },
+      {
+        "node": "V27_T3_LEVEL01_OPAQUE_GALLERY_EDGE",
+        "distance_3d_model_m": 8.16244,
+        "source_face_index": 4,
+        "nearest_point_xyz_model": [
+          43.344231,
+          -52.918835,
+          4.33
+        ],
+        "delta_z_model_m": 0.53,
+        "face_normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "triangle_xyz": [
+          [
+            43.3442307,
+            -52.9188347,
+            4.3299999
+          ],
+          [
+            36.0718956,
+            -63.6186333,
+            4.3299999
+          ],
+          [
+            43.4916801,
+            -53.0220795,
+            4.3299999
+          ]
+        ]
+      }
+    ],
+    "is_verified_connected": false,
+    "is_routable": false,
+    "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+    "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+    "closest_model_3d_distance_m": 0.04,
+    "closest_model_3d_neighbor": "V25_P1_T3_LEVEL_01_OPAQUE_RECESSED_GALLERY_DECK",
+    "note": "Nearest *upward-facing* model triangle is not a door, surveyed landing, or confirmed public pedestrian route."
+  }
+]
