@@ -7,6 +7,12 @@ on:
     paths:
       - "campus/versions/v88/**"
       - ".github/workflows/bnbu-v88-whole-campus.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "campus/versions/v88/**"
+      - ".github/workflows/bnbu-v88-whole-campus.yml"
   workflow_dispatch:
 
 concurrency:
