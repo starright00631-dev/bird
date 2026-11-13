@@ -1,0 +1,283 @@
+{
+  "schema": "bnbu-v87-osm-geometry-status-v1",
+  "retrieved_at_utc": "2026-11-13T00:59:04Z",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "raw_elements_sha256": "11997f1ae0ede0d3cd6cadf570ef5038d41ab4d72e39b6e16c3a27c01e02bf87",
+  "geometry_ready": true,
+  "registration_eligible": true,
+  "way_count": 3,
+  "ways": {
+    "T1": {
+      "way_id": 664082910,
+      "name_en": "T1 Business and Management Building",
+      "osm_version": 8,
+      "osm_timestamp": "2026-02-08T04:55:27Z",
+      "node_count": 19,
+      "closed_ring": true,
+      "node_sequence_matches_v86": true,
+      "name_matches_v86": true,
+      "building_tag_matches": true,
+      "geometry_lon_lat": [
+        [
+          113.5149614,
+          22.351927
+        ],
+        [
+          113.51496,
+          22.3518818
+        ],
+        [
+          113.5149854,
+          22.351883
+        ],
+        [
+          113.5149901,
+          22.3518167
+        ],
+        [
+          113.515305,
+          22.351841
+        ],
+        [
+          113.5153057,
+          22.3517039
+        ],
+        [
+          113.5153781,
+          22.3516541
+        ],
+        [
+          113.5155702,
+          22.351857
+        ],
+        [
+          113.5155628,
+          22.3519934
+        ],
+        [
+          113.515485,
+          22.3519934
+        ],
+        [
+          113.5154837,
+          22.3520064
+        ],
+        [
+          113.5153415,
+          22.3520009
+        ],
+        [
+          113.5151622,
+          22.351989
+        ],
+        [
+          113.515179,
+          22.3521392
+        ],
+        [
+          113.5151257,
+          22.3521462
+        ],
+        [
+          113.5149008,
+          22.3521758
+        ],
+        [
+          113.5148806,
+          22.3520289
+        ],
+        [
+          113.5148831,
+          22.3519433
+        ],
+        [
+          113.5149614,
+          22.351927
+        ]
+      ]
+    },
+    "T2": {
+      "way_id": 664082908,
+      "name_en": "T2 Humanities Building",
+      "osm_version": 9,
+      "osm_timestamp": "2026-02-08T04:55:27Z",
+      "node_count": 20,
+      "closed_ring": true,
+      "node_sequence_matches_v86": true,
+      "name_matches_v86": true,
+      "building_tag_matches": true,
+      "geometry_lon_lat": [
+        [
+          113.5145372,
+          22.3523563
+        ],
+        [
+          113.5145649,
+          22.3525566
+        ],
+        [
+          113.5145928,
+          22.3525539
+        ],
+        [
+          113.5145954,
+          22.3525713
+        ],
+        [
+          113.514782,
+          22.3525223
+        ],
+        [
+          113.514847,
+          22.3525052
+        ],
+        [
+          113.5148195,
+          22.352367
+        ],
+        [
+          113.515084,
+          22.3523289
+        ],
+        [
+          113.515082,
+          22.352306
+        ],
+        [
+          113.5152255,
+          22.3522601
+        ],
+        [
+          113.5152121,
+          22.352203
+        ],
+        [
+          113.5152027,
+          22.3521361
+        ],
+        [
+          113.515179,
+          22.3521392
+        ],
+        [
+          113.5151257,
+          22.3521462
+        ],
+        [
+          113.5149008,
+          22.3521758
+        ],
+        [
+          113.5145228,
+          22.3522254
+        ],
+        [
+          113.5145341,
+          22.3522961
+        ],
+        [
+          113.5145107,
+          22.3522992
+        ],
+        [
+          113.5145214,
+          22.3523587
+        ],
+        [
+          113.5145372,
+          22.3523563
+        ]
+      ]
+    },
+    "T3": {
+      "way_id": 664082909,
+      "name_en": "T3 Science Building",
+      "osm_version": 8,
+      "osm_timestamp": "2026-02-08T04:55:27Z",
+      "node_count": 17,
+      "closed_ring": true,
+      "node_sequence_matches_v86": true,
+      "name_matches_v86": true,
+      "building_tag_matches": true,
+      "geometry_lon_lat": [
+        [
+          113.5142359,
+          22.3527954
+        ],
+        [
+          113.5142787,
+          22.3529345
+        ],
+        [
+          113.5144748,
+          22.3528829
+        ],
+        [
+          113.5144447,
+          22.3527851
+        ],
+        [
+          113.5147836,
+          22.3527004
+        ],
+        [
+          113.5147749,
+          22.352675
+        ],
+        [
+          113.5149124,
+          22.3526092
+        ],
+        [
+          113.5148942,
+          22.3525639
+        ],
+        [
+          113.514874,
+          22.3524981
+        ],
+        [
+          113.514847,
+          22.3525052
+        ],
+        [
+          113.514782,
+          22.3525223
+        ],
+        [
+          113.5145954,
+          22.3525713
+        ],
+        [
+          113.5141985,
+          22.3526756
+        ],
+        [
+          113.514216,
+          22.3527327
+        ],
+        [
+          113.5141898,
+          22.3527396
+        ],
+        [
+          113.5142089,
+          22.3528015
+        ],
+        [
+          113.5142359,
+          22.3527954
+        ]
+      ]
+    }
+  },
+  "blocking_reasons": [],
+  "physical_master_modified": false,
+  "active_gis_modified": false,
+  "candidate_geometry_created": false,
+  "notes": [
+    "OSM ways are community-mapped footprints, not surveyed building control polygons.",
+    "Full way geometry improves on out-center bbox centres but is not photogrammetric or geodetic survey evidence.",
+    "No geometry is promoted into the scientific master by this acquisition step."
+  ]
+}
