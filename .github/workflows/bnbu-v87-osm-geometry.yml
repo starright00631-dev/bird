@@ -1,4 +1,4 @@
-name: BNBU v87 live OSM full-way geometry capture
+name: BNBU v87 OSM geometry validation
 
 on:
   push:
@@ -6,23 +6,21 @@ on:
       - bnbu-campus-v78-mainline-reconciliation-20261112
     paths:
       - "campus/versions/v87/src/fetch_osm_full_geometry_v87.py"
-      - "campus/versions/v87/tests/**"
-      - "campus/versions/v87/reference/v86_osm_way_snapshot.json"
-      - ".github/workflows/bnbu-v87-osm-geometry.yml"
-  pull_request:
-    paths:
-      - "campus/versions/v87/src/fetch_osm_full_geometry_v87.py"
-      - "campus/versions/v87/tests/**"
-      - "campus/versions/v87/reference/v86_osm_way_snapshot.json"
+      - "campus/versions/v87/tests/test_fetch_osm_full_geometry_v87.py"
       - ".github/workflows/bnbu-v87-osm-geometry.yml"
   workflow_dispatch:
 
+concurrency:
+  group: bnbu-v87-osm-validation-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,25 +28,21 @@ jobs:
           python-version: "3.11"
       - name: Install OSM capture dependency
         run: python -m pip install "requests>=2.31,<3"
-      - name: Test full-way geometry validation gates
-        run: python -m unittest discover -s campus/versions/v87/tests -v
-      - name: Capture current full OSM way geometry (push/dispatch only)
-        if: github.event_name != 'pull_request' && github.ref_name == 'bnbu-campus-v78-mainline-reconciliation-20261112'
+      - name: Test full-way geometry validation gates (no network)
+        run: python -m unittest discover -s campus/versions/v87/tests -p 'test_fetch_osm_full_geometry_v87.py' -v
+      - name: Capture current full OSM way geometry (manual dispatch only)
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python campus/versions/v87/src/fetch_osm_full_geometry_v87.py \
             --raw-output campus/versions/v87/qa/v87_osm_full_geometry_live.json \
             --status-output campus/versions/v87/qa/v87_osm_geometry_status.json
-      - name: Commit source snapshot and validation status to the same development branch
-        if: github.event_name != 'pull_request' && github.ref_name == 'bnbu-campus-v78-mainline-reconciliation-20261112'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add campus/versions/v87/qa/v87_osm_full_geometry_live.json campus/versions/v87/qa/v87_osm_geometry_status.json
-          if git diff --cached --quiet; then
-            echo "No OSM snapshot changes to commit."
-          else
-            git commit -m "BNBU v87: capture live T1-T3 OSM full-way geometry"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
+      - name: Upload OSM source snapshot and validation status
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: BNBU-v87-live-OSM-full-geometry
+          path: |
+            campus/versions/v87/qa/v87_osm_full_geometry_live.json
+            campus/versions/v87/qa/v87_osm_geometry_status.json
+          if-no-files-found: error
+          retention-days: 30

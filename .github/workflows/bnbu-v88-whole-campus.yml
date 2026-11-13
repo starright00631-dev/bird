@@ -7,11 +7,11 @@ on:
     paths:
       - "campus/versions/v88/**"
       - ".github/workflows/bnbu-v88-whole-campus.yml"
-  pull_request:
-    paths:
-      - "campus/versions/v88/**"
-      - ".github/workflows/bnbu-v88-whole-campus.yml"
   workflow_dispatch:
+
+concurrency:
+  group: bnbu-v88-whole-campus-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   actions: read
@@ -20,6 +20,7 @@ permissions:
 jobs:
   whole-campus:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -28,7 +29,7 @@ jobs:
       - name: Install v88 validation dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install "trimesh>=4.4,<5" "numpy>=1.26,<3" "playwright>=1.45,<2"
+          python -m pip install -r campus/versions/v88/requirements_v88.txt
           python -m playwright install --with-deps chromium
       - name: Download the verified mainline v76.1 full-campus package artifact
         env:
@@ -43,27 +44,46 @@ jobs:
           PKG_DIR=$(find /tmp/v88-work -type f -name 'index.html' -print -quit | xargs dirname)
           test -f "$PKG_DIR/generated/BNBU_v71_CONNECTED_LAKEFRONT.glb"
           echo "PKG_DIR=$PKG_DIR" >> "$GITHUB_ENV"
-      - name: Overlay v88 registry, viewer and reproducible source
+      - name: Overlay v88 registry, viewer, source and QA into the complete package
         run: |
-          mkdir -p "$PKG_DIR/history" "$PKG_DIR/src" "$(dirname "$PKG_DIR")/registry" "$(dirname "$PKG_DIR")/release_qa"
+          mkdir -p "$PKG_DIR/history" "$PKG_DIR/src" "$PKG_DIR/registry" "$PKG_DIR/release_qa" "$PKG_DIR/qa"
           cp "$PKG_DIR/generated/BNBU_v71_CONNECTED_LAKEFRONT.glb" "$PKG_DIR/history/BNBU_v71_CONNECTED_LAKEFRONT_v76_parent.glb"
           cp campus/versions/v88/viewer.js "$PKG_DIR/viewer.js"
           cp campus/versions/v88/BNBU_v88_ARCHITECTURE_COMPONENT_ATLAS.json "$PKG_DIR/generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json"
           cp campus/versions/v88/src/build_v88.py "$PKG_DIR/src/build_v88.py"
           cp campus/versions/v88/src/verify_v88_main.py "$PKG_DIR/src/verify_v88_main.py"
           cp campus/versions/v88/src/test_v88_browser.py "$PKG_DIR/src/test_v88_browser.py"
-          cp campus/versions/v88/registry/BNBU_v88_BUILDING_ASSET_REGISTRY.json "$(dirname "$PKG_DIR")/registry/BNBU_v88_BUILDING_ASSET_REGISTRY.json"
           cp campus/versions/v88/requirements_v88.txt "$PKG_DIR/requirements_v88.txt"
+          cp campus/versions/v88/README_v88_WHOLE_CAMPUS.md "$PKG_DIR/README_v88_WHOLE_CAMPUS.md"
+          cp campus/versions/v88/registry/BNBU_v88_BUILDING_ASSET_REGISTRY.json "$PKG_DIR/registry/BNBU_v88_BUILDING_ASSET_REGISTRY.json"
+          cp campus/versions/v88/registry/BNBU_v88_BUILDING_ASSET_REGISTRY.csv "$PKG_DIR/registry/BNBU_v88_BUILDING_ASSET_REGISTRY.csv"
+          cp campus/versions/v88/registry/BNBU_v88_BUILDING_ASSET_ANCHORS_QA_ONLY.geojson "$PKG_DIR/registry/BNBU_v88_BUILDING_ASSET_ANCHORS_QA_ONLY.geojson"
+          cp campus/versions/v88/qa/v88_lineage_reconciliation.json "$PKG_DIR/qa/v88_lineage_reconciliation.json"
+          cp campus/versions/v88/qa/v88_duplicate_removal_validation.json "$PKG_DIR/qa/v88_duplicate_removal_validation.json"
       - name: Apply v88 duplicate-surface cleanup and embed the complete viewer
         run: python "$PKG_DIR/src/build_v88.py"
       - name: Verify active scene, all retained mesh nodes and asset registry
         run: python "$PKG_DIR/src/verify_v88_main.py"
       - name: Test real Chromium file and localhost HTTP navigation
         run: python "$PKG_DIR/src/test_v88_browser.py"
+      - name: Generate package-wide SHA256 manifest
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os
+          root=Path(os.environ['PKG_DIR'])
+          files={}
+          for p in sorted(root.rglob('*')):
+              if p.is_file() and p.name!='v88_sha256_manifest.json':
+                  files[str(p.relative_to(root))]={'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size}
+          (root/'release_qa'/'v88_sha256_manifest.json').write_text(json.dumps({'version':'v88','file_count':len(files),'files':files},indent=2),encoding='utf-8')
+          print('Manifest files:',len(files))
+          PY
       - name: Package complete mainline v88 campus viewer
         run: |
           cd "$(dirname "$PKG_DIR")"
           zip -qr /tmp/BNBU_Campus_Full_v88.zip "$(basename "$PKG_DIR")"
+          unzip -t /tmp/BNBU_Campus_Full_v88.zip
       - uses: actions/upload-artifact@v4
         with:
           name: BNBU-v88-whole-campus-mainline-verified
