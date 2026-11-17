@@ -29,6 +29,8 @@ on:
     branches: [main]
     paths:
       - "scripts/audit_ubc_sources.py"
+      - "scripts/summarize_ubc_lobo_uncertainty.py"
+      - "tests/test_ubc_lobo_uncertainty.py"
       - "tests/test_audit_ubc_sources.py"
       - "tests/test_inspect_ubc_codebook.py"
       - "scripts/inspect_ubc_codebook.py"
@@ -154,7 +156,7 @@ jobs:
         run: python scripts/build_ubc_facade_panel.py --input data/derived/ubc/zulian_appendix1.csv --panel-out data/derived/ubc/ubc_facade_survey_panel.csv --audit-out data/derived/ubc/ubc_facade_panel_audit.json
 
       - name: Run UBC audit and panel-builder unit tests
-        run: python -m pytest -q tests/test_audit_ubc_sources.py tests/test_inspect_ubc_codebook.py tests/test_inspect_zulian_appendix.py tests/test_ubc_facade_panel.py
+        run: python -m pytest -q tests/test_audit_ubc_sources.py tests/test_inspect_ubc_codebook.py tests/test_inspect_zulian_appendix.py tests/test_ubc_facade_panel.py tests/test_ubc_lobo_uncertainty.py
 
       - name: Set up R for the paper-aligned seasonal GLMM
         uses: r-lib/actions/setup-r@v2
@@ -207,6 +209,25 @@ jobs:
               assert row["test_visits"] == str(expected_n[row["season"]])
               assert row["delta_brier"] != ""
               assert row["delta_log_loss"] != ""
+          nested_path = Path("results/ubc/ubc_nested_leave_one_building_out_validation.csv")
+          assert nested_path.exists()
+          with nested_path.open(newline="") as handle:
+              nested_rows = list(csv.DictReader(handle))
+          assert len(nested_rows) == 32, f"Expected 4 seasons x 8 nested LOBO folds, got {len(nested_rows)}"
+          allowed_models = {"full", "building_only", "vegetation_only", "null"}
+          assert all(r["converged"].lower() == "true" and r["baseline_converged"].lower() == "true" for r in nested_rows), "Nested LOBO contains failed model/baseline folds"
+          assert all(r["selected_model"] in allowed_models and r["selected_training_aicc"] != "" for r in nested_rows)
+          assert all(set(part.split("=")[0] for part in r["candidate_aicc"].split(";")) == allowed_models for r in nested_rows)
+          with Path("results/ubc/ubc_nested_leave_one_building_out_summary.csv").open(newline="") as handle:
+              nested_summary = list(csv.DictReader(handle))
+          assert len(nested_summary) == 4
+          for row in nested_summary:
+              assert row["evaluated_building_folds"] == "8"
+              assert row["test_visits"] == str(expected_n[row["season"]])
+              selected_total = sum(int(row[k]) for k in ("selected_full", "selected_building_only", "selected_vegetation_only", "selected_null"))
+              assert selected_total == 8
+          print("UBC_NESTED_LOBO", nested_rows)
+          print("UBC_NESTED_LOBO_SUMMARY", nested_summary)
           assert Path("results/ubc/ubc_facade_feature_correlations.csv").exists()
           assert Path("results/ubc/ubc_facade_feature_vif.csv").exists()
           with Path("results/ubc/ubc_seasonal_response_curves.csv").open(newline="") as handle:
@@ -241,6 +262,19 @@ jobs:
           assert all(r["n_held_out_buildings"] == 8 and r["n_cluster_resamples"] == 5000 for r in rows)
           assert next(r for r in rows if r["stratum"] == "overall" and r["metric"] == "brier")["n_test_visits"] == 8835
           print("UBC_CLUSTER_UNCERTAINTY", json.dumps(rows))
+          PY
+      - name: Nested LOBO paired building uncertainty (CPU only)
+        run: |
+          python scripts/summarize_ubc_lobo_uncertainty.py --input results/ubc/ubc_nested_leave_one_building_out_validation.csv --output results/ubc/ubc_nested_lobo_cluster_uncertainty.json --resamples 5000 --seed 20261118
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("results/ubc/ubc_nested_lobo_cluster_uncertainty.json").read_text())
+          rows = report["results"]
+          assert len(rows) == 10
+          assert all(r["n_held_out_buildings"] == 8 and r["n_cluster_resamples"] == 5000 for r in rows)
+          assert next(r for r in rows if r["stratum"] == "overall" and r["metric"] == "brier")["n_test_visits"] == 8835
+          print("UBC_NESTED_LOBO_CLUSTER_UNCERTAINTY", json.dumps(rows))
           PY
       - name: Upload verified De Groot source snapshot and audit report
         uses: actions/upload-artifact@v4
