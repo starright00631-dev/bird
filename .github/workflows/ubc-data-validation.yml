@@ -215,8 +215,8 @@ jobs:
               nested_rows = list(csv.DictReader(handle))
           assert len(nested_rows) == 32, f"Expected 4 seasons x 8 nested LOBO folds, got {len(nested_rows)}"
           allowed_models = {"full", "building_only", "vegetation_only", "null"}
-          assert all(r["converged"].lower() == "true" and r["baseline_converged"].lower() == "true" for r in nested_rows), "Nested LOBO contains failed model/baseline folds"
-          assert all(r["selected_model"] in allowed_models and r["selected_training_aicc"] != "" for r in nested_rows)
+          assert all(r["converged"].lower() == "true" and r["baseline_converged"].lower() == "true" and r["fixed_full_converged"].lower() == "true" for r in nested_rows), "Nested LOBO contains failed model/baseline/fixed-full folds"
+          assert all(r["selected_model"] in allowed_models and r["selected_training_aicc"] != "" and r["fixed_full_brier"] != "" and r["fixed_full_log_loss"] != "" for r in nested_rows)
           assert all(set(part.split("=")[0] for part in r["candidate_aicc"].split(";")) == allowed_models for r in nested_rows)
           with Path("results/ubc/ubc_nested_leave_one_building_out_summary.csv").open(newline="") as handle:
               nested_summary = list(csv.DictReader(handle))
@@ -226,6 +226,7 @@ jobs:
               assert row["test_visits"] == str(expected_n[row["season"]])
               selected_total = sum(int(row[k]) for k in ("selected_full", "selected_building_only", "selected_vegetation_only", "selected_null"))
               assert selected_total == 8
+              assert row["delta_brier_vs_fixed_full"] != "" and row["delta_log_loss_vs_fixed_full"] != ""
           print("UBC_NESTED_LOBO", nested_rows)
           print("UBC_NESTED_LOBO_SUMMARY", nested_summary)
           assert Path("results/ubc/ubc_facade_feature_correlations.csv").exists()
@@ -271,9 +272,10 @@ jobs:
           from pathlib import Path
           report = json.loads(Path("results/ubc/ubc_nested_lobo_cluster_uncertainty.json").read_text())
           rows = report["results"]
-          assert len(rows) == 10
+          assert len(rows) == 20
+          assert {r["comparison"] for r in rows} == {"exposure_only", "fixed_full_glmm"}
           assert all(r["n_held_out_buildings"] == 8 and r["n_cluster_resamples"] == 5000 for r in rows)
-          assert next(r for r in rows if r["stratum"] == "overall" and r["metric"] == "brier")["n_test_visits"] == 8835
+          assert all(r["n_test_visits"] == 8835 for r in rows if r["stratum"] == "overall")
           print("UBC_NESTED_LOBO_CLUSTER_UNCERTAINTY", json.dumps(rows))
           PY
       - name: Upload verified De Groot source snapshot and audit report
