@@ -39,6 +39,11 @@ Repository: starright00631-dev/bird
 - PR #17 is merged as 841af682. Post-merge CI passed: 157 tests passed, 1 skipped; UBC source audit verified all six De Groot files and the UVic source audit completed.
 - The main branch has also added pinned UVic searcher-efficiency and carcass-persistence trial ingestion. This PR inspects the separate De Groot READ.ME.xlsx codebook before any field mapping is attempted.
 
+## Current handoff (2026-11-17)
+
+- PR #19 merged the codebook inspection and UVic risk-set boundary fix. CI passed 162 tests, 1 skipped; UBC source workflow verified all six files and exposed the De Groot field definitions.
+- This PR adds source-specific searcher-efficiency and interval-censored carcass-persistence sensitivity for UBC. It does not fit a collision-rate regression or transport coefficients to BNBU.
+
 ## Immediate next tasks
 
 1. Download and checksum-verify the remaining De Groot Dryad files; inspect the codebook before mapping columns.
