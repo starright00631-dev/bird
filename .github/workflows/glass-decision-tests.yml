@@ -1,0 +1,43 @@
+name: Glass, vegetation and retrofit decision tests
+
+on:
+  push:
+    paths:
+      - "birdglass/glass_observation.py"
+      - "birdglass/glass_image_classifier.py"
+      - "birdglass/vegetation_exposure.py"
+      - "birdglass/retrofit_decision.py"
+      - "tests/test_glass_observation.py"
+      - "tests/test_glass_image_classifier.py"
+      - "tests/test_vegetation_exposure.py"
+      - "tests/test_retrofit_decision.py"
+      - ".github/workflows/glass-decision-tests.yml"
+  pull_request:
+    paths:
+      - "birdglass/glass_observation.py"
+      - "birdglass/glass_image_classifier.py"
+      - "birdglass/vegetation_exposure.py"
+      - "birdglass/retrofit_decision.py"
+      - "tests/test_glass_observation.py"
+      - "tests/test_glass_image_classifier.py"
+      - "tests/test_vegetation_exposure.py"
+      - "tests/test_retrofit_decision.py"
+      - ".github/workflows/glass-decision-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  glass-decision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test runner
+        run: python -m pip install --upgrade pip pytest
+      - name: Run glass, vegetation and retrofit tests
+        run: python -m pytest -q tests/test_glass_observation.py tests/test_glass_image_classifier.py tests/test_vegetation_exposure.py tests/test_retrofit_decision.py
