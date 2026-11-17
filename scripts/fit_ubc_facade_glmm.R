@@ -696,6 +696,19 @@ write.csv(data.frame(feature = names(vif_values), VIF = as.numeric(vif_values)),
 
 lobo <- fit_leave_one_building_out(raw_data, seasons)
 nested_lobo <- fit_nested_leave_one_building_out(raw_data, seasons)
+# Paired comparator: the fixed full-model score comes from the exact same
+# held-out building and season, never from an in-sample fitted value.
+full_key <- paste(lobo$season, lobo$held_out_building, sep = "::")
+nested_key <- paste(nested_lobo$season, nested_lobo$held_out_building, sep = "::")
+full_index <- match(nested_key, full_key)
+if (anyNA(full_index)) {
+  stop("Could not align nested LOBO folds to fixed-full LOBO folds", call. = FALSE)
+}
+nested_lobo$fixed_full_converged <- lobo$converged[full_index]
+nested_lobo$fixed_full_brier <- lobo$brier[full_index]
+nested_lobo$fixed_full_log_loss <- lobo$log_loss[full_index]
+nested_lobo$delta_brier_vs_fixed_full <- nested_lobo$brier - nested_lobo$fixed_full_brier
+nested_lobo$delta_log_loss_vs_fixed_full <- nested_lobo$log_loss - nested_lobo$fixed_full_log_loss
 
 summarize_lobo <- function(results) {
   season_names <- sort(unique(as.character(results$season)))
@@ -756,9 +769,11 @@ summarize_nested_lobo <- function(results) {
   summaries <- lapply(seasons, function(season_name) {
     part <- results[as.character(results$season) == season_name, , drop = FALSE]
     valid <- part[
-      part$converged & part$baseline_converged & part$n_test > 0 &
-        is.finite(part$brier) & is.finite(part$baseline_brier) &
-        is.finite(part$log_loss) & is.finite(part$baseline_log_loss),
+      part$converged & part$baseline_converged & part$fixed_full_converged &
+        part$n_test > 0 & is.finite(part$brier) &
+        is.finite(part$baseline_brier) & is.finite(part$log_loss) &
+        is.finite(part$baseline_log_loss) & is.finite(part$fixed_full_brier) &
+        is.finite(part$fixed_full_log_loss),
       , drop = FALSE
     ]
     total_n <- if (nrow(valid)) sum(valid$n_test) else 0L
@@ -778,6 +793,10 @@ summarize_nested_lobo <- function(results) {
       oof_log_loss = weighted("log_loss"),
       offset_only_log_loss = weighted("baseline_log_loss"),
       delta_log_loss = weighted("log_loss") - weighted("baseline_log_loss"),
+      fixed_full_brier = weighted("fixed_full_brier"),
+      delta_brier_vs_fixed_full = weighted("brier") - weighted("fixed_full_brier"),
+      fixed_full_log_loss = weighted("fixed_full_log_loss"),
+      delta_log_loss_vs_fixed_full = weighted("log_loss") - weighted("fixed_full_log_loss"),
       selected_full = sum(valid$selected_model == "full", na.rm = TRUE),
       selected_building_only = sum(valid$selected_model == "building_only", na.rm = TRUE),
       selected_vegetation_only = sum(valid$selected_model == "vegetation_only", na.rm = TRUE),
@@ -820,7 +839,7 @@ report <- list(
     candidate_sets = model_fixed_terms,
     random_effects = "(1 | facade_id), matching the published (1 | Build:Fac) grouping",
     offset = "log(survey_hours), with METHOD 1=24h and METHOD 2=48h",
-    scaling = "predictors standardized to mean 0 and SD 1 on the full balanced panel",
+    scaling = "full-panel scaling for descriptive seasonal fits; training-fold-only scaling for both held-out-building evaluations",
     model_selection = "AICc; delta AICc <= 2 reported as plausible",
     conditional_response_curves = paste(
       "Fixed-effect predictions from every model within delta AICc <= 2; random effects are excluded.",
@@ -832,6 +851,7 @@ report <- list(
     lobo_validation_summary = lobo_summary,
     nested_lobo_validation = "outer leave-one-building-out; predictor scaling and AICc candidate selection are repeated on seven training buildings only",
     nested_lobo_validation_summary = nested_lobo_summary,
+    nested_lobo_comparators = c("exposure-only binomial GLM with log-hours offset", "fixed full GLMM on the same held-out building-season fold"),
     lobo_interpretation = paste(
       "The offset-only binomial model is the predictive control. Positive delta Brier/log-loss means the full GLMM performs worse.",
       "These are internal held-out-building transfer checks, not external-site validation."
