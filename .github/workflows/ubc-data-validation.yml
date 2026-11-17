@@ -192,6 +192,12 @@ jobs:
           with Path("results/ubc/ubc_seasonal_response_curves.csv").open(newline="") as handle:
               curves = list(csv.DictReader(handle))
           assert curves, "No conditional response curves"
+          plausible_models = {
+              (r["season"], r["model"])
+              for r in rows
+              if r["delta_AICc"] and float(r["delta_AICc"]) <= 2.0
+          }
+          assert all((r["season"], r["model"]) in plausible_models for r in curves), "A response curve was emitted for a model outside delta AICc <= 2"
           for curve in curves:
               if curve["predicted_probability"]:
                   p = float(curve["predicted_probability"])
