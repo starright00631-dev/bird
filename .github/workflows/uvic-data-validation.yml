@@ -1,0 +1,52 @@
+name: UVic source audit and observed-rate baseline
+
+on:
+  push:
+    paths:
+      - "birdglass/uvic_panel.py"
+      - "scripts/build_uvic_facade_panel.py"
+      - "scripts/fit_uvic_observed_rate.py"
+      - "tests/test_uvic_panel.py"
+      - "requirements.txt"
+      - ".github/workflows/uvic-data-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Rebuild and verify pinned facade-period panel
+        run: python scripts/build_uvic_facade_panel.py --fetch-pinned
+      - name: Fit descriptive effort-offset GEE baseline
+        run: python scripts/fit_uvic_observed_rate.py
+      - name: Verify full scientific test suite
+        run: python -m pytest -q tests
+      - name: Print compact run summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          audit = json.loads(Path("data/derived/uvic/uvic_source_audit.json").read_text())
+          model = json.loads(Path("results/uvic_observed_rate_baseline.json").read_text())
+          print("UVIC_SOURCE_TOTALS", json.dumps(audit["totals"], sort_keys=True))
+          print("UVIC_GEE", json.dumps({
+              "converged": model["converged"],
+              "rows": model["n_panel_rows"],
+              "facades": model["n_facades"],
+              "buildings": model["n_buildings"],
+              "periods": model["n_periods"],
+              "evidence": model["collision_evidence_count"],
+              "dispersion": model["pearson_dispersion_ratio"],
+          }, sort_keys=True))
+          PY
