@@ -78,7 +78,7 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Seasonal GLMM uses binomial-logit, `log(survey_hours)` offset (24/48 hours), and one composite `facade_id` random intercept. Candidate sets and parameter counts reproduce the paper's df: full=8, building-only=6, vegetation-only=5, null=2. ORs are reported per 1-SD predictor, not hand-set raw increments.
 - CI seasonal AICc pattern: fall building-only; winter building-only with full ΔAICc 1.25; spring full with building-only ΔAICc 1.92; summer null with building-only ΔAICc 0.05. These are within-study model-support comparisons, not predictive validation or causal effects.
 - All seasonal candidate models converged with positive-definite Hessians. CI on the branch passed 182 tests (1 skipped) and the pinned UBC source/model audit; raw and derived files are retained in a 30-day CI artifact, not Git.
-- Independent review added two input-integrity checks: reject fractional METHOD codes rather than truncating to 1/2, and reject fractional `STORIES_REFLECT_CANOPY` counts. Dedicated regression tests cover both.
+- Input-integrity checks reject fractional METHOD codes rather than truncating to 1/2. `STORIES_REFLECT_CANOPY` is continuous in the released Appendix 1 (26/57 façades have fractional values) and is preserved without rounding or integer validation.
 - Remaining limitations: carcass detection/persistence are not corrected at façade level; only eight temperate Pacific buildings; glass area is not optical glass type/spectra; LOBO is internal UBC transfer only; no BNBU calibration or intervention efficacy.
 
 ## Finite-pane optics PR #23 merged (2026-11-17)
