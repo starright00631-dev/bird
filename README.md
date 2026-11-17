@@ -140,3 +140,12 @@ The viewer and source evidence are documented in [campus/README.md](campus/READM
 4. Fit glass/vegetation count-rate models with exposure offsets, then compare predictive challengers.
 5. Estimate intervention effects only from comparable field designs and produce an uncertainty-aware multi-objective frontier.
 6. Use BNBU field verification to localize and calibrate, not to manufacture accuracy from 48 opportunistic submissions.
+
+
+### Glass type and retrofit decision layer
+
+- `birdglass/glass_observation.py`: separate visual class, surface treatment, exterior/interior mounting, reflectance/transmittance and pattern geometry.
+- `birdglass/glass_image_classifier.py`: optional CLIP zero-shot photo triage; scores are relative similarities and always require human review.
+- `birdglass/vegetation_exposure.py`: 5 m to 10 km vegetation buffers, façade tree/porous cover and canopy-reflection exposure.
+- `birdglass/retrofit_decision.py`: evidence-tiered recommendations for exterior markers, screens, shading and lighting; no fabricated efficacy percentages and no default tree pruning.
+- `data/reference/intervention_evidence.csv`: source-linked evidence registry. Local cost and transferability remain explicit unknowns.
