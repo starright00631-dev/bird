@@ -1,0 +1,42 @@
+index,id,family,record_group,display_label,source_anchor_node,existing_component_count,iou_before,iou_after
+0,T1,T,core_30,T1 · Business and Management Building,ROOF_DECK_T1,10,0.313,0.992
+1,T2,T,core_30,T2 · Humanities Building,ROOF_DECK_T2,9,0.327,0.99
+2,T4,T,core_30,T4 · Teaching Building T4,ROOF_DECK_T4,9,0.339,0.984
+3,T5,T,core_30,T5 · Teaching Building T5,ROOF_DECK_T5,13,0.444,0.987
+4,T6,T,core_30,T6 · Teaching Building T6,ROOF_DECK_T6,13,0.328,0.987
+5,T7,T,core_30,T7 · Teaching Building T7,ROOF_DECK_T7,13,0.299,0.988
+6,T4_SSAC,OTHER,extended_mapped,T4-SSAC · Student Services & Chuihui Yuan,ROOF_DECK_T4_SSAC,13,0.0,0.989
+7,CC,OTHER,extended_mapped,Cultural Creativity Clusters / 文化创意群落,ROOF_DECK_CC,16,0.311,0.988
+8,LRC,LRC,core_30,LRC · Phase I Learning Resource Centre,ROOF_DECK_LRC,19,0.681,0.989
+9,T3,T,core_30,T3 · Science Building,ROOF_DECK_T3,4,0.263,0.987
+10,T8,T,core_30,T8 · CEFC Building,ROOF_DECK_T8,4,0.211,0.989
+11,T29,OTHER,extended_mapped,T29 · Teaching Building Block 29 / T29教学楼,ROOF_DECK_T29,4,0.242,0.977
+12,T29_SSAC_PODIUM,OTHER,extended_mapped,T29-SSAC · Cultural Village Podium / 文化小镇二层平台,ROOF_DECK_T29_SSAC_PODIUM,4,0.0,0.995
+13,ADMIN,OTHER,extended_mapped,Administration Building / 行政楼,ROOF_DECK_ADMIN,4,0.357,0.987
+14,HALL,OTHER,extended_mapped,University Hall / 大学会堂,ROOF_DECK_HALL,5,0.46,0.992
+15,SPORT,OTHER,extended_mapped,Sports Complex / 体育馆,ROOF_DECK_SPORT,5,0.394,0.994
+16,THEATRE,OTHER,extended_mapped,Performance Theatre / 表演剧场,ROOF_DECK_THEATRE,4,0.557,0.988
+17,YUZHAN,OTHER,extended_mapped,YUZHAN · 榆栈,ROOF_DECK_YUZHAN,4,0.366,0.982
+18,V15,V,core_30,V15 · Ming Xin House,MAIN_V15,4,0.34,0.984
+19,V16,V,core_30,V16 · Shang Xian House,MAIN_V16,4,0.194,0.986
+20,V17,V,core_30,V17 · Ren Ai House,MAIN_V17,4,0.163,0.985
+21,V18,V,core_30,V18 · Bao Pu House,MAIN_V18,4,0.159,0.986
+22,V19,V,core_30,V19 · Zhen Zhi House,MAIN_V19,4,0.267,0.985
+23,V20,V,core_30,V20 · Du Xing House,MAIN_V20,4,0.179,0.985
+24,V21,V,core_30,V21 · Bo Wen House,MAIN_V21,4,0.195,0.984
+25,V22,V,core_30,V22 · Ya Zhi House,MAIN_V22,4,0.156,0.985
+26,V23,V,core_30,V23 · Xue Qin House,MAIN_V23,4,0.166,0.984
+27,V24,V,core_30,V24 · Yang Ming House,MAIN_V24,4,0.129,0.984
+28,V25,V,core_30,V25 · Dong Po House,MAIN_V25,4,0.36,0.986
+29,V26,V,core_30,V26 · Goethe House,MAIN_V26,4,0.363,0.983
+30,V27,V,core_30,V27 · Hugo House,MAIN_V27,4,0.33,0.984
+31,V28,V,core_30,V28 · Shakespeare House,MAIN_V28,4,0.36,0.984
+32,V29,V,core_30,V29 · Yung Wing House,MAIN_V29,4,0.206,0.982
+33,D1,D,core_30,"D1 · D1, Residence Cluster of Phase II Campus (雍雅苑)",PHASEII_DORM_D1,36,0.53,0.988
+34,D2,D,core_30,"D2 · D2, Residence Cluster of Phase II Campus",PHASEII_DORM_D2,36,0.495,0.988
+35,D3,D,core_30,"D3 · D3, Residence Cluster of Phase II Campus (乐雅苑)",PHASEII_DORM_D3,36,0.495,0.988
+36,D4,D,core_30,"D4 · D4, Residence Cluster of Phase II Campus",PHASEII_DORM_D4,36,0.544,0.988
+37,D5,D,core_30,"D5 · D5, Residence Cluster of Phase II Campus (宏雅苑)",PHASEII_DORM_D5,36,0.532,0.988
+38,D6,D,core_30,"D6 · D6, Residence Cluster of Phase II Campus (正雅苑)",PHASEII_DORM_D6,36,0.477,0.988
+39,P2_CIRCULAR_COMMONS,OTHER,extended_mapped,Phase II Circular Commons / 二期中心圆厅,V24_P2_CIRCULAR_COMMONS_01_BASE_PLINTH,11,0.043,0.882
+40,P2_LRC_LAB_COMPLEX,OTHER,extended_mapped,P2 LRC · Phase II Learning Resource Centre & Lab Complex / 二期学习资源中心与实验综合楼,MAIN_P2_LRC_LAB_COMPLEX,10,0.0,0.969

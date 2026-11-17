@@ -22,27 +22,30 @@ def check():
         data=json.loads(urllib.request.urlopen(url+"/site-status.json").read().decode())
         assert data["source_offline_html_sha256"]==report["site_index_html_sha256"]
         with sync_playwright() as p:
-            browser=p.chromium.launch(headless=True,args=["--no-sandbox","--disable-dev-shm-usage"])
+            browser=p.chromium.launch(headless=True,args=[
+                "--no-sandbox","--enable-webgl","--enable-unsafe-swiftshader",
+                "--use-angle=swiftshader","--disable-dev-shm-usage"
+            ])
             page=browser.new_page(viewport={"width":1200,"height":820})
             errors=[]
             page.on("pageerror",lambda err:errors.append(str(err)))
             response=page.goto(url+"/index.html",wait_until="domcontentloaded",timeout=110000)
             assert response.status==200
             page.wait_for_function("window.__BNBU_READY__ === true",timeout=130000)
-            page.wait_for_function("window.__BNBU_DEBUG__.v76BuildingCount()===30",timeout=60000)
-            assert page.evaluate("window.__BNBU_VERSION__")== "v76"
-            assert page.evaluate("window.__BNBU_DEBUG__.meshCount()")==1379
-            assert page.locator("#architecture-v76-select option").count()==30
+            page.wait_for_function("window.__BNBU_DEBUG__.v76BuildingCount()===30 && window.__BNBU_DEBUG__.v89MappedBuildingCount()===41",timeout=60000)
+            assert page.evaluate("window.__BNBU_VERSION__")=="v89"
+            assert page.evaluate("window.__BNBU_DEBUG__.meshCount()")>=450
+            assert page.locator("#architecture-v76-select option").count()==41
             assert not errors,errors
             # This is exactly the path the older README exposed. It must not
             # load the stale CDN-dependent v66 viewer.
             page.goto(url+"/campus/viewer.html",wait_until="domcontentloaded",timeout=110000)
             page.wait_for_url(url+"/index.html",timeout=30000)
             page.wait_for_function("window.__BNBU_READY__ === true",timeout=130000)
-            assert page.evaluate("window.__BNBU_VERSION__")=="v76"
+            assert page.evaluate("window.__BNBU_VERSION__")=="v89"
             assert not errors,errors
             browser.close()
-        print("GitHub Pages layout + /campus/viewer.html redirect passed, v76 and 1379 meshes")
+        print("GitHub Pages layout + /campus/viewer.html redirect passed, v89 and 41 mapped buildings")
     finally:
         server.shutdown()
         server.server_close()

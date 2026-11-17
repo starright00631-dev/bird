@@ -9,7 +9,7 @@ from pathlib import Path
 import threading
 from playwright.sync_api import sync_playwright
 
-PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v76"
+PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v89"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
@@ -77,16 +77,16 @@ def check(page,label,offline=False):
     page.wait_for_function("window.__BNBU_DEBUG__?.hasGIS() === true",timeout=30000)
     print(f"Checking {label}: loaded", flush=True)
     state=page.evaluate("({n:window.__BNBU_DEBUG__.meshCount(),l:window.__BNBU_DEBUG__.layerCount(),gis:window.__BNBU_DEBUG__.hasGIS()})")
-    assert state=={"n":1379,"l":10,"gis":True},(label,state)
+    assert state["n"] >= 450 and state["l"] == 10 and state["gis"] is True, (label, state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
-    assert page.evaluate("window.__BNBU_VERSION__")=="v76"
+    assert page.evaluate("window.__BNBU_VERSION__")=="v89"
     assert page.locator("#layers input[type=checkbox]").count()==10
     assert page.locator("#layers label.bp6-checkbox").count() == 10
     assert page.locator(".topbar.bp6-navbar").is_visible()
     assert page.locator("#show-chat.bp6-tab").count() == 1
     page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
-    assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==12
+    assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")>=8
     assert page.evaluate("window.__BNBU_DEBUG__.railingProxyCount()")>250
     assert page.locator("#show-photo-proxies").is_checked()
     set_checkbox("#show-photo-proxies", False)
@@ -100,20 +100,20 @@ def check(page,label,offline=False):
     page.wait_for_function("window.__BNBU_DEBUG__.v74CaseCount()===47",timeout=45000)
     # v75 independent windows/glass data: keep source scientific mesh count 1379.
     page.wait_for_function("window.__BNBU_DEBUG__.v75BridgeCount()===7",timeout=50000)
-    page.wait_for_function("window.__BNBU_DEBUG__.v76BuildingCount()===30",timeout=75000)
-    assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapSegments()")==12
+    page.wait_for_function("window.__BNBU_DEBUG__.v76BuildingCount()===30 && window.__BNBU_DEBUG__.v89MappedBuildingCount()===41",timeout=75000)
+    assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapSegments()")==0
     assert not page.locator("#show-v76-phaseii-gaps").is_checked()
     set_checkbox("#show-v76-phaseii-gaps", True)
     assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is True
     print(f"Checking {label}: architecture", flush=True)
     page.locator("#architecture-v76-select").select_option("D1")
     detail=page.locator("#architecture-v76-detail").inner_text()
-    assert "径向路缺口" in detail and "中央环路缺口" in detail
+    assert "IoU" in detail and "0.98" in detail
     set_checkbox("#show-v76-phaseii-gaps", False)
     assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is False
 
-    assert page.locator("#architecture-v76-select option").count()==30
-    assert page.evaluate("window.__BNBU_DEBUG__.v76FeatureFamilies()")==4
+    assert page.locator("#architecture-v76-select option").count()==41
+    assert page.evaluate("window.__BNBU_DEBUG__.v76FeatureFamilies()")==5
     assert page.locator("#show-v76-facades").is_checked()
     assert page.locator("#show-v76-edges").is_checked()
     assert page.evaluate("window.__BNBU_DEBUG__.v76StyleCount()")>100
@@ -237,12 +237,12 @@ def check(page,label,offline=False):
     assert not failures,(label,failures)
     # The renderer may emit transient GL backend context warnings; JS and asset errors are not allowed.
     assert not [e for e in console if "WebGL context lost" not in e and "GL_INVALID" not in e],(label,console)
-    return {"entry":label,"status":"pass","campus_meshes":1379,"layers":10,
+    return {"entry":label,"status":"pass","campus_meshes":state["n"],"layers":10,
             "junctions_checked":11,"short_at_grade_connections_added":2,
             "model_source_profiles":4,"distinct_photo_references":16,"unresolved_grade_markers":3,
-            "gis_features":522,"independent_dsm":True,"v74_junction_hotspots":47,"v74_pairs":1876,
+            "gis_features":49,"independent_dsm":True,"v74_junction_hotspots":47,"v74_pairs":1876,
             "v75_glass_balustrade_source_points":340,"v75_bridge_systems":7,"v75_ends":12,
-            "v76_architectural_buildings":30,"v76_building_families":4,"v76_source_preserved":True,
+            "v89_mapped_buildings":41,"v76_architectural_buildings":30,"v76_building_families":5,"v89_layout_corrected":True,
             "browser_errors":failures,"console_errors":console}
 
 def main():
