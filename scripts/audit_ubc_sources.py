@@ -8,12 +8,14 @@ histories, and censored persistence intervals. It is not a collision model.
 from __future__ import annotations
 import argparse
 import csv
+from collections import Counter
 import hashlib
 import json
 import re
 import statistics
 import urllib.request
 from datetime import datetime
+from math import isfinite
 from pathlib import Path
 
 ZENODO_RECORD = 6373683
