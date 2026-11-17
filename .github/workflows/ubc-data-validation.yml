@@ -22,6 +22,8 @@ on:
       - "tests/test_audit_ubc_sources.py"
       - "tests/test_inspect_ubc_codebook.py"
       - "scripts/inspect_ubc_codebook.py"
+      - "scripts/inspect_zulian_appendix.py"
+      - "tests/test_inspect_zulian_appendix.py"
       - "requirements.txt"
       - "README.md"
       - "docs/UBC_DATA_AUDIT.md"
@@ -49,7 +51,7 @@ jobs:
       - name: Inspect the READ.ME codebook without inferring column mappings
         run: python scripts/inspect_ubc_codebook.py --input data/derived/ubc/READ.ME.xlsx --out data/derived/ubc/codebook_inspection.json
       - name: Download and inspect the separate Zulian 2023 facade covariate appendix
-        run: python scripts/inspect_zulian_appendix.py --download --strict --csv-out data/derived/ubc/zulian_appendix1.csv --report-out data/derived/ubc/zulian_appendix_inspection.json
+        run: python scripts/inspect_zulian_appendix.py --download --strict --de-groot-collision-csv data/derived/ubc/Observed.Collision.Counts.csv --csv-out data/derived/ubc/zulian_appendix1.csv --report-out data/derived/ubc/zulian_appendix_inspection.json
       - name: Assert source completeness, codebook structure and observation-process schemas
         run: |
           python - <<'PY'
@@ -103,6 +105,17 @@ jobs:
           assert appendix["outcomes"]["COLLISIONMORTALITY_X"]["positive_rows"] == 142
           assert appendix["outcomes"]["COLLISIONS_X"]["sum"] == 199
           assert appendix["method_counts"] == {"1": 4845, "2": 3990}
+          reconciliation = appendix["cross_source_reconciliation"]
+          assert reconciliation["row_join_allowed"] is False
+          assert reconciliation["facade_key_sets_equal"] is True
+          assert reconciliation["shared_dates"] == 139
+          assert reconciliation["appendix_only_dates"] == 16
+          assert reconciliation["de_groot_only_dates"] == 16
+          assert reconciliation["common_facade_date_keys"] == 7919
+          assert reconciliation["appendix_only_facade_date_keys"] == 916
+          assert reconciliation["de_groot_only_facade_date_keys"] == 912
+          assert reconciliation["mortality_count_mismatches_on_common_keys"] == 8
+          assert reconciliation["method_mismatches_on_common_keys"] == 171
           assert appendix["season_counts"] == {"fall": 1881, "spring": 1881, "summer": 1881, "winter": 3192}
           codebook = json.loads(Path("data/derived/ubc/codebook_inspection.json").read_text())
           assert codebook["sheet_count"] > 0
