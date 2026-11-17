@@ -268,3 +268,22 @@ def test_point_count_audit_uses_checklist_not_species_row_grain(tmp_path):
     assert result["nonstudy_checklists"] == 1
     assert result["checklist_group_size_mismatches"] == 0
     assert result["metadata_inconsistencies"] == 0
+
+
+def test_observed_collision_audit_rejects_facade_id_reused_across_buildings(tmp_path):
+    from scripts.audit_ubc_sources import audit_observed_collision_counts
+
+    path = tmp_path / "Observed.Collision.Counts.csv"
+    write_csv(path, [
+        "SURVEY_DATE", "BUILDING.X", "FACADE", "VEGE_CAT", "VEGE_PERC",
+        "STOREYS", "COLLISIONMORTALITY_X", "METHOD",
+    ], [
+        {"SURVEY_DATE": "1/1/2020", "BUILDING.X": "A", "FACADE": "shared",
+         "VEGE_CAT": "low", "VEGE_PERC": "20", "STOREYS": "2",
+         "COLLISIONMORTALITY_X": "0", "METHOD": "1"},
+        {"SURVEY_DATE": "1/2/2020", "BUILDING.X": "B", "FACADE": "shared",
+         "VEGE_CAT": "high", "VEGE_PERC": "80", "STOREYS": "3",
+         "COLLISIONMORTALITY_X": "1", "METHOD": "1"},
+    ])
+    with pytest.raises(ValueError, match="maps to multiple buildings"):
+        audit_observed_collision_counts(path)
