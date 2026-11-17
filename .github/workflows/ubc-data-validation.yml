@@ -40,11 +40,13 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install codebook reader and test runner
-        run: python -m pip install pytest openpyxl
+        run: python -m pip install pytest openpyxl scipy
       - name: Download and checksum-verify all De Groot source files
         run: python scripts/audit_ubc_sources.py --fetch --data-dir data/derived/ubc --out data/derived/ubc/ubc_audit.json
       - name: Inspect the READ.ME codebook without inferring column mappings
         run: python scripts/inspect_ubc_codebook.py --input data/derived/ubc/READ.ME.xlsx --out data/derived/ubc/codebook_inspection.json
+      - name: Fit source-specific searcher-efficiency and carcass-persistence sensitivity
+        run: python scripts/fit_ubc_observation_process.py --data-dir data/derived/ubc --out data/derived/ubc/observation_process_fit.json
       - name: Assert source completeness, codebook structure and observation-process schemas
         run: |
           python - <<'PY'
@@ -61,7 +63,20 @@ jobs:
           codebook = json.loads(Path("data/derived/ubc/codebook_inspection.json").read_text())
           assert codebook["sheet_count"] > 0
           assert any(sheet["preview_rows"] for sheet in codebook["sheets"])
+          observation = json.loads(Path("data/derived/ubc/observation_process_fit.json").read_text())
+          assert observation["not_a_bnbu_calibration"] is True
+          assert observation["search_efficiency"]["n_trials"] == 29
+          assert observation["search_efficiency"]["per_search"][0]["observed_attempts"] == 29
+          assert observation["search_efficiency"]["per_search"][0]["detections"] == 16
+          assert observation["carcass_persistence"]["n_trials"] == 103
+          assert len(observation["carcass_persistence"]["candidate_fits"]) == 4
+          assert len(observation["detection_sensitivity"]) == 4
+          for candidate in observation["detection_sensitivity"]:
+              for method in ("1", "2"):
+                  q = candidate["by_method"][method]["detection_probability_at_posterior_mean"]
+                  assert 0.0 < q <= 1.0
           print("UBC_CODEBOOK", json.dumps(codebook, ensure_ascii=False))
+          print("UBC_OBSERVATION_PROCESS", json.dumps(observation, ensure_ascii=False))
           print("UBC_SOURCES_VERIFIED", report["files_present"])
           print("UBC_SEARCH_EFFICIENCY", report["search_efficiency"]["conditional_detection_by_search"])
           print("UBC_CARCASS_PERSISTENCE", report["carcass_persistence"])
