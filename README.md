@@ -51,7 +51,7 @@ See the [data registry](docs/data_registry.csv), [source register](docs/SOURCE_R
 - China 2025: 3,078 buildings; useful for multi-scale habitat hypotheses, not local causal effects.
 - Ottawa 2026: 225 collisions and 51 species; treatment compliance evidence, site-specific.
 - Oklahoma 2026 BACI: 6 treated and 134 untreated façades; field design benchmark, but low treated replication and a non-significant formal treatment-by-period interaction.
-- UBC 2021 De Groot: 8 buildings, five seasonal sampling periods, 29 search-efficiency trials and 103 carcass-persistence trials. Only the search-efficiency CSV is currently imported and checksum-verified.
+- UBC 2021 De Groot: 8 buildings, five seasonal sampling periods, 29 search-efficiency trials and 103 carcass-persistence trials. The six-file source manifest is pinned, but no raw file is trusted in the repository after a local checksum mismatch was found. A dedicated CI workflow fetches and verifies the original archive before auditing the observation-process data.
 - UBC 2023 Zulian: 8,835 repeated façade surveys across 57 façades and 8 buildings; 142 positive façade-surveys and 152 individual collision events. Appendix 1 is identified but not yet imported.
 - 2026 stereo bird-flight data: 360 retained trials at 120 fps; kinematics only, not glass recognition.
 
@@ -107,7 +107,7 @@ Example values are placeholders, not BNBU measurements. The comparison reports m
 ## Repository map
 
 - `birdglass/`: executable mechanism, measurement and decision modules.
-- `data/external/`: public metadata/QA artefacts; `data/raw/`: checksum-pinned public source snapshots with provenance.
+- `data/external/`: public metadata/QA artefacts; `data/derived/`: ignored local/CI source downloads and derived panels, never silently promoted to verified source snapshots.
 - `docs/`: causal model, literature audit, registries, intervention evidence and validation gates.
 - `results/`: scenario/sensitivity outputs; not observed field data.
 - `scripts/`: source audits and reproducibility helpers.
