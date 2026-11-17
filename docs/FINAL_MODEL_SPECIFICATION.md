@@ -20,7 +20,7 @@ For each verified façade/pane, the system keeps these pathways separate:
 - birdglass/vegetation.py owns the five non-overlapping bands and separate attraction, routing, reflection and obstruction pathways.
 - birdglass/decision.py owns FacadeContext, evaluate_facade, approach-denominator identifiability and the intervention mechanism comparison.
 - birdglass/glass_observation.py and birdglass/vegetation_observation.py are intake adapters into those canonical types. They do not duplicate the risk/decision rules.
-- birdglass/facade_decision_report.py combines observations and attaches source IDs to canonical decision candidates.
+- birdglass/facade_decision_report.py combines observations and attaches source IDs to canonical decision candidates. The machine-readable evidence mapping is data/reference/intervention_evidence.csv.
 - birdglass/glass_image_classifier.py is optional CLIP photo triage pinned to an immutable model revision. Scores are relative logits, not probabilities; human review is mandatory.
 - birdglass/vegetation_segmentation.py summarizes externally produced masks. It does not run segmentation inference. Every mask must retain source image, model/revision, CRS, pixel resolution and human-QA provenance.
 
@@ -40,7 +40,7 @@ The 5 cm by 5 cm, at-least-5 mm exterior pattern check is a general geometry scr
 ## 4. Vegetation interpretation rules
 
 - Do not add or average cover percentages across spatial bands. Each band has its own denominator.
-- Do not treat cumulative buffers as annular bands. Convert cumulative values only with valid clipped areas and area-weighted differences.
+- Do not treat cumulative buffers as annular bands. The cumulative_cover_to_annular adapter converts them only when all five actual valid clipped areas are supplied, using area-weighted covered-area differences; missing/invalid areas fail closed.
 - Keep façade-specific 50-m porous/tree cover separate from the five annular bands.
 - Keep building-level VEGE_PERC separate from façade-level cover.
 - Keep STORIES_REFLECT_CANOPY continuous; do not round it to an integer.

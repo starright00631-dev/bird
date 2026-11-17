@@ -120,3 +120,5 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Added a joined façade report that calls the canonical decision engine. It rejects arbitrary probability floats; a prediction requires a pinned artifact, explicit endpoint/exposure, BNBU calibration and held-out validation report.
 - Intervention recommendations are mapped to a machine-readable source registry. Ottawa/Oklahoma/Klem/UV evidence remains study-specific; no BNBU efficacy percentages or best-treatment claims are generated.
 - UBC LOBO paired cluster bootstrap (8 building clusters, 5,000 resamples) does not demonstrate predictive improvement over the exposure-only baseline. Keep the UBC model as a descriptive association benchmark only.
+
+- Added cumulative_cover_to_annular conversion: only uses measured valid clipped areas and area-weighted covered-area differences; incomplete or inconsistent cumulative buffers fail closed. This prevents nested-buffer percentages from being mislabelled as annular features.

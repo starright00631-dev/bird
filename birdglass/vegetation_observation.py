@@ -2,10 +2,83 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import math
 from typing import Mapping
 
-from .evidence import Measurement, measurement_dict
+from .evidence import EvidenceTier, Measurement, measurement_dict
 from .vegetation import VEGETATION_BUFFERS, VegetationProfile, vegetation_pathways
+
+
+
+
+CUMULATIVE_BUFFER_KEYS = ("0_5m", "0_25m", "0_100m", "0_1km", "0_10km")
+
+
+def cumulative_cover_to_annular(
+    cumulative_cover_pct: Mapping[str, float],
+    valid_area_m2: Mapping[str, float],
+    *,
+    source_ids: Mapping[str, str],
+    evidence_tier: EvidenceTier,
+) -> dict[str, Measurement]:
+    """Convert cumulative cover percentages to disjoint annular percentages.
+
+    The valid clipped area of each cumulative buffer is required. This uses
+    area-weighted covered-area differences; it must not assume ideal circular
+    areas when campus boundaries or no-data masks clip the buffers.
+    """
+    missing_cover = set(CUMULATIVE_BUFFER_KEYS) - set(cumulative_cover_pct)
+    missing_area = set(CUMULATIVE_BUFFER_KEYS) - set(valid_area_m2)
+    missing_source = set(CUMULATIVE_BUFFER_KEYS) - set(source_ids)
+    if missing_cover or missing_area or missing_source:
+        raise ValueError(
+            "Cumulative conversion requires all five cover, valid-area and source keys; "
+            f"missing cover={sorted(missing_cover)}, area={sorted(missing_area)}, "
+            f"source={sorted(missing_source)}"
+        )
+    if not isinstance(evidence_tier, EvidenceTier):
+        raise ValueError("evidence_tier must be an EvidenceTier")
+
+    covered_area = {}
+    valid_area = {}
+    for key in CUMULATIVE_BUFFER_KEYS:
+        pct = float(cumulative_cover_pct[key])
+        area = float(valid_area_m2[key])
+        source_id = source_ids[key]
+        if not math.isfinite(pct) or not 0 <= pct <= 100:
+            raise ValueError(f"Cumulative cover for {key} must be finite and in [0,100]")
+        if not math.isfinite(area) or area <= 0:
+            raise ValueError(f"Valid clipped area for {key} must be finite and positive")
+        if not source_id or not source_id.strip():
+            raise ValueError(f"Source ID for {key} is required")
+        valid_area[key] = area
+        covered_area[key] = area * pct / 100.0
+
+    annular = {}
+    for index, (cumulative_key, band) in enumerate(zip(
+        CUMULATIVE_BUFFER_KEYS, VEGETATION_BUFFERS
+    )):
+        if index == 0:
+            ring_area = valid_area[cumulative_key]
+            ring_covered = covered_area[cumulative_key]
+            source_id = source_ids[cumulative_key]
+        else:
+            previous = CUMULATIVE_BUFFER_KEYS[index - 1]
+            ring_area = valid_area[cumulative_key] - valid_area[previous]
+            ring_covered = covered_area[cumulative_key] - covered_area[previous]
+            source_id = f"{source_ids[previous]}|{source_ids[cumulative_key]}"
+        if ring_area <= 0:
+            raise ValueError(f"Valid clipped area must increase at cumulative buffer {cumulative_key}")
+        tolerance = max(1e-8, ring_area * 1e-10)
+        if ring_covered < -tolerance:
+            raise ValueError(f"Cumulative covered area decreases at {cumulative_key}")
+        pct = 100.0 * max(0.0, ring_covered) / ring_area
+        if pct > 100.0 + 1e-8:
+            raise ValueError(f"Derived annular cover exceeds 100% at {band}")
+        annular[band] = Measurement(
+            min(100.0, pct), "percent", evidence_tier, source_id=source_id
+        )
+    return annular
 
 
 def _check(value: Measurement | None, units: set[str], lower: float, upper: float, label: str) -> None:
