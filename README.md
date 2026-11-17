@@ -1,3 +1,19 @@
+## BNBU bird-collision decision system (research prototype)
+
+**[Decision-support model documentation](docs/DECISION_SUPPORT_MODEL.md)** · **[Current project status](docs/PROJECT_STATUS_BIRDCOLLISION.md)** · **[Neotropical event-data audit](docs/NEOTROPICAL_DATA_AUDIT.md)** · [Draft PR #14](https://github.com/starright00631-dev/bird/pull/14)
+
+The active research branch adds a multi-pathway, evidence-aware façade assessment and intervention decision system. It separates local bird activity and pane-specific approaches, glass reflection/transparency, multi-scale vegetation, nocturnal light, collision observation bias and intervention choice. It does not collapse these into one scalar risk score and does not claim a calibrated BNBU collision probability.
+
+Campus 3D reconstruction is not a prerequisite. The approximately 48–50 BNBU opportunistic reports are local context, not a complete positive/negative training set. The 4,103 Neotropical rows are reported collision events, not an approach-risk dataset.
+
+To run the new public-data audit:
+```bash
+python scripts/audit_neotropical_sampling.py --fetch-pinned --out results/neotropical_audit.json
+python -m pytest -q tests
+```
+
+---
+
 ## BNBU campus 3D viewer — current v76
 
 **[Download the verified offline viewer/ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml)** · [Online viewer (requires Pages activation)](https://starright00631-dev.github.io/bird/) · [3D modeling source and evidence](campus/README.md)
