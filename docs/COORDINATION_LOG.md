@@ -49,7 +49,7 @@ The approximately 48 submissions remain aggregate-only localization and hypothes
 
 ## Current PR task
 
-Branch: feat/ubc-source-audit-artifact-pr-20261117
+Branch: feat/ubc-audit-censoring-grain-final-20261117
 PR: #18
 
 - Correct Inf/NA right-censoring in carcass persistence audit.
@@ -60,7 +60,7 @@ PR: #18
 
 ## Immediate next tasks
 
-1. After PR #18 CI passes, download its updated artifact and verify the full JSON and codebook once more.
+1. After PR #19 CI passes, download its updated artifact and verify the full JSON and codebook once more.
 2. Reproduce the De Groot GenEst carcass-persistence and search-efficiency models, propagating uncertainty into estimated collision counts.
 3. Obtain and audit Zulian Appendix 1 as a separate repeated-facade survey product.
 4. Continue southern-China species-by-week/guild exposure data and measured glass/vegetation features; do not treat UBC coefficients as BNBU coefficients.
