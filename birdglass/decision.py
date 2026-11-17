@@ -12,6 +12,7 @@ from .evidence import EvidenceTier, Measurement, measurement_dict
 from .glazing import (
     GlassAppearance,
     GlassPanel,
+    MarkerSurface,
     PatternStatus,
     assess_glazing,
 )
@@ -47,7 +48,7 @@ class ApproachSample:
             self.total_approaches, self.glass_contacts, self.opaque_contacts,
             self.no_contact, self.censored,
         )
-        if any(not isinstance(v, int) or v < 0 for v in values):
+        if any(not isinstance(v, int) or isinstance(v, bool) or v < 0 for v in values):
             raise ValueError("Approach counts must be nonnegative integers")
         if self.total_approaches <= 0:
             raise ValueError("total_approaches must be positive")
@@ -104,6 +105,23 @@ class FacadeContext:
     nocturnal_migrant_activity: Measurement | None = None
     artificial_light_level: Measurement | None = None
 
+    def __post_init__(self) -> None:
+        if self.approaches_per_hour is not None and self.approaches_per_hour.value is not None:
+            if self.approaches_per_hour.unit not in {
+                "approaches/hour", "approaches_per_hour"
+            }:
+                raise ValueError("approaches_per_hour must use approaches/hour")
+            if self.approaches_per_hour.value < 0:
+                raise ValueError("approaches_per_hour cannot be negative")
+        if self.artificial_light_level is not None and self.artificial_light_level.value is not None:
+            if self.artificial_light_level.unit not in {"lux", "lx"}:
+                raise ValueError("artificial_light_level must use lux")
+            if self.artificial_light_level.value < 0:
+                raise ValueError("artificial_light_level cannot be negative")
+        if self.nocturnal_migrant_activity is not None and self.nocturnal_migrant_activity.value is not None:
+            if self.nocturnal_migrant_activity.value < 0:
+                raise ValueError("nocturnal_migrant_activity cannot be negative")
+
 
 def _has_value(value: Measurement | None) -> bool:
     return value is not None and value.value is not None
@@ -123,6 +141,141 @@ def _recommendation(action: str, priority: Priority, rationale: str,
     }
 
 
+
+def _intervention_comparison(
+    pattern_status: PatternStatus,
+    needs_visual_interruption: bool,
+    high_hazard_appearance: bool,
+    reflected_habitat_measured: bool,
+    transmitted_habitat_measured: bool,
+    nocturnal_activity_supported: bool,
+    artificial_light_measured: bool,
+    artificial_light_level: Measurement | None,
+    vegetation_cover_measured: bool,
+) -> dict:
+    """Compare mechanism fit and evidence needs; never invent efficacy ranks."""
+    candidates = []
+    if pattern_status == PatternStatus.GUIDELINE_2X2:
+        candidates.append({
+            "action": "maintain_and_audit_exterior_2x2_pattern",
+            "mechanism_match": "direct_glass_visibility",
+            "decision": "maintenance_candidate",
+            "site_effect_estimate": None,
+            "required_checks": [
+                "Verify complete exterior coverage and sustained visual contrast.",
+                "Inspect from bird approach views under changing light.",
+                "Do not infer ABC Threat Factor certification from spacing alone.",
+            ],
+        })
+    elif pattern_status == PatternStatus.GUIDELINE_2X4:
+        candidates.append({
+            "action": "consider_upgrade_from_2x4_to_2x2",
+            "mechanism_match": "direct_glass_visibility",
+            "decision": "conditional_candidate_if_small_birds_or_high_activity_are_supported",
+            "site_effect_estimate": None,
+            "required_checks": [
+                "Verify marker material, component geometry and contrast.",
+                "Check full-pane feasibility and local bird guilds.",
+            ],
+        })
+    elif needs_visual_interruption:
+        candidates.append({
+            "action": "full_pane_exterior_visual_markers",
+            "mechanism_match": "direct_glass_visibility",
+            "decision": "first_candidate_for_site_review",
+            "site_effect_estimate": None,
+            "required_checks": [
+                "Cover the full pane with a verified exterior pattern.",
+                "Use ECCC spacing/size guidance as a screen; assess ABC rating separately.",
+                "Measure contrast against reflected and transmitted backgrounds.",
+            ],
+        })
+    if needs_visual_interruption:
+        candidates.append({
+            "action": "external_screen_or_cord_system",
+            "mechanism_match": "physical_interruption_of_glass_approach",
+            "decision": "conditional_alternative_if_markers_are_not_feasible",
+            "site_effect_estimate": None,
+            "constraints": [
+                "Check entanglement, stand-off, wind load, fire/egress and maintenance.",
+                "Measure contact transfer to the screen, frame or adjacent panes.",
+            ],
+        })
+    if reflected_habitat_measured:
+        candidates.append({
+            "action": "external_shading_or_solar_screen",
+            "mechanism_match": "measured_reflection_pathway",
+            "decision": "test_only_after_multi_time_multi_angle_scene_measurement",
+            "site_effect_estimate": None,
+            "constraints": [
+                "Confirm the reflected habitat image and its solar/view-angle window.",
+                "Check wind, structure, daylight and maintenance constraints.",
+            ],
+        })
+    if transmitted_habitat_measured:
+        candidates.append({
+            "action": "internal_blinds_or_indoor_plant_repositioning",
+            "mechanism_match": "through_glass_false_passage",
+            "decision": "supplementary_only_not_a_substitute_for_exterior_treatment",
+            "site_effect_estimate": None,
+            "constraints": [
+                "Confirm that the measured cue is a transmitted false passage.",
+                "This does not directly remove exterior mirror reflection.",
+            ],
+        })
+    if (
+        nocturnal_activity_supported and artificial_light_measured
+        and artificial_light_level is not None
+        and artificial_light_level.value is not None
+        and artificial_light_level.value > 0
+    ):
+        candidates.append({
+            "action": "seasonal_night_lighting_controls",
+            "mechanism_match": "nocturnal_migrant_activity_and_artificial_light",
+            "decision": "candidate_only_for_measured_activity_and_light",
+            "site_effect_estimate": None,
+            "constraints": [
+                "Keep this separate from daytime transparency/reflection.",
+                "Use locally supported migration windows and preserve human safety.",
+            ],
+        })
+    if vegetation_cover_measured:
+        candidates.append({
+            "action": "vegetation_reconfiguration",
+            "mechanism_match": "not_identified_from_cover_percentage_alone",
+            "decision": "do_not_recommend_removal_or_pruning_from_cover_alone",
+            "site_effect_estimate": None,
+            "constraints": [
+                "Retain local canopy and landscape cover at separate scales.",
+                "Require route, reflection, resource-use and ecological-impact evidence.",
+            ],
+        })
+    if high_hazard_appearance:
+        candidates.append({
+            "action": "uv_only_pattern",
+            "mechanism_match": "species_and_illumination_conditional",
+            "decision": "defer_until_local_species_and_spectral_visibility_are_tested",
+            "site_effect_estimate": None,
+            "constraints": [
+                "Test shade, overcast and low-light conditions.",
+                "Do not treat UV as a universal replacement for visible exterior markers.",
+            ],
+        })
+    return {
+        "comparison_basis": "mechanism_match_and_evidence_fit_not_efficacy",
+        "effectiveness_ranked": False,
+        "best_option": None,
+        "effect_estimates_for_this_panel": None,
+        "minimum_data_for_valid_ranking": [
+            "Pane-specific approach denominators and independently verified outcomes.",
+            "Matched or randomized before-after control-impact monitoring.",
+            "Equivalent survey effort, carcass persistence and searcher-detection correction.",
+            "Cost, maintenance, visual impact, safety and ecological side effects.",
+        ],
+        "candidates": candidates,
+    }
+
+
 def evaluate_facade(context: FacadeContext) -> dict:
     """Return a multi-pathway profile and ranked, conditional actions."""
 
@@ -136,12 +289,30 @@ def evaluate_facade(context: FacadeContext) -> dict:
         GlassAppearance.REFLECTIVE_AND_TRANSPARENT,
     }
     reflected_share = context.vegetation.reflected_vegetation_share
-    if reflected_share is None:
+    if not _has_value(reflected_share):
         reflected_share = glass.reflected_vegetation_share
     reflected_habitat_measured = (
         _has_value(reflected_share)
         and reflected_share.tier in {EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY}
         and reflected_share.value > 0
+    )
+    transmitted_share = glass.transmitted_habitat_share
+    transmitted_habitat_measured = (
+        _has_value(transmitted_share)
+        and transmitted_share.tier in {EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY}
+        and transmitted_share.value > 0
+    )
+    measured_high_vlr = (
+        _has_value(glass.exterior_vlr_pct)
+        and glass.exterior_vlr_pct.value > 15.0
+    )
+    needs_visual_interruption = (
+        high_hazard_appearance
+        or glazing["optical_hazard_profile"] == "elevated"
+        or glazing["optical_hazard_profile"] == "reflective_opaque_surface_requires_review"
+        or reflected_habitat_measured
+        or transmitted_habitat_measured
+        or measured_high_vlr
     )
     local_activity_measured = (
         _has_value(context.bird_activity)
@@ -149,7 +320,21 @@ def evaluate_facade(context: FacadeContext) -> dict:
             EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY
         }
     )
-    approach_rate_measured = _has_value(context.approaches_per_hour)
+    approach_rate_measured = (
+        _has_value(context.approaches_per_hour)
+        and context.approaches_per_hour.tier in {
+            EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY
+        }
+    )
+    vegetation_cover_measured = any(
+        _has_value(value) for value in context.vegetation.cover_pct.values()
+    )
+    artificial_light_measured = (
+        _has_value(context.artificial_light_level)
+        and context.artificial_light_level.tier in {
+            EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY
+        }
+    )
 
     approach_rate = (
         context.approach_sample.conditional_glass_contact_rate()
@@ -171,7 +356,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
     data_gaps = []
     recommendations = []
 
-    if high_hazard_appearance:
+    if needs_visual_interruption:
         findings.append({
             "pathway": "glass_optics",
             "status": glazing["optical_hazard_profile"],
@@ -197,7 +382,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
                 "direct optical pathway, not proof that birds approach or collide."
             ),
         })
-    if context.vegetation.cover_pct:
+    if vegetation_cover_measured:
         findings.append({
             "pathway": "vegetation_scale",
             "status": "multi_scale_measurements_available",
@@ -260,7 +445,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
             "and right-censored approaches from continuous video."
         )
 
-    if high_hazard_appearance and pattern_status not in {
+    if needs_visual_interruption and pattern_status not in {
         PatternStatus.GUIDELINE_2X2, PatternStatus.GUIDELINE_2X4
     }:
         priority = (
@@ -279,12 +464,14 @@ def evaluate_facade(context: FacadeContext) -> dict:
                 "Use high-contrast markers on the exterior/first surface.",
                 "Prefer maximum clear gaps of 5 cm horizontally and vertically "
                 "(the more conservative 2x2 pattern).",
-                "Use marker elements at least 5 mm wide and verify contrast "
-                "against actual reflections and transmitted backgrounds.",
+                "Use at least 5 mm components for the ECCC general-guidance "
+                "screen; assess ABC marker geometry/material/surface criteria separately.",
+                "Verify contrast against actual reflections and transmitted backgrounds.",
                 "Inspect from bird approach views at multiple times and angles.",
             ],
-            "Canada.ca glass-collision guidance; ABC 2025 Prescriptive Rating; "
-            "Lawson et al. 2026 field BACI study; Lysyk et al. 2026 Ottawa study",
+            "Environment and Climate Change Canada general guidance; ABC 2025 "
+            "Prescriptive Rating (separate criteria); Riding et al. 2026 field BACI "
+            "study; Lysyk et al. 2026 Ottawa study",
             "Published effects are study-specific and are not a predicted "
             "BNBU percentage reduction.",
         ))
@@ -300,16 +487,16 @@ def evaluate_facade(context: FacadeContext) -> dict:
                 "are documented.",
             ],
             "ABC 2025 Prescriptive Rating and Canadian guidance",
-            "This is a design preference, not a quantified incremental benefit.",
+            "The code screens spacing only; ABC Threat Factor rating also depends "
+            "on marker geometry, area, material, surface and the complete glass assembly.",
         ))
 
-    vlr = glass.exterior_vlr_pct.value if glass.exterior_vlr_pct else None
-    if vlr is not None and vlr > 15.0 and pattern_status != PatternStatus.GUIDELINE_2X2:
+    if glazing["surface2_rating_review_flag_gt_15pct"]:
         recommendations.append(_recommendation(
             "measure_first_surface_reflection_and_marker_contrast",
             Priority.HIGH,
             "Exterior visible-light reflectance exceeds the 15% boundary used "
-            "by the ABC rating procedure for some non-first-surface patterns.",
+            "for some ABC surface-2 assemblies, and the current pattern is interior.",
             [
                 "Prefer a pattern on the exterior/first surface, or obtain a "
                 "bird-vision contrast assessment using measured spectra.",
@@ -317,11 +504,11 @@ def evaluate_facade(context: FacadeContext) -> dict:
                 "glass-type label.",
             ],
             "ABC 2025 Prescriptive Rating",
-            "15% is a rating-procedure boundary, not a universal biological "
-            "risk threshold.",
+            "15% is a rating-procedure boundary for specific assemblies, not a "
+            "universal biological risk threshold or a rule for exterior patterns.",
         ))
 
-    if high_hazard_appearance and pattern_status not in {
+    if needs_visual_interruption and pattern_status not in {
         PatternStatus.GUIDELINE_2X2, PatternStatus.GUIDELINE_2X4
     }:
         recommendations.append(_recommendation(
@@ -367,9 +554,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
         }
     )
     if nocturnal_activity_supported:
-        if _has_value(context.artificial_light_level) and (
-            context.artificial_light_level.value > 0
-        ):
+        if artificial_light_measured and context.artificial_light_level.value > 0:
             recommendations.append(_recommendation(
                 "seasonal_night_lighting_controls",
                 Priority.HIGH,
@@ -391,7 +576,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
                 "measurements before prioritizing a lighting intervention."
             )
 
-    if context.vegetation.cover_pct:
+    if vegetation_cover_measured:
         recommendations.append(_recommendation(
             "retain_vegetation_as_a_multiscale_context_variable",
             Priority.CONDITIONAL,
@@ -409,7 +594,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
             "identifies a universal causal tree-removal rule.",
         ))
 
-    if high_hazard_appearance:
+    if needs_visual_interruption and high_hazard_appearance:
         recommendations.append(_recommendation(
             "evaluate_uv_pattern_only_after_spectral_and_species_checks",
             Priority.CONDITIONAL,
@@ -449,6 +634,18 @@ def evaluate_facade(context: FacadeContext) -> dict:
 
     recommendations.sort(key=lambda item: (item["priority_order"], item["action"]))
 
+    intervention_comparison = _intervention_comparison(
+        pattern_status=pattern_status,
+        needs_visual_interruption=needs_visual_interruption,
+        high_hazard_appearance=high_hazard_appearance,
+        reflected_habitat_measured=reflected_habitat_measured,
+        transmitted_habitat_measured=transmitted_habitat_measured,
+        nocturnal_activity_supported=nocturnal_activity_supported,
+        artificial_light_measured=artificial_light_measured,
+        artificial_light_level=context.artificial_light_level,
+        vegetation_cover_measured=vegetation_cover_measured,
+    )
+
     if approach_rate["identified"] and approach_rate_measured:
         identifiability = "expected_hourly_contact_rate_identified"
     elif approach_rate["identified"]:
@@ -479,13 +676,14 @@ def evaluate_facade(context: FacadeContext) -> dict:
 
     return {
         "model": "BNBU Bird-Glass Interpretable Decision Support",
-        "model_version": "0.1.0",
+        "model_version": "0.2.0",
         "panel_id": glass.panel_id,
         "risk_profile": risk_profile,
         "glass_assessment": glazing,
         "vegetation_pathways": vegetation,
         "findings": findings,
         "recommendations": recommendations,
+        "intervention_comparison": intervention_comparison,
         "data_gaps": sorted(set(data_gaps)),
         "prohibited_inferences": [
             "Do not convert Neotropical event counts into collision probabilities.",
