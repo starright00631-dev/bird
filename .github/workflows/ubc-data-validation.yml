@@ -5,6 +5,10 @@ on:
     paths:
       - "scripts/audit_ubc_sources.py"
       - "tests/test_audit_ubc_sources.py"
+      - "tests/test_inspect_ubc_codebook.py"
+      - "scripts/inspect_ubc_codebook.py"
+      - "requirements.txt"
+      - "README.md"
       - "docs/UBC_DATA_AUDIT.md"
       - "docs/COORDINATION_LOG.md"
       - "data/raw/ubc/**"
@@ -13,6 +17,10 @@ on:
     paths:
       - "scripts/audit_ubc_sources.py"
       - "tests/test_audit_ubc_sources.py"
+      - "tests/test_inspect_ubc_codebook.py"
+      - "scripts/inspect_ubc_codebook.py"
+      - "requirements.txt"
+      - "README.md"
       - "docs/UBC_DATA_AUDIT.md"
       - "docs/COORDINATION_LOG.md"
       - "data/raw/ubc/**"
@@ -59,4 +67,4 @@ jobs:
           print("UBC_CARCASS_PERSISTENCE", report["carcass_persistence"])
           PY
       - name: Run UBC audit unit tests
-        run: python -m pytest -q tests/test_audit_ubc_sources.py
+        run: python -m pytest -q tests/test_audit_ubc_sources.py tests/test_inspect_ubc_codebook.py
