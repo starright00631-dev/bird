@@ -7,6 +7,7 @@ on:
       - "scripts/build_uvic_facade_panel.py"
       - "scripts/fit_uvic_observed_rate.py"
       - "tests/test_uvic_panel.py"
+      - "tests/test_audit_ubc_sources.py"
       - "requirements.txt"
       - ".github/workflows/uvic-data-validation.yml"
   workflow_dispatch:
@@ -49,6 +50,7 @@ jobs:
               "nb2_converged": model["nb2_sensitivity"]["converged"],
               "nb2_alpha": model["nb2_sensitivity"].get("alpha"),
               "poisson_nb2_max_log_rate_ratio_difference": model["max_abs_log_rate_ratio_difference_poisson_vs_nb2"],
+              "non_intercept_effect_direction_agreement": model["non_intercept_effect_direction_agreement_poisson_vs_nb2"],
           }, sort_keys=True))
           PY
       - name: Verify full scientific test suite
