@@ -63,4 +63,4 @@ python scripts/audit_ubc_sources.py --fetch --data-dir data/derived/ubc --out da
 python -m pytest -q tests
 ~~~
 
-The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks. The UBC pinned-source workflow runs the fetch-and-audit command on relevant pull requests; its successful run is the evidence that all six archive files were verified.
+The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks. The UBC pinned-source workflow fetches all six archive files, verifies their MD5 values, and inspects the READ.ME.xlsx workbook. The codebook preview reports sheet names, dimensions and bounded non-empty rows; it is schema discovery only, not an automatic column mapping.
