@@ -72,9 +72,6 @@ class GlassObservation:
             raise ValueError("pattern_spacing_cm cannot be negative")
         if self.pattern_width_mm is not None and self.pattern_width_mm < 0:
             raise ValueError("pattern_width_mm cannot be negative")
-        if self.reflectance_percent is not None and self.transmittance_percent is not None:
-            if self.reflectance_percent + self.transmittance_percent > 100.5:
-                raise ValueError("Reflectance + transmittance cannot exceed 100% beyond tolerance")
         return self
 
     @property
@@ -84,6 +81,12 @@ class GlassObservation:
         if self.evidence_source in {"site_photo", "zero_shot_image_model", "unknown"} and not self.reviewed_by_human:
             return True
         if self.classification_confidence is not None and self.classification_confidence < 0.8:
+            return True
+        pattern_expected = (
+            self.visual_class in {"fritted", "patterned"}
+            or self.surface_treatment in {"ceramic_frit", "applied_film", "external_markers"}
+        )
+        if pattern_expected and self.pattern_is_screening_compliant is None:
             return True
         return False
 
@@ -131,6 +134,7 @@ class GlassObservation:
             "pattern_present": pattern_present,
             "pattern_screening_compliant": pattern_compliant,
             "pattern_noncompliant_or_incomplete": pattern_noncompliant,
+            "pattern_geometry_unverified": pattern_present and pattern_compliant is None,
             "interior_treatment_may_leave_exterior_reflection": interior_treatment,
             "requires_human_review": self.needs_human_review,
             "risk_probability_estimated": False,
