@@ -2,11 +2,14 @@ import csv
 import hashlib
 from pathlib import Path
 
+import pytest
+
 from scripts.audit_ubc_sources import (
     FILES,
     audit_carcass_persistence,
     audit_search_efficiency,
     audit_survey_table,
+    download_file,
     read_csv,
 )
 
@@ -106,3 +109,54 @@ def test_verified_search_efficiency_season_breakdown():
     assert seasons["spring"]["first_search_detections"] == 2
     assert seasons["summer"]["first_search_detections"] == 3
     assert seasons["winter"]["first_search_detections"] == 11
+
+
+
+def test_download_file_verifies_checksum_before_writing(monkeypatch, tmp_path):
+    payload = b"ID,s1\\ncarc1,1\\n"
+    digest = hashlib.md5(payload).hexdigest()
+    monkeypatch.setitem(FILES, "Search.Efficiency.csv", (digest, len(payload)))
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, traceback):
+            return False
+
+        def read(self):
+            return payload
+
+    monkeypatch.setattr(
+        "scripts.audit_ubc_sources.urllib.request.urlopen",
+        lambda request, timeout: FakeResponse(),
+    )
+    destination = tmp_path / "Search.Efficiency.csv"
+    result = download_file("Search.Efficiency.csv", destination)
+    assert destination.read_bytes() == payload
+    assert result["md5"] == digest
+    assert result["bytes"] == len(payload)
+
+
+def test_download_file_rejects_checksum_mismatch_before_writing(monkeypatch, tmp_path):
+    payload = b"ID,s1\\ncarc1,1\\n"
+    monkeypatch.setitem(FILES, "Search.Efficiency.csv", ("0" * 32, len(payload)))
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, traceback):
+            return False
+
+        def read(self):
+            return payload
+
+    monkeypatch.setattr(
+        "scripts.audit_ubc_sources.urllib.request.urlopen",
+        lambda request, timeout: FakeResponse(),
+    )
+    destination = tmp_path / "Search.Efficiency.csv"
+    with pytest.raises(ValueError, match="MD5 mismatch"):
+        download_file("Search.Efficiency.csv", destination)
+    assert not destination.exists()
