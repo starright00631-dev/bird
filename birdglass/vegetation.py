@@ -22,7 +22,10 @@ def _check_range(measurement: Measurement | None, unit: str,
                  lower: float, upper: float, label: str) -> None:
     if measurement is None or measurement.value is None:
         return
-    if measurement.unit not in {unit, unit.replace("_", " ")}:
+    accepted = {unit, unit.replace("_", " ")}
+    if unit == "percent":
+        accepted.add("%")
+    if measurement.unit not in accepted:
         raise ValueError(f"{label} must use {unit}")
     if not lower <= measurement.value <= upper:
         raise ValueError(f"{label} must lie in [{lower}, {upper}]")

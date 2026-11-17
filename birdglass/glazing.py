@@ -138,23 +138,37 @@ def assess_glazing(panel: GlassPanel) -> dict:
         GlassAppearance.CLEAR_TRANSPARENT,
         GlassAppearance.HIGHLY_REFLECTIVE,
         GlassAppearance.REFLECTIVE_AND_TRANSPARENT,
-        GlassAppearance.TINTED_OR_LOW_E,
     }
+    vlr = panel.exterior_vlr_pct.value if panel.exterior_vlr_pct else None
+    reflected = (
+        panel.reflected_vegetation_share.value
+        if panel.reflected_vegetation_share else None
+    )
+    transmitted = (
+        panel.transmitted_habitat_share.value
+        if panel.transmitted_habitat_share else None
+    )
+    reflection_rating_flag = vlr is not None and vlr > 15.0
+    low_e_mechanism_observed = (
+        panel.appearance == GlassAppearance.TINTED_OR_LOW_E
+        and (reflection_rating_flag or (reflected is not None and reflected > 0)
+             or (transmitted is not None and transmitted > 0))
+    )
     if status == PatternStatus.GUIDELINE_2X2:
         optical_hazard = "reduced_not_eliminated"
     elif status == PatternStatus.GUIDELINE_2X4:
         optical_hazard = "partially_mitigated"
-    elif high_hazard_appearance:
+    elif high_hazard_appearance or low_e_mechanism_observed:
         optical_hazard = "elevated"
     elif panel.appearance == GlassAppearance.OPAQUE_SPANDREL:
         optical_hazard = "not_applicable_to_opaque_surface"
-    elif panel.appearance == GlassAppearance.UNKNOWN:
+    elif panel.appearance in {
+        GlassAppearance.UNKNOWN, GlassAppearance.TINTED_OR_LOW_E
+    }:
         optical_hazard = "unclassified"
     else:
         optical_hazard = "requires_visual_and_spectral_review"
 
-    vlr = panel.exterior_vlr_pct.value if panel.exterior_vlr_pct else None
-    reflection_rating_flag = vlr is not None and vlr > 15.0
     findings = []
     if panel.appearance in {
         GlassAppearance.HIGHLY_REFLECTIVE,
@@ -166,14 +180,10 @@ def assess_glazing(panel: GlassPanel) -> dict:
         GlassAppearance.REFLECTIVE_AND_TRANSPARENT,
     }:
         findings.append("see_through_or_false_passage_pathway")
-    if panel.reflected_vegetation_share is not None:
-        value = panel.reflected_vegetation_share.value
-        if value is not None and value > 0:
-            findings.append("measured_reflected_vegetation_present")
-    if panel.transmitted_habitat_share is not None:
-        value = panel.transmitted_habitat_share.value
-        if value is not None and value > 0:
-            findings.append("measured_transmitted_habitat_present")
+    if reflected is not None and reflected > 0:
+        findings.append("measured_reflected_vegetation_present")
+    if transmitted is not None and transmitted > 0:
+        findings.append("measured_transmitted_habitat_present")
     if reflection_rating_flag:
         findings.append("exterior_vlr_above_15_percent_rating_review_flag")
 

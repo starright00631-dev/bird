@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from enum import IntEnum
 from typing import Sequence
 
-from .evidence import Measurement, measurement_dict
+from .evidence import EvidenceTier, Measurement, measurement_dict
 from .glazing import (
     GlassAppearance,
     GlassPanel,
@@ -27,7 +27,7 @@ class Priority(IntEnum):
 
 @dataclass(frozen=True)
 class ApproachSample:
-    """A pane-specific sample of all approaches crossing a defined risk gate.
+    """Pane-specific sample of all approaches crossing a defined risk gate.
 
     sampling_frame must be continuous_video before a conditional contact rate
     is identifiable. Selected collision clips are not a denominator.
@@ -134,15 +134,21 @@ def evaluate_facade(context: FacadeContext) -> dict:
         GlassAppearance.CLEAR_TRANSPARENT,
         GlassAppearance.HIGHLY_REFLECTIVE,
         GlassAppearance.REFLECTIVE_AND_TRANSPARENT,
-        GlassAppearance.TINTED_OR_LOW_E,
     }
     reflected_share = context.vegetation.reflected_vegetation_share
     if reflected_share is None:
         reflected_share = glass.reflected_vegetation_share
     reflected_habitat_measured = (
-        _has_value(reflected_share) and reflected_share.value > 0
+        _has_value(reflected_share)
+        and reflected_share.tier in {EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY}
+        and reflected_share.value > 0
     )
-    local_activity_measured = _has_value(context.bird_activity)
+    local_activity_measured = (
+        _has_value(context.bird_activity)
+        and context.bird_activity.tier in {
+            EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY
+        }
+    )
     approach_rate_measured = _has_value(context.approaches_per_hour)
 
     approach_rate = (
@@ -175,8 +181,13 @@ def evaluate_facade(context: FacadeContext) -> dict:
                 "must remain separate in later calibration."
             ),
         })
-    elif glass.appearance == GlassAppearance.UNKNOWN:
-        data_gaps.append("Classify the complete glass assembly from outside views.")
+    elif glass.appearance in {
+        GlassAppearance.UNKNOWN, GlassAppearance.TINTED_OR_LOW_E
+    }:
+        data_gaps.append(
+            "Classify the complete glass assembly from outside views and "
+            "measure exterior reflectance/transmittance."
+        )
     if reflected_habitat_measured:
         findings.append({
             "pathway": "vegetation_to_reflection",
@@ -196,7 +207,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
                 "coefficient is applied."
             ),
         })
-    if local_activity_measured:
+    if _has_value(context.bird_activity):
         findings.append({
             "pathway": "bird_activity",
             "status": "measured_proxy_or_local_observation",
@@ -310,7 +321,9 @@ def evaluate_facade(context: FacadeContext) -> dict:
             "risk threshold.",
         ))
 
-    if high_hazard_appearance:
+    if high_hazard_appearance and pattern_status not in {
+        PatternStatus.GUIDELINE_2X2, PatternStatus.GUIDELINE_2X4
+    }:
         recommendations.append(_recommendation(
             "consider_external_screen_or_cord_system",
             Priority.MEDIUM,
@@ -347,7 +360,13 @@ def evaluate_facade(context: FacadeContext) -> dict:
             "collision probability.",
         ))
 
-    if _has_value(context.nocturnal_migrant_activity):
+    nocturnal_activity_supported = (
+        _has_value(context.nocturnal_migrant_activity)
+        and context.nocturnal_migrant_activity.tier in {
+            EvidenceTier.MEASURED, EvidenceTier.LOCAL_SURVEY
+        }
+    )
+    if nocturnal_activity_supported:
         if _has_value(context.artificial_light_level) and (
             context.artificial_light_level.value > 0
         ):
@@ -409,7 +428,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
             "Two tested songbird species do not establish universal UV efficacy.",
         ))
 
-    if not approach_rate_measured or context.approach_sample is None:
+    if not approach_rate_measured or not approach_rate["identified"]:
         recommendations.append(_recommendation(
             "establish_standardized_pane_approach_monitoring",
             Priority.HIGH,
