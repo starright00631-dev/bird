@@ -49,7 +49,7 @@ jobs:
       - name: Inspect the READ.ME codebook without inferring column mappings
         run: python scripts/inspect_ubc_codebook.py --input data/derived/ubc/READ.ME.xlsx --out data/derived/ubc/codebook_inspection.json
       - name: Download and inspect the separate Zulian 2023 facade covariate appendix
-        run: python scripts/inspect_zulian_appendix.py --download --csv-out data/derived/ubc/zulian_appendix1.csv --report-out data/derived/ubc/zulian_appendix_inspection.json
+        run: python scripts/inspect_zulian_appendix.py --download --strict --csv-out data/derived/ubc/zulian_appendix1.csv --report-out data/derived/ubc/zulian_appendix_inspection.json
       - name: Assert source completeness, codebook structure and observation-process schemas
         run: |
           python - <<'PY'
@@ -90,14 +90,25 @@ jobs:
           assert points["checklist_group_size_mismatches"] == 0
           assert points["metadata_inconsistencies"] == 0
           appendix = json.loads(Path("data/derived/ubc/zulian_appendix_inspection.json").read_text())
-          assert appendix["row_count"] > 0
-          assert appendix["column_count"] > 0
-          assert len(appendix["source"]["sha256"]) == 64
+          assert appendix["row_count"] == 8835
+          assert appendix["column_count"] == 45
+          assert appendix["source"]["sha256_matches_pin"] is True
+          assert appendix["panel"]["buildings"] == 8
+          assert appendix["panel"]["facades"] == 57
+          assert appendix["panel"]["survey_dates"] == 155
+          assert appendix["panel"]["facade_date_rows"] == 8835
+          assert appendix["panel"]["duplicate_facade_date_keys"] == 0
+          assert appendix["panel"]["complete_facade_date_grid"] is True
+          assert appendix["outcomes"]["COLLISIONMORTALITY_X"]["sum"] == 152
+          assert appendix["outcomes"]["COLLISIONMORTALITY_X"]["positive_rows"] == 142
+          assert appendix["outcomes"]["COLLISIONS_X"]["sum"] == 199
+          assert appendix["method_counts"] == {"1": 4845, "2": 3990}
+          assert appendix["season_counts"] == {"fall": 1881, "spring": 1881, "summer": 1881, "winter": 3192}
           codebook = json.loads(Path("data/derived/ubc/codebook_inspection.json").read_text())
           assert codebook["sheet_count"] > 0
           assert any(sheet["preview_rows"] for sheet in codebook["sheets"])
           print("UBC_CODEBOOK", json.dumps(codebook, ensure_ascii=False))
-          print("ZULIAN_APPENDIX_DISCOVERY", json.dumps(appendix, ensure_ascii=False))
+          print("ZULIAN_APPENDIX_PANEL_AUDIT", json.dumps(appendix, ensure_ascii=False))
           print("UBC_SOURCES_VERIFIED", report["files_present"])
           print("UBC_SEARCH_EFFICIENCY", report["search_efficiency"]["conditional_detection_by_search"])
           print("UBC_CARCASS_PERSISTENCE", report["carcass_persistence"])

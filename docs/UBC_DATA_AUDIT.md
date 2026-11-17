@@ -125,20 +125,77 @@ python -m pytest -q tests
 The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks. The UBC pinned-source workflow fetches all six archive files, verifies their MD5 values, and inspects the READ.ME.xlsx workbook. The codebook preview reports sheet names, dimensions and bounded non-empty rows; it is schema discovery only, not an automatic column mapping.
 
 
-## Zulian et al. (2023) Appendix 1: schema discovery
+
+
+## Zulian et al. (2023) Appendix 1: primary façade-survey panel
 
 Source: https://ace-eco.org/vol18/iss2/art15/appendix1.csv  
 Paper DOI: https://doi.org/10.5751/ACE-02482-180215  
-Article license: CC BY 4.0 (attribute the authors/source and identify changes).
+Article license: CC BY 4.0; attribute the authors/source and identify changes.
 
-The appendix is downloaded separately from the De Groot Dryad archive. It is a
-façade-level covariate table, not the repeated collision-survey outcome table.
-The CI discovery step records its byte count, SHA-256, exact header names,
-candidate building/façade key columns, duplicate composite keys, missingness
-and numeric ranges for FacArea, AreaGlass, VegPer, TreeCov and StorReflVeg.
+The appendix is a **complete repeated façade-survey panel**, not a 57-row
+covariate-only table. Its pinned source SHA-256 is
+0baba75389249af1dad546868183f956dd38facef64ae35b04ab761e293fd8a7.
 
-At this stage the appendix is **schema-discovered, not yet joined or used for
-model fitting**. The exact key labels, 57-row coverage, and one-to-one mapping
-to the 57 façade labels in Observed.Collision.Counts.csv must be verified
-before the model builder can use it. The first discovery run is not treated
-as checksum-pinned until its SHA-256 is committed as a fixed expected value.
+| Property | Verified result |
+|---|---:|
+| Rows / columns | 8,835 / 45 |
+| Buildings / façades | 8 / 57 |
+| Survey dates | 155 |
+| Facade-date keys | 8,835, no duplicates |
+| Visits per façade | 155 for every façade |
+| Facades per date | 57 for every date |
+| Primary carcass-mortality count | 152 |
+| Positive carcass-mortality visits | 142 |
+| Broader COLLISIONS_X count | 199 |
+| Broader COLLISIONS_X positive visits | 186 |
+
+The primary binomial response is derived from COLLISIONMORTALITY_X:
+1 if the count is positive, otherwise 0. The separate COLLISIONS_X field is
+retained as a secondary outcome and is not substituted into the paper-aligned
+carcass model.
+
+### Verified model feature mapping
+
+| Model concept | Appendix field | Grain / unit |
+|---|---|---|
+| Façade area | FACADE_AREA | m², façade-level |
+| Glass area | AREA_GLASS | m², façade-level |
+| Porous/ground-shrub vegetation cover | PERC_VEG_AND_POROUS_SURFACE_FACADE | %, façade-level 50-m buffer |
+| Tree canopy cover | TREECOVER_FACADE_PERCENT | %, façade-level 50-m buffer |
+| Stories reflecting canopy | STORIES_REFLECT_CANOPY | stories, façade-level |
+| Building vegetation stratum | VEGE_PERC | proportion 0-1, building-level |
+| Survey exposure | METHOD | 1=24 h, 2=48 h |
+
+The paper's VegPer maps to PERC_VEG_AND_POROUS_SURFACE_FACADE, not the
+building-level VEGE_PERC. TreeCov maps to TREECOVER_FACADE_PERCENT, and
+StorReflVeg maps to STORIES_REFLECT_CANOPY. All façade predictors are constant
+within each façade across its 155 repeated survey rows. Fractional STOREYS
+values are retained; they are not rounded.
+
+The paper's model uses a binomial logit mixed model with a log-hours offset,
+season-specific fits, a BUILDING_X:FACADE random intercept, and four candidate
+sets: full, building-only, vegetation-only and null. The full model includes
+FACADE_AREA x AREA_GLASS. The current pipeline pins and audits the input panel;
+the next model-fitting step will reproduce this baseline and add grouped
+building holdouts and uncertainty-aware response curves.
+
+### Why the De Groot raw CSV is not row-joined to this appendix
+
+The De Groot raw collision file is a separate source version. It has 8,846
+raw rows, 8,831 unique facade-date keys, 15 repeated keys and four missing
+keys in the planned 57 x 155 grid. The Appendix 1 panel has 8,835 complete
+facade-date rows. Both aggregate to 152 mortality events, but the date-level
+key coverage and eight common-key mortality counts differ. Therefore the
+Appendix 1 panel is the primary modelling dataset; the De Groot files remain
+an independent observation-process and aggregate cross-check source. They
+must not be row-joined or pooled without a documented reconciliation.
+
+### Important limitation for the final BNBU decision system
+
+This UBC panel measures glass area and the vertical extent of reflected
+canopy, but it does not provide categorical glass product/type labels
+(transparent, reflective, tinted, fritted, patterned) or measured spectral
+reflectance/transmittance. The final system will need a separate photo/spec
+inspection layer for glass type. It will also need local BNBU vegetation and
+glass observations before making campus-specific absolute-risk claims.

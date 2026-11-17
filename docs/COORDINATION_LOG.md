@@ -66,6 +66,6 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 ## Zulian façade covariate ingestion (2026-11-17)
 
 - Added a separate downloader/schema inspector for the ACE-ECO Appendix 1 CSV from Zulian et al. (2023).
-- First CI pass is discovery-only: capture the raw header, row count, SHA-256, candidate Building/Facade key uniqueness and numeric summaries for FacArea, AreaGlass, VegPer, TreeCov and StorReflVeg.
-- Do not join it to the De Groot panel until the appendix key labels and 57-façade one-to-one coverage are confirmed. The appendix is not a collision-outcome table.
+- Appendix 1 is a complete 8,835-row repeated survey panel (57 façades x 155 dates), not a 57-row covariate table. The exact SHA-256 is pinned; no duplicate or missing facade-date keys remain.
+- Do not row-join it to De Groot: both sources have 152 mortality events, but their date-level keys differ and eight common-key outcomes mismatch. Use Appendix 1 as the primary model panel and De Groot as a separate observation-process/aggregate cross-check.
 - Next: pin the discovered SHA-256, confirm key coverage against the 57 facade labels in Observed.Collision.Counts.csv, build a one-row-per-facade feature table, then fit the season-specific binomial mixed model with log survey-hours offset.
