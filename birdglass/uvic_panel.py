@@ -479,20 +479,27 @@ def fit_observed_rate_gee(panel_rows: Sequence[Mapping[str, object]]) -> dict:
     if not bool(getattr(fitted, "converged", True)):
         raise RuntimeError("Poisson GEE did not converge")
 
-    confidence = fitted.conf_int()
-    terms = []
-    for term in fitted.params.index:
-        estimate = float(fitted.params[term])
-        lower = float(confidence.loc[term, 0])
-        upper = float(confidence.loc[term, 1])
-        terms.append({
-            "term": str(term),
-            "log_rate_ratio": estimate,
-            "rate_ratio": exp(estimate),
-            "ci95_lower_rate_ratio": exp(lower),
-            "ci95_upper_rate_ratio": exp(upper),
-            "p_value_robust": float(fitted.pvalues[term]),
-        })
+    def coefficient_rows(result, excluded: set[str] | None = None) -> list[dict]:
+        excluded = excluded or set()
+        confidence = result.conf_int()
+        output = []
+        for term in result.params.index:
+            if str(term) in excluded:
+                continue
+            estimate = float(result.params[term])
+            lower = float(confidence.loc[term, 0])
+            upper = float(confidence.loc[term, 1])
+            output.append({
+                "term": str(term),
+                "log_rate_ratio": estimate,
+                "rate_ratio": exp(estimate),
+                "ci95_lower_rate_ratio": exp(lower),
+                "ci95_upper_rate_ratio": exp(upper),
+                "p_value_robust": float(result.pvalues[term]),
+            })
+        return output
+
+    terms = coefficient_rows(fitted)
 
     period_rates = []
     for period, group in df.groupby("period_id", sort=True):
@@ -511,6 +518,66 @@ def fit_observed_rate_gee(panel_rows: Sequence[Mapping[str, object]]) -> dict:
     pearson = float(np.sum(np.square(np.asarray(fitted.resid_pearson, dtype=float))))
     df_resid = max(1, int(getattr(fitted, "df_resid", len(df) - len(terms))))
     dispersion = pearson / df_resid
+
+    # NB2 is a variance-model sensitivity check. It is not a replacement for
+    # the repeated-facade GEE: covariance is clustered by facade, but the NB2
+    # mean model itself is fitted by maximum likelihood.
+    nb2_sensitivity: dict = {"converged": False, "error": None}
+    nb2_coefficients: list[dict] = []
+    coefficient_difference = None
+    direction_agreement = None
+    try:
+        nb2_model = smf.negativebinomial(
+            formula,
+            data=df,
+            offset=np.log(df["survey_visits"].astype(float)),
+        )
+        nb2_fit = nb2_model.fit(
+            disp=False,
+            maxiter=300,
+            cov_type="cluster",
+            cov_kwds={"groups": df["facade_id"]},
+        )
+        nb2_converged = bool(nb2_fit.mle_retvals.get("converged", False))
+        if not nb2_converged:
+            raise RuntimeError("NB2 sensitivity model did not converge")
+        nb2_coefficients = coefficient_rows(nb2_fit, excluded={"alpha"})
+        nb2_sensitivity = {
+            "model": "NB2 negative-binomial regression with facade-clustered robust covariance",
+            "converged": True,
+            "alpha": float(nb2_fit.params["alpha"]),
+            "coefficients": nb2_coefficients,
+            "covariance": "cluster-robust by facade_id",
+            "interpretation": "variance sensitivity check; not a causal model or out-of-site validation",
+        }
+        poisson_by_term = {item["term"]: item["log_rate_ratio"] for item in terms}
+        nb2_by_term = {item["term"]: item["log_rate_ratio"] for item in nb2_coefficients}
+        common_terms = sorted(set(poisson_by_term) & set(nb2_by_term))
+        if common_terms:
+            coefficient_difference = max(
+                abs(poisson_by_term[term] - nb2_by_term[term]) for term in common_terms
+            )
+            non_intercept = [term for term in common_terms if term != "Intercept"]
+            direction_agreement = all(
+                (poisson_by_term[term] >= 0) == (nb2_by_term[term] >= 0)
+                for term in non_intercept
+                if abs(poisson_by_term[term]) > 1e-8 and abs(nb2_by_term[term]) > 1e-8
+            )
+    except Exception as exc:  # keep the primary GEE output but expose failed sensitivity
+        nb2_sensitivity = {
+            "model": "NB2 negative-binomial regression with facade-clustered robust covariance",
+            "converged": False,
+            "error": f"{type(exc).__name__}: {exc}",
+            "interpretation": "sensitivity unavailable; do not treat the Poisson fit as variance-validated",
+        }
+
+    model_warnings = []
+    if dispersion > 1.5:
+        model_warnings.append(
+            "Pearson dispersion ratio exceeds 1.5; retain robust GEE intervals and compare the NB2 sensitivity before interpreting rate ratios."
+        )
+    if not nb2_sensitivity["converged"]:
+        model_warnings.append("NB2 sensitivity did not converge; variance robustness remains unresolved.")
     return {
         "model": "Poisson GEE with exchangeable within-facade working correlation",
         "target": "observed collision evidence count per surveyed facade-day",
@@ -528,8 +595,13 @@ def fit_observed_rate_gee(panel_rows: Sequence[Mapping[str, object]]) -> dict:
         "collision_evidence_count": int(df["collision_evidence_count"].sum()),
         "fatal_evidence_proxy_count": int(df["fatal_evidence_proxy_count"].sum()),
         "pearson_dispersion_ratio": dispersion,
+        "overdispersion_screen": "flagged" if dispersion > 1.5 else "not_flagged",
         "converged": bool(getattr(fitted, "converged", True)),
         "coefficients": terms,
+        "nb2_sensitivity": nb2_sensitivity,
+        "max_abs_log_rate_ratio_difference_poisson_vs_nb2": coefficient_difference,
+        "non_intercept_effect_direction_agreement_poisson_vs_nb2": direction_agreement,
+        "model_warnings": model_warnings,
         "observed_period_rates": period_rates,
         "interpretation_limits": [
             "This models recorded evidence per surveyed facade-day, not true bird approach or absolute collision probability.",

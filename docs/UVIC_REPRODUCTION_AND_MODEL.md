@@ -68,7 +68,7 @@ source hashes, row counts, evidence-type counts or period totals change.
 
 ## Observed-evidence rate baseline
 
-fit_uvic_observed_rate.py fits a Poisson GEE with:
+fit_uvic_observed_rate.py fits a Poisson GEE as the repeated-facade baseline and a separate NB2 negative-binomial regression as a variance sensitivity check. The Poisson GEE uses:
 
 - response: recorded collision-evidence count per facade-period;
 - offset: log(survey_visits);
@@ -78,8 +78,12 @@ fit_uvic_observed_rate.py fits a Poisson GEE with:
 - covariance: robust sandwich.
 
 The output reports descriptive rate ratios, robust intervals and raw
-period-specific evidence rates per 1,000 facade-day visits. This is an
-observed-evidence baseline only. It does not estimate biological approach
+period-specific evidence rates per 1,000 facade-day visits. A Pearson
+chi-square dispersion ratio above 1.5 is flagged as a diagnostic screen, not
+as a formal model-selection test. The NB2 fit uses facade-clustered robust
+covariance; its coefficients are compared with the Poisson GEE, but neither
+model is declared superior without an independent predictive design. This is
+an observed-evidence baseline only. It does not estimate biological approach
 rates, absolute pane collision probabilities, or causal effects of glass or
 vegetation. No out-of-site predictive accuracy is claimed from six buildings.
 
@@ -92,7 +96,9 @@ bird approach flow. The 2024 building inventory is temporally offset from the
 not applied by this baseline. A later detection-corrected reproduction must
 rebuild the authors' GenEst/JAGS stages from their separate trial, banding and
 point-count inputs; this adapter must not be represented as that full
-reproduction.
+reproduction. The first Poisson GEE run produced a Pearson dispersion ratio
+of 2.24, so NB2 sensitivity was added before interpreting the building/period
+rate ratios.
 
 The next data needed for the main decision system are comparable facade-level
 surveys with glass type/area, multi-scale vegetation, lighting, survey effort,

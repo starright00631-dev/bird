@@ -151,23 +151,37 @@ def test_panel_csv_round_trip(tmp_path):
 
 
 def test_gee_baseline_runs_and_does_not_claim_glass_or_vegetation_effects():
+    import numpy as np
+
+    rng = np.random.default_rng(20261117)
     rows = []
-    for building in ("A", "B"):
-        for facade_number in range(1, 4):
-            facade = f"{building}{facade_number}"
-            for period_index, period in enumerate(("Fall_2019", "LateWinter_2020", "Fall_2020")):
+    periods = ("Fall_2019", "EarlyWinter_2021", "LateWinter_2021", "Fall_2020", "LateWinter_2020", "LateWinter_2022")
+    for building_index in range(6):
+        building = f"B{building_index}"
+        for facade_number in range(8):
+            facade = f"{building}F{facade_number}"
+            for period_index, period in enumerate(periods):
+                effort = 20 if (facade_number + period_index) % 19 == 0 else 21
+                mean = effort * np.exp(-3.8 + 0.12 * building_index + 0.15 * (period_index == 1))
+                alpha = 0.7
+                size = 1.0 / alpha
+                probability = size / (size + mean)
+                evidence = int(rng.negative_binomial(size, probability))
                 rows.append({
                     "facade_id": facade,
                     "building_id": building,
                     "period_id": period,
-                    "survey_visits": 20 if facade_number == 1 else 21,
-                    "collision_evidence_count": (facade_number + period_index) % 4,
-                    "fatal_evidence_proxy_count": (facade_number + period_index) % 2,
+                    "survey_visits": effort,
+                    "collision_evidence_count": evidence,
+                    "fatal_evidence_proxy_count": evidence // 3,
                 })
     result = fit_observed_rate_gee(rows)
     assert result["converged"] is True
-    assert result["n_panel_rows"] == 18
-    assert result["n_facades"] == 6
+    assert result["n_panel_rows"] == 288
+    assert result["n_facades"] == 48
+    assert result["reference_period"] == "Fall_2019"
+    assert result["nb2_sensitivity"]["converged"] is True
+    assert result["nb2_sensitivity"]["alpha"] > 0
     assert result["target"] == "observed collision evidence count per surveyed facade-day"
     assert any("No glass type" in item for item in result["interpretation_limits"])
     assert all("rate_ratio" in item for item in result["coefficients"])

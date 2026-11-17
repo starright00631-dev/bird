@@ -48,5 +48,8 @@ jobs:
               "periods": model["n_periods"],
               "evidence": model["collision_evidence_count"],
               "dispersion": model["pearson_dispersion_ratio"],
+              "nb2_converged": model["nb2_sensitivity"]["converged"],
+              "nb2_alpha": model["nb2_sensitivity"].get("alpha"),
+              "poisson_nb2_max_log_rate_ratio_difference": model["max_abs_log_rate_ratio_difference_poisson_vs_nb2"],
           }, sort_keys=True))
           PY
