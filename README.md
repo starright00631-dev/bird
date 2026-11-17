@@ -44,13 +44,15 @@ These are engineering gates, not features to infer from the current rule engine.
 
 ## Evidence and data
 
-See [data registry](docs/data_registry.csv), [source register](docs/SOURCE_REGISTER.csv), [research gates](docs/RESEARCH_GATES.md), and [intervention evidence matrix](docs/INTERVENTION_EVIDENCE_MATRIX.md).
+See the [data registry](docs/data_registry.csv), [source register](docs/SOURCE_REGISTER.csv), [research gates](docs/RESEARCH_GATES.md), [intervention evidence matrix](docs/INTERVENTION_EVIDENCE_MATRIX.md), [UBC data audit](docs/UBC_DATA_AUDIT.md), [BNBU local-data audit](docs/BNBU_LOCAL_DATA_AUDIT.md), and [shared coordination log](docs/COORDINATION_LOG.md).
 
 - UVic: 6,337 raw source rows collapse to 6,298 unique facade-day visits across 50 facades, 6 buildings and 6 survey windows. A pinned adapter builds 300 facade-period rows and a descriptive effort-offset Poisson GEE baseline. This validates the observation/rate layer, not BNBU pane risk or glass/vegetation effects; see [UVic reproduction and model notes](docs/UVIC_REPRODUCTION_AND_MODEL.md).
 - Neotropical database: 4,103 event reports and 571 species; event-only, no non-event denominator.
 - China 2025: 3,078 buildings; useful for multi-scale habitat hypotheses, not local causal effects.
 - Ottawa 2026: 225 collisions and 51 species; treatment compliance evidence, site-specific.
 - Oklahoma 2026 BACI: 6 treated and 134 untreated façades; field design benchmark, but low treated replication and a non-significant formal treatment-by-period interaction.
+- UBC 2021 De Groot: 8 buildings, five seasonal sampling periods, 29 search-efficiency trials and 103 carcass-persistence trials. Only the search-efficiency CSV is currently imported and checksum-verified.
+- UBC 2023 Zulian: 8,835 repeated façade surveys across 57 façades and 8 buildings; 142 positive façade-surveys and 152 individual collision events. Appendix 1 is identified but not yet imported.
 - 2026 stereo bird-flight data: 360 retained trials at 120 fps; kinematics only, not glass recognition.
 
 Sources are not pooled merely because they all concern bird collisions. Grain, effort, outcome definition, species mix and observation process must first be harmonized.
@@ -105,7 +107,7 @@ Example values are placeholders, not BNBU measurements. The comparison reports m
 ## Repository map
 
 - `birdglass/`: executable mechanism, measurement and decision modules.
-- `data/external/`: public metadata/QA artefacts only.
+- `data/external/`: public metadata/QA artefacts; `data/raw/`: checksum-pinned public source snapshots with provenance.
 - `docs/`: causal model, literature audit, registries, intervention evidence and validation gates.
 - `results/`: scenario/sensitivity outputs; not observed field data.
 - `scripts/`: source audits and reproducibility helpers.
