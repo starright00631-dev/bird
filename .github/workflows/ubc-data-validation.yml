@@ -8,6 +8,9 @@ on:
       - "tests/test_inspect_ubc_codebook.py"
       - "scripts/inspect_ubc_codebook.py"
       - "scripts/inspect_zulian_appendix.py"
+      - "scripts/build_ubc_facade_panel.py"
+      - "scripts/fit_ubc_facade_glmm.R"
+      - "tests/test_ubc_facade_panel.py"
       - "tests/test_inspect_zulian_appendix.py"
       - "requirements.txt"
       - "README.md"
@@ -23,6 +26,9 @@ on:
       - "tests/test_inspect_ubc_codebook.py"
       - "scripts/inspect_ubc_codebook.py"
       - "scripts/inspect_zulian_appendix.py"
+      - "scripts/build_ubc_facade_panel.py"
+      - "scripts/fit_ubc_facade_glmm.R"
+      - "tests/test_ubc_facade_panel.py"
       - "tests/test_inspect_zulian_appendix.py"
       - "requirements.txt"
       - "README.md"
@@ -38,7 +44,7 @@ permissions:
 jobs:
   pinned-source-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -129,13 +135,49 @@ jobs:
           print("UBC_SEARCH_SCHEDULE_AUDIT", report["search_schedule"])
           print("UBC_POINT_COUNT_AUDIT", report["point_counts"])
           PY
-      - name: Run UBC audit unit tests
-        run: python -m pytest -q tests/test_audit_ubc_sources.py tests/test_inspect_ubc_codebook.py tests/test_inspect_zulian_appendix.py
+      - name: Build the canonical 8,835-row facade-date model panel
+        run: python scripts/build_ubc_facade_panel.py --input data/derived/ubc/zulian_appendix1.csv --panel-out data/derived/ubc/ubc_facade_survey_panel.csv --audit-out data/derived/ubc/ubc_facade_panel_audit.json
+
+      - name: Run UBC audit and panel-builder unit tests
+        run: python -m pytest -q tests/test_audit_ubc_sources.py tests/test_inspect_ubc_codebook.py tests/test_inspect_zulian_appendix.py tests/test_ubc_facade_panel.py
+
+      - name: Set up R for the paper-aligned seasonal GLMM
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4"
+          use-public-rspm: true
+
+      - name: Install R model dependencies
+        run: Rscript -e 'install.packages(c("glmmTMB", "DHARMa", "jsonlite"), repos = "https://cloud.r-project.org")'
+
+      - name: Fit seasonal binomial mixed models and transfer checks
+        run: Rscript scripts/fit_ubc_facade_glmm.R --input data/derived/ubc/ubc_facade_survey_panel.csv --audit data/derived/ubc/ubc_facade_panel_audit.json --out-dir results/ubc
+
+      - name: Assert seasonal model outputs
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          report = json.loads(Path("results/ubc/ubc_seasonal_model_run.json").read_text())
+          assert report["model"]["primary_outcome"] == "mortality_present = 1(COLLISIONMORTALITY_X > 0)"
+          assert set(report["model"]["seasonal_fits"]) == {"fall", "winter", "spring", "summer"}
+          with Path("results/ubc/ubc_seasonal_model_selection.csv").open(newline="") as handle:
+              rows = list(csv.DictReader(handle))
+          assert rows, "No seasonal model-selection rows"
+          for season in ("fall", "winter", "spring", "summer"):
+              season_rows = [r for r in rows if r["season"] == season]
+              assert any(r["converged"].lower() == "true" and r["AICc"] for r in season_rows), f"No converged model for {season}"
+          assert Path("results/ubc/ubc_leave_one_building_out_validation.csv").exists()
+          print("UBC_SEASONAL_MODEL_SELECTION", rows)
+          print("UBC_MODEL_LIMITATIONS", report["limitations"])
+          PY
 
       - name: Upload verified De Groot source snapshot and audit report
         uses: actions/upload-artifact@v4
         with:
           name: ubc-de-groot-verified-source-snapshot
-          path: data/derived/ubc/
+          path: |
+            data/derived/ubc/
+            results/ubc/
           if-no-files-found: error
           retention-days: 30
