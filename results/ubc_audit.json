@@ -1,0 +1,39 @@
+{
+  "status": "partial_import",
+  "source": {
+    "dryad_doi": "10.5061/dryad.hqbzkh1g6",
+    "zenodo_record": 6373683,
+    "search_efficiency_md5": "f9e7a8816ef52eb9d3523f0f14b40d6b"
+  },
+  "files_present": ["Search.Efficiency.csv"],
+  "files_missing": [
+    "Carcass.Persistence.csv",
+    "Observed.Collision.Counts.csv",
+    "READ.ME.xlsx",
+    "Search.Schedule.csv",
+    "UBC.point.counts.csv"
+  ],
+  "search_efficiency": {
+    "rows": 29,
+    "conditional_detection_by_search": [
+      {"search": 1, "at_risk": 29, "detected": 16, "fraction": 0.5517241379, "missing_while_at_risk": 0},
+      {"search": 2, "at_risk": 13, "detected": 5, "fraction": 0.3846153846, "missing_while_at_risk": 0},
+      {"search": 3, "at_risk": 7, "detected": 1, "fraction": 0.1428571429, "missing_while_at_risk": 1},
+      {"search": 4, "at_risk": 5, "detected": 1, "fraction": 0.2, "missing_while_at_risk": 1},
+      {"search": 5, "at_risk": 3, "detected": 0, "fraction": 0.0, "missing_while_at_risk": 1},
+      {"search": 6, "at_risk": 3, "detected": 0, "fraction": 0.0, "missing_while_at_risk": 0}
+    ],
+    "first_search_by_season": {
+      "fall": {"trials": 2, "detected": 0, "observed": 2},
+      "spring": {"trials": 3, "detected": 2, "observed": 3},
+      "summer": {"trials": 3, "detected": 3, "observed": 3},
+      "winter": {"trials": 21, "detected": 11, "observed": 21}
+    }
+  },
+  "interpretation": [
+    "These are descriptive trial hazards, not a fitted GenEst parameter.",
+    "Later NA values after detection are not zero detections.",
+    "Do not correct collision counts until carcass persistence and search schedule are imported and jointly audited.",
+    "UBC is a temperate Pacific transfer benchmark, not BNBU calibration truth."
+  ]
+}
