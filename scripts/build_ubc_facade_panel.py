@@ -108,12 +108,12 @@ def build_panel(raw: bytes, *, strict_source: bool = True):
             raise ValueError(f"Negative story count at source row {row_number}")
         if not 0 <= values["facade_orientation_angle_degrees"] <= 360:
             raise ValueError(f"Facade orientation angle outside [0,360] at source row {row_number}")
-        previous = static_by_facade.setdefault(facade_id, values)
-        if previous != values:
-            raise ValueError(f"Facade-static predictors change across visits for {facade_id}")
         previous_building_veg = building_vegetation.setdefault(building, values["building_vegetation_proportion"])
         if previous_building_veg != values["building_vegetation_proportion"]:
             raise ValueError(f"Building-level VEGE_PERC changes within {building}")
+        previous = static_by_facade.setdefault(facade_id, values)
+        if previous != values:
+            raise ValueError(f"Facade-static predictors change across visits for {facade_id}")
         panel.append({
             "source_row": row_number, "survey_date": survey_date, "season": season,
             "building_id": building, "facade_label": facade, "facade_id": facade_id,
