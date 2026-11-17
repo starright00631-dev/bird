@@ -86,3 +86,51 @@ def test_appendix_reader_rejects_html_payload():
 def test_appendix_reader_rejects_duplicate_headers():
     with pytest.raises(ValueError, match="duplicate headers"):
         _read_csv(b"Building,Building\nA,A\n")
+
+
+
+def test_appendix_audit_flags_facade_feature_drift():
+    rows = fixture_rows()
+    rows[1]["AREA_GLASS"] = "41"
+    report = inspect_appendix(csv_bytes(rows))
+    summary = report["feature_summary"]["glass_area_m2"]
+    assert summary["constant_within_facade"] is False
+    assert summary["nonconstant_facade_count"] == 1
+
+
+def test_de_groot_reconciliation_detects_distinct_source_grain_and_mismatches():
+    appendix = fixture_rows()
+    de_groot_rows = [
+        {
+            "SURVEY_DATE": "9/9/2015", "BUILDING_X": "A", "FACADE": "A1",
+            "METHOD": "1", "COLLISIONMORTALITY_X": "0",
+        },
+        {
+            "SURVEY_DATE": "9/9/2015", "BUILDING_X": "A", "FACADE": "A1",
+            "METHOD": "1", "COLLISIONMORTALITY_X": "1",
+        },
+        {
+            "SURVEY_DATE": "9/10/2015", "BUILDING_X": "A", "FACADE": "A1",
+            "METHOD": "2", "COLLISIONMORTALITY_X": "0",
+        },
+        {
+            "SURVEY_DATE": "9/9/2015", "BUILDING_X": "A", "FACADE": "A2",
+            "METHOD": "1", "COLLISIONMORTALITY_X": "0",
+        },
+    ]
+    report = inspect_appendix(
+        csv_bytes(appendix),
+        de_groot_raw=csv_bytes(de_groot_rows),
+    )
+    comparison = report["cross_source_reconciliation"]
+    assert comparison["row_join_allowed"] is False
+    assert comparison["facade_key_sets_equal"] is True
+    assert comparison["common_facade_date_keys"] == 3
+    assert comparison["appendix_only_facade_date_keys"] == 1
+    assert comparison["de_groot_duplicate_facade_date_groups"] == 1
+    assert comparison["method_mismatches_on_common_keys"] == 1
+
+
+def test_strict_mode_rejects_unpinned_appendix_bytes():
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
+        inspect_appendix(csv_bytes(fixture_rows()), strict=True)
