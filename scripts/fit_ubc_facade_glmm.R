@@ -215,6 +215,74 @@ extract_coefficients <- function(fit, season, model_name, scales) {
   result
 }
 
+
+make_response_curves <- function(fit, season_data, season, model_name, scales) {
+  specs <- list(
+    facade_area_m2 = list(z = "facade_area_z", raw = "facade_area_m2"),
+    glass_area_m2 = list(z = "glass_area_z", raw = "glass_area_m2"),
+    facade_porous_cover_percent = list(z = "facade_porous_cover_z", raw = "facade_porous_cover_percent"),
+    facade_tree_cover_percent = list(z = "facade_tree_cover_z", raw = "facade_tree_cover_percent"),
+    stories_reflecting_canopy = list(z = "stories_reflecting_canopy_z", raw = "stories_reflecting_canopy")
+  )
+  fixed_terms <- model_fixed_terms[[model_name]]
+  output <- list()
+  for (predictor in names(specs)) {
+    spec <- specs[[predictor]]
+    if (!grepl(spec$z, fixed_terms, fixed = TRUE)) next
+    facade_values <- unique(season_data[[spec$raw]])
+    grid <- seq(
+      as.numeric(stats::quantile(facade_values, 0.05, na.rm = TRUE)),
+      as.numeric(stats::quantile(facade_values, 0.95, na.rm = TRUE)),
+      length.out = 25
+    )
+    for (hours in c(24, 48)) {
+      newdata <- data.frame(
+        survey_hours = rep(hours, length(grid)),
+        facade_area_z = rep(0, length(grid)),
+        glass_area_z = rep(0, length(grid)),
+        facade_porous_cover_z = rep(0, length(grid)),
+        facade_tree_cover_z = rep(0, length(grid)),
+        stories_reflecting_canopy_z = rep(0, length(grid)),
+        building_id = factor(rep(levels(season_data$building_id)[1], length(grid)),
+                             levels = levels(season_data$building_id)),
+        facade_label = factor(rep(levels(season_data$facade_label)[1], length(grid)),
+                              levels = levels(season_data$facade_label))
+      )
+      newdata[[spec$z]] <- (grid - scales[[spec$raw]]$mean) / scales[[spec$raw]]$sd
+      prediction <- tryCatch(
+        predict(
+          fit, newdata = newdata, type = "link", se.fit = TRUE,
+          re.form = NA, allow.new.levels = TRUE
+        ),
+        error = function(e) e
+      )
+      if (inherits(prediction, "error")) {
+        output[[length(output) + 1]] <- data.frame(
+          season = season, model = model_name, predictor = predictor,
+          predictor_value = grid, survey_hours = hours,
+          predicted_probability = NA_real_, lower_95 = NA_real_, upper_95 = NA_real_,
+          prediction_error = conditionMessage(prediction),
+          stringsAsFactors = FALSE
+        )
+        next
+      }
+      eta <- as.numeric(prediction$fit)
+      standard_error <- as.numeric(prediction$se.fit)
+      output[[length(output) + 1]] <- data.frame(
+        season = season, model = model_name, predictor = predictor,
+        predictor_value = grid, survey_hours = hours,
+        predicted_probability = stats::plogis(eta),
+        lower_95 = stats::plogis(eta - 1.96 * standard_error),
+        upper_95 = stats::plogis(eta + 1.96 * standard_error),
+        prediction_error = "",
+        stringsAsFactors = FALSE
+      )
+    }
+  }
+  if (!length(output)) return(data.frame())
+  do.call(rbind, output)
+}
+
 run_dharma_diagnostics <- function(fit, season) {
   tryCatch({
     simulation <- DHARMa::simulateResiduals(fittedModel = fit, n = 250, plot = FALSE)
@@ -331,6 +399,7 @@ scales <- scaled$scales
 
 selection_rows <- list()
 coefficient_rows <- list()
+response_curve_rows <- list()
 seasonal_fits <- list()
 diagnostics <- list()
 for (season in seasons) {
@@ -367,6 +436,10 @@ for (season in seasons) {
     }
   }
   diagnostics[[season]] <- run_dharma_diagnostics(best_fit, season)
+  season_curves <- make_response_curves(best_fit, season_data, season, best_name, scales)
+  if (nrow(season_curves) > 0) {
+    response_curve_rows[[length(response_curve_rows) + 1]] <- season_curves
+  }
   seasonal_fits[[season]] <- list(
     n = nrow(season_data),
     positive_visits = sum(season_data$mortality_present),
@@ -377,6 +450,7 @@ for (season in seasons) {
     best_model_AICc = valid$AICc[1],
     best_model_convergence = fits[[best_name]]$row$message,
     best_model_coefficients = extract_coefficients(best_fit, season, best_name, scales),
+    response_curve_predictors = if (nrow(season_curves) > 0) unique(season_curves$predictor) else character(),
     diagnostics = diagnostics[[season]]
   )
 }
@@ -386,6 +460,9 @@ selection <- selection[order(selection$season, selection$AICc), , drop = FALSE]
 coefficients <- if (length(coefficient_rows)) do.call(rbind, coefficient_rows) else data.frame()
 write.csv(selection, file.path(args$out_dir, "ubc_seasonal_model_selection.csv"), row.names = FALSE, na = "")
 write.csv(coefficients, file.path(args$out_dir, "ubc_seasonal_coefficients.csv"), row.names = FALSE, na = "")
+response_curves <- if (length(response_curve_rows)) do.call(rbind, response_curve_rows) else data.frame()
+write.csv(response_curves, file.path(args$out_dir, "ubc_seasonal_response_curves.csv"),
+          row.names = FALSE, na = "")
 
 static <- unique(data[c("facade_id", "facade_area_m2", "glass_area_m2",
                         "facade_porous_cover_percent", "facade_tree_cover_percent",
@@ -424,6 +501,10 @@ report <- list(
     offset = "log(survey_hours), with METHOD 1=24h and METHOD 2=48h",
     scaling = "predictors standardized to mean 0 and SD 1 on the full balanced panel",
     model_selection = "AICc; delta AICc <= 2 reported as plausible",
+    conditional_response_curves = paste(
+      "Fixed-effect predictions with random effects excluded; other standardized predictors fixed at zero.",
+      "Both 24-hour and 48-hour survey exposures are shown; confidence intervals are Wald intervals on the link scale."
+    ),
     diagnostics = diagnostics,
     lobo_validation = "leave-one-building-out on the full candidate model; population-level predictions exclude held-out random effects"
   ),
