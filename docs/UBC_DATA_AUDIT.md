@@ -1,6 +1,6 @@
 # UBC bird-window collision data: ingestion and audit
 
-**Status:** one raw observation-process file is checksum-verified; the remaining raw files and the 2023 façade-survey appendix are not yet imported. No UBC model has been fitted into the BNBU pipeline.
+**Status:** the De Groot source manifest is pinned to the Zenodo archive, but no raw source file is currently committed. A previous local Search.Efficiency.csv snapshot failed the published byte-level checksum and has been removed; it must not be used as a verified source. The new CI workflow downloads all six archived files into an ignored working directory and checks their published MD5 values before auditing them. No UBC model has been fitted into the BNBU pipeline.
 
 ## Two distinct UBC data products
 
@@ -14,24 +14,11 @@
 
 The six source files and pinned MD5 values are recorded in scripts/audit_ubc_sources.py. Dryad data are published under CC0; cite the dataset and paper.
 
-**Imported and verified:** Search.Efficiency.csv (29 rows; 1,766 bytes; MD5 f9e7a8816ef52eb9d3523f0f14b40d6b).
+**Pinned source file:** Search.Efficiency.csv is listed by Zenodo as 1,766 bytes with MD5 f9e7a8816ef52eb9d3523f0f14b40d6b. The copy previously committed in this repository had MD5 cb1e643c30993a444db2405dba1c2dcc and did not match the archive; it has been removed. The source is not considered downloaded or checksum-verified until the CI fetch step succeeds.
 
-**Not yet imported:** Carcass.Persistence.csv, Observed.Collision.Counts.csv, READ.ME.xlsx, Search.Schedule.csv and UBC.point.counts.csv. The downloader checks each published MD5 before writing any file.
+**Not currently committed:** all six De Groot files: Carcass.Persistence.csv, Observed.Collision.Counts.csv, READ.ME.xlsx, Search.Efficiency.csv, Search.Schedule.csv and UBC.point.counts.csv. The pinned downloader checks each published MD5 before writing any file. The CI workflow downloads them into ignored data/derived/ubc/ and emits an audit artifact in the ephemeral runner.
 
-The 29 search-efficiency trials contain repeated search histories. The descriptive sequential risk sets are:
-
-| Search | At-risk trials with observed result | Found | Conditional fraction |
-|---:|---:|---:|---:|
-| 1 | 29 | 16 | 55.2% |
-| 2 | 13 | 5 | 38.5% |
-| 3 | 7 | 1 | 14.3% |
-| 4 | 5 | 1 | 20.0% |
-| 5 | 3 | 0 | 0.0% |
-| 6 | 3 | 0 | 0.0% |
-
-One missing result while at risk occurs at each of searches 3, 4 and 5. Once a carcass is detected, its subsequent NA cells are no longer at risk; they are not zero detections. Seasonal first-search samples are small and unbalanced: fall 0/2, spring 2/3, summer 3/3 and winter 11/21.
-
-These are descriptive trial hazards only. They are not the final GenEst search-efficiency parameter, not a BNBU correction factor, and not enough to correct observed collisions without the persistence model and search schedule.
+The paper reports 29 search-efficiency trials. Repeated search histories must be analyzed as sequential risk sets: once a carcass is detected it leaves the risk set; later NA cells are not zero detections. Recompute the exact trial-level risk sets from the checksum-verified archive before quoting empirical fractions. These trials are observation-process inputs, not collision labels. They are not a BNBU correction factor, and cannot correct observed collisions without the persistence model and actual search schedule.
 
 ### B. Zulian et al. (2023), repeated façade-survey Appendix 1
 
@@ -58,9 +45,9 @@ Crucially, 142 positive façade-surveys and 152 individual collision events are 
 ## Reproduction
 
 ~~~bash
-python scripts/audit_ubc_sources.py --data-dir data/raw/ubc --out results/ubc_audit.json
-python scripts/audit_ubc_sources.py --fetch --data-dir data/raw/ubc --out results/ubc_audit.json
+python scripts/audit_ubc_sources.py --data-dir data/derived/ubc --out results/ubc_audit.json
+python scripts/audit_ubc_sources.py --fetch --data-dir data/derived/ubc --out results/ubc_audit.json
 python -m pytest -q tests
 ~~~
 
-The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks.
+The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks. The UBC CI workflow runs the fetch-and-audit command on relevant pull requests; a passing workflow is the evidence that the archive bytes were verified.
