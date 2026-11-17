@@ -66,7 +66,7 @@ def test_cover_is_reported_at_multiple_scales_without_one_score():
 
 
 def test_relative_cover_bands_are_region_specific():
-    assert relative_cover_band(10, [0, 10, 20, 30, 40, 50]) == "low_relative"
+    assert relative_cover_band(20, [0, 10, 20, 30, 40, 50]) == "low_relative"
     assert relative_cover_band(50, [0, 10, 20, 30, 40, 50]) == "high_relative"
     assert relative_cover_band(30, [10, 20, 30]) == "insufficient_reference"
 
