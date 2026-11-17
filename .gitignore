@@ -6,3 +6,5 @@ __pycache__/
 .venv/
 data/derived/uvic/
 results/uvic_observed_rate_baseline.json
+data/derived/ubc/
+results/ubc_audit.json
