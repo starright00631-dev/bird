@@ -16,8 +16,9 @@ The repository now has a mechanistic research codebase and a multi-pathway faça
 | Local approach flow | Identifiability and approach-event contracts exist | Continuous approach observations or a defensible effort-corrected movement proxy |
 | Glass optics | Finite-pane reflection/transmission and solar geometry exist | Full-assembly VLR/VLT/spectral R/T and multi-time bird-facing imagery |
 | Flight/contact | 3D movement/control/contact modules exist | Independent metric trajectories and held-out bird/trial validation |
-| Observation bias | Detection/persistence framework and event identifiability exist | Comparable local search-effort, persistence and detection measurements |
+| Observation bias | UVic and UBC searcher-efficiency/persistence sources are pinned and audited; UBC De Groot observation-process sensitivities are separate from collision outcomes | Obtain BNBU search effort, carcass persistence and searcher-detection trials before local correction |
 | Vegetation | Five buffers and four distinct ecological pathways exist | Human-audited canopy/land-cover layers, species/resources and route features |
+| External facade benchmark | Zulian 2023 Appendix 1 is pinned as an 8,835-row, 57-facade x 155-date panel; paper-aligned seasonal binomial GLMM and grouped-building validation are implemented in CI | Review seasonal AICc rankings, residual diagnostics and leave-one-building-out performance; do not transport UBC coefficients as BNBU calibration | 
 | Intervention | Evidence-gated candidate comparison exists | Matched/randomized BACI with pane-specific approach denominators and safety/cost measures |
 
 ## Main research constraints
@@ -35,7 +36,7 @@ The repository now has a mechanistic research codebase and a multi-pathway faça
 2. Build a reproducible external data ingestion layer with source hashes, units, taxonomic crosswalks, sampling effort and data-grain metadata.
 3. Acquire effort-aware bird occurrence/activity data for Guangdong/Zhuhai; do not treat regional presence as pane approach flow.
 4. Build a human-audited glass/vegetation image feature pipeline and hold out sites during validation.
-5. Fit an interpretable hierarchical count/rate baseline before trying boosted-tree challengers.
+5. Keep observed carcass-presence GLMM and event-count/rate models as separate endpoints; reproduce the external UBC baseline before fitting local BNBU models.
 6. Implement field-ready pane-level intervention and monitoring records, then estimate effects only from comparable designs.
 
-All new project work is committed directly to `main`. Campus 3D remains a separate supporting workstream; it is not the main research deliverable or a prerequisite for external-data model development.
+All new project work must use a feature branch and pull request, with review and passing CI before merge to `main`. Campus 3D remains a separate supporting workstream; it is not the main research deliverable or a prerequisite for external-data model development.
