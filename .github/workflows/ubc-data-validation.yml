@@ -1,0 +1,56 @@
+name: UBC pinned source audit
+
+on:
+  pull_request:
+    paths:
+      - "scripts/audit_ubc_sources.py"
+      - "tests/test_audit_ubc_sources.py"
+      - "docs/UBC_DATA_AUDIT.md"
+      - "docs/COORDINATION_LOG.md"
+      - "data/raw/ubc/**"
+      - ".github/workflows/ubc-data-validation.yml"
+  push:
+    paths:
+      - "scripts/audit_ubc_sources.py"
+      - "tests/test_audit_ubc_sources.py"
+      - "docs/UBC_DATA_AUDIT.md"
+      - "docs/COORDINATION_LOG.md"
+      - "data/raw/ubc/**"
+      - ".github/workflows/ubc-data-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test runner
+        run: python -m pip install pytest
+      - name: Download and checksum-verify all De Groot source files
+        run: python scripts/audit_ubc_sources.py --fetch --data-dir data/derived/ubc --out data/derived/ubc/ubc_audit.json
+      - name: Assert source completeness and observation-process schemas
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("data/derived/ubc/ubc_audit.json").read_text())
+          assert report["files_missing"] == []
+          assert len(report["files_present"]) == 6
+          assert report["search_efficiency"]["rows"] == 29
+          assert report["search_efficiency"]["status"] == "repeated_detection_history_parsed"
+          assert report["carcass_persistence"]["rows"] == 103
+          assert report["carcass_persistence"]["status"] == "interval_censoring_fields_detected"
+          print("UBC_SOURCES_VERIFIED", report["files_present"])
+          print("UBC_SEARCH_EFFICIENCY", report["search_efficiency"]["conditional_detection_by_search"])
+          print("UBC_CARCASS_PERSISTENCE", report["carcass_persistence"])
+          PY
+      - name: Run UBC audit unit tests
+        run: python -m pytest -q tests/test_audit_ubc_sources.py
