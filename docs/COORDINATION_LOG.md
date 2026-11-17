@@ -23,7 +23,7 @@ Repository: starright00631-dev/bird
 ## External-data work added
 
 - De Groot et al. Dryad/Zenodo UBC dataset: all six source files are downloaded and checksum-verified in the CI artifact; only Search.Efficiency.csv is committed as a small source snapshot. The audit verifies 8,846 collision rows, 8,831 facade-date keys, 152 fatality events, 142 positive visits, 103 persistence trials, 29 search-efficiency trials, 155 scheduled dates and 303 point-count species rows.
-- Zulian et al. 2023 Appendix 1: identified as the 8,835-row façade-survey risk set, but the raw CSV has not yet been downloaded or verified.
+- Zulian et al. 2023 Appendix 1: downloaded and pinned to SHA-256 0baba75389249af1dad546868183f956dd38facef64ae35b04ab761e293fd8a7; complete 8,835-row panel with 57 façades x 155 dates, 142 positive mortality visits and 152 events. It is the primary panel for the 2023 seasonal façade model.
 - The UBC data are an external temperate-Pacific transfer benchmark, not BNBU calibration truth.
 - Search-efficiency histories and carcass-persistence trials are observation-process data. They must not be used as collision labels.
 - The UBC De Groot and Zulian datasets are separate products; do not join them without verified row keys and grain.
@@ -41,7 +41,7 @@ Repository: starright00631-dev/bird
 
 ## Immediate next tasks
 
-1. Download and checksum-verify Zulian Appendix 1; verify its 57 façade rows, keys and covariate definitions before joining.
+1. Fit and reproduce the paper-aligned season-specific binomial mixed-effects model on the pinned Zulian 8,835-row panel; keep De Groot as a separate observation-process benchmark.
 2. Build the façade-date panel from the 8,846 De Groot collision rows, preserving 152 events, 142 positive visits, explicit zeros and four missing facade-date keys.
 3. Fit the paper-aligned seasonal binomial mixed-effects baseline with façade/building grouping and the survey-interval exposure term; separately retain a count model for event counts.
 4. Test multicollinearity and the eight-building clustering limitation before interpreting VegPer, TreeCov, StorReflVeg, AreaGlass or FacArea effects.
@@ -60,7 +60,7 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Search schedule: 155 dates, five periods, 225 monitoring days, all eight buildings scheduled on every date.
 - Searcher efficiency: 29 trials; carcass persistence: 103 trials (85 finite intervals, 18 right-censored); point counts: 303 species rows in 86 checklists.
 - The codebook is inspected; the 50-m VEGE_PERC is building-level and is not interchangeable with the 2023 façade-level TreeCov or StorReflVeg.
-- Next model input is the separately published Zulian et al. 2023 Appendix 1. Verify its exact keys and 57-façade grain before joining to the survey panel.
+- Zulian Appendix 1 is now pinned and audited as the primary 8,835-row survey panel. Its feature mapping is FACADE_AREA, AREA_GLASS, PERC_VEG_AND_POROUS_SURFACE_FACADE, TREECOVER_FACADE_PERCENT and STORIES_REFLECT_CANOPY. Do not use building-level VEGE_PERC as the façade-level VegPer feature.
 
 
 ## Zulian façade covariate ingestion (2026-11-17)
@@ -68,4 +68,4 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Added a separate downloader/schema inspector for the ACE-ECO Appendix 1 CSV from Zulian et al. (2023).
 - Appendix 1 is a complete 8,835-row repeated survey panel (57 façades x 155 dates), not a 57-row covariate table. The exact SHA-256 is pinned; no duplicate or missing facade-date keys remain.
 - Do not row-join it to De Groot: both sources have 152 mortality events, but their date-level keys differ and eight common-key outcomes mismatch. Use Appendix 1 as the primary model panel and De Groot as a separate observation-process/aggregate cross-check.
-- Next: pin the discovered SHA-256, confirm key coverage against the 57 facade labels in Observed.Collision.Counts.csv, build a one-row-per-facade feature table, then fit the season-specific binomial mixed model with log survey-hours offset.
+- Cross-source reconciliation: the 57 façade keys match, but only 139 of 155 survey dates overlap; 7,919 facade-date keys are common, 916 are Appendix-only and 912 De Groot-only. Eight common-key mortality counts and 171 METHOD values differ. No row join is allowed. Next: reproduce the four seasonal GLMM candidate sets, log-hours offset, nested building/façade random effects and AICc ranking on Appendix 1 alone.
