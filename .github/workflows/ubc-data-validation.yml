@@ -2,6 +2,7 @@ name: UBC pinned source audit
 
 on:
   pull_request:
+    branches: [main]
     paths:
       - "scripts/audit_ubc_sources.py"
       - "tests/test_audit_ubc_sources.py"
@@ -20,6 +21,7 @@ on:
       - "data/raw/ubc/**"
       - ".github/workflows/ubc-data-validation.yml"
   push:
+    branches: [main]
     paths:
       - "scripts/audit_ubc_sources.py"
       - "tests/test_audit_ubc_sources.py"
@@ -37,6 +39,10 @@ on:
       - "data/raw/ubc/**"
       - ".github/workflows/ubc-data-validation.yml"
   workflow_dispatch:
+
+concurrency:
+  group: ubc-data-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read

@@ -102,7 +102,7 @@ model_fixed_terms <- list(
     "facade_area_z * glass_area_z + facade_porous_cover_z +",
     "facade_tree_cover_z + stories_reflecting_canopy_z"
   ),
-  building_only = "facade_area_z * glass_area_z",
+  building_only = "facade_area_z * glass_area_z + stories_reflecting_canopy_z",
   vegetation_only = paste(
     "facade_porous_cover_z + facade_tree_cover_z +",
     "stories_reflecting_canopy_z"
@@ -114,7 +114,7 @@ make_formula <- function(model_name) {
   fixed <- model_fixed_terms[[model_name]]
   as.formula(paste(
     "mortality_present ~", fixed,
-    "+ offset(log(survey_hours)) + (1 | building_id/facade_label)"
+    "+ offset(log(survey_hours)) + (1 | facade_id)"
   ))
 }
 
@@ -175,7 +175,7 @@ auc_rank <- function(y, probability) {
   (sum(ranks[y == 1]) - positive * (positive + 1) / 2) / (positive * negative)
 }
 
-extract_coefficients <- function(fit, season, model_name, scales) {
+extract_coefficients <- function(fit, season, model_name) {
   table <- summary(fit)$coefficients$cond
   if (is.null(table) || nrow(table) == 0) return(data.frame())
   result <- data.frame(
@@ -191,27 +191,6 @@ extract_coefficients <- function(fit, season, model_name, scales) {
     odds_ratio_95_high_per_sd = exp(table[, "Estimate"] + 1.96 * table[, "Std. Error"]),
     stringsAsFactors = FALSE
   )
-  result$odds_ratio_per_published_unit_at_mean_other_predictor <- NA_real_
-  for (i in seq_len(nrow(result))) {
-    term <- result$term[i]
-    beta <- result$estimate_log_odds_per_sd[i]
-    if (term == "glass_area_z") {
-      result$odds_ratio_per_published_unit_at_mean_other_predictor[i] <-
-        exp(beta * 58 / scales$glass_area_m2$sd)
-    } else if (term == "facade_area_z") {
-      result$odds_ratio_per_published_unit_at_mean_other_predictor[i] <-
-        exp(beta * 235 / scales$facade_area_m2$sd)
-    } else if (term == "stories_reflecting_canopy_z") {
-      result$odds_ratio_per_published_unit_at_mean_other_predictor[i] <-
-        exp(beta * 2.6 / scales$stories_reflecting_canopy$sd)
-    } else if (term == "facade_porous_cover_z") {
-      result$odds_ratio_per_published_unit_at_mean_other_predictor[i] <-
-        exp(beta * 10 / scales$facade_porous_cover_percent$sd)
-    } else if (term == "facade_tree_cover_z") {
-      result$odds_ratio_per_published_unit_at_mean_other_predictor[i] <-
-        exp(beta * 10 / scales$facade_tree_cover_percent$sd)
-    }
-  }
   result
 }
 
@@ -246,7 +225,9 @@ make_response_curves <- function(fit, season_data, season, model_name, scales) {
         building_id = factor(rep(levels(season_data$building_id)[1], length(grid)),
                              levels = levels(season_data$building_id)),
         facade_label = factor(rep(levels(season_data$facade_label)[1], length(grid)),
-                              levels = levels(season_data$facade_label))
+                              levels = levels(season_data$facade_label)),
+        facade_id = factor(rep(levels(season_data$facade_id)[1], length(grid)),
+                           levels = levels(season_data$facade_id))
       )
       newdata[[spec$z]] <- (grid - scales[[spec$raw]]$mean) / scales[[spec$raw]]$sd
       prediction <- tryCatch(
@@ -325,10 +306,11 @@ fit_leave_one_building_out <- function(data, seasons) {
       scaled <- scale_predictors(train_raw, test_raw)
       train <- scaled$train
       test <- scaled$test
-      train$building_id <- factor(train$building_id)
-      train$facade_label <- factor(train$facade_label)
-      test$building_id <- factor(test$building_id, levels = unique(c(levels(train$building_id), as.character(test$building_id))))
-      test$facade_label <- factor(test$facade_label, levels = unique(c(levels(train$facade_label), as.character(test$facade_label))))
+      train$facade_id <- droplevels(factor(train$facade_id))
+      test$facade_id <- factor(
+        test$facade_id,
+        levels = unique(c(levels(train$facade_id), as.character(test$facade_id)))
+      )
       fit <- tryCatch(
         glmmTMB(
           formula = full_formula,
@@ -411,7 +393,7 @@ for (season in seasons) {
     selection_rows[[length(selection_rows) + 1]] <- result$row
     if (!is.null(result$fit)) {
       coefficient_rows[[length(coefficient_rows) + 1]] <-
-        extract_coefficients(result$fit, season, model_name, scales)
+        extract_coefficients(result$fit, season, model_name)
     }
   }
   local_selection <- do.call(rbind, lapply(fits, function(x) x$row))
@@ -449,13 +431,24 @@ for (season in seasons) {
     plausible_models = valid$model[valid$AICc - min(valid$AICc) <= 2],
     best_model_AICc = valid$AICc[1],
     best_model_convergence = fits[[best_name]]$row$message,
-    best_model_coefficients = extract_coefficients(best_fit, season, best_name, scales),
+    best_model_coefficients = extract_coefficients(best_fit, season, best_name),
     response_curve_predictors = if (nrow(season_curves) > 0) unique(season_curves$predictor) else character(),
     diagnostics = diagnostics[[season]]
   )
 }
 
 selection <- do.call(rbind, selection_rows)
+expected_model_df <- c(full = 8L, building_only = 6L, vegetation_only = 5L, null = 2L)
+for (row_index in seq_len(nrow(selection))) {
+  row <- selection[row_index, ]
+  if (isTRUE(row$converged) &&
+      as.integer(row$k) != expected_model_df[[row$model]]) {
+    stop(sprintf(
+      "Model %s has df=%s; published Build:Fac specification expects df=%s",
+      row$model, row$k, expected_model_df[[row$model]]
+    ), call. = FALSE)
+  }
+}
 selection <- selection[order(selection$season, selection$AICc), , drop = FALSE]
 coefficients <- if (length(coefficient_rows)) do.call(rbind, coefficient_rows) else data.frame()
 write.csv(selection, file.path(args$out_dir, "ubc_seasonal_model_selection.csv"), row.names = FALSE, na = "")
@@ -497,7 +490,7 @@ report <- list(
     estimation = "maximum likelihood via glmmTMB",
     seasonal_fits = seasonal_fits,
     candidate_sets = model_fixed_terms,
-    random_effects = "(1 | building_id/facade_label)",
+    random_effects = "(1 | facade_id), matching the published (1 | Build:Fac) grouping",
     offset = "log(survey_hours), with METHOD 1=24h and METHOD 2=48h",
     scaling = "predictors standardized to mean 0 and SD 1 on the full balanced panel",
     model_selection = "AICc; delta AICc <= 2 reported as plausible",
