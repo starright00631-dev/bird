@@ -80,6 +80,9 @@ jobs:
           print("UBC_OBSERVED_COLLISION_AUDIT", report["observed_collision_counts"])
           print("UBC_SEARCH_SCHEDULE_AUDIT", report["search_schedule"])
           print("UBC_POINT_COUNT_AUDIT", report["point_counts"])
+          print("UBC_OBSERVED_COLLISION_AUDIT", report["observed_collision_counts"])
+          print("UBC_SEARCH_SCHEDULE_AUDIT", report["search_schedule"])
+          print("UBC_POINT_COUNT_AUDIT", report["point_counts"])
           PY
       - name: Run UBC audit unit tests
         run: python -m pytest -q tests/test_audit_ubc_sources.py
