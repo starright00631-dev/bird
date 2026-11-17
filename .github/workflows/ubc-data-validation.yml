@@ -11,6 +11,8 @@ on:
       - "scripts/inspect_zulian_appendix.py"
       - "scripts/build_ubc_facade_panel.py"
       - "scripts/fit_ubc_facade_glmm.R"
+      - "scripts/summarize_ubc_lobo_uncertainty.py"
+      - "tests/test_ubc_lobo_uncertainty.py"
       - "tests/test_ubc_facade_panel.py"
       - "tests/test_inspect_zulian_appendix.py"
       - "requirements.txt"
@@ -227,6 +229,19 @@ jobs:
           print("UBC_MODEL_LIMITATIONS", report["limitations"])
           PY
 
+      - name: Paired held-out-building uncertainty (CPU only)
+        run: |
+          python scripts/summarize_ubc_lobo_uncertainty.py --input results/ubc/ubc_leave_one_building_out_validation.csv --output results/ubc/ubc_lobo_cluster_uncertainty.json --resamples 5000 --seed 20261117
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path("results/ubc/ubc_lobo_cluster_uncertainty.json").read_text())
+          rows = report["results"]
+          assert len(rows) == 10
+          assert all(r["n_held_out_buildings"] == 8 and r["n_cluster_resamples"] == 5000 for r in rows)
+          assert next(r for r in rows if r["stratum"] == "overall" and r["metric"] == "brier")["n_test_visits"] == 8835
+          print("UBC_CLUSTER_UNCERTAINTY", json.dumps(rows))
+          PY
       - name: Upload verified De Groot source snapshot and audit report
         uses: actions/upload-artifact@v4
         with:
