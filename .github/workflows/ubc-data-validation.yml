@@ -31,11 +31,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install test runner
-        run: python -m pip install pytest
+      - name: Install codebook reader and test runner
+        run: python -m pip install pytest openpyxl
       - name: Download and checksum-verify all De Groot source files
         run: python scripts/audit_ubc_sources.py --fetch --data-dir data/derived/ubc --out data/derived/ubc/ubc_audit.json
-      - name: Assert source completeness and observation-process schemas
+      - name: Inspect the READ.ME codebook without inferring column mappings
+        run: python scripts/inspect_ubc_codebook.py --input data/derived/ubc/READ.ME.xlsx --out data/derived/ubc/codebook_inspection.json
+      - name: Assert source completeness, codebook structure and observation-process schemas
         run: |
           python - <<'PY'
           import json
@@ -48,6 +50,10 @@ jobs:
           assert report["search_efficiency"]["status"] == "repeated_detection_history_parsed"
           assert report["carcass_persistence"]["rows"] == 103
           assert report["carcass_persistence"]["status"] == "interval_censoring_fields_detected"
+          codebook = json.loads(Path("data/derived/ubc/codebook_inspection.json").read_text())
+          assert codebook["sheet_count"] > 0
+          assert any(sheet["preview_rows"] for sheet in codebook["sheets"])
+          print("UBC_CODEBOOK", json.dumps(codebook, ensure_ascii=False))
           print("UBC_SOURCES_VERIFIED", report["files_present"])
           print("UBC_SEARCH_EFFICIENCY", report["search_efficiency"]["conditional_detection_by_search"])
           print("UBC_CARCASS_PERSISTENCE", report["carcass_persistence"])
