@@ -95,8 +95,12 @@ def audit_detection_sources(search_efficiency_text: str, search_schedule_text: s
                 found += int(value == "1")
                 not_found += int(value == "0")
         risk_sets.append({
-            "occasion": occasion, "at_risk": risk, "detected": found,
-            "not_detected": not_found, "missing_outcome_while_at_risk": missing,
+            "occasion": occasion,
+            "at_risk": risk,
+            "at_risk_including_missing": risk + missing,
+            "detected": found,
+            "not_detected": not_found,
+            "missing_outcome_while_at_risk": missing,
             "conditional_detection_fraction_observed": found / risk if risk else None,
         })
     for row in search:

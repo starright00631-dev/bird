@@ -23,7 +23,10 @@ def test_detection_audit_keeps_missing_outcomes_separate_from_no_detection():
     audit=audit_detection_sources(to_csv(search),to_csv(schedule),to_csv(persistence))
     assert audit["searcher_efficiency"]["risk_sets"][0]["at_risk"] == 3
     assert audit["searcher_efficiency"]["risk_sets"][0]["detected"] == 1
-    assert audit["searcher_efficiency"]["risk_sets"][1]["at_risk"] == 2
+    assert audit["searcher_efficiency"]["risk_sets"][1]["at_risk"] == 1
+    assert audit["searcher_efficiency"]["risk_sets"][1]["at_risk_including_missing"] == 2
+    assert audit["searcher_efficiency"]["risk_sets"][1]["detected"] == 1
+    assert audit["searcher_efficiency"]["risk_sets"][1]["not_detected"] == 0
     assert audit["searcher_efficiency"]["risk_sets"][1]["missing_outcome_while_at_risk"] == 1
     assert audit["carcass_persistence"]["finite_interval_observations"] == 1
     assert audit["carcass_persistence"]["right_censored_observations"] == 1

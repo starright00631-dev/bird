@@ -34,6 +34,11 @@ Repository: starright00631-dev/bird
 - This PR adds a pull-request workflow that fetches and checksum-verifies all six De Groot files in an ignored CI directory, plus downloader fail-closed tests.
 - Independent BNBU Bird–Glass conversations should use this log for handoff. Separate ChatGPT conversations are not continuously visible to one another; GitHub is the durable shared coordination surface.
 
+## Current handoff (2026-11-17)
+
+- PR #17 is merged as 841af682. Post-merge CI passed: 157 tests passed, 1 skipped; UBC source audit verified all six De Groot files and the UVic source audit completed.
+- The main branch has also added pinned UVic searcher-efficiency and carcass-persistence trial ingestion. This PR inspects the separate De Groot READ.ME.xlsx codebook before any field mapping is attempted.
+
 ## Immediate next tasks
 
 1. Download and checksum-verify the remaining De Groot Dryad files; inspect the codebook before mapping columns.
