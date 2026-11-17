@@ -165,15 +165,30 @@ jobs:
           import csv, json
           from pathlib import Path
           report = json.loads(Path("results/ubc/ubc_seasonal_model_run.json").read_text())
+          panel_audit = json.loads(Path("data/derived/ubc/ubc_facade_panel_audit.json").read_text())
+          assert report["source"]["sha256"] == panel_audit["source_sha256"]
+          assert report["source"]["sha256_pinned"] is True
           assert report["model"]["primary_outcome"] == "mortality_present = 1(COLLISIONMORTALITY_X > 0)"
           assert set(report["model"]["seasonal_fits"]) == {"fall", "winter", "spring", "summer"}
           with Path("results/ubc/ubc_seasonal_model_selection.csv").open(newline="") as handle:
               rows = list(csv.DictReader(handle))
+          assert len(rows) == 16, f"Expected 4 candidate models x 4 seasons, got {len(rows)}"
+          expected_n = {"fall": 1881, "winter": 3192, "spring": 1881, "summer": 1881}
+          expected_df = {"full": "8", "building_only": "6", "vegetation_only": "5", "null": "2"}
+          for row in rows:
+              assert row["n"] == str(expected_n[row["season"]])
+              assert row["k"] == expected_df[row["model"]]
           assert rows, "No seasonal model-selection rows"
           for season in ("fall", "winter", "spring", "summer"):
               season_rows = [r for r in rows if r["season"] == season]
               assert any(r["converged"].lower() == "true" and r["AICc"] for r in season_rows), f"No converged model for {season}"
-          assert Path("results/ubc/ubc_leave_one_building_out_validation.csv").exists()
+          lobo_path = Path("results/ubc/ubc_leave_one_building_out_validation.csv")
+          assert lobo_path.exists()
+          with lobo_path.open(newline="") as handle:
+              lobo_rows = list(csv.DictReader(handle))
+          assert len(lobo_rows) == 32, f"Expected 4 seasons x 8 held-out buildings, got {len(lobo_rows)}"
+          assert Path("results/ubc/ubc_facade_feature_correlations.csv").exists()
+          assert Path("results/ubc/ubc_facade_feature_vif.csv").exists()
           with Path("results/ubc/ubc_seasonal_response_curves.csv").open(newline="") as handle:
               curves = list(csv.DictReader(handle))
           assert curves, "No conditional response curves"
