@@ -537,7 +537,64 @@ write.csv(data.frame(feature = names(vif_values), VIF = as.numeric(vif_values)),
           file.path(args$out_dir, "ubc_facade_feature_vif.csv"), row.names = FALSE)
 
 lobo <- fit_leave_one_building_out(data, seasons)
+
+summarize_lobo <- function(results) {
+  season_names <- sort(unique(as.character(results$season)))
+  summaries <- lapply(season_names, function(season_name) {
+    part <- results[as.character(results$season) == season_name, , drop = FALSE]
+    valid <- part[
+      part$converged & part$n_test > 0 &
+        is.finite(part$brier) & is.finite(part$baseline_brier) &
+        is.finite(part$log_loss) & is.finite(part$baseline_log_loss),
+      , drop = FALSE
+    ]
+    if (nrow(valid) == 0) {
+      return(data.frame(
+        season = season_name, expected_building_folds = nrow(part),
+        evaluated_building_folds = 0L, test_visits = 0L,
+        test_positive_visits = 0L, oof_brier = NA_real_,
+        offset_only_brier = NA_real_, delta_brier = NA_real_,
+        oof_log_loss = NA_real_, offset_only_log_loss = NA_real_,
+        delta_log_loss = NA_real_, brier_folds_better = 0L,
+        log_loss_folds_better = 0L, mean_fold_auc = NA_real_,
+        auc_defined_folds = 0L, stringsAsFactors = FALSE
+      ))
+    }
+    total_n <- sum(valid$n_test)
+    weighted <- function(column) {
+      sum(valid$n_test * valid[[column]]) / total_n
+    }
+    auc_values <- valid$auc[is.finite(valid$auc)]
+    oof_brier <- weighted("brier")
+    baseline_brier <- weighted("baseline_brier")
+    oof_log_loss <- weighted("log_loss")
+    baseline_log_loss <- weighted("baseline_log_loss")
+    data.frame(
+      season = season_name,
+      expected_building_folds = nrow(part),
+      evaluated_building_folds = nrow(valid),
+      test_visits = total_n,
+      test_positive_visits = sum(valid$n_test_positive),
+      oof_brier = oof_brier,
+      offset_only_brier = baseline_brier,
+      delta_brier = oof_brier - baseline_brier,
+      oof_log_loss = oof_log_loss,
+      offset_only_log_loss = baseline_log_loss,
+      delta_log_loss = oof_log_loss - baseline_log_loss,
+      brier_folds_better = sum(valid$brier < valid$baseline_brier),
+      log_loss_folds_better = sum(valid$log_loss < valid$baseline_log_loss),
+      mean_fold_auc = if (length(auc_values)) mean(auc_values) else NA_real_,
+      auc_defined_folds = length(auc_values),
+      stringsAsFactors = FALSE
+    )
+  })
+  do.call(rbind, summaries)
+}
+
+lobo_summary <- summarize_lobo(lobo)
 write.csv(lobo, file.path(args$out_dir, "ubc_leave_one_building_out_validation.csv"),
+          row.names = FALSE, na = "")
+write.csv(lobo_summary, file.path(args$out_dir, "ubc_leave_one_building_out_summary.csv"),
           row.names = FALSE, na = "")
 
 report <- list(
@@ -563,7 +620,12 @@ report <- list(
       "Confidence intervals are Wald intervals on the link scale; curves are observational predictions, not causal treatment effects."
     ),
     diagnostics = diagnostics,
-    lobo_validation = "leave-one-building-out on the full candidate model; population-level predictions exclude held-out random effects"
+    lobo_validation = "leave-one-building-out on the full candidate model; population-level predictions exclude held-out random effects",
+    lobo_validation_summary = lobo_summary,
+    lobo_interpretation = paste(
+      "The offset-only binomial model is the predictive control. Positive delta Brier/log-loss means the full GLMM performs worse.",
+      "These are internal held-out-building transfer checks, not external-site validation."
+    )
   ),
   feature_correlations = correlation_matrix,
   feature_vif = vif_values,
@@ -609,5 +671,6 @@ cat(jsonlite::toJSON(list(
   seasonal_best_models = lapply(seasonal_fits, function(x) x$best_model),
   seasonal_positive_visits = lapply(seasonal_fits, function(x) x$positive_visits),
   lobo_rows = nrow(lobo),
+  lobo_summary = lobo_summary,
   output_directory = args$out_dir
 ), auto_unbox = TRUE, pretty = TRUE))
