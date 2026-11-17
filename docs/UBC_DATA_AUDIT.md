@@ -211,3 +211,21 @@ canopy, but it does not provide categorical glass product/type labels
 reflectance/transmittance. The final system will need a separate photo/spec
 inspection layer for glass type. It will also need local BNBU vegetation and
 glass observations before making campus-specific absolute-risk claims.
+
+
+### Leave-one-building-out predictive diagnostic
+
+The seasonal GLMM is also evaluated by holding out each of the eight buildings in turn. Predictions for held-out façades exclude their random intercepts. The comparator is an intercept-only binomial model with the same log survey-hours offset, so it preserves the 24/48-hour exposure difference.
+
+The first reproducible 32-fold run gives the following test-visit-weighted out-of-building scores (lower is better):
+
+| Season | Held-out visits | Positive visits | Full GLMM Brier | Offset-only Brier | Δ Brier | Full GLMM log loss | Offset-only log loss | Δ log loss |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fall | 1,881 | 57 | 0.03011 | 0.02973 | +0.00038 | 0.13388 | 0.14271 | -0.00883 |
+| Winter | 3,192 | 51 | 0.02448 | 0.01577 | +0.00871 | 0.10987 | 0.08354 | +0.02633 |
+| Spring | 1,881 | 26 | 0.02348 | 0.01368 | +0.00980 | 0.09772 | 0.07460 | +0.02312 |
+| Summer | 1,881 | 8 | 0.00433 | 0.00424 | +0.00009 | 0.03163 | 0.02797 | +0.00366 |
+
+Positive Δ means the full GLMM is worse than the exposure-only comparator. In this run, the full model has worse pooled Brier score in all four seasons and improves pooled log loss only in fall. It beats the baseline in 17 of 32 individual folds on Brier and 17 of 32 on log loss. Fold-mean AUC is approximately 0.63 in fall, 0.50 in winter, 0.71 in spring and 0.54 in summer; AUC is undefined for folds with a single outcome class, and summer has only eight positive visits overall.
+
+**Decision:** retain this model as a paper-aligned, within-UBC association/reproduction benchmark, not as a reliable building-ranking or transferable prediction model. The leave-one-building-out results do not establish useful generalization even within this one campus. More independent sites, more positive outcomes and measured glass/vegetation features are required before a predictive challenger is justified. These results do not calibrate BNBU risk.
