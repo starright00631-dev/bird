@@ -138,16 +138,13 @@ def recommend_interventions(
     glass: GlassObservation,
     vegetation: VegetationExposure,
     *,
-    night_lighting_level: Optional[float] = None,
+    night_lighting_problem_confirmed: bool = False,
     vegetation_conflict_confirmed: bool = False,
     glass_side_retrofit_feasible: bool = True,
 ) -> dict:
     """Return transparent, evidence-tiered recommendations for an existing façade."""
     glass.validate()
     vegetation.validate()
-    if night_lighting_level is not None and not 0 <= night_lighting_level <= 1:
-        raise ValueError("night_lighting_level must be a normalized value in [0,1]")
-
     glass_mechanisms = glass.mechanisms()
     vegetation_summary = vegetation.summary()
     reflection_exposure = vegetation_summary["canopy_reflection_exposure_flag"]
@@ -200,7 +197,7 @@ def recommend_interventions(
             "Reflection is a plausible mechanism; consider an external screen or shading after confirming the reflected scene and engineering feasibility.",
         ))
 
-    if night_lighting_level is not None and night_lighting_level >= 0.5:
+    if night_lighting_problem_confirmed:
         recommendations.append(_recommendation(
             "lighting_management", "medium", ("nighttime_attraction_or_disorientation",),
             "Night lighting is elevated in the supplied normalized assessment; reduce unnecessary illumination and manage blinds as a supporting measure.",
