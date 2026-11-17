@@ -103,3 +103,10 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Test-visit-weighted log-loss vs baseline: fall 0.13388 vs 0.14271 (better); winter 0.10987 vs 0.08354 (worse); spring 0.09772 vs 0.07460 (worse); summer 0.03163 vs 0.02797 (worse). Only fall improves log-loss.
 - 17/32 folds beat baseline on Brier and 17/32 on log-loss. Fold-mean AUC is about 0.63 fall, 0.50 winter, 0.71 spring, 0.54 summer; some folds have a single outcome class and summer has only eight positive visits.
 - Decision: the model is a paper-aligned UBC association/reproduction benchmark, not a transferable predictor or risk-ranking tool. This finding is now documented in `docs/UBC_DATA_AUDIT.md` and README. The R workflow now writes a weighted seasonal LOBO summary and CI asserts all eight building folds per season.
+
+
+## Registry and experiment-ledger handoff (2026-11-17)
+
+- Added `docs/EXPERIMENT_LEDGER.csv` with the UBC Appendix 1 model, De Groot source audit and finite-pane two-leg optics correction. Each entry records source/version/hash, hypothesis, method, split/control, CPU compute, results, limitations, decision and next falsifiable experiment.
+- Updated `docs/data_registry.csv` to mark Zulian as model-fitted but descriptive-only with weak LOBO transfer; it is not predictive or BNBU-calibrated.
+- Added separate UBC De Groot and Zulian entries to `docs/SOURCE_REGISTER.csv`; De Groot remains observation-process audit only and is not row-joined to Zulian.
