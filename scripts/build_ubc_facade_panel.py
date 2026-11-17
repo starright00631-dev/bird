@@ -76,7 +76,10 @@ def build_panel(raw: bytes, *, strict_source: bool = True):
         if key in seen:
             raise ValueError(f"Duplicate facade-date key at source row {row_number}: {key}")
         seen.add(key)
-        method = int(_number(row, SOURCE_FIELDS["method_code"], row_number))
+        method_value = _number(row, SOURCE_FIELDS["method_code"], row_number)
+        if not method_value.is_integer():
+            raise ValueError(f"Non-integer METHOD={method_value} at source row {row_number}")
+        method = int(method_value)
         if method not in {1, 2}:
             raise ValueError(f"Unexpected METHOD={method} at source row {row_number}")
         survey_hours = 24 * method
