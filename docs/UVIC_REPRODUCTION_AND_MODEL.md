@@ -87,6 +87,46 @@ an observed-evidence baseline only. It does not estimate biological approach
 rates, absolute pane collision probabilities, or causal effects of glass or
 vegetation. No out-of-site predictive accuracy is claimed from six buildings.
 
+
+## Detection-trial and survey-schedule audit
+
+A second pinned adapter audits the independent observation-process inputs:
+
+- Searcher efficiency: 79 trials. The observed sequential risk sets are:
+
+| Search occasion | At risk | Detected | Not detected | Missing outcome while at risk |
+|---|---:|---:|---:|---:|
+| s1 | 79 | 63 | 16 | 0 |
+| s2 | 13 | 5 | 8 | 3 |
+| s3 | 8 | 0 | 8 | 0 |
+| s4 | 8 | 3 | 5 | 0 |
+| s5 | 4 | 0 | 4 | 1 |
+
+These are descriptive conditional fractions among observed at-risk trials, not
+GenEst pkm estimates. Missing outcomes are kept separate from non-detections.
+No observation-after-detection sequence or invalid 0/1 code was found.
+
+- Carcass persistence: 82 trials; 58 finite interval observations and 24
+  right-censored observations. Four finite intervals begin at day zero; no
+  reversed intervals or missing/unparseable interval bounds were found.
+- Survey schedule: 126 unique dates, six seasonal windows with 21 dates each;
+  all six monitored buildings are scheduled on every listed date.
+- Search-efficiency and persistence trial IDs overlap for 74 trials.
+
+The original analysis script specifies GenEst pkm for searcher efficiency,
+cpm for interval-censored carcass persistence, and estM for the fixed facade
+survey schedule. The audit preserves these original model inputs but does not
+claim to have refitted them. The original R script selects model-list positions
+4 and 6 for the pkm/cpm stages; those selections must be reconciled against the
+complete AICc tables and model ordering before they are reused. The next step is
+to independently reproduce the original pkm, cpm and estM stages and verify
+the corrected mortality estimates.
+
+The survey source also contains 1,054 rows without a survey start time. These
+rows remain valid facade-day observations for the effort-offset period model,
+but they are not eligible for time-of-day effect estimation without a
+separately justified imputation or exclusion analysis.
+
 ## Important limits
 
 The source does not contain facade-level glass area, glazing appearance,

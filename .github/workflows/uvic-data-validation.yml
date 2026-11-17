@@ -7,6 +7,9 @@ on:
       - "scripts/build_uvic_facade_panel.py"
       - "scripts/fit_uvic_observed_rate.py"
       - "tests/test_uvic_panel.py"
+      - "birdglass/uvic_detection.py"
+      - "scripts/audit_uvic_detection_trials.py"
+      - "tests/test_uvic_detection.py"
       - "tests/test_audit_ubc_sources.py"
       - "requirements.txt"
       - ".github/workflows/uvic-data-validation.yml"
@@ -29,6 +32,8 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Rebuild and verify pinned facade-period panel
         run: python scripts/build_uvic_facade_panel.py --fetch-pinned
+      - name: Audit pinned detection and survey-schedule inputs
+        run: python scripts/audit_uvic_detection_trials.py --fetch-pinned
       - name: Fit descriptive effort-offset GEE baseline
         run: python scripts/fit_uvic_observed_rate.py
       - name: Print compact run summary
@@ -38,7 +43,15 @@ jobs:
           from pathlib import Path
           audit = json.loads(Path("data/derived/uvic/uvic_source_audit.json").read_text())
           model = json.loads(Path("results/uvic_observed_rate_baseline.json").read_text())
+          detection = json.loads(Path("data/derived/uvic/uvic_detection_audit.json").read_text())
           print("UVIC_SOURCE_TOTALS", json.dumps(audit["totals"], sort_keys=True))
+          print("UVIC_DETECTION", json.dumps({
+              "searcher_efficiency_trials": detection["source_rows"]["searcher_efficiency_trials"],
+              "carcass_persistence_trials": detection["source_rows"]["carcass_persistence_trials"],
+              "scheduled_dates": detection["source_rows"]["search_schedule_dates"],
+              "searcher_risk_sets": detection["searcher_efficiency"]["risk_sets"],
+              "persistence": detection["carcass_persistence"],
+          }, sort_keys=True))
           print("UVIC_GEE", json.dumps({
               "converged": model["converged"],
               "rows": model["n_panel_rows"],
