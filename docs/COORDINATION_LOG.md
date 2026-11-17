@@ -99,9 +99,9 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 ## UBC building-held-out diagnostic (2026-11-17)
 
 - Independently inspected the 30-day CI artifact `ubc-de-groot-verified-source-snapshot` and aggregated the 32 leave-one-building-out folds against the exposure-only binomial baseline with the same log(24/48h) offset.
-- Test-visit-weighted full-GLMM Brier vs baseline: fall 0.03011 vs 0.02973; winter 0.02448 vs 0.01577; spring 0.02348 vs 0.01368; summer 0.00433 vs 0.00424. Positive deltas mean worse prediction; Brier is worse in all four seasons.
-- Test-visit-weighted log-loss vs baseline: fall 0.13388 vs 0.14271 (better); winter 0.10987 vs 0.08354 (worse); spring 0.09772 vs 0.07460 (worse); summer 0.03163 vs 0.02797 (worse). Only fall improves log-loss.
-- 17/32 folds beat baseline on Brier and 17/32 on log-loss. Fold-mean AUC is about 0.63 fall, 0.50 winter, 0.71 spring, 0.54 summer; some folds have a single outcome class and summer has only eight positive visits.
+- Test-visit-weighted full-GLMM Brier vs baseline on the latest pinned CI run: fall 0.03011 vs 0.02979; winter 0.02448 vs 0.01579; spring 0.02348 vs 0.01372; summer 0.00433 vs 0.00424. Positive deltas mean worse prediction; Brier is worse in all four seasons.
+- Test-visit-weighted log-loss vs baseline: fall 0.13388 vs 0.14286 (better); winter 0.10987 vs 0.08395 (worse); spring 0.09772 vs 0.07593 (worse); summer 0.03163 vs 0.02818 (worse). Only fall improves pooled log-loss.
+- 17/32 folds beat baseline on Brier and 18/32 on log-loss. Fold-mean AUC is about 0.633 fall (8 defined folds), 0.497 winter (8), 0.713 spring (7) and 0.535 summer (6); some folds have a single outcome class and summer has only eight positive visits.
 - Decision: the model is a paper-aligned UBC association/reproduction benchmark, not a transferable predictor or risk-ranking tool. This finding is now documented in `docs/UBC_DATA_AUDIT.md` and README. The R workflow now writes a weighted seasonal LOBO summary and CI asserts all eight building folds per season.
 
 
