@@ -1,3 +1,4 @@
+import './chat.jsx';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
@@ -131,7 +132,7 @@ function renderLayerControls(){
   const count=group?group.children.filter(x=>x.isMesh).length:0;
   const el=document.createElement('div');el.className='layer-item';
   const id='part-'+key;
-  el.innerHTML='<input id="'+id+'" type="checkbox" '+(visible.has(key)?'checked':'')+'><i class="color-dot" style="background:'+color+'"></i><label for="'+id+'">'+label+'</label><span class="count">'+count+'</span><button type="button" class="focus" data-part="'+key+'">定位</button>';
+  el.innerHTML='<label class="bp6-control bp6-checkbox"><input id="'+id+'" type="checkbox" '+(visible.has(key)?'checked':'')+'><span class="bp6-control-indicator"></span><i class="color-dot" style="background:'+color+'"></i> '+label+'</label><span class="count">'+count+'</span><button type="button" class="bp6-button bp6-minimal bp6-small focus" data-part="'+key+'">定位</button>';
   const c=el.querySelector('input');c.addEventListener('change',()=>toggleLayer(key,c.checked));
   el.querySelector('button').addEventListener('click',()=>focusGroup(key));
   target.append(el);
@@ -539,7 +540,7 @@ function renderPhotoGallery(){
  const items=photoCatalog.photos.filter(p=>group==='all'||p.category===group);
  for(const p of items){
   const el=document.createElement('article');
-  el.style.cssText='border:1px solid #344758;border-radius:8px;padding:8px;margin:6px 0;background:#0d1e2c';
+  el.className='bp6-card bp6-compact photo-card';
   const a=document.createElement('a');
   a.href=p.source_url;a.target='_blank';a.rel='noopener noreferrer';
   a.textContent=p.id+' · '+p.title;
@@ -558,7 +559,7 @@ function renderPhotoGallery(){
   note.textContent=p.observed;
   note.style.cssText='font-size:11px;margin:5px 0;color:#bbd0dc';el.append(note);
   const qa=document.createElement('small');
-  qa.style.cssText='font-size:10px;color:#e0b98e';
+  qa.className='bp6-text-muted';
   qa.textContent='空间匹配：'+p.model_match+' · 未完成摄影配准/尺寸测量';
   el.append(qa);holder.append(el);
  }
@@ -627,8 +628,8 @@ function updateSceneVisibility(){
  if(campus)campus.visible=current==='campus';
  if(dsm)dsm.visible=current==='dsm';
  for(const b of document.querySelectorAll('[data-focus]'))b.disabled=current==='dsm'&&b.dataset.focus!=='all';
- $('choose-campus').classList.toggle('selected',current==='campus');
- $('choose-dsm').classList.toggle('selected',current==='dsm');
+ $('choose-campus').classList.toggle('selected',current==='campus');$('choose-campus').classList.toggle('bp6-active',current==='campus');
+ $('choose-dsm').classList.toggle('selected',current==='dsm');$('choose-dsm').classList.toggle('bp6-active',current==='dsm');
  $('layers').parentElement.style.display=current==='campus'?'':'none';
  $('map-section').querySelector('.map-top strong').textContent=current==='campus'?'校园 GIS 轮廓':'DSM 10 米等高线';
 }
@@ -840,6 +841,7 @@ new ResizeObserver(()=>{const r=host.getBoundingClientRect();if(r.width>0&&r.hei
 new ResizeObserver(redraw).observe(canvas);
 $('tab-map').onclick=()=>{$('tab-map').classList.add('active');$('tab-source').classList.remove('active');$('map-section').hidden=false;$('source-section').hidden=true;redraw();};
 $('tab-source').onclick=()=>{$('tab-source').classList.add('active');$('tab-map').classList.remove('active');$('map-section').hidden=true;$('source-section').hidden=false;renderPhotoGallery();};
+for(const tab of [$('tab-map'),$('tab-source')])tab.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tab.click();}});
 $('help-button').onclick=()=>$('help-dialog').showModal();
 $('close-help').onclick=()=>$('help-dialog').close();
 function animate(){requestAnimationFrame(animate);orbit.update();if(ripples){const t=performance.now()*0.000006;ripples.offset.set(t,t*.55);}renderer.render(scene,cam);}

@@ -4,6 +4,9 @@ __pycache__/
 .env
 .env.*
 .venv/
+
+campus/interface/node_modules/
+campus/interface/dist/
 data/derived/uvic/
 results/uvic_observed_rate_baseline.json
 data/derived/ubc/

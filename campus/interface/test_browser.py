@@ -17,27 +17,83 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
 
 def check(page,label,offline=False):
+    print(f"Checking {label}: chat", flush=True)
     failures=[];console=[]
+    def set_checkbox(selector, checked):
+        box = page.locator(selector)
+        if box.is_checked() != checked:
+            box.locator("xpath=ancestor::label[1]").click()
+        assert box.is_checked() == checked
+
     page.on("pageerror",lambda e:failures.append(str(e)))
     # Publisher-hosted photo thumbnails are intentionally offline-blocked here;
     # do not mistake those expected HTTPS request failures for missing local GLB/GIS.
     page.on("console",lambda e:console.append(e.text) if e.type=="error" and "net::ERR_FAILED" not in e.text and "net::ERR_BLOCKED_BY_CLIENT" not in e.text else None)
+    assert page.locator("#show-chat").get_attribute("aria-selected") == "true"
+    assert page.get_by_text("从空间开始提问").is_visible()
+    assert not page.locator("#help-dialog").is_visible()
+    page.locator("#help-button").click()
+    assert page.locator("#help-dialog").is_visible()
+    page.locator("#close-help").click()
+    assert not page.locator("#help-dialog").is_visible()
+    page.get_by_label("输入消息").fill("请介绍当前模型")
+    page.get_by_role("button", name="发送").click()
+    assert page.get_by_text("请先配置 API Key。").is_visible()
+    assert page.locator("#api-model").input_value() == "deepseek-flash"
+    page.locator("#api-key").fill("test-key")
+    page.get_by_role("button", name="完成").click()
+    requests = []
+    def fake_api(route):
+        if route.request.method == "OPTIONS":
+            route.fulfill(status=204, headers={"access-control-allow-origin":"*", "access-control-allow-methods":"POST, OPTIONS", "access-control-allow-headers":"authorization, content-type"})
+            return
+        requests.append(route.request.post_data_json)
+        route.fulfill(status=200, headers={"access-control-allow-origin":"*"}, content_type="application/json", body=json.dumps({"choices":[{"message":{"content":"测试回答"}}]}))
+    page.route("https://api.deepseek.com/chat/completions", fake_api)
+    page.get_by_role("button", name="发送").click()
+    page.get_by_text("测试回答").wait_for()
+    assert requests[0]["model"] == "deepseek-flash"
+    assert "当前场景" in requests[0]["messages"][0]["content"]
+    assert requests[0]["messages"][-1]["content"] == "请介绍当前模型"
+    page.get_by_label("输入消息").fill("继续说明")
+    page.get_by_role("button", name="发送").click()
+    page.wait_for_function("document.querySelectorAll('.aip-message.assistant').length === 2")
+    assert [item["role"] for item in requests[1]["messages"]] == ["system", "user", "assistant", "user"]
+    page.unroute("https://api.deepseek.com/chat/completions", fake_api)
+    def fail_api(route):
+        route.fulfill(status=401, headers={"access-control-allow-origin":"*"}, content_type="application/json", body='{"error":{"message":"invalid key"}}')
+    page.route("https://api.deepseek.com/chat/completions", fail_api)
+    page.get_by_label("输入消息").fill("失败后保留的问题")
+    page.get_by_role("button", name="发送").click()
+    page.get_by_text("请求失败：invalid key", exact=False).wait_for()
+    assert page.get_by_label("输入消息").input_value() == "失败后保留的问题"
+    assert page.locator(".aip-message.user").count() == 2
+    page.unroute("https://api.deepseek.com/chat/completions", fail_api)
+    # Chromium logs the deliberately mocked 401; retain every other console error.
+    console[:] = [item for item in console if "status of 401 (Unauthorized)" not in item]
+    print(f"Checking {label}: 3D and GIS", flush=True)
+    page.locator("#show-data").click()
     page.wait_for_function("window.__BNBU_READY__ === true",timeout=130000)
     page.wait_for_function("window.__BNBU_DEBUG__?.hasGIS() === true",timeout=30000)
+    print(f"Checking {label}: loaded", flush=True)
     state=page.evaluate("({n:window.__BNBU_DEBUG__.meshCount(),l:window.__BNBU_DEBUG__.layerCount(),gis:window.__BNBU_DEBUG__.hasGIS()})")
     assert state=={"n":1379,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
     assert page.evaluate("window.__BNBU_VERSION__")=="v76"
     assert page.locator("#layers input[type=checkbox]").count()==10
+    assert page.locator("#layers label.bp6-checkbox").count() == 10
+    assert page.locator(".topbar.bp6-navbar").is_visible()
+    assert page.locator("#show-chat.bp6-tab").count() == 1
     page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
     assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==12
     assert page.evaluate("window.__BNBU_DEBUG__.railingProxyCount()")>250
     assert page.locator("#show-photo-proxies").is_checked()
-    page.locator("#show-photo-proxies").uncheck()
+    set_checkbox("#show-photo-proxies", False)
     assert page.evaluate("window.__BNBU_DEBUG__.photoProxyVisible()") is False
-    page.locator("#show-photo-proxies").check()
+    set_checkbox("#show-photo-proxies", True)
     assert page.evaluate("window.__BNBU_DEBUG__.photoProxyVisible()") is True
+    print(f"Checking {label}: lake controls", flush=True)
     page.locator("button[data-focus=boardwalk]").click()
     assert page.evaluate("window.__BNBU_DEBUG__.cameraDistance()")<70
     page.wait_for_function("window.__BNBU_DEBUG__.junctionCount()===11",timeout=35000)
@@ -47,12 +103,13 @@ def check(page,label,offline=False):
     page.wait_for_function("window.__BNBU_DEBUG__.v76BuildingCount()===30",timeout=75000)
     assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapSegments()")==12
     assert not page.locator("#show-v76-phaseii-gaps").is_checked()
-    page.locator("#show-v76-phaseii-gaps").check()
+    set_checkbox("#show-v76-phaseii-gaps", True)
     assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is True
+    print(f"Checking {label}: architecture", flush=True)
     page.locator("#architecture-v76-select").select_option("D1")
     detail=page.locator("#architecture-v76-detail").inner_text()
     assert "径向路缺口" in detail and "中央环路缺口" in detail
-    page.locator("#show-v76-phaseii-gaps").uncheck()
+    set_checkbox("#show-v76-phaseii-gaps", False)
     assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is False
 
     assert page.locator("#architecture-v76-select option").count()==30
@@ -73,13 +130,13 @@ def check(page,label,offline=False):
     page.locator("#architecture-v76-select").select_option("LRC")
     assert "LRC (LRC)" in page.locator("#architecture-v76-detail").inner_text()
     page.screenshot(path=str(RESULT/(label+"_v76_LRC_outer_frame.png")),full_page=True,timeout=45000)
-    page.locator("#show-v76-facades").uncheck()
+    set_checkbox("#show-v76-facades", False)
     assert page.evaluate("window.__BNBU_DEBUG__.v76StyleCount()")==0
-    page.locator("#show-v76-facades").check()
+    set_checkbox("#show-v76-facades", True)
     assert page.evaluate("window.__BNBU_DEBUG__.v76StyleCount()")>100
-    page.locator("#show-v76-edges").uncheck()
+    set_checkbox("#show-v76-edges", False)
     assert page.evaluate("window.__BNBU_DEBUG__.v76EdgeVisible()") is False
-    page.locator("#show-v76-edges").check()
+    set_checkbox("#show-v76-edges", True)
     assert page.evaluate("window.__BNBU_DEBUG__.v76EdgeVisible()") is True
 
     assert page.locator("#bridge-v75-select option").count()==7
@@ -92,22 +149,23 @@ def check(page,label,offline=False):
     page.locator("#bridge-v75-select").select_option("lake")
     assert "340" in page.locator("#bridge-v75-detail").inner_text()
     page.screenshot(path=str(RESULT/(label+"_v75_bridge_glass.png")),full_page=True,timeout=45000)
-    page.locator("#show-v75-glass").uncheck()
+    set_checkbox("#show-v75-glass", False)
     assert page.evaluate("window.__BNBU_DEBUG__.v75GlassVisible()") is False
-    page.locator("#show-v75-glass").check()
+    set_checkbox("#show-v75-glass", True)
     assert page.evaluate("window.__BNBU_DEBUG__.v75GlassVisible()") is True
 
     assert page.locator("#v74-junction-select option").count()==47
     assert not page.locator("#show-v74-junctions").is_checked()
-    page.locator("#show-v74-junctions").check()
+    set_checkbox("#show-v74-junctions", True)
     assert page.evaluate("window.__BNBU_DEBUG__.v74MarkersVisible()") is True
     page.locator("#v74-junction-select").select_option("38")
     assert "局部三角面顶面高差" in page.locator("#v74-junction-description").inner_text()
     page.screenshot(path=str(RESULT/(label+"_v74_junction_detail.png")),full_page=True,timeout=45000)
-    page.locator("#show-v74-junctions").uncheck()
+    set_checkbox("#show-v74-junctions", False)
     assert page.evaluate("window.__BNBU_DEBUG__.v74MarkersVisible()") is False
 
     page.wait_for_function("window.__BNBU_DEBUG__.photoCount()===16",timeout=35000)
+    print(f"Checking {label}: sources", flush=True)
     page.locator("#tab-source").click()
     assert page.locator("#photo-cards article").count()==16
     assert page.locator("#photo-cards article a[href^='https://']").count()>=16
@@ -122,13 +180,13 @@ def check(page,label,offline=False):
     assert page.evaluate("window.__BNBU_DEBUG__.profileRailCount()")>220
     assert page.evaluate("window.__BNBU_DEBUG__.gradeMarkerCount()")==3
     assert page.locator("#show-v72-rails").is_checked()
-    page.locator("#show-v72-rails").uncheck()
+    set_checkbox("#show-v72-rails", False)
     assert page.evaluate("window.__BNBU_DEBUG__.hasProfileRails()") is True
-    page.locator("#show-v72-rails").check()
+    set_checkbox("#show-v72-rails", True)
     assert not page.locator("#show-v72-grade").is_checked()
-    page.locator("#show-v72-grade").check()
+    set_checkbox("#show-v72-grade", True)
     assert page.evaluate("window.__BNBU_DEBUG__.gradeMarkersVisible()") is True
-    page.locator("#show-v72-grade").uncheck()
+    set_checkbox("#show-v72-grade", False)
     assert page.evaluate("window.__BNBU_DEBUG__.gradeMarkersVisible()") is False
     page.locator("#focus-v72-ramp").click()
     page.screenshot(path=str(RESULT/(label+"_v72_ramp_rail.png")),full_page=True,timeout=45000)
@@ -139,7 +197,7 @@ def check(page,label,offline=False):
     page.screenshot(path=str(RESULT/(label+"_v72_LRC_stair.png")),full_page=True,timeout=45000)
     page.locator("#focus-v72-west").click()
     page.screenshot(path=str(RESULT/(label+"_v72_west_grade_unresolved.png")),full_page=True,timeout=45000)
-    page.locator("#show-v72-grade").uncheck()
+    set_checkbox("#show-v72-grade", False)
     assert page.evaluate("window.__BNBU_DEBUG__.modelConnectionPatchCount()")==2
     assert page.locator("#show-junction-graph").is_checked()
     assert page.locator("#show-model-joints").is_checked()
@@ -147,18 +205,18 @@ def check(page,label,offline=False):
     page.screenshot(path=str(RESULT/(label+"_land_connection_A.png")),full_page=True,timeout=45000)
     page.locator("#focus-join-b").click()
     page.screenshot(path=str(RESULT/(label+"_land_connection_B.png")),full_page=True,timeout=45000)
-    page.locator("#show-model-joints").uncheck()
+    set_checkbox("#show-model-joints", False)
     assert page.evaluate("window.__BNBU_DEBUG__.connectionPatchesVisible()") is False
-    page.locator("#show-model-joints").check()
+    set_checkbox("#show-model-joints", True)
     assert page.evaluate("window.__BNBU_DEBUG__.connectionPatchesVisible()") is True
     page.locator("#focus-east-landfall").click()
     page.screenshot(path=str(RESULT/(label+"_east_ramp.png")),full_page=True,timeout=45000)
     page.locator("button[data-focus=boardwalk]").click()
     page.screenshot(path=str(RESULT/(label+"_lakefront_detail.png")),full_page=True,timeout=45000)
     page.screenshot(path=str(RESULT/(label+"_campus.png")),full_page=True,timeout=45000)
-    page.locator("#part-water_unsurveyed").uncheck()
+    set_checkbox("#part-water_unsurveyed", False)
     assert page.evaluate("window.__BNBU_DEBUG__.layerVisible('water_unsurveyed')") is False
-    page.locator("#part-water_unsurveyed").check()
+    set_checkbox("#part-water_unsurveyed", True)
     assert page.evaluate("window.__BNBU_DEBUG__.layerVisible('water_unsurveyed')") is True
     page.locator("button[data-focus=lakefront]").click()
     page.locator("button[data-focus=phase2]").click()
@@ -168,13 +226,14 @@ def check(page,label,offline=False):
     assert "DSM" in page.locator("#scene-status").inner_text()
     page.wait_for_function("window.__BNBU_DEBUG__.contourMeshCount()===3737",timeout=35000)
     assert page.locator("#show-v73-dsm-contours").is_checked()
-    page.locator("#show-v73-dsm-contours").uncheck()
+    set_checkbox("#show-v73-dsm-contours", False)
     assert page.evaluate("window.__BNBU_DEBUG__.contourVisible()") is False
-    page.locator("#show-v73-dsm-contours").check()
+    set_checkbox("#show-v73-dsm-contours", True)
     assert page.evaluate("window.__BNBU_DEBUG__.contourVisible()") is True
     page.screenshot(path=str(RESULT/(label+"_dsm.png")),full_page=True,timeout=45000)
     page.locator("#choose-campus").click()
     page.wait_for_function("window.__BNBU_DEBUG__?.getScene()==='campus'",timeout=12000)
+    print(f"Checking {label}: completed", flush=True)
     assert not failures,(label,failures)
     # The renderer may emit transient GL backend context warnings; JS and asset errors are not allowed.
     assert not [e for e in console if "WebGL context lost" not in e and "GL_INVALID" not in e],(label,console)
