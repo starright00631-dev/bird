@@ -110,3 +110,17 @@ def test_write_panel_writes_auditable_csv_and_json(tmp_path):
     assert len(written) == 4
     assert written_audit["rows"] == 4
     assert written_audit["source_sha256"] == audit["source_sha256"]
+
+
+def test_build_panel_rejects_fractional_method_code():
+    rows = fixture_rows()
+    rows[0]["METHOD"] = "1.5"
+    with pytest.raises(ValueError, match="Non-integer METHOD"):
+        build_panel(csv_bytes(rows), strict_source=False)
+
+
+def test_build_panel_rejects_fractional_stories_reflecting_canopy():
+    rows = fixture_rows()
+    rows[0]["STORIES_REFLECT_CANOPY"] = "2.5"
+    with pytest.raises(ValueError, match="Non-integer stories_reflecting_canopy"):
+        build_panel(csv_bytes(rows), strict_source=False)
