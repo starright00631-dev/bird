@@ -61,3 +61,14 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Searcher efficiency: 29 trials; carcass persistence: 103 trials (85 finite intervals, 18 right-censored); point counts: 303 species rows in 86 checklists.
 - The codebook is inspected; the 50-m VEGE_PERC is building-level and is not interchangeable with the 2023 façade-level TreeCov or StorReflVeg.
 - Next model input is the separately published Zulian et al. 2023 Appendix 1. Verify its exact keys and 57-façade grain before joining to the survey panel.
+
+
+## Glass classification, vegetation exposure and retrofit decision layer (2026-11-17)
+
+- Added structured glass observation schema separating visual class, surface treatment, mounting surface, measured reflectance/transmittance and pattern geometry.
+- Added optional CLIP zero-shot photo triage. Similarity scores are not calibrated probabilities; all photo-only labels require human review.
+- Added multi-scale vegetation exposure schema for 5 m, 25 m, 50 m, 100 m, 1 km and 10 km buffers. Building-level VEGE_PERC remains separate from façade-level porous-cover and tree-cover measures.
+- Added evidence-tiered retrofit recommendations: exterior markers/pattern upgrade, external screen, external shading and supporting lighting management.
+- No default efficacy percentages are generated. Ottawa 2026 estimates are recorded as context-specific model predictions, not transferable BNBU causal effects.
+- Tree removal is not a default recommendation; glass-side mitigation is prioritized.
+- Added glass and vegetation observation templates and unit tests.
