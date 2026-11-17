@@ -1,139 +1,130 @@
-## BNBU campus 3D viewer — current v76
+# BNBU Bird–Glass Collision Research
 
-**[Download the verified offline viewer/ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml)** · [Online viewer (requires Pages activation)](https://starright00631-dev.github.io/bird/) · [3D modeling source and evidence](campus/README.md)
+Evidence-led research to explain **where, why and under what conditions birds collide with glass**, and to compare interventions for existing façades. The goal is a transparent, testable decision system—not a single opaque risk score or an unsupported end-to-end claim.
 
-The repository's old `campus/viewer.html` pointed to missing generated files and a CDN-based v66 viewer. It has been replaced by a redirect to the **self-contained v76** site. The online viewer is built and tested by GitHub Actions from the same HTML as the verified offline download, not from raw GLB references in GitHub's code browser.
+> **Status (2026-11-16):** executable mechanistic components and an evidence-aware façade decision prototype exist. This is not yet a trained, site-calibrated BNBU collision model. DINOv2 glass recognition and automatic vegetation segmentation are not implemented.
 
-GitHub Pages must have **Settings → Pages → Build and deployment → Source: GitHub Actions** selected once. If the online URL is not yet available, obtain the downloadable `BNBU-v76-complete-offline-model-zip` artifact from the workflow link; extract it and open `双击查看_校园3D.html`. A GitHub file preview is not an interactive website.
+## Model architecture
 
----
+1. **Bird availability/activity:** species or guild, season, time, resources, weather and migration.
+2. **Approach flow:** canopy, terrain, water, corridors, façade geometry and all at-risk approaches.
+3. **Glass optics:** transparency, external reflection, reflected habitat, transmitted false passage, coatings and view/illumination.
+4. **Flight/contact:** trajectories, morphology, perception/avoidance evidence, glass contact and opaque contact.
+5. **Observation:** carcass persistence, searcher detection, reporting effort, censoring and missingness.
+6. **Intervention:** exterior markers, screens/cords, shading, lighting and supplementary interior changes.
 
-## BNBU v72 — 16-photo evidence audit and source-height-matched junction details (current)
+The output is a **pathway profile plus an evidence-gated intervention comparison**. Absolute collision rates require effort-corrected approach flow and independently observed outcomes. Injury probability is a separate endpoint.
 
-The [verified v72 update (PR #9)](https://github.com/starright00631-dev/bird/pull/9) substantially expands the photo evidence underlying land/road/building/bridge connections: **16 distinct sourced BNBU and Zhuhai photographs**, classified by specific visible junction type and supplied with original-publisher links, plus three additional BNBU multi-image collections. Explore the source photos online in the viewer's *Evidence & Data* panel; they are **not copied** into the ZIP and are **not camera-registered** survey data. See [the critical image-by-image 3D comparison](campus/PHOTO_CONNECTION_AUDIT_V72.md) and [machine-readable photo register](campus/connection_photos_v72.json).
+## Implemented components
 
-v72 extracts **four true source-model XYZ profile paths** (two sides of an existing **122-vertex** bridge-to-east-land ramp and two sides of the **19-level** LRC external stair from the original 76 vertices). It uses these for individually switchable **display-only** slope/stair railings. Three remaining model vertical discrepancies (0.24 / 0.64 / 0.64 model units) can be shown separately as **warning markers, not new connecting ramps**. The LRC inspection camera now looks from the original ground approach below the building's soffit rather than through an opaque upper floor. Two v71 source-geometry repairs remain in place. The source GLB still contains exactly **1,379 meshes** and the original GeoJSON exactly **522** features; v72 makes no new surveyed road, bridge, ramp or bank/pond geometry and asserts no photogrammetric accuracy.
+| Code | Responsibility |
+|---|---|
+| `birdglass/scene_optics.py` | Finite-pane reflection/transmission geometry |
+| `birdglass/vision.py` | Measured-input spectra and species cone catches |
+| `birdglass/control.py`, `contact.py`, `pose_contact.py` | Flight-control/contact mechanics |
+| `birdglass/risk.py`, `approach_events.py` | Observation identifiability and approach censoring |
+| `birdglass/source_splits.py`, `stereo_tracks.py` | Leakage audit and external trajectory schema |
+| `birdglass/solar.py` | Approximate ENU sun position and specular geometry |
+| `birdglass/evidence.py`, `glazing.py`, `vegetation.py`, `decision.py` | Evidence tiers, glazing, five vegetation scales and conditional decisions |
 
-**Download and run the complete v72 offline model:** [Successful tested GitHub Actions run](https://github.com/starright00631-dev/bird/actions/runs/43152309398), artifact `BNBU-v72-complete-offline-model-zip`. Extract nested `BNBU_Campus_Full_v72.zip`, then double-click `双击查看_校园3D.html` without Python or Internet. The standalone model and local HTTP viewer both passed real Chromium controls, 16-photo gallery filtering, 4 source profile visualizations and full scientific-model/GIS regression; package content hashes have been independently verified.
+The façade decision layer separates measured evidence from proxies, reflection from through-glass false passage, local canopy from landscape cover, selected clips from continuous approach video, and mechanism fit from measured intervention efficacy.
 
----
+## Not yet implemented or calibrated
 
-## BNBU v71 — land / road / building / bridge junction audit (current)
+- DINOv2/ViT/CNN glass-image classification.
+- Automatic tree-crown segmentation, NDVI and multi-buffer remote-sensing extraction.
+- Harmonized external training table with comparable survey effort and non-event observations.
+- Fitted hierarchical Poisson/negative-binomial GAMM/GLMM for façade collision rates.
+- Trained CatBoost/Random Forest challenger model.
+- BNBU-specific causal intervention effects or pane-level calibrated risk.
+- BNBU pane geometry, measured full-assembly spectra and continuous approach denominator.
 
-The verified [v71 change, PR #8](https://github.com/starright00631-dev/bird/pull/8) repairs two short source-model **land-only** gaps between original V61 shore-promenade slabs. It adds **two small at-grade pavement mesh patches** (~4.156 and ~4.247 model m²), producing **1,379 meshes** while retaining all original 1,377 mesh buffers and **522 unchanged original GIS features**. These are topology-constrained model repairs, **not field-surveyed sidewalks**.
+These are engineering gates, not features to infer from the current rule engine.
 
-The separate [11-junction technical audit](campus/JUNCTION_V71_AUDIT.md) checks photo-supported structure types against actual inherited footprint intersections and vertex heights. The interface now has close-up controls for two new joins, the existing east bridge landfall, the original vehicle-road / pedestrian-path seam and an inherited exterior building stair, plus an optional color-coded GIS status overlay. Three key height differences remain unresolved, especially the ~0.64 model-height deck/west-promenade difference; no unsupported bridge, ramp or road was added.
+## Evidence and data
 
-**Download the complete tested ZIP** from [v71 GitHub Actions run](https://github.com/starright00631-dev/bird/actions/runs/43148911926) (artifact `BNBU-v71-complete-offline-model-zip`), extract the nested `BNBU_Campus_Full_v71.zip`, then double-click `双击查看_校园3D.html`. A separate self-contained HTML artifact is also available. Actual Chromium QA passed both file:// and localhost, testing patch visibility, junction inspector, lakefront and DSM; original scientific-model and campus integrity CI both passed.
+See [data registry](docs/data_registry.csv), [source register](docs/SOURCE_REGISTER.csv), [research gates](docs/RESEARCH_GATES.md), and [intervention evidence matrix](docs/INTERVENTION_EVIDENCE_MATRIX.md).
 
-This is a research scene and does **not** certify real-world ADA/accessibility, road width, pond shoreline or bird-strike exposure surface area. The western deck-to-land heights and other unresolved circulation gaps require registered photographs and elevation control.
+- UVic: 6,337 façade surveys and 756 building-days; useful for effort/detection modeling, not BNBU pane risk.
+- Neotropical database: 4,103 event reports and 571 species; event-only, no non-event denominator.
+- China 2025: 3,078 buildings; useful for multi-scale habitat hypotheses, not local causal effects.
+- Ottawa 2026: 225 collisions and 51 species; treatment compliance evidence, site-specific.
+- Oklahoma 2026 BACI: 6 treated and 134 untreated façades; field design benchmark, but low treated replication and a non-significant formal treatment-by-period interaction.
+- 2026 stereo bird-flight data: 360 retained trials at 120 fps; kinematics only, not glass recognition.
 
----
+Sources are not pooled merely because they all concern bird collisions. Grain, effort, outcome definition, species mix and observation process must first be harmonized.
 
-## BNBU v70 — photo-audited lakefront and near-land structure (current)
+## BNBU local records: localization, not training
 
-The [v70 source comparison and complete offline viewer, PR #7](https://github.com/starright00631-dev/bird/pull/7) refine the existing lakefront using real campus-photo **structural typologies**: a reversible, source-boardwalk-footprint-bound railing overlay, distinct model-owned deck/lawn/promenade material finishes, greener lake water, a muted bank join and a tighter boardwalk inspection view. The source 1,377 campus mesh positions and 522 GIS geometries remain unchanged; the rail is **a display-only proxy**, not surveyed geometry.
+The supplied source contains 48 submissions, 47 collision reports after excluding one near-miss report, and 50 reported birds; at least two events are suspected. The 38-entry microzone catalogue is a field-audit queue: no candidate currently has verified pane geometry or an identified impact surface.
 
-Read the [critical lakefront photo/data comparison](campus/LAKEFRONT_V70_CRITICAL_COMPARISON.md) for model-only areas, photo evidence, the flagged stair-vs-lake plan overlap, and explicit uncertainty. The real Chihua Hill two freshwater ponds are not independently georegistered and have **not** been invented.
+These opportunistic reports do not provide pane IDs, standardized zero surveys, approach denominators or consistent carcass/searcher-detection estimates. They cannot train a calibrated rate model. See [BNBU local-data audit](docs/BNBU_LOCAL_DATA_AUDIT.md). Raw records containing submitter identifiers are not committed.
 
-The [v70 GitHub Actions workflow](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml) publishes **BNBU-v70-complete-offline-model-zip** and a self-contained HTML viewer, tested by actual Chromium in both standalone `file://` and localhost modes. Extract the nested `BNBU_Campus_Full_v70.zip`, then double-click `双击查看_校园3D.html`. The ZIP includes original v64 GIS/GLB, v65/v66, v69 water appearance, the independent v67 DSM, evidence audit, source scripts and SHA-256 manifest.
+## Quick start
 
----
+Python 3.11 is used in CI.
 
-## BNBU v69 — evidence-aware waterfront refinements (current)
-
-The [v69 full offline release](https://github.com/starright00631-dev/bird/actions/runs/43143405025) now packages the complete model, a single double-click HTML viewer, and source/evidence/metadata for reproducibility. Download the CI artifact named **BNBU-v69-complete-offline-model-zip**, extract the nested `BNBU_Campus_Full_v69.zip`, then open `双击查看_校园3D.html` locally. Browser tests pass for both a standalone offline file and localhost viewer. The source changes are in [PR #6](https://github.com/starright00631-dev/bird/pull/6).
-
-v69 makes **appearance-only edits** to inherited lake/shore/wetland geometry: independent PBR styles on five inherited lake water entities and the separate archived wetland, height-toned existing banks, display-only subtle ripple normals and existing walkway edge highlighting; a close-up lakefront initial camera view plus synchronized GIS focus. The original 1,377 mesh positions/indices, 522 GIS source features and separate v67 ALOS surface-reference data are retained. Official [2019 BNBU ecology report](https://www.bnbu.edu.cn/info/1077/4589.htm) records a natural seasonal wetland at Chihua Hill connected to **two freshwater ponds**, but their geolocated outlines are **not** verified. Do not equate them with the historical Phase II wetland mesh or interpret v69 as a surveyed shoreline/bare-earth terrain, glass area or bird-strike exposure map. See [waterfront evidence and limitations](campus/WATERFRONT_V69_EVIDENCE.md).
-
----
-
-## Archived v68 interface release
-
-**The archived v68 interface and complete model ZIP are built and published by [BNBU complete offline interface and ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml).** Download the latest successful run's artifact named BNBU-v68-complete-offline-model-zip, then extract the nested BNBU_Campus_Full_v68.zip.
-
-Open the extracted **双击查看_校园3D.html** directly in a modern browser (Chrome/Edge): it contains all necessary three.js code, v66 GLB, GIS and independent v67 DSM **offline, with no server or CDN**. Alternatively launch 启动查看器.bat to serve index.html locally with Python 3.
-
-The reproducible viewer source lives in [campus/interface/](campus/interface/). A real Chromium browser CI tests both file:// and localhost startup, switching the campus/DSM scenes, all ten layers and the GIS data. Original v64 GLB/GPKG/GeoJSON/KML, v65 history, v66 model, v67 remotely sourced DSM, quarantined unverified CTV hypotheses, hashes and build code are included in the full ZIP. No new surveyed model geometry is asserted by the interface repair.
-
-# Bird–Glass Collision Research
-
-Mechanistic, **fixed-facade** research on birds navigating glass and surrounding architecture. We model how habitat cues, specular reflections and transmission, individual flight control, morphology and nearby solid structures can interact, then test whether a *joint* intervention changes the complete route. Replacing glass is outside the research scope.
-
-**Scientific status: computational components and data adapters, not a site-calibrated prediction or authorized installation plan.** An optical image being visible does not mean a bird recognizes the glass or avoids it.
-
-## Executable component chain
-
-| Module | Inspectable function |
-| --- | --- |
-| `birdglass/scene_optics.py` | 3D finite-pane reflection/transmission, habitat virtual images, bird-facing angular footprint, incidence and solid angle |
-| `birdglass/vision.py` | Measured-input reflection/transmission spectrum, species cone catches, contrast proxies and normal pre-impact energy |
-| `birdglass/control.py` | Delayed 3D heading control, curvature-constrained turning and open-gap baseline |
-| `birdglass/contact.py` | Earliest swept body/wing point contact across glass **and opaque** surfaces |
-| `birdglass/policy.py` | Paired full-facade counterfactuals with glass-to-wall risk transfer and non-deployment gate |
-| `birdglass/behavior_fit.py` | Lag/gain estimation with **held-out individual birds**, equal time support across lags, and two baselines |
-| `birdglass/pose_contact.py` | Column-mapped, metric 3D tracked head/wing/body landmarks and first contact of measured moving keypoint envelopes |
-| `birdglass/risk.py` | Event observation identifiability: approach traffic × conditional contact × observer discovery |
-| `birdglass/reachability.py` | Optional forward-screened gap planning, with finite latency/acceleration and full structural collision checks |
-| `birdglass/source_splits.py` | Real 3D-POP trial/video/subject overlap graph and leakage-safe source folds |
-| `birdglass/stereo_tracks.py` | Published 2026 bird-flight wide-CSV schema to metric pose tracks, strictly separating mm positions and pixel sizes |
-
-Reproduce unit and regression checks:
-
-```bash
+~~~bash
 python -m pip install -r requirements.txt
 python -m pytest -q tests
-```
+~~~
 
-[CI status](https://github.com/starright00631-dev/bird/actions) and [research validation gates](https://github.com/starright00631-dev/bird/issues/1).
+Minimal façade assessment:
 
-## Evidence and scientific boundaries
+~~~python
+from birdglass.decision import FacadeContext, evaluate_facade
+from birdglass.evidence import EvidenceTier, Measurement
+from birdglass.glazing import GlassAppearance, GlassPanel
+from birdglass.vegetation import VegetationProfile
 
-The following are **different** types of evidence and cannot be collapsed into a calibrated facade collision probability:
+glass = GlassPanel(
+    panel_id="example-pane-01",
+    appearance=GlassAppearance.REFLECTIVE_AND_TRANSPARENT,
+    exterior_vlr_pct=Measurement(
+        18.0, "percent", EvidenceTier.MEASURED,
+        source_id="replace-with-instrument-record",
+    ),
+)
+vegetation = VegetationProfile(
+    cover_pct={
+        "0_5m": Measurement(32.0, "percent", EvidenceTier.REMOTE_SENSING),
+        "1_10km": Measurement(61.0, "percent", EvidenceTier.REMOTE_SENSING),
+    }
+)
+result = evaluate_facade(FacadeContext(glass=glass, vegetation=vegetation))
+print(result["intervention_comparison"])
+~~~
 
-- Optical physics and measured material/species spectra, with source details in `docs/SCENE_OPTICS_AND_VALIDATION.md`.
-- Published bird avoidance control concepts, with source details in `docs/PRIMARY_LITERATURE_AUDIT.md`.
-- External metric 3D flight/keypoint data, with required field mapping in `docs/MEASURED_WING_POSE_ADAPTER.md`.
-- Behavior parameter estimation protocol in `docs/BEHAVIOR_FIT_PROTOCOL.md`; unit tests recover known synthetic values, but **no real independent annotated gap-aim flight records have been fitted here**.
-- Selected historical numerical sensitivity tests and provenance in `results/` and `docs/`. These are scenario evidence, not BNBU glass-specific forecasts.
+Example values are placeholders, not BNBU measurements. The comparison reports mechanism fit and evidence gaps; it intentionally returns no best option or local percentage reduction without comparable outcome data.
 
-The 3D-POP source is mainly pigeon **ground/locomotor posture**, not flight or glass avoidance. Its real metadata are used **only to audit evaluation leakage**. The 2026 stereo bird-flight CSVs have a schema adapter but the raw files are not yet in this repository.
+## Repository map
 
-The archived larger v0.4 multi-module simulator is **not fully migrated**. See `docs/IMPORT_STATUS.md`. Current source code, not archived numerical output or documentation alone, defines the reproducible implementation.
+- `birdglass/`: executable mechanism, measurement and decision modules.
+- `data/external/`: public metadata/QA artefacts only.
+- `docs/`: causal model, literature audit, registries, intervention evidence and validation gates.
+- `results/`: scenario/sensitivity outputs; not observed field data.
+- `scripts/`: source audits and reproducibility helpers.
+- `tests/`: scientific invariants and regression tests.
+- `campus/`: separate campus 3D visualization workstream. Its geometry is not a measured bird-collision exposure layer.
 
-No personal campus incident reports, identifying respondent details, access credentials or unlicensed raw footage are included. We do not infer bird injury or mortality from translational energy or sampled keypoint contacts. The model explicitly considers low-visual-impact additions and lighting/habitat adjustments, but does **not** authorize any installation without measured context, robust field validation and ecological/safety review.
+## Validation rules
 
+- Missing values remain missing, never silently zero.
+- A collision report is not a surveyed zero or approach denominator.
+- Vegetation remains at 0–5 m, 5–25 m, 25–100 m, 100 m–1 km and 1–10 km; no universal signed score.
+- The 2x2 pattern check is an ECCC general-guidance screen, not ABC Threat Factor certification. The 2x4 check is spacing geometry only.
+- Intervention comparisons require matched/randomized before-after control-impact monitoring and explicit safety/ecological constraints.
+- Validation holds out birds, façades/buildings, sites and time blocks as appropriate; random row splits are insufficient.
 
-## BNBU campus 3D scene (v66 evidence-linked semantic GIS / 3D)
+## Separate campus 3D project
 
-The complete inherited v64 campus meshes and editable GIS source are stored in [`campus/`](campus/README.md). The v66 builder produces a physically categorized GLB with ten named scene layers, retaining the original 1,377 meshes and restoring 112 render associations (10 water/shore + 96 stair + 6 at-grade links). This is a scene-structure and source-link repair, **not a surveyed reconstruction**. The CTV “校长别墅” candidate remains excluded. Hill elevations are relative, water boundaries and driveways are not independently surveyed, and no glass area is calibrated.
+The viewer and source evidence are documented in [campus/README.md](campus/README.md). The campus scene may later supply verified pane geometry and approach-view registration, but is not a prerequisite for the external-data model.
 
-Run `python campus/build_v66.py && python -m unittest discover -s campus -p 'test_v66.py' -v`, then `python -m http.server 8000`; open `http://localhost:8000/campus/viewer.html` to inspect the complete layered 3D model and GIS evidence. GitHub Actions produces downloadable generated GLB, GIS and provenance artifacts.
+## Next build sequence
 
-
-## Verified external bird–window video benchmark
-
-The source-audited 2022 PeerJ study's **38 selected cases** (29 contacts,
-9 near misses; only 36 rows with complete speed/angle/time predictors) are
-reprocessed directly from the NIH PMC versioned public supplement and
-cross-checked with the authors' published R-analysis file. The source has
-the exact SHA-256 \`0e33f97b007bb5f479ebe45abd76680c2ff36ea92f0280f6ead48e708af6cf35\`.
-
-**Falsification result:** when species are held out in entire groups, a
-speed+angle+hour logistic model yields Brier 0.2386 versus 0.2170 for
-the smoothed train-only intercept. Leave-calendar-year-out is 0.2568
-versus 0.1939. This means that **this small selected case table does not
-support a transferable predictive classifier**, let alone a panel-level
-collision probability. Real 3D approach/avoidance tracks and independent
-bird-visible optical conditions remain mandatory.
-
-- Analysis, original paper discrepancy and full limits:
-  [real video case benchmark](docs/REAL_CASE_VIDEO_BENCHMARK.md).
-- Executable code: \`python -m birdglass.video_case_benchmark --input ORIGINAL.csv --output report.json\`.
-- [Evidence workflow](https://github.com/starright00631-dev/bird/actions/workflows/inspect-samuels.yml)
-  retrieves/checksums the original public CSV and published R code,
-  validates source rows and publishes the inspectable output artifact.
-- \`birdglass/approach_events.py\` operationalizes at-risk approach
-  gates, finite-3D-facade ballistic intercepts, source-video verified
-  outcomes and **right-censoring** for missing camera coverage.
-  It does not infer behavior or site risk from a mirror ray alone.
+1. Complete façade decision tests and evidence contracts.
+2. Acquire/harmonize external façade survey and treatment data with effort/detection metadata.
+3. Build human-audited image/remote-sensing feature extraction and site-held-out validation.
+4. Fit interpretable count/rate models with exposure offsets before predictive challengers.
+5. Estimate treatment effects only from comparable field designs and produce an uncertainty-aware multi-objective frontier.
+6. Use BNBU field verification to localize and calibrate, not to manufacture accuracy from 48 opportunistic submissions.
