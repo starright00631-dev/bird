@@ -11,6 +11,7 @@ on:
       - "README.md"
       - "docs/UBC_DATA_AUDIT.md"
       - "docs/COORDINATION_LOG.md"
+      - "docs/data_registry.csv"
       - "data/raw/ubc/**"
       - ".github/workflows/ubc-data-validation.yml"
   push:
@@ -57,7 +58,33 @@ jobs:
           assert report["search_efficiency"]["rows"] == 29
           assert report["search_efficiency"]["status"] == "repeated_detection_history_parsed"
           assert report["carcass_persistence"]["rows"] == 103
-          assert report["carcass_persistence"]["status"] == "interval_censoring_fields_detected"
+          assert report["carcass_persistence"]["status"] == "interval_and_right_censoring_fields_detected"
+          assert report["carcass_persistence"]["interval_censored_trials"] == 85
+          assert report["carcass_persistence"]["right_censored_trials"] == 18
+          assert report["carcass_persistence"]["first_absent_inf_trials"] == 18
+          assert report["carcass_persistence"]["invalid_or_incomplete_trials"] == 0
+          observed = report["observed_collision_counts"]
+          assert observed["raw_rows"] == 8846
+          assert observed["unique_facades"] == 57
+          assert observed["unique_survey_dates"] == 155
+          assert observed["unique_facade_date_visits"] == 8831
+          assert observed["collision_event_count"] == 152
+          assert observed["positive_facade_date_visits"] == 142
+          assert observed["missing_facade_date_keys_vs_full_cross_product"] == 4
+          assert observed["duplicate_facade_date_groups"] == 15
+          assert observed["method_schedule_mismatch_rows"] == 0
+          schedule = report["search_schedule"]
+          assert schedule["unique_survey_dates"] == 155
+          assert schedule["period_count"] == 5
+          assert schedule["monitoring_days_total_inclusive"] == 225
+          assert schedule["all_buildings_searched_on_every_scheduled_date"]
+          points = report["point_counts"]
+          assert points["species_rows"] == 303
+          assert points["checklist_groups"] == 86
+          assert points["study_building_checklists"] == 72
+          assert points["nonstudy_checklists"] == 14
+          assert points["checklist_group_size_mismatches"] == 0
+          assert points["metadata_inconsistencies"] == 0
           codebook = json.loads(Path("data/derived/ubc/codebook_inspection.json").read_text())
           assert codebook["sheet_count"] > 0
           assert any(sheet["preview_rows"] for sheet in codebook["sheets"])
@@ -65,6 +92,17 @@ jobs:
           print("UBC_SOURCES_VERIFIED", report["files_present"])
           print("UBC_SEARCH_EFFICIENCY", report["search_efficiency"]["conditional_detection_by_search"])
           print("UBC_CARCASS_PERSISTENCE", report["carcass_persistence"])
+          print("UBC_OBSERVED_COLLISION_AUDIT", report["observed_collision_counts"])
+          print("UBC_SEARCH_SCHEDULE_AUDIT", report["search_schedule"])
+          print("UBC_POINT_COUNT_AUDIT", report["point_counts"])
           PY
       - name: Run UBC audit unit tests
         run: python -m pytest -q tests/test_audit_ubc_sources.py tests/test_inspect_ubc_codebook.py
+
+      - name: Upload verified De Groot source snapshot and audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubc-de-groot-verified-source-snapshot
+          path: data/derived/ubc/
+          if-no-files-found: error
+          retention-days: 30
