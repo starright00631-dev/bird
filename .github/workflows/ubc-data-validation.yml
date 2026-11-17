@@ -168,7 +168,15 @@ jobs:
               season_rows = [r for r in rows if r["season"] == season]
               assert any(r["converged"].lower() == "true" and r["AICc"] for r in season_rows), f"No converged model for {season}"
           assert Path("results/ubc/ubc_leave_one_building_out_validation.csv").exists()
+          with Path("results/ubc/ubc_seasonal_response_curves.csv").open(newline="") as handle:
+              curves = list(csv.DictReader(handle))
+          assert curves, "No conditional response curves"
+          for curve in curves:
+              if curve["predicted_probability"]:
+                  p = float(curve["predicted_probability"])
+                  assert 0.0 <= p <= 1.0
           print("UBC_SEASONAL_MODEL_SELECTION", rows)
+          print("UBC_SEASONAL_RESPONSE_CURVES", curves[:12])
           print("UBC_MODEL_LIMITATIONS", report["limitations"])
           PY
 
