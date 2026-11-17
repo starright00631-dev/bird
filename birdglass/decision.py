@@ -676,7 +676,7 @@ def evaluate_facade(context: FacadeContext) -> dict:
 
     return {
         "model": "BNBU Bird-Glass Interpretable Decision Support",
-        "model_version": "0.2.0",
+        "model_version": "0.3.0",
         "panel_id": glass.panel_id,
         "risk_profile": risk_profile,
         "glass_assessment": glazing,

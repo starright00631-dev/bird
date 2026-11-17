@@ -2,7 +2,7 @@
 
 Evidence-led research to explain **where, why and under what conditions birds collide with glass**, and to compare interventions for existing façades. The goal is a transparent, testable decision system—not a single opaque risk score or an unsupported end-to-end claim.
 
-> **Status (2026-11-16):** executable mechanistic components, an evidence-aware façade decision system, a pinned UVic survey-data adapter and an effort-offset Poisson GEE baseline exist. This is not yet a glass/vegetation-trained or site-calibrated BNBU collision model. DINOv2 glass recognition and automatic vegetation segmentation are not implemented.
+> **Status (2026-11-17):** the repository includes a pinned UBC façade glass/vegetation association benchmark, an evidence-aware BNBU façade assessment adapter, structured glass and vegetation field schemas, optional pinned CLIP photo triage, auditable annular-mask summaries and a source-linked intervention evidence registry. The UBC model is descriptive only and did not demonstrate predictive improvement over an exposure-only baseline on held-out buildings. No BNBU-calibrated absolute collision probability or local treatment efficacy is claimed.
 
 ## Model architecture
 
@@ -25,15 +25,18 @@ The output is a **pathway profile plus an evidence-gated intervention comparison
 | `birdglass/risk.py`, `approach_events.py` | Observation identifiability and approach censoring |
 | `birdglass/source_splits.py`, `stereo_tracks.py` | Leakage audit and external trajectory schema |
 | `birdglass/solar.py` | Approximate ENU sun position and specular geometry |
-| `birdglass/evidence.py`, `glazing.py`, `vegetation.py`, `decision.py` | Evidence tiers, glazing, five vegetation scales and conditional decisions |
+| `birdglass/evidence.py`, `glazing.py`, `vegetation.py`, `decision.py` | Canonical evidence tiers, glazing, five non-overlapping vegetation bands and conditional decisions |
+| `birdglass/glass_observation.py`, `vegetation_observation.py`, `facade_decision_report.py` | Human/spec/instrument intake adapters into the canonical façade decision engine |
+| `birdglass/glass_image_classifier.py`, `vegetation_segmentation.py` | Optional pinned CLIP photo triage and provenance-aware summaries of supplied annular masks (not segmentation inference) |
 | `birdglass/uvic_panel.py` | Pinned UVic source verification, facade-period aggregation and observed-evidence Poisson GEE baseline |
 
 The façade decision layer separates measured evidence from proxies, reflection from through-glass false passage, local canopy from landscape cover, selected clips from continuous approach video, and mechanism fit from measured intervention efficacy.
 
 ## Not yet implemented or calibrated
 
-- DINOv2/ViT/CNN glass-image classification.
-- Automatic tree-crown segmentation, NDVI and multi-buffer remote-sensing extraction.
+- BNBU-calibrated glass/vegetation collision model with held-out-building/site validation.
+- Automatic vegetation segmentation inference; the current mask utility only summarizes externally produced, human-QA masks.
+- Pinned CLIP photo triage is available, but it is provisional and cannot replace spectral R/T or human review.
 - Harmonized external training table with comparable survey effort and non-event observations.
 - Full detection-corrected GenEst/JAGS reproduction and a BNBU-calibrated GAMM/GLMM with measured glass and vegetation predictors.
 - Trained CatBoost/Random Forest challenger model.

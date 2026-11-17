@@ -17,6 +17,7 @@ class GlassAppearance(str, Enum):
     TINTED_OR_LOW_E = "tinted_or_low_e"
     FRITTED_OR_PATTERNED = "fritted_or_patterned"
     OPAQUE_SPANDREL = "opaque_spandrel"
+    FROSTED_TRANSLUCENT = "frosted_translucent"
     UNKNOWN = "unknown"
 
 
@@ -179,6 +180,8 @@ def assess_glazing(panel: GlassPanel) -> dict:
         GlassAppearance.UNKNOWN, GlassAppearance.TINTED_OR_LOW_E
     }:
         optical_hazard = "unclassified"
+    elif panel.appearance == GlassAppearance.FROSTED_TRANSLUCENT:
+        optical_hazard = "requires_visual_and_spectral_review"
     else:
         optical_hazard = "requires_visual_and_spectral_review"
 
@@ -199,6 +202,8 @@ def assess_glazing(panel: GlassPanel) -> dict:
         findings.append("measured_transmitted_habitat_present")
     if reflection_rating_flag:
         findings.append("exterior_vlr_above_15_percent_rating_review_flag")
+    if panel.appearance == GlassAppearance.FROSTED_TRANSLUCENT:
+        findings.append("diffuse_translucency_requires_visual_and_spectral_review")
 
     pattern_standard_scope = (
         "ECCC general 2x2 spacing screen only: whole-pane exterior coverage, "

@@ -24,3 +24,8 @@ This matrix distinguishes mechanism plausibility, published evidence and what ca
 ## Ranking rule
 
 The current decision engine compares mechanism fit and required evidence. It deliberately does not rank interventions by efficacy or emit a best option until comparable approach denominators, independently verified glass/opaque contacts, matched or randomized intervention monitoring, detection/persistence correction, cost, maintenance, safety and ecological side effects are available.
+
+
+## Machine-readable evidence links
+
+The action-to-source mapping is maintained in [data/reference/intervention_evidence.csv](../data/reference/intervention_evidence.csv). The decision report attaches source IDs to candidate actions, but the attached papers/guidelines remain mechanism or design context unless their study design supports a causal intervention estimate. The UBC GLMM is descriptive only and its held-out-building predictive comparison did not beat the exposure-only baseline. No external percentage is transported to BNBU.

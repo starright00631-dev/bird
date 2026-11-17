@@ -244,3 +244,20 @@ All 16 seasonal candidate fits converged with positive-definite Hessians. The ob
 This reproduces the paper's qualitative seasonal support pattern. The absolute log-likelihood/AICc values are not bit-identical to the publication, but the seasonal ΔAICc rankings and the odds-ratio-per-1-SD coefficient pattern align. The output does not establish causal effects or a predictive winner.
 
 Examples of the paper-aligned OR-per-1-SD results in the best-supported candidate sets are: fall AreaGlass 2.56 (95% CI 1.70–3.86) and StorReflVeg 1.92 (1.15–3.19); winter FacArea 1.57 (1.07–2.31) and AreaGlass 1.47 (1.06–2.05); spring full-model AreaGlass 1.99 (1.32–3.02). In summer, the null and building-only models are essentially tied; do not infer a stable glass effect from that season's model choice. All coefficients are observational associations per one standard deviation, not causal effects or intervention efficacy.
+
+
+## Held-out-building uncertainty (paired cluster bootstrap)
+
+The pinned CI runs 5,000 paired building-cluster resamples across all four
+seasonal folds. The resampling unit is the building; seasonal folds for the
+same building move together. The comparator is a binomial exposure-only model
+with the same log(24/48-hour) offset.
+
+| Pooled metric | GLMM minus exposure-only | 95% building-cluster interval | Interpretation |
+|---|---:|---:|---|
+| Brier score | +0.00531 | -0.00027 to +0.00988 | No demonstrated improvement; positive values are worse |
+| Log loss | +0.01283 | -0.00433 to +0.02735 | No demonstrated improvement; positive values are worse |
+
+These intervals use only eight buildings and are a small-cluster uncertainty
+screen, not cross-campus validation. The model remains a descriptive seasonal
+association benchmark; do not use its coefficients as BNBU risk probabilities.

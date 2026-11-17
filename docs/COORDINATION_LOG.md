@@ -110,3 +110,13 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Added `docs/EXPERIMENT_LEDGER.csv` with the UBC Appendix 1 model, De Groot source audit and finite-pane two-leg optics correction. Each entry records source/version/hash, hypothesis, method, split/control, CPU compute, results, limitations, decision and next falsifiable experiment.
 - Updated `docs/data_registry.csv` to mark Zulian as model-fitted but descriptive-only with weak LOBO transfer; it is not predictive or BNBU-calibrated.
 - Added separate UBC De Groot and Zulian entries to `docs/SOURCE_REGISTER.csv`; De Groot remains observation-process audit only and is not row-joined to Zulian.
+
+
+## Final façade model intake and decision integration (2026-11-17)
+
+- Added human/spec/instrument glass observation adapter into canonical GlassPanel/PatternSpec/assess_glazing; unreviewed CLIP/photo classes remain provisional and map to UNKNOWN.
+- Added vegetation observation adapter into canonical VegetationProfile/vegetation_pathways; the five bands are non-overlapping annuli. Façade-specific 50-m porous/tree cover, building-level vegetation proportion and continuous STORIES_REFLECT_CANOPY are separate fields.
+- Added pinned CLIP revision requirement and provenance-aware summarization of supplied annular masks. The mask utility is not a segmentation model and requires source image, model revision, CRS, resolution and human-QA provenance.
+- Added a joined façade report that calls the canonical decision engine. It rejects arbitrary probability floats; a prediction requires a pinned artifact, explicit endpoint/exposure, BNBU calibration and held-out validation report.
+- Intervention recommendations are mapped to a machine-readable source registry. Ottawa/Oklahoma/Klem/UV evidence remains study-specific; no BNBU efficacy percentages or best-treatment claims are generated.
+- UBC LOBO paired cluster bootstrap (8 building clusters, 5,000 resamples) does not demonstrate predictive improvement over the exposure-only baseline. Keep the UBC model as a descriptive association benchmark only.
