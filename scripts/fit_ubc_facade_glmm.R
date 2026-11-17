@@ -423,6 +423,104 @@ fit_leave_one_building_out <- function(data, seasons) {
   do.call(rbind, output)
 }
 
+
+# Nested LOBO: candidate selection is repeated inside each training fold.
+# The held-out building is never used for scaling, AICc selection or fitting.
+fit_nested_leave_one_building_out <- function(data, seasons) {
+  output <- list()
+  for (season in seasons) {
+    season_data <- data[data$season == season, , drop = FALSE]
+    for (held_out in levels(data$building_id)) {
+      train_raw <- season_data[season_data$building_id != held_out, , drop = FALSE]
+      test_raw <- season_data[season_data$building_id == held_out, , drop = FALSE]
+      fail_row <- function(message, candidates = "") data.frame(
+        season = as.character(season), held_out_building = held_out,
+        selected_model = NA_character_, candidate_aicc = candidates,
+        n_train = nrow(train_raw), n_test = nrow(test_raw),
+        n_test_positive = sum(test_raw$mortality_present), converged = FALSE,
+        auc = NA_real_, brier = NA_real_, log_loss = NA_real_,
+        baseline_converged = FALSE, baseline_brier = NA_real_,
+        baseline_log_loss = NA_real_, message = message,
+        stringsAsFactors = FALSE
+      )
+      if (nrow(train_raw) == 0 || nrow(test_raw) == 0 ||
+          length(unique(train_raw$mortality_present)) < 2) {
+        output[[length(output) + 1]] <- fail_row("Insufficient training outcomes or test rows")
+        next
+      }
+      scaled <- tryCatch(scale_predictors(train_raw, test_raw), error = function(e) e)
+      if (inherits(scaled, "error")) {
+        output[[length(output) + 1]] <- fail_row(conditionMessage(scaled))
+        next
+      }
+      train <- scaled$train
+      test <- scaled$test
+      train$facade_id <- droplevels(factor(train$facade_id))
+      test$facade_id <- factor(test$facade_id,
+        levels = unique(c(levels(train$facade_id), as.character(test$facade_id))))
+      candidate_fits <- lapply(names(model_fixed_terms), function(name) {
+        fit_one_model(train, as.character(season), name)
+      })
+      names(candidate_fits) <- names(model_fixed_terms)
+      candidate_rows <- do.call(rbind, lapply(candidate_fits, function(x) x$row))
+      valid <- candidate_rows[candidate_rows$converged & is.finite(candidate_rows$AICc), , drop = FALSE]
+      candidate_text <- paste(sprintf("%s=%.6f%s", candidate_rows$model,
+        candidate_rows$AICc, ifelse(candidate_rows$converged, "", "[failed]")),
+        collapse = ";")
+      if (nrow(valid) == 0) {
+        output[[length(output) + 1]] <- fail_row("No converged training-fold candidate", candidate_text)
+        next
+      }
+      valid <- valid[order(valid$AICc, valid$model), , drop = FALSE]
+      selected <- as.character(valid$model[1])
+      fit <- candidate_fits[[selected]]$fit
+      prediction <- tryCatch(as.numeric(predict(
+        fit, newdata = test, type = "response", re.form = NA, allow.new.levels = TRUE
+      )), error = function(e) e)
+      if (inherits(prediction, "error") || length(prediction) != nrow(test) ||
+          any(!is.finite(prediction))) {
+        message <- if (inherits(prediction, "error")) conditionMessage(prediction) else "Invalid held-out predictions"
+        output[[length(output) + 1]] <- fail_row(message, candidate_text)
+        next
+      }
+      baseline_fit <- tryCatch(stats::glm(
+        mortality_present ~ offset(log(survey_hours)), data = train,
+        family = stats::binomial(link = "logit")
+      ), error = function(e) e)
+      if (inherits(baseline_fit, "error")) {
+        output[[length(output) + 1]] <- fail_row(
+          paste("Exposure-only baseline failed:", conditionMessage(baseline_fit)), candidate_text
+        )
+        next
+      }
+      baseline_prediction <- as.numeric(stats::predict(baseline_fit, newdata = test, type = "response"))
+      if (length(baseline_prediction) != nrow(test) || any(!is.finite(baseline_prediction))) {
+        output[[length(output) + 1]] <- fail_row("Invalid exposure-only baseline predictions", candidate_text)
+        next
+      }
+      y <- as.integer(test$mortality_present)
+      probability <- pmin(pmax(prediction, 1e-8), 1 - 1e-8)
+      baseline_probability <- pmin(pmax(baseline_prediction, 1e-8), 1 - 1e-8)
+      output[[length(output) + 1]] <- data.frame(
+        season = as.character(season), held_out_building = held_out,
+        selected_model = selected, selected_training_aicc = valid$AICc[1],
+        candidate_aicc = candidate_text,
+        n_train = nrow(train), n_test = nrow(test),
+        n_train_positive = sum(train$mortality_present), n_test_positive = sum(y),
+        converged = TRUE, auc = auc_rank(y, probability),
+        brier = mean((probability - y)^2),
+        log_loss = mean(-y * log(probability) - (1-y) * log(1-probability)),
+        baseline_converged = isTRUE(baseline_fit$converged),
+        baseline_brier = mean((baseline_probability-y)^2),
+        baseline_log_loss = mean(-y*log(baseline_probability)-(1-y)*log(1-baseline_probability)),
+        message = "Candidate set selected by training-fold AICc only",
+        stringsAsFactors = FALSE
+      )
+    }
+  }
+  do.call(rbind, output)
+}
+
 args <- parse_args(commandArgs(trailingOnly = TRUE))
 dir.create(args$out_dir, recursive = TRUE, showWarnings = FALSE)
 validated <- read_and_validate_panel(args$input, args$audit)
