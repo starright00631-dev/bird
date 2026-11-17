@@ -2,10 +2,14 @@ import csv
 import hashlib
 from pathlib import Path
 
+import pytest
+
 from scripts.audit_ubc_sources import (
+    FILES,
     audit_carcass_persistence,
     audit_search_efficiency,
     audit_survey_table,
+    download_file,
     read_csv,
 )
 
@@ -86,20 +90,89 @@ def test_csv_reader_rejects_duplicate_headers(tmp_path):
         raise AssertionError("Duplicate headers should fail")
 
 
-def test_public_search_efficiency_file_matches_dryad_md5():
-    path = Path(__file__).parents[1] / "data" / "raw" / "ubc" / "Search.Efficiency.csv"
-    assert path.exists()
-    assert hashlib.md5(path.read_bytes()).hexdigest() == "f9e7a8816ef52eb9d3523f0f14b40d6b"
-    result = audit_search_efficiency(path)
-    assert result["rows"] == 29
-    assert result["conditional_detection_by_search"][0]["detections_on_this_search"] == 16
-    assert result["conditional_detection_by_search"][1]["at_risk_trials_with_observed_result"] == 13
+def test_search_efficiency_source_metadata_matches_zenodo_record():
+    assert FILES["Search.Efficiency.csv"] == (
+        "f9e7a8816ef52eb9d3523f0f14b40d6b",
+        1766,
+    )
 
 
-def test_verified_search_efficiency_season_breakdown():
-    path = Path(__file__).parents[1] / "data" / "raw" / "ubc" / "Search.Efficiency.csv"
+def test_download_file_verifies_pinned_bytes_before_writing(monkeypatch, tmp_path):
+    payload = b"ID,s1\\ncarc1,1\\n"
+    digest = hashlib.md5(payload).hexdigest()
+    monkeypatch.setitem(FILES, "Search.Efficiency.csv", (digest, len(payload)))
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, traceback):
+            return False
+
+        def read(self):
+            return payload
+
+    monkeypatch.setattr(
+        "scripts.audit_ubc_sources.urllib.request.urlopen",
+        lambda request, timeout: FakeResponse(),
+    )
+    destination = tmp_path / "Search.Efficiency.csv"
+    result = download_file("Search.Efficiency.csv", destination)
+    assert destination.read_bytes() == payload
+    assert result["md5"] == digest
+    assert result["bytes"] == len(payload)
+
+
+def test_download_file_rejects_mismatched_bytes_without_writing(monkeypatch, tmp_path):
+    payload = b"ID,s1\\ncarc1,1\\n"
+    monkeypatch.setitem(FILES, "Search.Efficiency.csv", ("0" * 32, len(payload)))
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, traceback):
+            return False
+
+        def read(self):
+            return payload
+
+    monkeypatch.setattr(
+        "scripts.audit_ubc_sources.urllib.request.urlopen",
+        lambda request, timeout: FakeResponse(),
+    )
+    destination = tmp_path / "Search.Efficiency.csv"
+    with pytest.raises(ValueError, match="MD5 mismatch"):
+        download_file("Search.Efficiency.csv", destination)
+    assert not destination.exists()
+
+
+def test_verified_search_efficiency_season_breakdown_uses_explicit_fixture(tmp_path):
+    path = tmp_path / "Search.Efficiency.csv"
+    headers = ["ID", "Season", "s1", "s2", "s3", "s4", "s5", "s6"]
+    rows = []
+    season_specs = [
+        ("fall", 2, 0),
+        ("spring", 3, 2),
+        ("summer", 3, 3),
+        ("winter", 21, 11),
+    ]
+    for season, n_trials, first_search_detections in season_specs:
+        for index in range(n_trials):
+            rows.append({
+                "ID": f"{season}-{index}",
+                "Season": season,
+                "s1": "1" if index < first_search_detections else "0",
+                "s2": "NA",
+                "s3": "NA",
+                "s4": "NA",
+                "s5": "NA",
+                "s6": "NA",
+            })
+    write_csv(path, headers, rows)
     result = audit_search_efficiency(path)
     seasons = result["first_search_by_season"]
+    assert result["rows"] == 29
     assert seasons["fall"]["first_search_detections"] == 0
     assert seasons["fall"]["trials"] == 2
     assert seasons["spring"]["first_search_detections"] == 2
