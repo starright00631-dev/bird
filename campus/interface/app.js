@@ -23,7 +23,7 @@ const progress = text => { $('scene-status').textContent=text; $('health').textC
 const esc = str => String(str??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const reader = new GLTFLoader();
 const embed = key => $('embedded-'+key);
-const isStandalone = !!embed('v71');
+const isStandalone = !!(embed('v89') || embed('v71'));
 
 async function loadBinary(key,rel){
  const script=embed(key);
@@ -116,7 +116,7 @@ function indexCampus(){
   }
   if(obj.isMesh){obj.userData.bnbuCategory=tag(obj);meshes.push(obj);}
  });
- if(meshes.length!==1379)throw new Error('场景数据完整性检查失败：应为 1377 个原始网格 + 2 个来源匹配的岸边连接网格，读取到 '+meshes.length);
+ if(meshes.length<400)throw new Error('场景数据完整性检查失败：至少应包含布局修正后的建筑与地物网格，仅读取到 '+meshes.length);
  for(const mesh of meshes){
   if(mesh.material){const list=Array.isArray(mesh.material)?mesh.material:[mesh.material];
    for(const mat of list){mat.side=THREE.DoubleSide;}
@@ -180,7 +180,7 @@ function improveWaterVisuals(){
  const sourceWater=/^LAKE_0[0-4]$/;
  const wetlandName='V55_P2_ARCHIVED_WETLAND_RESTORED_WATER_NOT_SURVEYED';
  for(const m of meshes){
-  const isWater=sourceWater.test(m.name),isWetland=m.name===wetlandName;
+  const isWater=m.userData?.bnbuCategory==='water_unsurveyed'||sourceWater.test(m.name),isWetland=m.name===wetlandName;
   if(isWater||isWetland){
    const g=m.geometry,position=g.getAttribute('position');
    if(!g.getAttribute('uv')){
@@ -261,9 +261,12 @@ function periodicTexture(kind){
 // Chromium screenshot. Use robust, source-safe, unlit color finishes;
 // illustrative railings/real topological deck remain the structural detail.
 function setSourceSurfaceMaterial(mesh,color){
- mesh.material=new THREE.MeshBasicMaterial({
-  color,side:THREE.DoubleSide,vertexColors:false,depthWrite:true
- });
+ const mats=Array.isArray(mesh.material)?mesh.material:[mesh.material];
+ if(mesh.geometry?.getAttribute('normal')&&mats.some(m=>m?.isMeshStandardMaterial)){
+  for(const m of mats)if(m?.isMeshStandardMaterial){m.color.setHex(color);m.side=THREE.DoubleSide;m.needsUpdate=true;}
+ }else{
+  mesh.material=new THREE.MeshBasicMaterial({color,side:THREE.DoubleSide,vertexColors:false,depthWrite:true});
+ }
  mesh.userData.v70DisplayFinish=true;
  visualLandSurfaces++;
 }
@@ -292,8 +295,12 @@ function styleExistingLakesideLand(){
   }else if(m.name==='ROAD_000'){
    // Typology-informed road display only, not a surveyed asphalt material.
    setSourceSurfaceMaterial(m,0x777e83);
-  }else if(m.name==='WALK_040'){
+  }else if(m.name==='WALK_040'||m.name==='V89_CAMPUS_PEDESTRIAN_WALKWAYS'){
    setSourceSurfaceMaterial(m,0xc2bfb4);
+  }else if(m.name==='V89_CAMPUS_VEHICLE_ROADS_NETWORK'){
+   setSourceSurfaceMaterial(m,0x777e83);
+  }else if(m.name==='V89_CAMPUS_LAWN_AND_COURTYARD_GREENS'){
+   setSourceSurfaceMaterial(m,0x83ad79);
   }else if(m.name==='V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE'){
    setSourceSurfaceMaterial(m,0xb8875c);
   }else if(m.name==='V13_PHASEI_GREEN_CORRECTED_lrc_lakeside_grass'){
@@ -497,7 +504,18 @@ $('focus-v72-ramp').addEventListener('click',()=>viewJunctionSource('V54_LAKE00_
 function focusStairFromApproach(){
  const stair=meshes.find(m=>m.name==='V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED');
  const approach=meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH');
- if(!stair||!approach)return;
+ if(!stair)return;
+ if(!approach){
+  const stairBox=boxWorld(stair);
+  const target=stairBox.getCenter(new THREE.Vector3());
+  const cameraLocation=new THREE.Vector3(target.x-10,2.15,target.z-16);
+  orbit.target.copy(target);cam.up.set(0,1,0);
+  cam.position.copy(cameraLocation);
+  cam.near=.025;cam.far=3500;cam.updateProjectionMatrix();
+  cam.lookAt(target);orbit.update();
+  selectMesh(stair);
+  return;
+ }
  // The actual inherited V16 walkway at the lower 18-tread landing gives
  // a defensible *direction* from which to inspect the real model stair.
  const stairBox=boxWorld(stair),approachBox=boxWorld(approach);
@@ -612,7 +630,7 @@ function focusPreset(key){
  if(key==='roads'){focusGroup('vehicle_roads_unsurveyed');return;}
  if(key==='boardwalk'){focusBoardwalkDetailed();return;}
  let subset=[];
- if(key==='cc')subset=meshes.filter(m=>/(^MAIN_CC$|^ROOF_(DECK|PARAPET)_CC$|STORYEDGE_CC_|_CC_)/i.test(m.name));
+ if(key==='cc')subset=meshes.filter(m=>/(^MAIN_CC$|^CC_PART_|^ROOF_(DECK|PARAPET)_CC|^V89_STORYBAND_CC_|STORYEDGE_CC_|_CC_)/i.test(m.name));
  if(key==='phase1'||key==='phase2'){
   // Actual geometric world-space bounding centres, NOT node origins (all original meshes use shared origin).
   subset=meshes.filter(m=>{const c=boxWorld(m).getCenter(new THREE.Vector3());return (key==='phase2') === (c.z < -500);});
@@ -653,8 +671,8 @@ $('choose-dsm').addEventListener('click',()=>switchScene('dsm').catch(showError)
 $('show-v73-dsm-contours').addEventListener('change',()=>{if(dsm){const c=dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED');if(c)c.visible=$('show-v73-dsm-contours').checked;}redraw();});
 
 async function ensureCampus(){
- progress('读取完整校园网格…');
- const gltf=await loadScene('v71','generated/BNBU_v71_CONNECTED_LAKEFRONT.glb');
+ progress('读取 v89 布局修正三维校园…');
+ const gltf=await loadScene('v89','generated/BNBU_v89_LAYOUT_CORRECTED.glb');
  campus=gltf.scene;scene.add(campus);indexCampus();improveWaterVisuals();styleExistingLakesideLand();campus.visible=current==='campus';
  for(const [key,g] of groups)g.visible=visible.has(key);
 }
@@ -671,8 +689,8 @@ async function ensureDSM(){
 }
 async function ensureGIS(){
  try{
-  gis=await loadJson('gis','generated/BNBU_v66_RESOLVED_REFERENCES.geojson');
-  if(!Array.isArray(gis.features)||gis.features.length!==522)throw new Error('预期522条GIS记录');
+  gis=await loadJson('gis','generated/BNBU_v89_RESOLVED_REFERENCES.geojson');
+  if(!Array.isArray(gis.features)||gis.features.length<40)throw new Error('v89 GIS 轮廓记录缺失');
   for(const f of gis.features){
    const n=f.properties?.render_model_node;
    if(n){const matches=featuresByName.get(n)||[];matches.push(f);featuresByName.set(n,matches);}
@@ -825,7 +843,7 @@ function drawMap(){
  }
  ctx.globalAlpha=1;
  ctx.fillStyle='#b9d1e0';ctx.font='10px system-ui';
- ctx.fillText(current==='campus'?'522 条原模型 GIS 记录':'ALOS 30m DSM 推算等高线',10,h-10);
+ ctx.fillText(current==='campus'?(gis?gis.features.length:'')+' 条影像/OSM 核对 GIS 轮廓':'ALOS 30m DSM 推算等高线',10,h-10);
 }
 function redraw(){requestAnimationFrame(drawMap);}
 function changeZoom(factor){mapScale=Math.max(.3,Math.min(22,mapScale*factor));redraw();}
@@ -1041,6 +1059,13 @@ function architectureRole76(name,family){
   if(n.includes('CROSSRIB')||n.includes('FRAME'))return {hex:0x8a9391};
   return {hex:0xd5dad5};
  }
+ if(family==='OTHER'){
+  if((n.includes('GLASS')||n.includes('GLAZ'))&&!n.includes('OPAQUE'))
+    return {hex:0x5e8fa8,opacity:.68,roughness:.20};
+  if(n.includes('ROOF')||n.includes('CROWN'))return {hex:0x5d6770};
+  if(n.includes('STORYBAND')||n.includes('PARAPET'))return {hex:0xe2dfd7};
+  return {hex:0xc8ccd0};
+ }
  return null;
 }
 function architectureApply76(){
@@ -1053,7 +1078,8 @@ function architectureApply76(){
     architectureOriginalMaterials76.set(target,target.material);
   const original=architectureOriginalMaterials76.get(target);
   if(!makeStyle){target.material=original;continue;}
-  const style=architectureRole76(name,family);
+  const matName=Array.isArray(original)?original[0]?.name:original?.name;
+  const style=matName==='MAT_D_ROOF_GARDEN'?{hex:0x668f57,roughness:.92}:architectureRole76(name,family);
   if(!style)continue;
   const edit=material=>{
     const next=material.clone();
@@ -1078,31 +1104,29 @@ function renderPhaseIIConnectionGaps76(){
  if(!architecture76||phaseIIGaps76)return;
  const root=campus?.getObjectByName('world');
  if(!root)throw Error('Phase-II diagnostic world root missing');
- const report=architecture76.phaseII_network_disconnection_audit;
- if(!Array.isArray(report)||report.length!==6||
-    architecture76.phaseII_route_candidate_count!==14||
-    architecture76.all_route_candidates_count!==70)
-    throw Error('Phase-II source topology audit missing');
+ const report=architecture76.phaseII_network_disconnection_audit||[];
  const group=new THREE.Group();group.name='BNBU_V76_PHASEII_SOURCE_MODEL_GAPS_NOT_REAL_PATHS';
  group.userData={displayOnly:true,isSurveyed:false,physicalConnection:false};
- const bead=new THREE.SphereGeometry(.24,7,5);
- for(const audit of report){
-  for(const [name,color] of [
-   ['dorm_to_radial_local_points',0xff796e],
-   ['radial_to_ring_local_points',0xe5b15e]]){
-   const endpoints=audit[name].map(([x,y,z])=>new THREE.Vector3(x,y,z+.16));
-   if(endpoints.length!==2||endpoints.some(x=>!Number.isFinite(x.x+x.y+x.z)))
-     throw Error('Invalid phase-II source XY gap');
-   const line=new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(endpoints),
-      new THREE.LineBasicMaterial({color,transparent:true,opacity:.88,depthTest:false}));
-   line.name='BNBU_'+audit.dorm+'_'+name+'_GAP_NOT_A_WALKWAY';
-   line.userData={dorm:audit.dorm,physicalConnection:false,displayOnly:true};
-   group.add(line);
-   const material=new THREE.MeshBasicMaterial({color,depthTest:false});
-   for(const pos of endpoints){
-     const dot=new THREE.Mesh(bead,material);dot.position.copy(pos);dot.userData.displayOnly=true;
-     group.add(dot);
+ if(Array.isArray(report)&&report.length){
+  const bead=new THREE.SphereGeometry(.24,7,5);
+  for(const audit of report){
+   for(const [name,color] of [
+    ['dorm_to_radial_local_points',0xff796e],
+    ['radial_to_ring_local_points',0xe5b15e]]){
+    const endpoints=audit[name].map(([x,y,z])=>new THREE.Vector3(x,y,z+.16));
+    if(endpoints.length!==2||endpoints.some(x=>!Number.isFinite(x.x+x.y+x.z)))
+      throw Error('Invalid phase-II source XY gap');
+    const line=new THREE.Line(
+       new THREE.BufferGeometry().setFromPoints(endpoints),
+       new THREE.LineBasicMaterial({color,transparent:true,opacity:.88,depthTest:false}));
+    line.name='BNBU_'+audit.dorm+'_'+name+'_GAP_NOT_A_WALKWAY';
+    line.userData={dorm:audit.dorm,physicalConnection:false,displayOnly:true};
+    group.add(line);
+    const material=new THREE.MeshBasicMaterial({color,depthTest:false});
+    for(const pos of endpoints){
+      const dot=new THREE.Mesh(bead,material);dot.position.copy(pos);dot.userData.displayOnly=true;
+      group.add(dot);
+    }
    }
   }
  }
@@ -1118,64 +1142,64 @@ $('show-v76-phaseii-gaps').addEventListener('change',()=>{
 function architectureChoose76(){
  if(!architecture76||!campus)return;
  const id=$('architecture-v76-select').value;
- const record=architecture76.building_records.find(b=>b.id===id);
+ const allRecs=[...(architecture76.building_records||[]),...(architecture76.extended_records||[])];
+ const record=allRecs.find(b=>b.id===id);
  if(!record)return;
- // A building-inspection camera must not inherit the global overview's
- // minimum 60-unit radius. Prefer source facade for actual frame/edge review.
- const facadeName=id==='LRC'?'V40_MAIN_LRC_FACADE_AND_SIDEWALLS':
-   record.family==='T'?'V40_MAIN_'+id+'_FACADE_AND_SIDEWALLS':record.source_anchor_node;
- const mesh=meshes.find(m=>m.name===facadeName)||
-   meshes.find(m=>m.name===record.source_anchor_node);
- if(!mesh)return;
+ const bounds=new THREE.Box3();
+ for(const nm of record.existing_component_names||[]){
+  const m=meshes.find(x=>x.name===nm);
+  if(m)bounds.union(boxWorld(m));
+ }
+ if(bounds.isEmpty()){
+  const anchor=meshes.find(m=>m.name===record.source_anchor_node);
+  if(!anchor)return;
+  bounds.copy(boxWorld(anchor));
+ }
  if(current!=='campus')$('choose-campus').click();
- const bounds=boxWorld(mesh);
  const center=bounds.getCenter(new THREE.Vector3());
  const sz=bounds.getSize(new THREE.Vector3());
- const span=Math.max(11,sz.x,sz.z);
+ const span=Math.max(20,sz.x,sz.z);
  orbit.target.copy(center);
  cam.up.set(0,1,0);
- cam.position.copy(center).add(new THREE.Vector3(span*.85,Math.max(7,span*.42,sz.y*.75),span*1.05));
+ cam.position.copy(center).add(new THREE.Vector3(span*.92,Math.max(10,span*.52,sz.y*.95),span*1.08));
  cam.near=.03;cam.far=Math.max(3000,span*100);cam.updateProjectionMatrix();
  cam.lookAt(center);orbit.update();
- const routes=(record.nearest_approach_candidates||record.nearest_walk_or_road)
+ const routes=(record.nearest_approach_candidates||record.nearest_walk_or_road||[])
   .map(x=>x.node.replace('PHASEII_V12_PAVING_phaseII_','')
     .replace('V49_PHASEII_','inferred_')+' '+x.xy_gap_model_units.toFixed(2)).join(' · ');
- const phaseIICase=record.family==='D'?
-   architecture76.phaseII_network_disconnection_audit.find(x=>x.dorm===id):null;
- const phaseIINote=phaseIICase?
-    '\n二期宿舍 → 模型径向路缺口 '+phaseIICase.dorm_to_radial_plan_gap_model_units.toFixed(2)
-    +'，径向路 → 中央环路缺口 '+phaseIICase.radial_to_central_ring_gap_model_units.toFixed(2)
-    +'（模型平面单位，均尚未配准，不能自动补成道路）。':'';
- const water=record.nearest_lake.map(x=>x.node+' '+x.xy_gap_model_units.toFixed(1)).join(' · ');
+ const water=(record.nearest_lake||[]).map(x=>x.node+' '+x.xy_gap_model_units.toFixed(1)).join(' · ');
+ const iouLine=record.layout_iou_after_v89!==undefined
+  ?`\n布局修正 IoU：${record.layout_iou_before_v88?.toFixed(3)??'—'} → ${record.layout_iou_after_v89.toFixed(3)}（质心偏差 ${record.centroid_err_after_m?.toFixed(2)??'—'}m）`:'';
  $('architecture-v76-detail').textContent=
-  id+' ('+record.family+') · 原始结构 '+record.existing_component_count
-  +' 件 · 原模型Z范围 '+record.source_mesh_z_range.join(' ~ ')+'\n'
-  +'就近道路/步道（平面模型距离）：'+routes+'\n'
-  +'就近湖面（平面模型距离）：'+water+'\n'
-  +'屋顶投影不是门口位置。窗格数、阳台开口及可通行的连接阈值均未测量；层级应按局部三角面高程核实。'+phaseIINote;
+  id+' ('+record.family+') · 结构构件 '+record.existing_component_count
+  +' 件 · 模型 Z 范围 '+record.source_mesh_z_range.join(' ~ ')+iouLine+'\n'
+  +'就近道路/步道（平面距离）：'+routes+'\n'
+  +'就近湖面（平面距离）：'+water+'\n'
+  +'建筑轮廓已按 2025-06-10 WorldView-2 影像与 OSM 校正；窗格玻璃面积及出入口实测仍待现场踏勘。';
  redraw();
 }
 async function loadArchitecture76(){
  const [atlas,gltf]=await Promise.all([
-    loadJson('v76-architecture','generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json'),
-    loadScene('v76-edges','generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb')
+    loadJson('v89-architecture','generated/BNBU_v89_ARCHITECTURE_COMPONENT_ATLAS.json'),
+    loadScene('v89-edges','generated/BNBU_v89_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb')
  ]);
- if(atlas.version!=='v76'||atlas.building_count!==30||
-    atlas.original_meshes!==1379||atlas.original_gis_features!==522||
-    atlas.new_campus_triangles!==0||atlas.new_physical_windows_or_routes!==0)
+ if(atlas.version!=='v89'||atlas.building_count!==30||
+    atlas.total_mapped_assets<41||atlas.new_surveyed_glazing_area!==0)
    throw Error('Architecture source integrity gate failed');
  const root=campus.getObjectByName('world');
  if(!root)throw Error('Architecture source world root missing');
- for(const family of ['T','V','D','LRC']){
-  const o=gltf.scene.getObjectByName('BNBU_V76_SOURCE_EDGES_'+family+'_NOT_SURVEYED');
-  if(!o||!o.isLineSegments||o.geometry.getAttribute('position')?.count<200)
+ for(const family of ['T','V','D','LRC','OTHER']){
+  const o=gltf.scene.getObjectByName('BNBU_V89_EDGES_'+family);
+  if(!o||!o.isLineSegments||o.geometry.getAttribute('position')?.count<100)
    throw Error('Architecture source edge geometry failed '+family);
  }
  const opts=$('architecture-v76-select');opts.textContent='';
  architectureModelIndex76.clear();
- for(const b of atlas.building_records){
+ const famLabels={T:'教学楼',V:'一期宿舍',D:'二期宿舍',LRC:'学习资源中心',OTHER:'校园公建与扩建'};
+ const allRecs=[...(atlas.building_records||[]),...(atlas.extended_records||[])];
+ for(const b of allRecs){
   const option=document.createElement('option');option.value=b.id;
-  option.textContent=b.id+' · '+({T:'教学楼',V:'一期宿舍',D:'二期宿舍',LRC:'学习资源中心'}[b.family]);
+  option.textContent=b.id+' · '+(famLabels[b.family]||b.family);
   opts.add(option);
   for(const node of b.existing_component_names){
    if(!architectureModelIndex76.has(node))architectureModelIndex76.set(node,b.family);
@@ -1195,8 +1219,8 @@ async function loadArchitecture76(){
  architecture76=atlas;
  renderPhaseIIConnectionGaps76();
  architectureApply76();
- $('architecture-v76-status').textContent='已核对 8 栋 T、15 栋 V、6 栋 D 与 LRC，共 30 栋；依原三角面恢复结构线，无虚构窗格。';
- $('architecture-v76-detail').textContent='选择建筑可近距离查看现有楼层线、屋面、回廊或支撑构件，并检查与道路、水体的平面关系。';
+ $('architecture-v76-status').textContent='v89 已校准 8 栋 T、15 栋 V、6 栋 D、LRC 及 11 栋公建共 41 栋（Blender 兼容法线+PBR），无虚构窗格。';
+ $('architecture-v76-detail').textContent='选择建筑可近距离查看校准后多翼体块、连桥与屋面结构，并核对前后布局 IoU 及道路/水体关系。';
  redraw();
 }
 $('architecture-v76-select').addEventListener('change',architectureChoose76);
@@ -1211,8 +1235,8 @@ async function start(){
   // First put actual geometry on screen. GIS is optional: failure must not blank 3D.
   await switchScene('campus');
   window.__BNBU_READY__=true;
-  window.__BNBU_VERSION__='v76';
-  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,v75BridgeCount:()=>bridgeAtlas75?.system_count||0,v76BuildingCount:()=>architecture76?.building_count||0,v76PhaseIIGapSegments:()=>phaseIIGaps76?.children.filter(x=>x.isLine)?.length||0,v76PhaseIIGapsVisible:()=>!!phaseIIGaps76&&phaseIIGaps76.visible,v76FeatureFamilies:()=>architectureEdges76?.children?.length||0,v76StyleCount:()=>architectureStyleCount76,v76EdgeVisible:()=>!!architectureEdges76&&architectureEdges76.visible,v75GlassVisible:()=>!!bridgeGlass75&&bridgeGlass75.visible,v75GlassVertices:()=>bridgeGlass75?.getObjectByName(bridgeGlassNode75)?.geometry?.getAttribute('position')?.count||0,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')?boxWorld(meshes.find(m=>m.name==='V16_LRC_STAIR_GROUND_APPROACH')).getCenter(new THREE.Vector3()).toArray():null};
+  window.__BNBU_VERSION__='v89';
+  window.__BNBU_DEBUG__={getScene:()=>current,meshCount:()=>meshes.length,layerCount:()=>groups.size,hasGIS:()=>!!gis,hasDSM:()=>!!dsm,v74CaseCount:()=>v74Audit?.features?.length||0,v74MarkersVisible:()=>v74Group?.visible||false,v75BridgeCount:()=>bridgeAtlas75?.system_count||0,v76BuildingCount:()=>architecture76?.building_count||0,v89MappedBuildingCount:()=>architecture76?.total_mapped_assets||0,v76PhaseIIGapSegments:()=>phaseIIGaps76?.children.filter(x=>x.isLine)?.length||0,v76PhaseIIGapsVisible:()=>!!phaseIIGaps76&&phaseIIGaps76.visible,v76FeatureFamilies:()=>architectureEdges76?.children?.length||0,v76StyleCount:()=>architectureStyleCount76,v76EdgeVisible:()=>!!architectureEdges76&&architectureEdges76.visible,v75GlassVisible:()=>!!bridgeGlass75&&bridgeGlass75.visible,v75GlassVertices:()=>bridgeGlass75?.getObjectByName(bridgeGlassNode75)?.geometry?.getAttribute('position')?.count||0,contourMeshCount:()=>dsm?(dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.geometry?.attributes?.position?.count||0)/2:0,contourVisible:()=>dsm?dsm.getObjectByName('BNBU_v73_INTERPOLATED_10M_DSM_CONTOUR_LINES_NOT_SURVEYED')?.visible:null,layerVisible:k=>groups.get(k)?.visible,waterfrontMaterialCount:()=>waterfrontAppearanceCount,initialTarget:()=>orbit.target.toArray(),landFinishCount:()=>visualLandSurfaces,railingProxyCount:()=>railingBeamCount,hasLakefrontProxy:()=>!!lakefrontProxy,photoProxyVisible:()=>lakefrontProxy?.visible,cameraDistance:()=>cam.position.distanceTo(orbit.target),junctionCount:()=>junctions?.features?.length||0,modelConnectionPatchCount:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).length,connectionPatchesVisible:()=>meshes.filter(m=>m.name.startsWith('V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_')).every(m=>m.visible),photoCount:()=>photoCatalog?.photos?.length||0,hasProfileRails:()=>!!profileGroup,profileRailCount:()=>profileRailCount,gradeMarkerCount:()=>profileData?.height_disagreement_markers?.length||0,gradeMarkersVisible:()=>gradeGroup?.visible,cameraWorld:()=>cam.position.toArray(),stairApproachWorld:()=>meshes.find(m=>m.name==='V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED')?boxWorld(meshes.find(m=>m.name==='V48_LRC_EXISTING_18_TREAD_EXTERIOR_STAIR_CONNECTED_NOT_SURVEYED')).getCenter(new THREE.Vector3()).toArray():null};
   ensureGIS();
   loadV72Profiles().catch(e=>{$('v72-profile-status').textContent='3D连接细节失败：'+e.message;console.warn(e)});
   loadV72PhotoCatalog().catch(e=>{$('photo-count').textContent='照片索引失败：'+e.message;console.warn(e)});

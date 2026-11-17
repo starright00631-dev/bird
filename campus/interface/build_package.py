@@ -14,7 +14,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CAMPUS = HERE.parent
 OUT = CAMPUS.parent / "dist"
-NAME = "BNBU_Campus_Full_v76"
+NAME = "BNBU_Campus_Full_v89"
 PACKAGE = OUT / NAME
 ZIP_PATH = OUT / (NAME + ".zip")
 ASSETS = {
@@ -23,6 +23,9 @@ ASSETS = {
     "generated/BNBU_v69_WATERFRONT_PROVENANCE.json": "generated/BNBU_v69_WATERFRONT_PROVENANCE.json",
     "generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json": "generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json",
     "generated/BNBU_v71_CONNECTED_LAKEFRONT.glb": "generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
+    "generated/BNBU_v89_LAYOUT_CORRECTED.glb": "generated/BNBU_v89_LAYOUT_CORRECTED.glb",
+    "generated/BNBU_v89_RESOLVED_REFERENCES.geojson": "generated/BNBU_v89_RESOLVED_REFERENCES.geojson",
+    "generated/BNBU_v89_LAYOUT_AUDIT_REPORT.json": "generated/BNBU_v89_LAYOUT_AUDIT_REPORT.json",
     "generated/BNBU_v71_CONNECTION_PATCHES.geojson": "generated/BNBU_v71_CONNECTION_PATCHES.geojson",
     "generated/BNBU_v71_JUNCTION_AUDIT.geojson": "generated/BNBU_v71_JUNCTION_AUDIT.geojson",
     "generated/BNBU_v71_CONNECTION_PROVENANCE.json": "generated/BNBU_v71_CONNECTION_PROVENANCE.json",
@@ -41,6 +44,8 @@ ASSETS = {
     "generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json": "generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json",
     "generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json": "generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json",
     "generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb": "generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb",
+    "generated/BNBU_v89_ARCHITECTURE_COMPONENT_ATLAS.json": "generated/BNBU_v89_ARCHITECTURE_COMPONENT_ATLAS.json",
+    "generated/BNBU_v89_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb": "generated/BNBU_v89_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb",
     "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson": "generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson",
     "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json": "generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json",
     "history/BNBU_v65_DISPLAY_Y_UP.glb": "generated/BNBU_v65_DISPLAY_Y_UP.glb",
@@ -74,6 +79,12 @@ ASSETS = {
     "src/test_bridges_v75.py": "test_bridges_v75.py",
     "src/audit_architecture_v76.py": "audit_architecture_v76.py",
     "src/test_architecture_v76.py": "test_architecture_v76.py",
+    "src/build_layout_v89.py": "build_layout_v89.py",
+    "src/test_layout_v89.py": "test_layout_v89.py",
+    "evidence/bnbu_layout_ground_truth_v89.json": "evidence/bnbu_layout_ground_truth_v89.json",
+    "docs/LAYOUT_CORRECTION_ISSUE13.md": "LAYOUT_CORRECTION_ISSUE13.md",
+    "registry/BNBU_v89_BUILDING_ASSET_REGISTRY.json": "registry/BNBU_v89_BUILDING_ASSET_REGISTRY.json",
+    "registry/BNBU_v89_BUILDING_ASSET_REGISTRY.csv": "registry/BNBU_v89_BUILDING_ASSET_REGISTRY.csv",
     "src/test_v65.py": "test_v65.py",
     "src/test_v66.py": "test_v66.py",
     "src/test_waterfront_v69.py": "test_waterfront_v69.py",
@@ -187,15 +198,15 @@ def sha256(path: Path) -> str:
 def assemble_standalone(template,css,js):
     tags=[]
     for key,rel in [
-        ("v71","generated/BNBU_v71_CONNECTED_LAKEFRONT.glb"),
+        ("v89","generated/BNBU_v89_LAYOUT_CORRECTED.glb"),
         ("dsm","generated/BNBU_v73_ALOS_DSM_WITH_3D_CONTOURS.glb"),
         ("v75-glass","generated/BNBU_v75_BOARDWALK_GLASS_INFILL_DISPLAY_ONLY.glb"),
-        ("v76-edges","generated/BNBU_v76_SOURCE_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb"),
+        ("v89-edges","generated/BNBU_v89_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb"),
     ]:
         b64=base64.b64encode((PACKAGE/rel).read_bytes()).decode("ascii")
         tags.append('<script id="embedded-'+key+'" type="application/octet-stream">'+b64+'</script>')
     for key,rel in [
-        ("gis","generated/BNBU_v66_RESOLVED_REFERENCES.geojson"),
+        ("gis","generated/BNBU_v89_RESOLVED_REFERENCES.geojson"),
         ("contours","generated/BNBU_v67_AW3D30_CONTOURS_INTERPOLATED.geojson"),
         ("dsm-meta","generated/BNBU_v67_TERRAIN_SOURCE_AND_LIMITS.json"),
         ("lakefront","generated/BNBU_v70_LAKEFRONT_DISPLAY_OVERLAY.json"),
@@ -206,7 +217,7 @@ def assemble_standalone(template,css,js):
         ("photos-v72","evidence/connection_photos_v72.json"),
         ("v74-hotspots","generated/BNBU_v74_LOCAL_3D_JUNCTION_HOTSPOTS.geojson"),
         ("v75-atlas","generated/BNBU_v75_BRIDGE_COMPONENT_ATLAS.json"),
-        ("v76-architecture","generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json"),
+        ("v89-architecture","generated/BNBU_v89_ARCHITECTURE_COMPONENT_ATLAS.json"),
     ]:
         content=(PACKAGE/rel).read_text(encoding="utf-8").replace("</script","<\\/script")
         tags.append('<script id="embedded-'+key+'" type="application/json">'+content+'</script>')
@@ -248,15 +259,17 @@ def validate():
     assert atlas["v75_glass_infill"]["glass_panel_count_verified"] is None
     assert atlas["v60_lakefront_boardwalk"]["source_pier_model_count"]==13
     assert atlas["gates"]["bird_collision_input_added"] is False
-    architecture=json.loads((PACKAGE/"generated/BNBU_v76_ARCHITECTURE_COMPONENT_ATLAS.json").read_text())
-    assert architecture["version"]=="v76" and architecture["building_count"]==30
-    assert architecture["original_meshes"]==1379 and architecture["original_gis_features"]==522
-    assert architecture["new_campus_triangles"]==0 and architecture["new_surveyed_glazing_area"]==0
-    assert set(architecture["feature_edge_overlay"])=={"T","V","D","LRC"}
-    assert architecture["all_route_candidates_count"]==70 and architecture["phaseII_route_candidate_count"]==14
-    assert len(architecture["phaseII_network_disconnection_audit"])==6
-    assert all(case["do_not_extrude_missing_paths"] and not case["source_model_circulation_verified"] for case in architecture["phaseII_network_disconnection_audit"])
+    architecture=json.loads((PACKAGE/"generated/BNBU_v89_ARCHITECTURE_COMPONENT_ATLAS.json").read_text())
+    audit_v89=json.loads((PACKAGE/"generated/BNBU_v89_LAYOUT_AUDIT_REPORT.json").read_text())
+    assert architecture["version"]=="v89" and architecture["building_count"]==30 and architecture["total_mapped_assets"]==41
+    assert architecture["new_surveyed_glazing_area"]==0 and architecture["blender_compatible"] is True
+    assert set(architecture["feature_edge_overlay"])=={"T","V","D","LRC","OTHER"}
+    assert audit_v89["summary"]["buildings_evaluated"]==41 and audit_v89["summary"]["mean_iou_after_v89"]>=0.96
+    gis_v89=json.loads((PACKAGE/"generated/BNBU_v89_RESOLVED_REFERENCES.geojson").read_text(encoding="utf-8"))
+    assert len(gis_v89["features"])>=45
     for rel in ["generated/BNBU_v71_CONNECTED_LAKEFRONT.glb",
+                "generated/BNBU_v89_LAYOUT_CORRECTED.glb",
+                "generated/BNBU_v89_SHARP_FEATURE_EDGES_DISPLAY_ONLY.glb",
                 "generated/BNBU_v69_WATERFRONT_REFINED.glb",
                 "generated/BNBU_v66_SEMANTIC_Y_UP.glb",
                 "generated/BNBU_v67_OBSERVED_ALOS_DSM_SEPARATE.glb",
@@ -324,9 +337,12 @@ def build():
     sh.write_text(SH,encoding="utf-8");sh.chmod(sh.stat().st_mode|stat.S_IXUSR)
     make_packaged_src_portable()
     validate()
+    arch_v89=json.loads((PACKAGE/"generated/BNBU_v89_ARCHITECTURE_COMPONENT_ATLAS.json").read_text(encoding="utf-8"))
+    audit_v89=json.loads((PACKAGE/"generated/BNBU_v89_LAYOUT_AUDIT_REPORT.json").read_text(encoding="utf-8"))
+    gis_v89=json.loads((PACKAGE/"generated/BNBU_v89_RESOLVED_REFERENCES.geojson").read_text(encoding="utf-8"))
     manifest={
-        "name":NAME,"source_model":"v64","geometry_scene":"v66","render_scene":"v76 source-accurate crease edges and typed architectural materials + 30 building environment audit; campus v71 geometry unchanged","external_DSM":"v67",
-        "mesh_count":1379,"original_mesh_count":1377,"GIS_feature_count":522,
+        "name":NAME,"source_model":"v64","geometry_scene":"v89","render_scene":"v89 Issue #13 layout-corrected Blender-compatible PBR+normals 3D campus + 41-building audit","external_DSM":"v67",
+        "mesh_count":arch_v89["active_mesh_nodes"],"original_mesh_count":1377,"GIS_feature_count":len(gis_v89["features"]),
         "v71_source_bounded_pavement_seams":2,"audited_junction_pairs":11,
         "v72_optional_source_height_rail_profiles":4,"v72_observed_distinct_photo_links":16,
         "v73_dsm_3d_interpolated_contour_segments":3737,"v73_dsm_3d_contour_vertices":7474,
@@ -340,9 +356,9 @@ def build():
         "v75_original_campus_GLB_untouched":True,
         "v76_architectural_buildings":30,"v76_teaching_T":8,"v76_residential_V":15,
         "v76_residential_D":6,"v76_unique_LRC":1,
-        "v76_original_geometry_unchanged":True,"v76_no_new_surveyed_windows_balconies_or_paths":True,
-        "v76_complete_environment_candidates":70,"v76_phaseII_source_circulation_candidates":14,
-        "v76_phaseII_dormitory_network_gap_segments":12,
+        "v89_total_mapped_assets":41,"v89_mean_iou_after":audit_v89["summary"]["mean_iou_after_v89"],
+        "v89_blender_compatible":True,"v89_has_vertex_normals":True,
+        "v89_no_new_surveyed_windows":True,
         "v70_photo_typology_lakefront_overlay":True,
         "v69_material_and_shore_color_refinement":True,
         "original_geometry_edited":False,"new_geometry_approximate_and_unsurveyed":True,

@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
-BUNDLE=ROOT/"dist"/"BNBU_Campus_Full_v76"
+BUNDLE=ROOT/"dist"/"BNBU_Campus_Full_v89"
 OFFLINE=BUNDLE/"双击查看_校园3D.html"
 PAGES=ROOT/"dist"/"pages-site"
 PROJECT_URL="https://starright00631-dev.github.io/bird/"
@@ -35,8 +35,8 @@ def _redirect(target,source):
 def build():
     assert OFFLINE.is_file(),f"First run campus/interface/build_package.py: missing {OFFLINE}"
     source=OFFLINE.read_bytes()
-    assert len(source)>1_000_000 and b'id="embedded-v71"' in source
-    for key in ["v76-architecture","v76-edges","v75-glass","v74-hotspots","gis","dsm"]:
+    assert len(source)>1_000_000 and b'id="embedded-v89"' in source
+    for key in ["v89-architecture","v89-edges","v75-glass","v74-hotspots","gis","dsm"]:
         assert ('id="embedded-'+key+'"').encode() in source,key
     assert b'cdn.jsdelivr' not in source and b'unpkg.com' not in source
     assert b'window.__BNBU_VERSION__' in source
@@ -54,10 +54,11 @@ def build():
         f'<p>The campus viewer is at <a href="{PROJECT_URL}">{PROJECT_URL}</a>.</p></body></html>',
         encoding="utf-8")
     (PAGES/".nojekyll").write_text("",encoding="utf-8")
+    manifest=json.loads((BUNDLE/"manifest.json").read_text(encoding="utf-8"))
     info={
-        "project":"BNBU campus model","version":"v76",
+        "project":"BNBU campus model","version":"v89",
         "viewer":"standalone zero-CDN model",
-        "model_mesh_count":1379,"gis_features":522,
+        "model_mesh_count":manifest.get("mesh_count"),"gis_features":manifest.get("GIS_feature_count"),
         "source_offline_html_sha256":hashlib.sha256(source).hexdigest(),
         "site_index_html_sha256":hashlib.sha256((PAGES/"index.html").read_bytes()).hexdigest(),
         "source_commit":os.environ.get("GITHUB_SHA","local"),

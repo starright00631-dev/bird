@@ -1,0 +1,955 @@
+{
+  "version": "v89",
+  "campus": "BNBU Zhuhai (Phase I + Phase II)",
+  "mapped_assets": [
+    {
+      "index": 0,
+      "id": "T1",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T1 · Business and Management Building",
+      "source_anchor_node": "ROOF_DECK_T1",
+      "existing_component_count": 10,
+      "source_mesh_z_range": [
+        0.0,
+        21.6
+      ],
+      "source_bbox_utm_xy": [
+        759002.056,
+        2473914.428,
+        759073.427,
+        2473971.393
+      ],
+      "iou_before": 0.313,
+      "iou_after": 0.992,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 1,
+      "id": "T2",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T2 · Humanities Building",
+      "source_anchor_node": "ROOF_DECK_T2",
+      "existing_component_count": 9,
+      "source_mesh_z_range": [
+        0.0,
+        21.6
+      ],
+      "source_bbox_utm_xy": [
+        758963.443,
+        2473967.516,
+        759037.165,
+        2474014.676
+      ],
+      "iou_before": 0.327,
+      "iou_after": 0.99,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 2,
+      "id": "T4",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T4 · Teaching Building T4",
+      "source_anchor_node": "ROOF_DECK_T4",
+      "existing_component_count": 9,
+      "source_mesh_z_range": [
+        0.0,
+        22.05
+      ],
+      "source_bbox_utm_xy": [
+        759162.614,
+        2474032.511,
+        759230.524,
+        2474101.203
+      ],
+      "iou_before": 0.339,
+      "iou_after": 0.984,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 3,
+      "id": "T5",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T5 · Teaching Building T5",
+      "source_anchor_node": "ROOF_DECK_T5",
+      "existing_component_count": 13,
+      "source_mesh_z_range": [
+        0.0,
+        22.05
+      ],
+      "source_bbox_utm_xy": [
+        759109.223,
+        2474045.145,
+        759184.389,
+        2474125.887
+      ],
+      "iou_before": 0.444,
+      "iou_after": 0.987,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 4,
+      "id": "T6",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T6 · Teaching Building T6",
+      "source_anchor_node": "ROOF_DECK_T6",
+      "existing_component_count": 13,
+      "source_mesh_z_range": [
+        0.0,
+        22.05
+      ],
+      "source_bbox_utm_xy": [
+        759051.738,
+        2474065.627,
+        759133.452,
+        2474139.962
+      ],
+      "iou_before": 0.328,
+      "iou_after": 0.987,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 5,
+      "id": "T7",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T7 · Teaching Building T7",
+      "source_anchor_node": "ROOF_DECK_T7",
+      "existing_component_count": 13,
+      "source_mesh_z_range": [
+        0.0,
+        22.05
+      ],
+      "source_bbox_utm_xy": [
+        759004.136,
+        2474098.339,
+        759085.168,
+        2474160.609
+      ],
+      "iou_before": 0.299,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 6,
+      "id": "T4_SSAC",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "T4-SSAC · Student Services & Chuihui Yuan",
+      "source_anchor_node": "ROOF_DECK_T4_SSAC",
+      "existing_component_count": 13,
+      "source_mesh_z_range": [
+        0.0,
+        14.4
+      ],
+      "source_bbox_utm_xy": [
+        759198.981,
+        2474078.484,
+        759279.998,
+        2474124.757
+      ],
+      "iou_before": 0.0,
+      "iou_after": 0.989,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 7,
+      "id": "CC",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "Cultural Creativity Clusters / 文化创意群落",
+      "source_anchor_node": "ROOF_DECK_CC",
+      "existing_component_count": 16,
+      "source_mesh_z_range": [
+        0.0,
+        20.0
+      ],
+      "source_bbox_utm_xy": [
+        759184.272,
+        2473886.455,
+        759347.978,
+        2473978.634
+      ],
+      "iou_before": 0.311,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 8,
+      "id": "LRC",
+      "family": "LRC",
+      "record_group": "core_30",
+      "display_label": "LRC · Phase I Learning Resource Centre",
+      "source_anchor_node": "ROOF_DECK_LRC",
+      "existing_component_count": 19,
+      "source_mesh_z_range": [
+        0.0,
+        17.3
+      ],
+      "source_bbox_utm_xy": [
+        759036.645,
+        2473955.689,
+        759150.685,
+        2474058.82
+      ],
+      "iou_before": 0.681,
+      "iou_after": 0.989,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 9,
+      "id": "T3",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T3 · Science Building",
+      "source_anchor_node": "ROOF_DECK_T3",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.6
+      ],
+      "source_bbox_utm_xy": [
+        758929.565,
+        2474007.047,
+        759004.259,
+        2474054.362
+      ],
+      "iou_before": 0.263,
+      "iou_after": 0.987,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 10,
+      "id": "T8",
+      "family": "T",
+      "record_group": "core_30",
+      "display_label": "T8 · CEFC Building",
+      "source_anchor_node": "ROOF_DECK_T8",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        758955.645,
+        2474140.843,
+        759026.586,
+        2474164.282
+      ],
+      "iou_before": 0.211,
+      "iou_after": 0.989,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 11,
+      "id": "T29",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "T29 · Teaching Building Block 29 / T29教学楼",
+      "source_anchor_node": "ROOF_DECK_T29",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.6
+      ],
+      "source_bbox_utm_xy": [
+        758869.724,
+        2474142.226,
+        758920.515,
+        2474189.251
+      ],
+      "iou_before": 0.242,
+      "iou_after": 0.977,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 12,
+      "id": "T29_SSAC_PODIUM",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "T29-SSAC · Cultural Village Podium / 文化小镇二层平台",
+      "source_anchor_node": "ROOF_DECK_T29_SSAC_PODIUM",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        7.2
+      ],
+      "source_bbox_utm_xy": [
+        758821.325,
+        2474039.866,
+        758924.755,
+        2474189.251
+      ],
+      "iou_before": 0.0,
+      "iou_after": 0.995,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 13,
+      "id": "ADMIN",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "Administration Building / 行政楼",
+      "source_anchor_node": "ROOF_DECK_ADMIN",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.0
+      ],
+      "source_bbox_utm_xy": [
+        759098.602,
+        2473798.148,
+        759164.002,
+        2473879.326
+      ],
+      "iou_before": 0.357,
+      "iou_after": 0.987,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 14,
+      "id": "HALL",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "University Hall / 大学会堂",
+      "source_anchor_node": "ROOF_DECK_HALL",
+      "existing_component_count": 5,
+      "source_mesh_z_range": [
+        0.0,
+        15.0
+      ],
+      "source_bbox_utm_xy": [
+        759056.776,
+        2473810.314,
+        759135.258,
+        2473888.155
+      ],
+      "iou_before": 0.46,
+      "iou_after": 0.992,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 15,
+      "id": "SPORT",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "Sports Complex / 体育馆",
+      "source_anchor_node": "ROOF_DECK_SPORT",
+      "existing_component_count": 5,
+      "source_mesh_z_range": [
+        0.0,
+        18.0
+      ],
+      "source_bbox_utm_xy": [
+        758934.567,
+        2473852.835,
+        759036.247,
+        2473950.461
+      ],
+      "iou_before": 0.394,
+      "iou_after": 0.994,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 16,
+      "id": "THEATRE",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "Performance Theatre / 表演剧场",
+      "source_anchor_node": "ROOF_DECK_THEATRE",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        12.0
+      ],
+      "source_bbox_utm_xy": [
+        759128.735,
+        2473859.262,
+        759189.821,
+        2473910.874
+      ],
+      "iou_before": 0.557,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 17,
+      "id": "YUZHAN",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "YUZHAN · 榆栈",
+      "source_anchor_node": "ROOF_DECK_YUZHAN",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        13.2
+      ],
+      "source_bbox_utm_xy": [
+        758735.204,
+        2474051.428,
+        758777.568,
+        2474091.185
+      ],
+      "iou_before": 0.366,
+      "iou_after": 0.982,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 18,
+      "id": "V15",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V15 · Ming Xin House",
+      "source_anchor_node": "MAIN_V15",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        759163.149,
+        2474178.208,
+        759227.133,
+        2474228.809
+      ],
+      "iou_before": 0.34,
+      "iou_after": 0.984,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 19,
+      "id": "V16",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V16 · Shang Xian House",
+      "source_anchor_node": "MAIN_V16",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "source_bbox_utm_xy": [
+        759178.803,
+        2474130.981,
+        759249.18,
+        2474197.825
+      ],
+      "iou_before": 0.194,
+      "iou_after": 0.986,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 20,
+      "id": "V17",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V17 · Ren Ai House",
+      "source_anchor_node": "MAIN_V17",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        759074.318,
+        2474224.41,
+        759133.012,
+        2474283.794
+      ],
+      "iou_before": 0.163,
+      "iou_after": 0.985,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 21,
+      "id": "V18",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V18 · Bao Pu House",
+      "source_anchor_node": "MAIN_V18",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        24.8
+      ],
+      "source_bbox_utm_xy": [
+        759080.927,
+        2474158.155,
+        759150.715,
+        2474225.962
+      ],
+      "iou_before": 0.159,
+      "iou_after": 0.986,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 22,
+      "id": "V19",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V19 · Zhen Zhi House",
+      "source_anchor_node": "MAIN_V19",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        759000.972,
+        2474230.839,
+        759051.983,
+        2474282.493
+      ],
+      "iou_before": 0.267,
+      "iou_after": 0.985,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 23,
+      "id": "V20",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V20 · Du Xing House",
+      "source_anchor_node": "MAIN_V20",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        759005.778,
+        2474184.494,
+        759056.76,
+        2474237.336
+      ],
+      "iou_before": 0.179,
+      "iou_after": 0.985,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 24,
+      "id": "V21",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V21 · Bo Wen House",
+      "source_anchor_node": "MAIN_V21",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        758929.12,
+        2474222.424,
+        758985.704,
+        2474284.029
+      ],
+      "iou_before": 0.195,
+      "iou_after": 0.984,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 25,
+      "id": "V22",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V22 · Ya Zhi House",
+      "source_anchor_node": "MAIN_V22",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        758931.172,
+        2474180.135,
+        758982.154,
+        2474232.976
+      ],
+      "iou_before": 0.156,
+      "iou_after": 0.985,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 26,
+      "id": "V23",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V23 · Xue Qin House",
+      "source_anchor_node": "MAIN_V23",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        758844.305,
+        2474198.266,
+        758911.758,
+        2474250.599
+      ],
+      "iou_before": 0.166,
+      "iou_after": 0.984,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 27,
+      "id": "V24",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V24 · Yang Ming House",
+      "source_anchor_node": "MAIN_V24",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        18.6
+      ],
+      "source_bbox_utm_xy": [
+        758804.972,
+        2474184.438,
+        758875.441,
+        2474236.846
+      ],
+      "iou_before": 0.129,
+      "iou_after": 0.984,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 28,
+      "id": "V25",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V25 · Dong Po House",
+      "source_anchor_node": "MAIN_V25",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        24.8
+      ],
+      "source_bbox_utm_xy": [
+        758873.097,
+        2474039.866,
+        758924.755,
+        2474117.199
+      ],
+      "iou_before": 0.36,
+      "iou_after": 0.986,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 29,
+      "id": "V26",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V26 · Goethe House",
+      "source_anchor_node": "MAIN_V26",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "source_bbox_utm_xy": [
+        758821.325,
+        2474063.85,
+        758869.787,
+        2474136.871
+      ],
+      "iou_before": 0.363,
+      "iou_after": 0.983,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 30,
+      "id": "V27",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V27 · Hugo House",
+      "source_anchor_node": "MAIN_V27",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "source_bbox_utm_xy": [
+        758748.538,
+        2474077.072,
+        758796.989,
+        2474153.454
+      ],
+      "iou_before": 0.33,
+      "iou_after": 0.984,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 31,
+      "id": "V28",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V28 · Shakespeare House",
+      "source_anchor_node": "MAIN_V28",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "source_bbox_utm_xy": [
+        758849.663,
+        2473961.172,
+        758898.299,
+        2474039.714
+      ],
+      "iou_before": 0.36,
+      "iou_after": 0.984,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 32,
+      "id": "V29",
+      "family": "V",
+      "record_group": "core_30",
+      "display_label": "V29 · Yung Wing House",
+      "source_anchor_node": "MAIN_V29",
+      "existing_component_count": 4,
+      "source_mesh_z_range": [
+        0.0,
+        21.7
+      ],
+      "source_bbox_utm_xy": [
+        758798.547,
+        2474034.043,
+        758852.301,
+        2474080.423
+      ],
+      "iou_before": 0.206,
+      "iou_after": 0.982,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 33,
+      "id": "D1",
+      "family": "D",
+      "record_group": "core_30",
+      "display_label": "D1 · D1, Residence Cluster of Phase II Campus (雍雅苑)",
+      "source_anchor_node": "PHASEII_DORM_D1",
+      "existing_component_count": 36,
+      "source_mesh_z_range": [
+        0.0,
+        33.1
+      ],
+      "source_bbox_utm_xy": [
+        758597.936,
+        2474990.418,
+        758695.778,
+        2475086.964
+      ],
+      "iou_before": 0.53,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 34,
+      "id": "D2",
+      "family": "D",
+      "record_group": "core_30",
+      "display_label": "D2 · D2, Residence Cluster of Phase II Campus",
+      "source_anchor_node": "PHASEII_DORM_D2",
+      "existing_component_count": 36,
+      "source_mesh_z_range": [
+        0.0,
+        33.1
+      ],
+      "source_bbox_utm_xy": [
+        758633.364,
+        2474899.704,
+        758704.456,
+        2474983.062
+      ],
+      "iou_before": 0.495,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 35,
+      "id": "D3",
+      "family": "D",
+      "record_group": "core_30",
+      "display_label": "D3 · D3, Residence Cluster of Phase II Campus (乐雅苑)",
+      "source_anchor_node": "PHASEII_DORM_D3",
+      "existing_component_count": 36,
+      "source_mesh_z_range": [
+        0.0,
+        33.1
+      ],
+      "source_bbox_utm_xy": [
+        758580.99,
+        2474815.85,
+        758673.834,
+        2474909.36
+      ],
+      "iou_before": 0.495,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 36,
+      "id": "D4",
+      "family": "D",
+      "record_group": "core_30",
+      "display_label": "D4 · D4, Residence Cluster of Phase II Campus",
+      "source_anchor_node": "PHASEII_DORM_D4",
+      "existing_component_count": 36,
+      "source_mesh_z_range": [
+        0.0,
+        33.1
+      ],
+      "source_bbox_utm_xy": [
+        758463.382,
+        2474822.602,
+        758561.195,
+        2474919.218
+      ],
+      "iou_before": 0.544,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 37,
+      "id": "D5",
+      "family": "D",
+      "record_group": "core_30",
+      "display_label": "D5 · D5, Residence Cluster of Phase II Campus (宏雅苑)",
+      "source_anchor_node": "PHASEII_DORM_D5",
+      "existing_component_count": 36,
+      "source_mesh_z_range": [
+        0.0,
+        33.1
+      ],
+      "source_bbox_utm_xy": [
+        758453.421,
+        2474926.778,
+        758525.535,
+        2475010.03
+      ],
+      "iou_before": 0.532,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 38,
+      "id": "D6",
+      "family": "D",
+      "record_group": "core_30",
+      "display_label": "D6 · D6, Residence Cluster of Phase II Campus (正雅苑)",
+      "source_anchor_node": "PHASEII_DORM_D6",
+      "existing_component_count": 36,
+      "source_mesh_z_range": [
+        0.0,
+        33.1
+      ],
+      "source_bbox_utm_xy": [
+        758484.769,
+        2475000.289,
+        758578.078,
+        2475094.118
+      ],
+      "iou_before": 0.477,
+      "iou_after": 0.988,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 39,
+      "id": "P2_CIRCULAR_COMMONS",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "Phase II Circular Commons / 二期中心圆厅",
+      "source_anchor_node": "V24_P2_CIRCULAR_COMMONS_01_BASE_PLINTH",
+      "existing_component_count": 11,
+      "source_mesh_z_range": [
+        0.0,
+        7.75
+      ],
+      "source_bbox_utm_xy": [
+        758584.606,
+        2474927.27,
+        758612.221,
+        2474954.8
+      ],
+      "iou_before": 0.043,
+      "iou_after": 0.882,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    },
+    {
+      "index": 40,
+      "id": "P2_LRC_LAB_COMPLEX",
+      "family": "OTHER",
+      "record_group": "extended_mapped",
+      "display_label": "P2 LRC · Phase II Learning Resource Centre & Lab Complex / 二期学习资源中心与实验综合楼",
+      "source_anchor_node": "MAIN_P2_LRC_LAB_COMPLEX",
+      "existing_component_count": 10,
+      "source_mesh_z_range": [
+        0.0,
+        15.6
+      ],
+      "source_bbox_utm_xy": [
+        758608.415,
+        2475056.236,
+        758698.255,
+        2475179.416
+      ],
+      "iou_before": 0.0,
+      "iou_after": 0.969,
+      "is_surveyed": false,
+      "birdstrike_area_eligible": false
+    }
+  ],
+  "quarantined_hypotheses": [
+    {
+      "id": "CTV_SMALL_HOUSE",
+      "status": "quarantined_unverified"
+    }
+  ]
+}

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BNBU 校园 v76 · T/V 宿舍 / LRC 专属构件与环境连接</title>
+<title>BNBU 校园 v89 · Issue #13 布局校准与 Blender 兼容三维模型</title>
 <link rel="stylesheet" href="./viewer.css">
 </head>
 <body class="bp6-dark bp6-running-text">
 <header class="bp6-navbar topbar">
-  <div class="bp6-navbar-group brand"><span class="bp6-navbar-heading">BNBU 校园空间模型</span><span class="bp6-navbar-divider"></span><span class="bp6-text-muted">3D / GIS · v76</span></div>
+  <div class="bp6-navbar-group brand"><span class="bp6-navbar-heading">BNBU 校园空间模型</span><span class="bp6-navbar-divider"></span><span class="bp6-text-muted">3D / GIS · v89</span></div>
   <div class="scene-switch bp6-button-group" role="group" aria-label="场景切换"><button id="choose-campus" class="bp6-button bp6-small bp6-active selected" type="button">校园三维模型</button><button class="bp6-button bp6-small" id="choose-dsm" type="button">遥感山体参考</button></div>
   <div class="top-actions"><button class="bp6-button bp6-small" id="help-button" type="button">使用说明</button><span id="health" role="status">准备载入</span></div>
 </header>
@@ -34,14 +34,14 @@
   </section>
   <aside class="workspace-pane"><div id="workspace-tabs" class="bp6-tab-list" role="tablist" aria-label="工作区面板"><div id="show-chat" class="bp6-tab" role="tab" aria-selected="true" tabindex="0">AIP 对话</div><div id="show-data" class="bp6-tab" role="tab" aria-selected="false" tabindex="0">模型数据</div></div><div id="chat-root"></div><div class="right-pane" hidden>
     <section id="architecture-v76-section" class="selected-panel" style="">
-      <div class="section-header"><h2>v76 建筑身份与连接细部</h2><small>源模型保护</small></div>
-      <p id="architecture-v76-status" role="status" style="font-size:11px;">恢复 T/V/D/LRC 原始屋面、结构线及周边关系中…</p>
-      <label for="architecture-v76-select" style="font-size:11px">选择建筑 · 近距离看原始几何与周边路线</label>
+      <div class="section-header"><h2>v89 建筑布局与构件细部</h2><small>Issue #13</small></div>
+      <p id="architecture-v76-status" role="status" style="font-size:11px;">正在加载 WorldView-2 (2025-06-10) + OSM 校准的 41 栋建筑与连桥…</p>
+      <label for="architecture-v76-select" style="font-size:11px">选择建筑 · 近距离核对校准后多翼轮廓与 IoU</label>
       <select class="bp6-input" id="architecture-v76-select" style="display:block;width:100%;padding:7px;margin:6px 0;border-radius:5px"></select>
-      <label class="bp6-control bp6-checkbox" style="display:block;font-size:11px;margin-top:7px"><input type="checkbox" id="show-v76-facades" checked><span class="bp6-control-indicator"></span> 区分原有 T 教学楼 / V 一期宿舍 / D 二期宿舍 / LRC 结构的材质</label>
-      <label class="bp6-control bp6-checkbox" style="display:block;font-size:11px;margin:5px 0 8px"><input type="checkbox" id="show-v76-edges" checked><span class="bp6-control-indicator"></span> 显示由真实 GLB 三角面提取的建筑棱线（可关闭）</label>
-      <label class="bp6-control bp6-checkbox" style="display:block;font-size:11px;margin:5px 0 8px"><input type="checkbox" id="show-v76-phaseii-gaps"><span class="bp6-control-indicator"></span> 二期宿舍连接问题：12 段源模型缺口定位（诊断，不是新道路）</label>
-      <p id="architecture-v76-detail" style="font-size:10px;white-space:pre-wrap;line-height:1.5">30 栋建筑逐个核对；建筑轮廓 / 入口 / 阳台 / 玻璃面积均未测绘确认。</p>
+      <label class="bp6-control bp6-checkbox" style="display:block;font-size:11px;margin-top:7px"><input type="checkbox" id="show-v76-facades" checked><span class="bp6-control-indicator"></span> 区分 T 教学楼 / V 一期宿舍 / D 二期宿舍 / LRC 与扩建公建材质</label>
+      <label class="bp6-control bp6-checkbox" style="display:block;font-size:11px;margin:5px 0 8px"><input type="checkbox" id="show-v76-edges" checked><span class="bp6-control-indicator"></span> 显示建筑结构棱线（v89 GLB 锐边提取，可关闭）</label>
+      <label class="bp6-control bp6-checkbox" style="display:block;font-size:11px;margin:5px 0 8px"><input type="checkbox" id="show-v76-phaseii-gaps"><span class="bp6-control-indicator"></span> 二期环道/宿舍关系检查图层（v89 环路已对齐）</label>
+      <p id="architecture-v76-detail" style="font-size:10px;white-space:pre-wrap;line-height:1.5">已校准 41 栋建筑实际布局；窗格面积与实测玻璃分格仍待现场踏勘确认。</p>
       <p style="font-size:10px;">二期模型含 6 条径向铺装、6 条推定地面连接，以及中央环路/西侧概念路。缺口依据现存 GLB 和 GIS，不能据此假定真实校园断路。</p>
       <p style="font-size:10px;">算法为源网格二面角与开放边提取；建模材料只是建筑类型判读。楼顶投影和道路的接近不能证明入口连通。<a href="https://fbm.bnbu.edu.cn/en/about_us/contact_us.htm" target="_blank" rel="noopener">T1</a> · <a href="https://www.bnbu.edu.cn/info/1076/6575.htm" target="_blank" rel="noopener">一期住宿</a> · <a href="https://bnbu.edu.cn/en/info/1255/10522.htm" target="_blank" rel="noopener">二期住宿</a> · <a href="https://co.bnbu.edu.cn/" target="_blank" rel="noopener">LRC</a></p>
     </section>
