@@ -125,8 +125,8 @@ def classify_pattern(pattern: PatternSpec | None) -> PatternStatus:
         return PatternStatus.UNDERSIZED
     if horizontal <= 5.0 and vertical <= 5.0:
         return PatternStatus.GUIDELINE_2X2
-    # ABC's 2x4 prescription permits up to 4 in horizontally and 2 in
-    # vertically. The 2x2 pattern is the more conservative option.
+    # This is a spacing-only 2x4 screen. ABC Threat Factor rating also
+    # evaluates marker geometry/area, material, surface and the full assembly.
     if horizontal <= 10.0 and vertical <= 5.0:
         return PatternStatus.GUIDELINE_2X4
     return PatternStatus.NONCOMPLIANT
@@ -154,6 +154,15 @@ def assess_glazing(panel: GlassPanel) -> dict:
         and (reflection_rating_flag or (reflected is not None and reflected > 0)
              or (transmitted is not None and transmitted > 0))
     )
+    opaque_reflection_observed = (
+        panel.appearance == GlassAppearance.OPAQUE_SPANDREL
+        and (reflection_rating_flag or (reflected is not None and reflected > 0))
+    )
+    surface2_rating_review_flag = (
+        reflection_rating_flag
+        and panel.pattern is not None
+        and panel.pattern.surface == MarkerSurface.INTERIOR
+    )
     if status == PatternStatus.GUIDELINE_2X2:
         optical_hazard = "reduced_not_eliminated"
     elif status == PatternStatus.GUIDELINE_2X4:
@@ -161,7 +170,11 @@ def assess_glazing(panel: GlassPanel) -> dict:
     elif high_hazard_appearance or low_e_mechanism_observed:
         optical_hazard = "elevated"
     elif panel.appearance == GlassAppearance.OPAQUE_SPANDREL:
-        optical_hazard = "not_applicable_to_opaque_surface"
+        optical_hazard = (
+            "reflective_opaque_surface_requires_review"
+            if opaque_reflection_observed
+            else "transparency_not_present_reflection_unassessed"
+        )
     elif panel.appearance in {
         GlassAppearance.UNKNOWN, GlassAppearance.TINTED_OR_LOW_E
     }:
@@ -187,6 +200,17 @@ def assess_glazing(panel: GlassPanel) -> dict:
     if reflection_rating_flag:
         findings.append("exterior_vlr_above_15_percent_rating_review_flag")
 
+    pattern_standard_scope = (
+        "ECCC general 2x2 spacing screen only: whole-pane exterior coverage, "
+        "high contrast, no more than 5 cm clear gaps and at least 5 mm components. "
+        "This is not an ABC Threat Factor certification."
+        if status == PatternStatus.GUIDELINE_2X2 else
+        "2x4 spacing geometry screen only. ABC marker geometry, area, material, "
+        "surface, low-E position and complete assembly criteria are not assessed."
+        if status == PatternStatus.GUIDELINE_2X4 else
+        "No product certification or Threat Factor is inferred from this pattern status."
+    )
+
     return {
         "panel_id": panel.panel_id,
         "appearance": panel.appearance.value,
@@ -194,8 +218,10 @@ def assess_glazing(panel: GlassPanel) -> dict:
         "exterior_vlr_pct": measurement_dict(panel.exterior_vlr_pct),
         "exterior_vlt_pct": measurement_dict(panel.exterior_vlt_pct),
         "pattern_status": status.value,
+        "pattern_standard_scope": pattern_standard_scope,
         "optical_hazard_profile": optical_hazard,
         "reflection_rating_review_flag_gt_15pct": reflection_rating_flag,
+        "surface2_rating_review_flag_gt_15pct": surface2_rating_review_flag,
         "findings": findings,
         "caveat": (
             "The >15% exterior visible-light-reflectance value is a boundary "
