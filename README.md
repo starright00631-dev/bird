@@ -51,8 +51,8 @@ See the [data registry](docs/data_registry.csv), [source register](docs/SOURCE_R
 - China 2025: 3,078 buildings; useful for multi-scale habitat hypotheses, not local causal effects.
 - Ottawa 2026: 225 collisions and 51 species; treatment compliance evidence, site-specific.
 - Oklahoma 2026 BACI: 6 treated and 134 untreated façades; field design benchmark, but low treated replication and a non-significant formal treatment-by-period interaction.
-- UBC 2021 De Groot: 8 buildings, five seasonal sampling periods, 29 search-efficiency trials and 103 carcass-persistence trials. Search.Efficiency.csv is the only raw file currently checked in and passes the upstream MD5 check. A dedicated workflow fetches and verifies all six source files and inspects the READ.ME.xlsx codebook on relevant pull requests; the remaining five files are not yet integrated into a model.
-- UBC 2023 Zulian: 8,835 repeated façade surveys across 57 façades and 8 buildings; 142 positive façade-surveys and 152 individual collision events. Appendix 1 is identified but not yet imported.
+- UBC 2021 De Groot: all six Dryad files are checksum-verified in CI; 8,846 collision rows resolve to 8,831 facade-date keys, 152 fatality events and 142 positive visits. The 103 persistence trials, 29 search-efficiency trials, 155-date schedule and 303 point-count species rows are audited. Raw files remain in a 30-day CI artifact, not Git. This is the observation-process benchmark, not yet the final façade feature model.
+- UBC 2023 Zulian: the paper reports 8,835 repeated façade surveys, 57 façades, 142 positive survey intervals and 152 events. Appendix 1 contains the façade-level glass and vegetation covariates (FacArea, AreaGlass, VegPer, TreeCov, StorReflVeg); it remains to be downloaded, checksum-pinned and joined after key/grain validation.
 - 2026 stereo bird-flight data: 360 retained trials at 120 fps; kinematics only, not glass recognition.
 
 Sources are not pooled merely because they all concern bird collisions. Grain, effort, outcome definition, species mix and observation process must first be harmonized.
@@ -127,6 +127,10 @@ Example values are placeholders, not BNBU measurements. The comparison reports m
 ## Separate campus 3D project
 
 The viewer and source evidence are documented in [campus/README.md](campus/README.md). The campus scene may later supply verified pane geometry and approach-view registration, but is not a prerequisite for the external-data model.
+
+### 空间研究工作台与 AI 对话
+
+右侧默认显示 AIP 对话，选择「模型数据」可打开原有 GIS、图层和证据面板。设置按钮支持配置 OpenAI 兼容 API 基础地址、模型 ID 和 API Key，默认使用 DeepSeek 的 `https://api.deepseek.com` 与 `deepseek-flash`。密钥只保存在当前页面内，刷新后需重新输入；对话直接从浏览器发送给所配置的服务，服务须支持浏览器跨域（离线 HTML 的 `file://` 来源尤其需要服务商允许）。3D 模型仍可离线使用，AI 对话需要网络和有效密钥。发送时包含当前场景、选中对象的显示信息和对话内容；请勿发送不愿提供给服务商的数据。模型无法自动读取整个场景或证据库，回答须结合研究资料核验。
 
 ## Next build sequence
 

@@ -1,6 +1,6 @@
 # UBC bird-window collision data: ingestion and audit
 
-**Status:** one raw observation-process file is checksum-verified; the remaining raw files and the 2023 façade-survey appendix are not yet imported. No UBC model has been fitted into the BNBU pipeline.
+**Status:** all six De Groot (2021) source files are downloaded and MD5-verified in the UBC CI workflow and retained as a 30-day workflow artifact; raw files are not committed to the repository. The codebook has been inspected. No UBC model has yet been fitted into the BNBU pipeline. Zulian (2023) Appendix 1 remains a separate, not-yet-downloaded façade-covariate source.
 
 ## Two distinct UBC data products
 
@@ -14,9 +14,9 @@
 
 The six source files and pinned MD5 values are recorded in scripts/audit_ubc_sources.py. Dryad data are published under CC0; cite the dataset and paper.
 
-**Imported and verified:** Search.Efficiency.csv (29 rows; 1,766 bytes; MD5 f9e7a8816ef52eb9d3523f0f14b40d6b).
+**Repository snapshot:** Search.Efficiency.csv (29 rows; 1,766 bytes; MD5 f9e7a8816ef52eb9d3523f0f14b40d6b).
 
-**Not yet imported:** Carcass.Persistence.csv, Observed.Collision.Counts.csv, READ.ME.xlsx, Search.Schedule.csv and UBC.point.counts.csv. The downloader checks each published MD5 before writing any file.
+**CI-verified source snapshot:** all six Dryad files pass their published MD5 and byte-size checks. The five remaining files are downloaded into an ignored CI directory and uploaded as a 30-day workflow artifact; they are not copied into Git. The audit tests the raw grain and codebook before any model mapping.
 
 The 29 search-efficiency trials contain repeated search histories. The descriptive sequential risk sets are:
 
@@ -47,6 +47,50 @@ The checksum-verified workbook contains five sheets: UBC.point.counts, Observed.
 | UBC.point.counts | Species, Count, Location, Date, JulianDay, Start, Interval, Duration_mins, Distance_m, Num_obs, Complete_Checklist and Num_spp_in_count. | Bird abundance/count models need to preserve point-count effort, checklist completeness, observer count and survey duration. |
 
 **Important boundary:** this is a codebook-based schema description. No row-level join, field recoding, model fit or causal effect estimate has been produced from the five non-committed source files. The 50 m vegetation feature cannot be substituted for BNBU's requested multi-scale canopy/reflection features.
+
+
+### Reproduced source audit (pinned Dryad/Zenodo snapshot)
+
+The UBC CI run verifies all six archive files and checks the following source-grain facts:
+
+| Source layer | Verified result | Safe interpretation |
+|---|---:|---|
+| Observed collision file | 8,846 rows | Raw source rows, not automatically 8,846 independent visits |
+| Facade-date keys | 8,831 | 57 façades across 155 survey dates; 15 repeated facade-date groups |
+| Collision events | 152 | Sum of the count-valued fatality field |
+| Positive facade-date visits | 142 | Binary visit-level outcome after aggregation |
+| Explicit zero rows | 8,694 | Explicit recorded zeros only |
+| Missing facade-date keys | 4 | Retained as missing; never synthesized as zero |
+| Search schedule | 155 dates, 5 periods | 225 inclusive monitoring days; all 8 buildings scheduled on every listed date |
+| Searcher-efficiency trials | 29 | Six sequential search occasions; missing at-risk results remain missing |
+| Carcass-persistence trials | 103 | 85 finite interval observations and 18 right-censored observations |
+| Winter point counts | 303 species rows | 86 checklist groups: 72 at the eight study buildings and 14 ancillary |
+
+The collision file contains 15 repeated facade-date groups. The audit preserves
+the sum of 152 fatality events and the 142 positive facade-date visits as
+different outcomes. It also records mixed zero/positive groups and repeated
+positive events instead of silently deduplicating them. Four absent facade-date
+keys in the full 57 x 155 cross-product remain missing observations, not
+negative labels.
+
+The METHOD field is checked against the scheduled 24/48-hour interval. All
+8,846 source rows match the author schedule. The 2024 inventory is not used as
+a proxy for façade or glass area.
+
+### Why the De Groot source is not yet the final glass/vegetation model
+
+The codebook confirms a count-valued fatality response, a 24/48-hour survey
+interval, building-level VEGE_PERC within 50 m, a high/low VEGE_CAT
+sampling stratum, and façade STOREYS. This source does not provide the full
+façade-level predictor set required by the 2023 seasonal analysis:
+FacArea, AreaGlass, VegPer, TreeCov, and StorReflVeg.
+
+Zulian et al. (2023) reports those 57 façade-level covariates in Appendix 1
+and analyzes the same 8,835 survey intervals. The next integration must
+download and verify that appendix, inspect its actual keys and grain, and
+join it to the De Groot survey panel only after uniqueness and coverage tests.
+The 50-m building vegetation percentage is not a substitute for façade-level
+tree canopy or stories reflecting vegetation.
 
 ### B. Zulian et al. (2023), repeated façade-survey Appendix 1
 

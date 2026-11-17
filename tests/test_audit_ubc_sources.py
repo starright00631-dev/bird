@@ -61,11 +61,12 @@ def test_persistence_requires_interval_censoring_fields(tmp_path):
         {"ID": "b", "LastPresent": "4.0", "FirstAbsent": "NA"},
     ])
     result = audit_carcass_persistence(path)
-    assert result["status"] == "interval_censoring_fields_detected"
+    assert result["status"] == "interval_and_right_censoring_fields_detected"
     assert result["last_present_column"] == "LastPresent"
     assert result["first_absent_column"] == "FirstAbsent"
     assert result["interval_censored_trials"] == 1
     assert result["right_censored_trials"] == 1
+    assert result["first_absent_na_trials"] == 1
 
 
 def test_unknown_response_is_not_silently_zero(tmp_path):
@@ -160,3 +161,110 @@ def test_download_file_rejects_checksum_mismatch_before_writing(monkeypatch, tmp
     with pytest.raises(ValueError, match="MD5 mismatch"):
         download_file("Search.Efficiency.csv", destination)
     assert not destination.exists()
+
+
+def test_persistence_inf_is_right_censored(tmp_path):
+    path = tmp_path / "Carcass.Persistence.csv"
+    write_csv(path, ["ID", "LastPresent", "FirstAbsent"], [
+        {"ID": "a", "LastPresent": "2.0", "FirstAbsent": "3.0"},
+        {"ID": "b", "LastPresent": "4.0", "FirstAbsent": "Inf"},
+        {"ID": "c", "LastPresent": "1.0", "FirstAbsent": "NA"},
+    ])
+    result = audit_carcass_persistence(path)
+    assert result["interval_censored_trials"] == 1
+    assert result["right_censored_trials"] == 2
+    assert result["first_absent_inf_trials"] == 1
+    assert result["first_absent_na_trials"] == 1
+    assert result["invalid_or_incomplete_trials"] == 0
+
+
+def test_persistence_rejects_absence_before_last_present(tmp_path):
+    path = tmp_path / "Carcass.Persistence.csv"
+    write_csv(path, ["ID", "LastPresent", "FirstAbsent"], [
+        {"ID": "bad", "LastPresent": "4.0", "FirstAbsent": "3.0"},
+        {"ID": "good", "LastPresent": "1.0", "FirstAbsent": "2.0"},
+    ])
+    result = audit_carcass_persistence(path)
+    assert result["interval_censored_trials"] == 1
+    assert result["invalid_or_incomplete_trials"] == 1
+    assert result["invalid_ids"] == ["bad"]
+
+
+def test_observed_collision_audit_separates_events_from_visits(tmp_path):
+    from scripts.audit_ubc_sources import audit_observed_collision_counts
+
+    path = tmp_path / "Observed.Collision.Counts.csv"
+    write_csv(path, [
+        "SURVEY_DATENO", "SURVEY_DATE", "BUILDING.X", "FACADE",
+        "VEGE_CAT", "VEGE_PERC", "STOREYS", "COLLISIONMORTALITY_X", "METHOD",
+    ], [
+        {"SURVEY_DATENO": "1/1/2020", "SURVEY_DATE": "1/1/2020", "BUILDING.X": "A",
+         "FACADE": "A1", "VEGE_CAT": "low", "VEGE_PERC": "0.2",
+         "STOREYS": "3", "COLLISIONMORTALITY_X": "1", "METHOD": "1"},
+        {"SURVEY_DATENO": "1/1/2020", "SURVEY_DATE": "1/1/2020", "BUILDING.X": "A",
+         "FACADE": "A1", "VEGE_CAT": "low", "VEGE_PERC": "0.2",
+         "STOREYS": "3", "COLLISIONMORTALITY_X": "1", "METHOD": "1"},
+        {"SURVEY_DATENO": "1/1/2020", "SURVEY_DATE": "1/1/2020", "BUILDING.X": "A",
+         "FACADE": "A2", "VEGE_CAT": "low", "VEGE_PERC": "0.2",
+         "STOREYS": "2.5", "COLLISIONMORTALITY_X": "0", "METHOD": "1"},
+    ])
+    result = audit_observed_collision_counts(path)
+    assert result["raw_rows"] == 3
+    assert result["collision_event_count"] == 2
+    assert result["positive_event_rows"] == 2
+    assert result["positive_facade_date_visits"] == 1
+    assert result["duplicate_facade_date_groups"] == 1
+    assert result["duplicate_extra_positive_events"] == 1
+    assert result["explicit_zero_rows"] == 1
+
+
+def test_search_schedule_reports_seasonal_effort_windows(tmp_path):
+    from scripts.audit_ubc_sources import audit_search_schedule
+
+    path = tmp_path / "Search.Schedule.csv"
+    write_csv(path, [
+        "SearchDate", "Season", "Season.by.5", "A", "B"
+    ], [
+        {"SearchDate": "1/1/2020", "Season": "winter", "Season.by.5": "winter2020", "A": "1", "B": "1"},
+        {"SearchDate": "1/2/2020", "Season": "winter", "Season.by.5": "winter2020", "A": "1", "B": "1"},
+        {"SearchDate": "1/4/2020", "Season": "winter", "Season.by.5": "winter2020", "A": "1", "B": "1"},
+    ])
+    result = audit_search_schedule(path)
+    assert result["unique_survey_dates"] == 3
+    assert result["period_count"] == 1
+    assert result["monitoring_days_total_inclusive"] == 4
+    assert result["periods"]["winter2020"]["gap_days_distribution"] == {"1": 1, "2": 1}
+    assert result["all_buildings_searched_on_every_scheduled_date"] is True
+
+
+def test_point_count_audit_uses_checklist_not_species_row_grain(tmp_path):
+    from scripts.audit_ubc_sources import audit_point_counts, UBC_STUDY_POINT_COUNT_LOCATIONS
+
+    path = tmp_path / "UBC.point.counts.csv"
+    study_location = sorted(UBC_STUDY_POINT_COUNT_LOCATIONS)[0]
+    other_location = "University of British Columbia, Extra Annex"
+    write_csv(path, [
+        "Species", "Count", "Location", "Date", "Interval", "Start",
+        "Duration_mins", "Distance_m", "Num_obs", "Complete_Checklist",
+        "Num_spp_in_count",
+    ], [
+        {"Species": "Species A", "Count": "1", "Location": study_location,
+         "Date": "25-Jan-17", "Interval": "1", "Start": "9:00 AM",
+         "Duration_mins": "5", "Distance_m": "50", "Num_obs": "1",
+         "Complete_Checklist": "TRUE", "Num_spp_in_count": "2"},
+        {"Species": "Species B", "Count": "2", "Location": study_location,
+         "Date": "25-Jan-17", "Interval": "1", "Start": "9:00 AM",
+         "Duration_mins": "5", "Distance_m": "50", "Num_obs": "1",
+         "Complete_Checklist": "TRUE", "Num_spp_in_count": "2"},
+        {"Species": "Species C", "Count": "1", "Location": other_location,
+         "Date": "25-Jan-17", "Interval": "1", "Start": "9:00 AM",
+         "Duration_mins": "5", "Distance_m": "50", "Num_obs": "1",
+         "Complete_Checklist": "TRUE", "Num_spp_in_count": "1"},
+    ])
+    result = audit_point_counts(path)
+    assert result["species_rows"] == 3
+    assert result["checklist_groups"] == 2
+    assert result["study_building_checklists"] == 1
+    assert result["nonstudy_checklists"] == 1
+    assert result["checklist_group_size_mismatches"] == 0
+    assert result["metadata_inconsistencies"] == 0
