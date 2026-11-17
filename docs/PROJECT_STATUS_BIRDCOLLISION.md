@@ -18,8 +18,15 @@ The repository now has a mechanistic research codebase and a multi-pathway faça
 | Flight/contact | 3D movement/control/contact modules exist | Independent metric trajectories and held-out bird/trial validation |
 | Observation bias | UVic and UBC searcher-efficiency/persistence sources are pinned and audited; UBC De Groot observation-process sensitivities are separate from collision outcomes | Obtain BNBU search effort, carcass persistence and searcher-detection trials before local correction |
 | Vegetation | Five buffers and four distinct ecological pathways exist | Human-audited canopy/land-cover layers, species/resources and route features |
-| External facade benchmark | Zulian 2023 Appendix 1 is pinned as an 8,835-row, 57-facade x 155-date panel; paper-aligned seasonal binomial GLMM and grouped-building validation are implemented in CI | Review seasonal AICc rankings, residual diagnostics and leave-one-building-out performance; do not transport UBC coefficients as BNBU calibration | 
+| External facade benchmark | Zulian 2023 Appendix 1 is pinned as an 8,835-row, 57-facade x 155-date panel; paper-aligned seasonal binomial GLMM, AICc comparison, DHARMa diagnostics and 32-fold leave-one-building-out validation run in CI | AICc support pattern matches the paper, but held-out-building Brier is worse than the offset-only baseline in all four seasons; retain as descriptive UBC benchmark, not transferable predictor or BNBU calibration | 
 | Intervention | Evidence-gated candidate comparison exists | Matched/randomized BACI with pane-specific approach denominators and safety/cost measures |
+
+## UBC benchmark interpretation
+
+- Appendix 1 is the primary façade-feature panel. It has 8,835 complete façade-date rows, 57 façades, 8 buildings, 155 dates, 142 positive carcass-presence visits and 152 carcass-mortality events. `COLLISIONS_X` is a separate endpoint.
+- The De Groot observed-collision file is a separate source version: only 139 dates overlap, 16 dates are unique to each source, 8 common-key mortality counts differ and 171 METHOD values differ. Do not row-join these files.
+- The paper-aligned seasonal GLMM uses a binomial logit, log(24/48-hour survey exposure) offset and one composite building:façade random intercept. Candidate model df are 8/6/5/2.
+- LOBO is not a predictive success: full-model Brier is worse than the exposure-only baseline in fall, winter, spring and summer; log-loss improves only in fall. No held-out-site or Guangdong validation exists.
 
 ## Main research constraints
 
@@ -32,11 +39,11 @@ The repository now has a mechanistic research codebase and a multi-pathway faça
 
 ## Immediate engineering priorities
 
-1. Complete and run the decision-edge regression tests.
-2. Build a reproducible external data ingestion layer with source hashes, units, taxonomic crosswalks, sampling effort and data-grain metadata.
-3. Acquire effort-aware bird occurrence/activity data for Guangdong/Zhuhai; do not treat regional presence as pane approach flow.
-4. Build a human-audited glass/vegetation image feature pipeline and hold out sites during validation.
-5. Keep observed carcass-presence GLMM and event-count/rate models as separate endpoints; reproduce the external UBC baseline before fitting local BNBU models.
-6. Implement field-ready pane-level intervention and monitoring records, then estimate effects only from comparable designs.
+1. Reproduce the De Groot observation-process correction (GenEst pkm searcher efficiency, cpm carcass persistence and estM survey schedule) from the pinned trial inputs; reconcile the original model-list selections against complete AICc tables before using corrected mortality.
+2. Acquire and harmonize an independent subtropical façade-survey dataset with explicit zeros, 24/48-hour effort, façade glass/vegetation features, searcher detection and carcass persistence; retain exact source versions and hashes.
+3. Acquire effort-aware bird occurrence/activity data for Guangdong/Zhuhai; do not treat regional presence as pane approach flow or collision exposure.
+4. Build pane-level measured glass appearance and whole-assembly spectral R/T records; link them to finite-pane reflection/transmission geometry and independent multi-view validation.
+5. Collect continuous approach/avoidance trajectories and species morphology before fitting recognition, control or swept-contact parameters; keep synthetic kinematics as code tests only.
+6. Implement field-ready BNBU pane-level survey and intervention monitoring records with costs, daylight, maintenance, safety, ecological effects and adjacent-pane risk transfer; estimate efficacy only from comparable controlled designs.
 
 All new project work must use a feature branch and pull request, with review and passing CI before merge to `main`. Campus 3D remains a separate supporting workstream; it is not the main research deliverable or a prerequisite for external-data model development.
