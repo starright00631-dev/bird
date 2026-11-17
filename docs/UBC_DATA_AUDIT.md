@@ -228,3 +228,19 @@ The first reproducible 32-fold run gives the following test-visit-weighted out-o
 Positive Δ means the full GLMM is worse than the exposure-only comparator. In this run, the full model has worse pooled Brier score in all four seasons and improves pooled log loss only in fall. It beats the baseline in 17 of 32 individual folds on Brier and 17 of 32 on log loss. Fold-mean AUC is approximately 0.63 in fall, 0.50 in winter, 0.71 in spring and 0.54 in summer; AUC is undefined for folds with a single outcome class, and summer has only eight positive visits overall.
 
 **Decision:** retain this model as a paper-aligned, within-UBC association/reproduction benchmark, not as a reliable building-ranking or transferable prediction model. The leave-one-building-out results do not establish useful generalization even within this one campus. More independent sites, more positive outcomes and measured glass/vegetation features are required before a predictive challenger is justified. These results do not calibrate BNBU risk.
+
+
+### Seasonal model-selection reproduction
+
+All 16 seasonal candidate fits converged with positive-definite Hessians. The observed AICc differences are:
+
+| Season | Best-supported model | Other model within ΔAICc ≤ 2 | ΔAICc |
+|---|---|---|---:|
+| Fall | Building-only | None | Full = 2.738 |
+| Winter | Building-only | Full | Full = 1.253 |
+| Spring | Full | Building-only | Building-only = 1.917 |
+| Summer | Null | Building-only | Building-only = 0.049 |
+
+This reproduces the paper's qualitative seasonal support pattern. The absolute log-likelihood/AICc values are not bit-identical to the publication, but the seasonal ΔAICc rankings and the odds-ratio-per-1-SD coefficient pattern align. The output does not establish causal effects or a predictive winner.
+
+Examples of the paper-aligned OR-per-1-SD results in the best-supported candidate sets are: fall AreaGlass 2.56 (95% CI 1.70–3.86) and StorReflVeg 1.92 (1.15–3.19); winter FacArea 1.57 (1.07–2.31) and AreaGlass 1.47 (1.06–2.05); spring full-model AreaGlass 1.99 (1.32–3.02). In summer, the null and building-only models are essentially tied; do not infer a stable glass effect from that season's model choice. All coefficients are observational associations per one standard deviation, not causal effects or intervention efficacy.
