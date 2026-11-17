@@ -66,6 +66,12 @@ def test_pattern_screening_requires_exterior_spacing_width_coverage_and_contrast
     )
     assert interior.pattern_is_screening_compliant is False
     assert interior.mechanisms()["interior_treatment_may_leave_exterior_reflection"] is True
+    unmeasured = GlassObservation(
+        facade_id="B1::F7", visual_class="fritted",
+        evidence_source="human_inspection", reviewed_by_human=True,
+    )
+    assert unmeasured.mechanisms()["pattern_geometry_unverified"] is True
+    assert unmeasured.needs_human_review is True
 
 
 def test_invalid_optical_percentages_are_rejected():
