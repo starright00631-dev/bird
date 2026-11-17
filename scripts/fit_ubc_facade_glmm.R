@@ -217,11 +217,26 @@ make_response_curves <- function(fit, season_data, season, model_name, scales) {
     for (hours in c(24, 48)) {
       newdata <- data.frame(
         survey_hours = rep(hours, length(grid)),
-        facade_area_z = rep(0, length(grid)),
-        glass_area_z = rep(0, length(grid)),
-        facade_porous_cover_z = rep(0, length(grid)),
-        facade_tree_cover_z = rep(0, length(grid)),
-        stories_reflecting_canopy_z = rep(0, length(grid)),
+        facade_area_z = rep(
+          (median(season_data$facade_area_m2) - scales$facade_area_m2$mean) /
+            scales$facade_area_m2$sd, length(grid)
+        ),
+        glass_area_z = rep(
+          (median(season_data$glass_area_m2) - scales$glass_area_m2$mean) /
+            scales$glass_area_m2$sd, length(grid)
+        ),
+        facade_porous_cover_z = rep(
+          (median(season_data$facade_porous_cover_percent) - scales$facade_porous_cover_percent$mean) /
+            scales$facade_porous_cover_percent$sd, length(grid)
+        ),
+        facade_tree_cover_z = rep(
+          (median(season_data$facade_tree_cover_percent) - scales$facade_tree_cover_percent$mean) /
+            scales$facade_tree_cover_percent$sd, length(grid)
+        ),
+        stories_reflecting_canopy_z = rep(
+          (median(season_data$stories_reflecting_canopy) - scales$stories_reflecting_canopy$mean) /
+            scales$stories_reflecting_canopy$sd, length(grid)
+        ),
         building_id = factor(rep(levels(season_data$building_id)[1], length(grid)),
                              levels = levels(season_data$building_id)),
         facade_label = factor(rep(levels(season_data$facade_label)[1], length(grid)),
@@ -495,7 +510,7 @@ report <- list(
     scaling = "predictors standardized to mean 0 and SD 1 on the full balanced panel",
     model_selection = "AICc; delta AICc <= 2 reported as plausible",
     conditional_response_curves = paste(
-      "Fixed-effect predictions with random effects excluded; other standardized predictors fixed at zero.",
+      "Fixed-effect predictions with random effects excluded; other predictors held at their season-specific medians.",
       "Both 24-hour and 48-hour survey exposures are shown; confidence intervals are Wald intervals on the link scale."
     ),
     diagnostics = diagnostics,
