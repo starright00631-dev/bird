@@ -61,3 +61,12 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Searcher efficiency: 29 trials; carcass persistence: 103 trials (85 finite intervals, 18 right-censored); point counts: 303 species rows in 86 checklists.
 - The codebook is inspected; the 50-m VEGE_PERC is building-level and is not interchangeable with the 2023 façade-level TreeCov or StorReflVeg.
 - Next model input is the separately published Zulian et al. 2023 Appendix 1. Verify its exact keys and 57-façade grain before joining to the survey panel.
+
+
+## Bird–glass optics iteration (2026-11-17)
+
+- Focused branch: research/scene-ray-two-leg-occlusion-20261117 (based on main 0e439b382fde91d3d932c9a1daccdfb7c8097a28).
+- Found and corrected a missing visibility leg in finite-pane ray optics: opaque occlusion is now checked on both bird-to-pane and real-scene-source-to-pane segments. Reflection uses the real source position for the latter check, not the virtual image.
+- Added regression cases with opaque blockers located only on the source-side leg for reflected foreground habitat and transmitted rear habitat; updated the optics validation note.
+- This is a deterministic geometric correctness result, not empirical collision prediction, glass recognition, or BNBU calibration. Awaiting CI and independent review; do not merge before both pass.
+- Parallel UBC façade-model PR #22 remains active and has two substantive review comments; its corrections are independent of this optics branch. Do not duplicate or overwrite that work.

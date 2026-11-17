@@ -97,3 +97,23 @@ def test_missing_observation_never_becomes_behavior_probability():
 def test_invalid_geometry_rejected():
     with pytest.raises(ValueError):
         RectPatch("bad",(0,0,0),(0,2,0),(0,2,0))
+
+
+@pytest.mark.parametrize(
+    "kind,scene,blocker",
+    [
+        # Reflection: the bird and source are on the same side of the pane.
+        ("reflection", (-2, 2, 1), RectPatch("source-side-wall", (-1, 1.5, 1),
+                                             (0, .4, 0), (0, 0, .4), "opaque")),
+        # Transmission: the habitat source is behind the pane.
+        ("transmission", (2, 2, 1), RectPatch("rear-wall", (1, 1.5, 1),
+                                               (0, .4, 0), (0, 0, .4), "opaque")),
+    ],
+)
+def test_opaque_blocker_on_scene_to_pane_leg_suppresses_ray(kind, scene, blocker):
+    pane = facade()
+    # The chosen blocker lies on the source-to-pane segment, not the
+    # eye-to-pane segment; this distinguishes the two-leg visibility test.
+    assert scene_ray((-2, 0, 1), (1, 0, 0), scene, pane, kind) is not None
+    assert scene_ray((-2, 0, 1), (1, 0, 0), scene, pane, kind,
+                     blockers=[blocker]) is None

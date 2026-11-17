@@ -147,7 +147,13 @@ def scene_ray(viewer_m, heading_mps, scene_center_m, patch: RectPatch,
             return None
         apparent = scene.copy()
     hit = _intersect_segment(eye, apparent, patch)
-    if hit is None or _is_opaque_occluded(eye, hit, blockers):
+    if hit is None:
+        return None
+    # Visibility requires both unobstructed legs: eye -> pane and pane ->
+    # real scene source. The reflected apparent target is virtual, so using
+    # it for source-side occlusion would test the wrong half-space.
+    if (_is_opaque_occluded(eye, hit, blockers)
+            or _is_opaque_occluded(hit, scene, blockers)):
         return None
     sight = _unit(apparent-eye)
     incidence = degrees(acos(float(np.clip(abs(sight @ n), 0., 1.))))
