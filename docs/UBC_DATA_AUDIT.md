@@ -164,15 +164,14 @@ carcass model.
 | Glass area | AREA_GLASS | m², façade-level |
 | Porous/ground-shrub vegetation cover | PERC_VEG_AND_POROUS_SURFACE_FACADE | %, façade-level 50-m buffer |
 | Tree canopy cover | TREECOVER_FACADE_PERCENT | %, façade-level 50-m buffer |
-| Stories reflecting canopy | STORIES_REFLECT_CANOPY | stories, façade-level |
+| Stories reflecting canopy | STORIES_REFLECT_CANOPY | continuous index, façade-level |
 | Building vegetation stratum | VEGE_PERC | proportion 0-1, building-level |
 | Survey exposure | METHOD | 1=24 h, 2=48 h |
 
 The paper's VegPer maps to PERC_VEG_AND_POROUS_SURFACE_FACADE, not the
 building-level VEGE_PERC. TreeCov maps to TREECOVER_FACADE_PERCENT, and
 StorReflVeg maps to STORIES_REFLECT_CANOPY. All façade predictors are constant
-within each façade across its 155 repeated survey rows. Fractional STOREYS
-values are retained; they are not rounded.
+within each façade across its 155 repeated survey rows.
 
 The source field `STORIES_REFLECT_CANOPY` is treated as a continuous
 reflected-canopy exposure index. Although the paper describes the concept as
