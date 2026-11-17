@@ -109,6 +109,10 @@ def build_panel(raw: bytes, *, strict_source: bool = True):
             raise ValueError(f"Building vegetation proportion outside [0,1] at row {row_number}")
         if values["stories_reflecting_canopy"] < 0 or values["building_storeys"] < 0:
             raise ValueError(f"Negative story count at source row {row_number}")
+        if not values["stories_reflecting_canopy"].is_integer():
+            raise ValueError(
+                f"Non-integer stories_reflecting_canopy at source row {row_number}"
+            )
         if not 0 <= values["facade_orientation_angle_degrees"] <= 360:
             raise ValueError(f"Facade orientation angle outside [0,360] at source row {row_number}")
         previous_building_veg = building_vegetation.setdefault(building, values["building_vegetation_proportion"])
