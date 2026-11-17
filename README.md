@@ -44,7 +44,7 @@ These are engineering gates, not features to infer from the current rule engine.
 
 ## Evidence and data
 
-See the [data registry](docs/data_registry.csv), [source register](docs/SOURCE_REGISTER.csv), [research gates](docs/RESEARCH_GATES.md), [intervention evidence matrix](docs/INTERVENTION_EVIDENCE_MATRIX.md), [UBC data audit](docs/UBC_DATA_AUDIT.md), [BNBU local-data audit](docs/BNBU_LOCAL_DATA_AUDIT.md), and [shared coordination log](docs/COORDINATION_LOG.md).
+See the [data registry](docs/data_registry.csv), [source register](docs/SOURCE_REGISTER.csv), [experiment ledger](docs/EXPERIMENT_LEDGER.csv), [research gates](docs/RESEARCH_GATES.md), [intervention evidence matrix](docs/INTERVENTION_EVIDENCE_MATRIX.md), [UBC data audit](docs/UBC_DATA_AUDIT.md), [BNBU local-data audit](docs/BNBU_LOCAL_DATA_AUDIT.md), and [shared coordination log](docs/COORDINATION_LOG.md).
 
 - UVic: 6,337 raw source rows collapse to 6,298 unique facade-day visits across 50 facades, 6 buildings and 6 survey windows. A pinned adapter builds 300 facade-period rows, a descriptive effort-offset Poisson GEE and an NB2 sensitivity check. A separate adapter audits 79 searcher-efficiency trials, 82 carcass-persistence trials and 126 scheduled survey dates. This validates the observation layer, not BNBU pane risk or glass/vegetation effects; full GenEst/JAGS refit remains pending. See [UVic reproduction and model notes](docs/UVIC_REPRODUCTION_AND_MODEL.md).
 - Neotropical database: 4,103 event reports and 571 species; event-only, no non-event denominator.
