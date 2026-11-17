@@ -58,9 +58,9 @@ Crucially, 142 positive façade-surveys and 152 individual collision events are 
 ## Reproduction
 
 ~~~bash
-python scripts/audit_ubc_sources.py --data-dir data/raw/ubc --out results/ubc_audit.json
-python scripts/audit_ubc_sources.py --fetch --data-dir data/raw/ubc --out results/ubc_audit.json
+python scripts/audit_ubc_sources.py --data-dir data/derived/ubc --out data/derived/ubc/ubc_audit.json
+python scripts/audit_ubc_sources.py --fetch --data-dir data/derived/ubc --out data/derived/ubc/ubc_audit.json
 python -m pytest -q tests
 ~~~
 
-The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks.
+The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks. The UBC pinned-source workflow runs the fetch-and-audit command on relevant pull requests; its successful run is the evidence that all six archive files were verified.
