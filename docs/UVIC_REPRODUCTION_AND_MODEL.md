@@ -94,7 +94,7 @@ A second pinned adapter audits the independent observation-process inputs:
 
 - Searcher efficiency: 79 trials. The observed sequential risk sets are:
 
-| Search occasion | At risk | Detected | Not detected | Missing outcome while at risk |
+| Search occasion | At risk with observed outcome | Detected | Not detected | Missing outcome while at risk |
 |---|---:|---:|---:|---:|
 | s1 | 79 | 63 | 16 | 0 |
 | s2 | 13 | 5 | 8 | 3 |
@@ -103,8 +103,11 @@ A second pinned adapter audits the independent observation-process inputs:
 | s5 | 4 | 0 | 4 | 1 |
 
 These are descriptive conditional fractions among observed at-risk trials, not
-GenEst pkm estimates. Missing outcomes are kept separate from non-detections.
-No observation-after-detection sequence or invalid 0/1 code was found.
+GenEst pkm estimates. The at-risk column is the observed denominator; missing
+outcomes are counted separately and are not treated as non-detections. For s2,
+13 observed outcomes plus 3 missing outcomes gives 16 trials still eligible
+before the missing results are censored from later occasions. No
+observation-after-detection sequence or invalid 0/1 code was found.
 
 - Carcass persistence: 82 trials; 58 finite interval observations and 24
   right-censored observations. Four finite intervals begin at day zero; no
