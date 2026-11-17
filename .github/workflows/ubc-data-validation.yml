@@ -148,7 +148,7 @@ jobs:
           use-public-rspm: true
 
       - name: Install R model dependencies
-        run: Rscript -e 'install.packages(c("glmmTMB", "DHARMa", "jsonlite"), repos = "https://cloud.r-project.org")'
+        run: Rscript -e 'install.packages(c("glmmTMB", "DHARMa", "jsonlite"))'
 
       - name: Fit seasonal binomial mixed models and transfer checks
         run: Rscript scripts/fit_ubc_facade_glmm.R --input data/derived/ubc/ubc_facade_survey_panel.csv --audit data/derived/ubc/ubc_facade_panel_audit.json --out-dir results/ubc
