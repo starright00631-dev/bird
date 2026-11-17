@@ -72,7 +72,7 @@ read_and_validate_panel <- function(path, audit_path) {
   panel$building_id <- factor(panel$building_id)
   panel$facade_label <- factor(panel$facade_label)
   panel$facade_id <- factor(panel$facade_id)
-  panel
+  list(panel = panel, audit = audit)
 }
 
 predictor_map <- c(
@@ -388,7 +388,9 @@ fit_leave_one_building_out <- function(data, seasons) {
 
 args <- parse_args(commandArgs(trailingOnly = TRUE))
 dir.create(args$out_dir, recursive = TRUE, showWarnings = FALSE)
-data <- read_and_validate_panel(args$input, args$audit)
+validated <- read_and_validate_panel(args$input, args$audit)
+data <- validated$panel
+audit <- validated$audit
 seasons <- c("fall", "winter", "spring", "summer")
 scaled <- scale_predictors(data)
 data <- scaled$train
