@@ -6,11 +6,12 @@ Repository: starright00631-dev/bird
 
 ## Working agreement
 
-1. main is the shared source of truth. All integrated project work is committed here.
+1. main is the shared source of truth; new work must use a feature branch and pull request targeting main. Do not push unreviewed research changes directly to main.
 2. Read this log and README.md before adding a second implementation of an existing module.
-3. Keep one canonical feature schema, source registry and test suite. Other chats should use the repository as the handoff surface rather than maintaining separate incompatible copies.
-4. Do not merge a model result merely because another chat reports it. Require code, pinned inputs, executable tests and a reproducible result file.
-5. Never treat synthetic records as external validation or local BNBU evidence.
+3. Keep one canonical feature schema, source registry and test suite. Other BNBU Bird–Glass conversations must use the repository and this log as the handoff surface rather than maintaining separate incompatible copies.
+4. Before starting duplicate work, record the current task, changed files, source pins, test state and open blockers here. Update the log when handing work to another conversation.
+5. Do not merge a model result merely because another chat reports it. Require code, pinned inputs, executable tests, a reviewed PR diff and a reproducible result file.
+6. Never treat synthetic records as external validation or local BNBU evidence.
 
 ## Confirmed main-line state
 
@@ -26,6 +27,12 @@ Repository: starright00631-dev/bird
 - The UBC data are an external temperate-Pacific transfer benchmark, not BNBU calibration truth.
 - Search-efficiency histories and carcass-persistence trials are observation-process data. They must not be used as collision labels.
 - The UBC De Groot and Zulian datasets are separate products; do not join them without verified row keys and grain.
+
+## Current handoff (2026-11-17)
+
+- The UBC Search.Efficiency.csv snapshot on main now matches the published 1,766-byte Zenodo file checksum. The other five De Groot source files remain pending.
+- This PR adds a pull-request workflow that fetches and checksum-verifies all six De Groot files in an ignored CI directory, plus downloader fail-closed tests.
+- Independent BNBU Bird–Glass conversations should use this log for handoff. Separate ChatGPT conversations are not continuously visible to one another; GitHub is the durable shared coordination surface.
 
 ## Immediate next tasks
 
