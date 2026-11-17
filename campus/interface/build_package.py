@@ -311,7 +311,7 @@ def build():
         target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copy2(CAMPUS/src,target)
     template=(HERE/"index.template.html").read_text(encoding="utf-8")
-    css=(HERE/"viewer.css").read_text(encoding="utf-8")
+    css=(HERE/"dist/viewer.bundle.css").read_text(encoding="utf-8") + "\n" + (HERE/"viewer.css").read_text(encoding="utf-8")
     js=bundled.read_text(encoding="utf-8")
     (PACKAGE/"index.html").write_text(template.replace('<!-- PACKAGER_EMBEDDED_DATA -->',''),encoding="utf-8")
     (PACKAGE/"viewer.css").write_text(css,encoding="utf-8")

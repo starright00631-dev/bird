@@ -17,19 +17,61 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
 
 def check(page,label,offline=False):
+    print(f"Checking {label}: chat", flush=True)
     failures=[];console=[]
     page.on("pageerror",lambda e:failures.append(str(e)))
     # Publisher-hosted photo thumbnails are intentionally offline-blocked here;
     # do not mistake those expected HTTPS request failures for missing local GLB/GIS.
     page.on("console",lambda e:console.append(e.text) if e.type=="error" and "net::ERR_FAILED" not in e.text and "net::ERR_BLOCKED_BY_CLIENT" not in e.text else None)
+    assert page.locator("#show-chat").get_attribute("aria-selected") == "true"
+    assert page.get_by_text("从空间开始提问").is_visible()
+    page.get_by_label("输入消息").fill("请介绍当前模型")
+    page.get_by_role("button", name="发送").click()
+    assert page.get_by_text("请先配置 API Key。").is_visible()
+    assert page.locator("#api-model").input_value() == "deepseek-flash"
+    page.locator("#api-key").fill("test-key")
+    page.get_by_role("button", name="完成").click()
+    requests = []
+    def fake_api(route):
+        if route.request.method == "OPTIONS":
+            route.fulfill(status=204, headers={"access-control-allow-origin":"*", "access-control-allow-methods":"POST, OPTIONS", "access-control-allow-headers":"authorization, content-type"})
+            return
+        requests.append(route.request.post_data_json)
+        route.fulfill(status=200, headers={"access-control-allow-origin":"*"}, content_type="application/json", body=json.dumps({"choices":[{"message":{"content":"测试回答"}}]}))
+    page.route("https://api.deepseek.com/chat/completions", fake_api)
+    page.get_by_role("button", name="发送").click()
+    page.get_by_text("测试回答").wait_for()
+    assert requests[0]["model"] == "deepseek-flash"
+    assert "当前场景" in requests[0]["messages"][0]["content"]
+    assert requests[0]["messages"][-1]["content"] == "请介绍当前模型"
+    page.get_by_label("输入消息").fill("继续说明")
+    page.get_by_role("button", name="发送").click()
+    page.wait_for_function("document.querySelectorAll('.aip-message.assistant').length === 2")
+    assert [item["role"] for item in requests[1]["messages"]] == ["system", "user", "assistant", "user"]
+    page.unroute("https://api.deepseek.com/chat/completions", fake_api)
+    def fail_api(route):
+        route.fulfill(status=401, headers={"access-control-allow-origin":"*"}, content_type="application/json", body='{"error":{"message":"invalid key"}}')
+    page.route("https://api.deepseek.com/chat/completions", fail_api)
+    page.get_by_label("输入消息").fill("失败后保留的问题")
+    page.get_by_role("button", name="发送").click()
+    page.get_by_text("请求失败：invalid key", exact=False).wait_for()
+    assert page.get_by_label("输入消息").input_value() == "失败后保留的问题"
+    assert page.locator(".aip-message.user").count() == 2
+    page.unroute("https://api.deepseek.com/chat/completions", fail_api)
+    # Chromium logs the deliberately mocked 401; retain every other console error.
+    console[:] = [item for item in console if "status of 401 (Unauthorized)" not in item]
+    print(f"Checking {label}: 3D and GIS", flush=True)
+    page.locator("#show-data").click()
     page.wait_for_function("window.__BNBU_READY__ === true",timeout=130000)
     page.wait_for_function("window.__BNBU_DEBUG__?.hasGIS() === true",timeout=30000)
+    print(f"Checking {label}: loaded", flush=True)
     state=page.evaluate("({n:window.__BNBU_DEBUG__.meshCount(),l:window.__BNBU_DEBUG__.layerCount(),gis:window.__BNBU_DEBUG__.hasGIS()})")
     assert state=={"n":1379,"l":10,"gis":True},(label,state)
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
     assert page.evaluate("window.__BNBU_VERSION__")=="v76"
     assert page.locator("#layers input[type=checkbox]").count()==10
+    assert page.locator("#layers label").first.evaluate("el => getComputedStyle(el).color") == "rgb(220, 232, 244)"
     page.wait_for_function("window.__BNBU_DEBUG__.hasLakefrontProxy() === true",timeout=30000)
     assert page.evaluate("window.__BNBU_DEBUG__.landFinishCount()")==12
     assert page.evaluate("window.__BNBU_DEBUG__.railingProxyCount()")>250
@@ -38,6 +80,7 @@ def check(page,label,offline=False):
     assert page.evaluate("window.__BNBU_DEBUG__.photoProxyVisible()") is False
     page.locator("#show-photo-proxies").check()
     assert page.evaluate("window.__BNBU_DEBUG__.photoProxyVisible()") is True
+    print(f"Checking {label}: lake controls", flush=True)
     page.locator("button[data-focus=boardwalk]").click()
     assert page.evaluate("window.__BNBU_DEBUG__.cameraDistance()")<70
     page.wait_for_function("window.__BNBU_DEBUG__.junctionCount()===11",timeout=35000)
@@ -49,6 +92,7 @@ def check(page,label,offline=False):
     assert not page.locator("#show-v76-phaseii-gaps").is_checked()
     page.locator("#show-v76-phaseii-gaps").check()
     assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is True
+    print(f"Checking {label}: architecture", flush=True)
     page.locator("#architecture-v76-select").select_option("D1")
     detail=page.locator("#architecture-v76-detail").inner_text()
     assert "径向路缺口" in detail and "中央环路缺口" in detail
@@ -108,6 +152,7 @@ def check(page,label,offline=False):
     assert page.evaluate("window.__BNBU_DEBUG__.v74MarkersVisible()") is False
 
     page.wait_for_function("window.__BNBU_DEBUG__.photoCount()===16",timeout=35000)
+    print(f"Checking {label}: sources", flush=True)
     page.locator("#tab-source").click()
     assert page.locator("#photo-cards article").count()==16
     assert page.locator("#photo-cards article a[href^='https://']").count()>=16
@@ -175,6 +220,7 @@ def check(page,label,offline=False):
     page.screenshot(path=str(RESULT/(label+"_dsm.png")),full_page=True,timeout=45000)
     page.locator("#choose-campus").click()
     page.wait_for_function("window.__BNBU_DEBUG__?.getScene()==='campus'",timeout=12000)
+    print(f"Checking {label}: completed", flush=True)
     assert not failures,(label,failures)
     # The renderer may emit transient GL backend context warnings; JS and asset errors are not allowed.
     assert not [e for e in console if "WebGL context lost" not in e and "GL_INVALID" not in e],(label,console)

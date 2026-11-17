@@ -1,3 +1,7 @@
+## 空间研究工作台与 AI 对话
+
+右侧默认显示 AIP 对话，选择「模型数据」可打开原有 GIS、图层和证据面板。设置按钮支持配置 OpenAI 兼容 API 基础地址、模型 ID 和 API Key，默认使用 DeepSeek 的 `https://api.deepseek.com` 与 `deepseek-flash`。密钥只保存在当前页面内，刷新后需重新输入；对话直接从浏览器发送给所配置的服务，服务须支持浏览器跨域（离线 HTML 的 `file://` 来源尤其需要服务商允许）。3D 模型仍可离线使用，AI 对话需要网络和有效密钥。发送时包含当前场景、选中对象的显示信息和对话内容；请勿发送不愿提供给服务商的数据。模型无法自动读取整个场景或证据库，回答须结合研究资料核验。
+
 ## BNBU campus 3D viewer — current v76
 
 **[Download the verified offline viewer/ZIP](https://github.com/starright00631-dev/bird/actions/workflows/campus-package.yml)** · [Online viewer (requires Pages activation)](https://starright00631-dev.github.io/bird/) · [3D modeling source and evidence](campus/README.md)

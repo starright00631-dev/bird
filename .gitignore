@@ -4,3 +4,6 @@ __pycache__/
 .env
 .env.*
 .venv/
+
+campus/interface/node_modules/
+campus/interface/dist/

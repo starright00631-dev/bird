@@ -9,6 +9,10 @@
     "check": "node --check app.js"
   },
   "dependencies": {
+    "@blueprintjs/core": "^6.23.0",
+    "@blueprintjs/icons": "^6.16.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "three": "0.169.0"
   },
   "devDependencies": {
