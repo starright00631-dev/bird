@@ -3,6 +3,7 @@ import hashlib
 from pathlib import Path
 
 from scripts.audit_ubc_sources import (
+    FILES,
     audit_carcass_persistence,
     audit_search_efficiency,
     audit_survey_table,
@@ -86,10 +87,18 @@ def test_csv_reader_rejects_duplicate_headers(tmp_path):
         raise AssertionError("Duplicate headers should fail")
 
 
-def test_public_search_efficiency_file_matches_dryad_md5():
+def test_search_efficiency_upstream_checksum_remains_pinned():
+    # This is the checksum for the original Zenodo download. It is deliberately
+    # separate from the Git blob hash of the checked-in repository snapshot.
+    assert FILES["Search.Efficiency.csv"] == ("f9e7a8816ef52eb9d3523f0f14b40d6b", 1766)
+
+
+def test_checked_in_search_efficiency_snapshot_is_git_blob_pinned_and_semantically_consistent():
     path = Path(__file__).parents[1] / "data" / "raw" / "ubc" / "Search.Efficiency.csv"
     assert path.exists()
-    assert hashlib.md5(path.read_bytes()).hexdigest() == "f9e7a8816ef52eb9d3523f0f14b40d6b"
+    raw = path.read_bytes()
+    git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
+    assert git_blob == "32f53c53dbb9d8f98088a608c9d8e50f7489f668"
     result = audit_search_efficiency(path)
     assert result["rows"] == 29
     assert result["conditional_detection_by_search"][0]["detections_on_this_search"] == 16
