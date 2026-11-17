@@ -64,3 +64,8 @@ of correlated repeated trials.
 
 Source: structural simulation; 11 geometry/optics tests. Not BNBU risk
 calibration or installation permission.
+
+
+## Two-leg occlusion correction (2026-11-17)
+
+A geometry audit found that the first implementation tested opaque blockers only between the bird viewpoint and the pane. That was insufficient: a foreground habitat source (reflection) or rear habitat source (transmission) can itself be hidden from the pane by an opaque wall. The scene-ray routine now checks both the viewpoint-to-pane segment and the real source-to-pane segment. For reflection, the second segment uses the real source position, not its virtual image. Regression tests place blockers exclusively on the source-side leg for both reflection and transmission. This is a geometric visibility correction only; it supplies no behavioral recognition or collision probability.
