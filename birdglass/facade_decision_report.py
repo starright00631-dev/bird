@@ -103,6 +103,8 @@ def build_facade_decision_report(
     artificial_light_level: Measurement | None = None,
     prediction: ValidatedRiskPrediction | None = None,
 ) -> dict:
+    if prediction is not None and not isinstance(prediction, ValidatedRiskPrediction):
+        raise TypeError("prediction must be a site-calibrated ValidatedRiskPrediction, not a bare probability")
     glass.validate()
     vegetation.validate()
     if glass.facade_id != vegetation.facade_id:

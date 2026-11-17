@@ -46,7 +46,8 @@ def test_report_uses_canonical_decision_engine_and_no_unvalidated_probability():
     marker = next(x for x in report["recommendations"] if x["action"] == "retrofit_full_pane_exterior_visual_markers")
     assert "OTTAWA_TREATMENT_2026" in marker["evidence_source_ids"]
     assert "OKLAHOMA_MARKER_BACI" in marker["evidence_source_ids"]
-    assert marker["site_effect_estimate"] is None
+    candidate = next(x for x in report["intervention_comparison"]["candidates"] if x["action"] == "full_pane_exterior_visual_markers")
+    assert candidate["site_effect_estimate"] is None
 
 
 def test_report_requires_glass_and_vegetation_facade_ids_to_match():
