@@ -275,9 +275,10 @@ def audit_search_schedule(path):
             "start_date": ordered[0].isoformat() if ordered else None,
             "end_date": ordered[-1].isoformat() if ordered else None,
             "monitoring_days_inclusive": monitoring_days,
-            "gap_days_distribution": dict(sorted(
-                __import__("collections").Counter(gaps).items()
-            )),
+            "gap_days_distribution": {
+                str(gap): count
+                for gap, count in sorted(__import__("collections").Counter(gaps).items())
+            },
         }
 
     return {
