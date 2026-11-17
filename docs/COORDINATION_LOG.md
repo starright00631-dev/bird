@@ -6,11 +6,12 @@ Repository: starright00631-dev/bird
 
 ## Working agreement
 
-1. main is the shared source of truth. All integrated project work is committed here.
+1. main is the shared source of truth; new work must use a feature branch and pull request targeting main. Do not push unreviewed research changes directly to main.
 2. Read this log and README.md before adding a second implementation of an existing module.
-3. Keep one canonical feature schema, source registry and test suite. Other chats should use the repository as the handoff surface rather than maintaining separate incompatible copies.
-4. Do not merge a model result merely because another chat reports it. Require code, pinned inputs, executable tests and a reproducible result file.
-5. Never treat synthetic records as external validation or local BNBU evidence.
+3. Keep one canonical feature schema, source registry and test suite. Other BNBU Bird–Glass conversations must use the repository and this log as the handoff surface rather than maintaining incompatible copies.
+4. Before starting duplicate work, record the current task, changed files, source pins, test state and open blockers here. Update the log when handing work to another conversation.
+5. Do not merge a model result merely because another chat reports it. Require code, pinned inputs, executable tests, a reviewed PR diff and a reproducible result file.
+6. Never treat synthetic records as external validation or local BNBU evidence.
 
 ## Confirmed main-line state
 
@@ -21,11 +22,16 @@ Repository: starright00631-dev/bird
 
 ## External-data work added
 
-- De Groot et al. Dryad/Zenodo UBC dataset: only Search.Efficiency.csv is currently imported. Its 29 rows, 1,766-byte file and MD5 are verified. The other five source files remain pending.
+- De Groot et al. Dryad/Zenodo UBC dataset: source manifest is pinned, but no raw file is currently trusted in the repository. A local Search.Efficiency.csv snapshot failed the published MD5 and was removed. The new PR adds a checksum-gated CI fetch of all six files into an ignored directory; do not call this source downloaded/verified until that workflow passes.
 - Zulian et al. 2023 Appendix 1: identified as the 8,835-row façade-survey risk set, but the raw CSV has not yet been downloaded or verified.
 - The UBC data are an external temperate-Pacific transfer benchmark, not BNBU calibration truth.
 - Search-efficiency histories and carcass-persistence trials are observation-process data. They must not be used as collision labels.
 - The UBC De Groot and Zulian datasets are separate products; do not join them without verified row keys and grain.
+
+## Current handoff (2026-11-17)
+
+- This conversation is correcting the UBC raw-file provenance failure on branch fix/ubc-source-provenance-and-ci-20261117. The PR removes the non-matching committed snapshot, preserves the upstream MD5, and adds a CI fetch/audit gate. Do not re-add a raw file unless its exact archive checksum passes.
+- Independent BNBU Bird–Glass conversations should continue using this log for handoff. Separate ChatGPT conversations are not continuously visible to one another; GitHub is the durable shared coordination surface.
 
 ## Immediate next tasks
 
