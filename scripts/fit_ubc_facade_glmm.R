@@ -366,18 +366,55 @@ fit_leave_one_building_out <- function(data, seasons) {
       }
       y <- as.integer(test$mortality_present)
       probability <- pmin(pmax(prediction, 1e-8), 1 - 1e-8)
-      baseline <- mean(train$mortality_present)
-      baseline <- min(max(baseline, 1e-8), 1 - 1e-8)
+      # Fair exposure-aware benchmark: intercept-only binomial model with the
+      # same log-hours offset, rather than a constant rate that ignores METHOD.
+      baseline_fit <- tryCatch(
+        stats::glm(
+          mortality_present ~ offset(log(survey_hours)),
+          data = train,
+          family = stats::binomial(link = "logit")
+        ),
+        error = function(e) e
+      )
+      if (inherits(baseline_fit, "error")) {
+        baseline_probability <- rep(NA_real_, nrow(test))
+        baseline_converged <- FALSE
+        baseline_message <- conditionMessage(baseline_fit)
+      } else {
+        baseline_probability <- tryCatch(
+          as.numeric(stats::predict(baseline_fit, newdata = test, type = "response")),
+          error = function(e) rep(NA_real_, nrow(test))
+        )
+        baseline_probability <- pmin(pmax(baseline_probability, 1e-8), 1 - 1e-8)
+        baseline_converged <- isTRUE(baseline_fit$converged) && all(is.finite(baseline_probability))
+        baseline_message <- if (baseline_converged) "" else "Exposure-only baseline failed to converge or predict"
+      }
+      model_brier <- mean((probability - y)^2)
+      model_log_loss <- mean(-y * log(probability) - (1 - y) * log(1 - probability))
+      baseline_brier <- if (baseline_converged) mean((baseline_probability - y)^2) else NA_real_
+      baseline_log_loss <- if (baseline_converged) {
+        mean(-y * log(baseline_probability) - (1 - y) * log(1 - baseline_probability))
+      } else {
+        NA_real_
+      }
       output[[length(output) + 1]] <- data.frame(
         season = as.character(season), held_out_building = held_out,
         n_train = nrow(train), n_test = nrow(test),
         n_train_positive = sum(train$mortality_present),
         n_test_positive = sum(y), converged = converged,
         auc = auc_rank(y, probability),
-        brier = mean((probability - y)^2),
-        log_loss = mean(-y * log(probability) - (1 - y) * log(1 - probability)),
-        baseline_brier = mean((baseline - y)^2),
-        baseline_log_loss = mean(-y * log(baseline) - (1 - y) * log(1 - baseline)),
+        brier = model_brier,
+        log_loss = model_log_loss,
+        baseline_converged = baseline_converged,
+        baseline_brier = baseline_brier,
+        baseline_log_loss = baseline_log_loss,
+        brier_skill_vs_exposure_baseline = if (is.finite(baseline_brier) && baseline_brier > 0) {
+          1 - model_brier / baseline_brier
+        } else NA_real_,
+        log_loss_skill_vs_exposure_baseline = if (is.finite(baseline_log_loss) && baseline_log_loss > 0) {
+          1 - model_log_loss / baseline_log_loss
+        } else NA_real_,
+        baseline_message = baseline_message,
         message = as.character(fit$fit$message),
         stringsAsFactors = FALSE
       )
@@ -438,15 +475,15 @@ for (season in seasons) {
   # Match the paper's figure convention: plot every plausible model within
   # delta AICc <= 2 (not only the single best-ranked model).
   plausible_names <- valid$model[valid$AICc - min(valid$AICc) <= 2]
-  season_curves <- do.call(rbind, lapply(plausible_names, function(model_name) {
+  curve_frames <- lapply(plausible_names, function(model_name) {
     make_response_curves(
       fits[[model_name]]$fit, season_data, season, model_name, scales
     )
-  }))
-  if (!is.null(season_curves) && nrow(season_curves) > 0) {
+  })
+  curve_frames <- Filter(function(x) !is.null(x) && nrow(x) > 0, curve_frames)
+  season_curves <- if (length(curve_frames)) do.call(rbind, curve_frames) else data.frame()
+  if (nrow(season_curves) > 0) {
     response_curve_rows[[length(response_curve_rows) + 1]] <- season_curves
-  } else {
-    season_curves <- data.frame()
   }
   seasonal_fits[[season]] <- list(
     n = nrow(season_data),
