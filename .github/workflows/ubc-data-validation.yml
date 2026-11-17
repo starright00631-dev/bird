@@ -2,6 +2,7 @@ name: UBC pinned source audit
 
 on:
   pull_request:
+    branches: [main]
     paths:
       - "scripts/audit_ubc_sources.py"
       - "tests/test_audit_ubc_sources.py"
@@ -15,6 +16,7 @@ on:
       - "data/raw/ubc/**"
       - ".github/workflows/ubc-data-validation.yml"
   push:
+    branches: [main]
     paths:
       - "scripts/audit_ubc_sources.py"
       - "tests/test_audit_ubc_sources.py"
@@ -24,9 +26,14 @@ on:
       - "README.md"
       - "docs/UBC_DATA_AUDIT.md"
       - "docs/COORDINATION_LOG.md"
+      - "docs/data_registry.csv"
       - "data/raw/ubc/**"
       - ".github/workflows/ubc-data-validation.yml"
   workflow_dispatch:
+
+concurrency:
+  group: ubc-data-validation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -65,29 +72,54 @@ jobs:
           assert report["carcass_persistence"]["invalid_or_incomplete_trials"] == 0
           observed = report["observed_collision_counts"]
           assert observed["raw_rows"] == 8846
+          assert observed["unique_buildings"] == 8
           assert observed["unique_facades"] == 57
           assert observed["unique_survey_dates"] == 155
+          assert observed["expected_full_facade_date_cross_product"] == 8835
           assert observed["unique_facade_date_visits"] == 8831
           assert observed["collision_event_count"] == 152
+          assert observed["positive_event_rows"] == 152
           assert observed["positive_facade_date_visits"] == 142
+          assert observed["explicit_zero_rows"] == 8694
+          assert observed["duplicate_extra_rows"] == 15
+          assert observed["duplicate_extra_positive_events"] == 10
+          assert observed["mixed_zero_positive_duplicate_groups"] == 4
+          assert observed["zero_only_duplicate_groups"] == 1
           assert observed["missing_facade_date_keys_vs_full_cross_product"] == 4
           assert observed["duplicate_facade_date_groups"] == 15
+          assert observed["method_schedule_checked_rows"] == 8846
           assert observed["method_schedule_mismatch_rows"] == 0
+          assert observed["unscheduled_observation_rows"] == 0
+          assert observed["date_field_mismatch_rows"] == 0
+          assert observed["invalid_collision_values"] == 0
+          assert len(observed["noninteger_storeys_facades"]) == 11
+          assert observed["inconsistent_storeys_facades"] == []
+          assert all(v["constant_within_building"] for v in observed["vegetation_by_building"].values())
           schedule = report["search_schedule"]
+          assert schedule["rows"] == 155
           assert schedule["unique_survey_dates"] == 155
+          assert len(schedule["building_columns"]) == 8
+          assert all(value == 155 for value in schedule["building_search_counts"].values())
           assert schedule["period_count"] == 5
           assert schedule["monitoring_days_total_inclusive"] == 225
           assert schedule["all_buildings_searched_on_every_scheduled_date"]
           points = report["point_counts"]
           assert points["species_rows"] == 303
           assert points["checklist_groups"] == 86
+          assert points["study_building_locations"] == 8
           assert points["study_building_checklists"] == 72
+          assert points["nonstudy_locations"] == 2
           assert points["nonstudy_checklists"] == 14
           assert points["checklist_group_size_mismatches"] == 0
           assert points["metadata_inconsistencies"] == 0
           codebook = json.loads(Path("data/derived/ubc/codebook_inspection.json").read_text())
-          assert codebook["sheet_count"] > 0
-          assert any(sheet["preview_rows"] for sheet in codebook["sheets"])
+          assert codebook["sheet_count"] == 5
+          assert {sheet["title"] for sheet in codebook["sheets"]} == {
+              "UBC.point.counts", "Observed.Collision.Counts", "Search.Schedule",
+              "Search.Efficiency", "Carcass.Persistence"
+          }
+          assert all(sheet["preview_rows"] for sheet in codebook["sheets"])
+          assert all(not sheet["preview_truncated"] for sheet in codebook["sheets"])
           print("UBC_CODEBOOK", json.dumps(codebook, ensure_ascii=False))
           print("UBC_SOURCES_VERIFIED", report["files_present"])
           print("UBC_SEARCH_EFFICIENCY", report["search_efficiency"]["conditional_detection_by_search"])

@@ -287,3 +287,22 @@ def test_observed_collision_audit_rejects_facade_id_reused_across_buildings(tmp_
     ])
     with pytest.raises(ValueError, match="maps to multiple buildings"):
         audit_observed_collision_counts(path)
+
+
+def test_persistence_only_explicit_genest_na_or_inf_is_right_censored(tmp_path):
+    path = tmp_path / "Carcass.Persistence.csv"
+    write_csv(path, ["ID", "LastPresent", "FirstAbsent"], [
+        {"ID": "finite", "LastPresent": "1.0", "FirstAbsent": "2.0"},
+        {"ID": "inf", "LastPresent": "2.0", "FirstAbsent": "Inf"},
+        {"ID": "na", "LastPresent": "3.0", "FirstAbsent": "NA"},
+        {"ID": "unknown", "LastPresent": "1.0", "FirstAbsent": "unknown"},
+        {"ID": "dash", "LastPresent": "1.0", "FirstAbsent": "-"},
+        {"ID": "blank", "LastPresent": "1.0", "FirstAbsent": ""},
+    ])
+    result = audit_carcass_persistence(path)
+    assert result["interval_censored_trials"] == 1
+    assert result["right_censored_trials"] == 2
+    assert result["first_absent_inf_trials"] == 1
+    assert result["first_absent_na_trials"] == 1
+    assert result["invalid_or_incomplete_trials"] == 3
+    assert result["invalid_ids"] == ["unknown", "dash", "blank"]

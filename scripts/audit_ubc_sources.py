@@ -172,14 +172,15 @@ def audit_carcass_persistence(path):
 
         hi_token = (hi_raw or "").strip().casefold()
         hi_is_inf = hi_token in {"inf", "+inf", "infinity", "+infinity", "∞"}
-        hi_is_na = missing(hi_raw)
+        # GenEst explicitly uses Inf or NA for a carcass still present at the
+        # final check. Do not reinterpret generic placeholders such as blank,
+        # "unknown", "-", or "." as right-censoring.
+        hi_is_na = hi_token == "na"
         if hi_is_inf:
             first_absent_inf_ids.append(trial_id)
             right_censored_ids.append(trial_id)
             continue
         if hi_is_na:
-            # GenEst accepts FirstAbsent=Inf or NA when the carcass remains
-            # present at the final persistence-trial check.
             first_absent_na_ids.append(trial_id)
             right_censored_ids.append(trial_id)
             continue

@@ -61,3 +61,12 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Searcher efficiency: 29 trials; carcass persistence: 103 trials (85 finite intervals, 18 right-censored); point counts: 303 species rows in 86 checklists.
 - The codebook is inspected; the 50-m VEGE_PERC is building-level and is not interchangeable with the 2023 façade-level TreeCov or StorReflVeg.
 - Next model input is the separately published Zulian et al. 2023 Appendix 1. Verify its exact keys and 57-façade grain before joining to the survey panel.
+
+
+## Cross-chat handoff and duplicate-work control (2026-11-17)
+
+- PR #20 is the canonical full De Groot UBC source audit and supersedes stale/overlapping PR #18. Do not merge both.
+- The separate branch `feat/ubc-observation-process-model-20261117` is reserved for source-specific observation-process modelling, not another copy of the source audit.
+- At the inspected head `d4d4663cb6ccc9b413bb6cce97da98b4721bda46`, that branch has no committed `scripts/fit_ubc_observation_process.py` or observation-model test file. Its UBC workflow references that missing script and fails in Actions run 44010948106 with FileNotFoundError. The general scientific tests pass, but this is not evidence that the observation-process model exists or is validated.
+- Do not copy or merge a model from a chat summary. Wait for its executable source, explicit data/likelihood assumptions, tests and result artefact to appear on the branch, then review it against the canonical UBC source audit and GenEst definitions.
+- The browser host currently blocks direct reading of the separate ChatGPT conversation. Use this repository log and PR/branch state as the durable handoff; do not claim continuous direct chat access or attempt browser-policy workarounds.
