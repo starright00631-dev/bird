@@ -1,6 +1,6 @@
 # UBC bird-window collision data: ingestion and audit
 
-**Status:** all six De Groot (2021) source files are downloaded and MD5-verified in the UBC CI workflow and retained as a 30-day workflow artifact; raw files are not committed to the repository. The codebook has been inspected. No UBC model has yet been fitted into the BNBU pipeline. Zulian (2023) Appendix 1 remains a separate, not-yet-downloaded façade-covariate source.
+**Status:** all six De Groot (2021) source files are downloaded and MD5-verified in the UBC CI workflow and retained as a 30-day workflow artifact; raw files are not committed to the repository. The codebook has been inspected. Zulian (2023) Appendix 1 is also downloaded, SHA-256-pinned and schema-audited in CI as a complete 8,835-row repeated façade-survey panel. Neither UBC dataset is a BNBU calibration model.
 
 ## Two distinct UBC data products
 
@@ -85,12 +85,13 @@ sampling stratum, and façade STOREYS. This source does not provide the full
 façade-level predictor set required by the 2023 seasonal analysis:
 FacArea, AreaGlass, VegPer, TreeCov, and StorReflVeg.
 
-Zulian et al. (2023) reports those 57 façade-level covariates in Appendix 1
-and analyzes the same 8,835 survey intervals. The next integration must
-download and verify that appendix, inspect its actual keys and grain, and
-join it to the De Groot survey panel only after uniqueness and coverage tests.
-The 50-m building vegetation percentage is not a substitute for façade-level
-tree canopy or stories reflecting vegetation.
+Zulian et al. (2023) reports those façade-level covariates in Appendix 1,
+which is now pinned and audited as a complete 8,835-row façade-date panel.
+Its variables are mapped to their actual source columns below. The De Groot
+raw collision file is a different source version: its date grid and several
+common-key outcomes/methods differ, so the two outcome panels must not be
+row-joined. The 50-m building vegetation proportion is not a substitute for
+façade-level porous cover, tree canopy or stories reflecting vegetation.
 
 ### B. Zulian et al. (2023), repeated façade-survey Appendix 1
 
@@ -99,7 +100,7 @@ tree canopy or stories reflecting vegetation.
 - Published design: 57 façades across 8 buildings, 155 survey days and 8,835 façade surveys.
 - Published outcomes: 142 positive façade-surveys, 152 individual collision events and 23 species.
 
-The appendix is identified but not downloaded or checksum-verified in this project version. Do not claim that its raw rows are already in the repository.
+The appendix is downloaded by the UBC CI workflow, pinned to SHA-256 `0baba75389249af1dad546868183f956dd38facef64ae35b04ab761e293fd8a7`, and retained with the De Groot source files in a 30-day artifact. The raw 2.96 MB CSV is not committed to Git.
 
 The article models detected carcass presence/absence by season using binomial mixed-effects models, with building and façade identity as random effects and log hours since the previous survey as an offset. The paper reports glass area as positively associated with collisions in every season; stories reflecting vegetation were influential in fall; façade area was influential in winter. These are UBC-specific associations, not coefficients to copy to BNBU.
 
@@ -107,7 +108,7 @@ Crucially, 142 positive façade-surveys and 152 individual collision events are 
 
 ## Integration rules
 
-1. Keep the De Groot Dryad files and the Zulian Appendix 1 as separate source products until row grain and join keys are inspected.
+1. Keep the De Groot Dryad files and the Zulian Appendix 1 as separate source products. The Appendix 1 panel has a verified 57 x 155 grid; the De Groot raw file differs in date-level keys and some common-key outcomes/methods, so do not row-join them.
 2. Preserve completed survey zeroes. Missing visits, cancelled surveys and unvisited façades are not zero-collision observations.
 3. Treat search efficiency and carcass persistence as observation-process data, not collision labels.
 4. Read READ.ME.xlsx before mapping the remaining De Groot fields.
@@ -122,7 +123,7 @@ python scripts/audit_ubc_sources.py --fetch --data-dir data/derived/ubc --out da
 python -m pytest -q tests
 ~~~
 
-The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks. The UBC pinned-source workflow fetches all six archive files, verifies their MD5 values, and inspects the READ.ME.xlsx workbook. The codebook preview reports sheet names, dimensions and bounded non-empty rows; it is schema discovery only, not an automatic column mapping.
+The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The UBC pinned-source workflow also downloads the Zulian Appendix 1 CSV, checks its pinned SHA-256 and byte count, validates the complete 57-façade x 155-date panel, maps the paper's façade covariates and compares its keys with the separate De Groot file. Raw downloads and audit reports remain in the 30-day CI artifact, not Git.
 
 
 
@@ -185,11 +186,15 @@ building holdouts and uncertainty-aware response curves.
 The De Groot raw collision file is a separate source version. It has 8,846
 raw rows, 8,831 unique facade-date keys, 15 repeated keys and four missing
 keys in the planned 57 x 155 grid. The Appendix 1 panel has 8,835 complete
-facade-date rows. Both aggregate to 152 mortality events, but the date-level
-key coverage and eight common-key mortality counts differ. Therefore the
-Appendix 1 panel is the primary modelling dataset; the De Groot files remain
-an independent observation-process and aggregate cross-check source. They
-must not be row-joined or pooled without a documented reconciliation.
+facade-date rows. The pinned CI reconciliation confirms the same 57 façade
+keys, but only 139 shared survey dates; each source has 16 dates absent from
+the other. There are 7,919 common facade-date keys, 916 Appendix-only keys
+and 912 De Groot-only keys. On the common keys, eight mortality counts and
+171 METHOD values differ. Although both sources aggregate to 152 mortality
+events, they are not the same row-level panel. Therefore Appendix 1 is the
+primary modelling dataset for the 2023 façade analysis; De Groot remains an
+independent observation-process and aggregate cross-check source. They must
+not be row-joined or pooled.
 
 ### Important limitation for the final BNBU decision system
 
