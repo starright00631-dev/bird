@@ -187,6 +187,9 @@ jobs:
           with lobo_path.open(newline="") as handle:
               lobo_rows = list(csv.DictReader(handle))
           assert len(lobo_rows) == 32, f"Expected 4 seasons x 8 held-out buildings, got {len(lobo_rows)}"
+          assert all(r["baseline_converged"].lower() == "true" for r in lobo_rows), "Exposure-only holdout baseline failed"
+          assert all(r["brier_skill_vs_exposure_baseline"] != "" for r in lobo_rows)
+          assert all(r["log_loss_skill_vs_exposure_baseline"] != "" for r in lobo_rows)
           assert Path("results/ubc/ubc_facade_feature_correlations.csv").exists()
           assert Path("results/ubc/ubc_facade_feature_vif.csv").exists()
           with Path("results/ubc/ubc_seasonal_response_curves.csv").open(newline="") as handle:
@@ -204,6 +207,7 @@ jobs:
                   assert 0.0 <= p <= 1.0
           print("UBC_SEASONAL_MODEL_SELECTION", rows)
           print("UBC_SEASONAL_RESPONSE_CURVES", curves[:12])
+          print("UBC_LEAVE_ONE_BUILDING_OUT", lobo_rows)
           print("UBC_MODEL_LIMITATIONS", report["limitations"])
           PY
 
