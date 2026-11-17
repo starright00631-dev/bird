@@ -3,7 +3,7 @@
 from __future__ import annotations
 import argparse, csv, hashlib, io, json
 from collections import Counter
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from scripts.inspect_zulian_appendix import EXPECTED_SHA256, inspect_appendix
 
@@ -49,7 +49,19 @@ def build_panel(raw: bytes, *, strict_source: bool = True):
     method_counts, season_counts = Counter(), Counter()
     for row_number, row in enumerate(rows, start=2):
         source = {key: row.get(value, "") for key, value in SOURCE_FIELDS.items()}
-        survey_date = date.fromisoformat(source["survey_date"].strip()).isoformat()
+        raw_date = source["survey_date"].strip()
+        try:
+            survey_date = date.fromisoformat(raw_date).isoformat()
+        except ValueError:
+            survey_date = None
+            for date_format in ("%m/%d/%Y", "%m/%d/%y", "%Y/%m/%d"):
+                try:
+                    survey_date = datetime.strptime(raw_date, date_format).date().isoformat()
+                    break
+                except ValueError:
+                    continue
+            if survey_date is None:
+                raise ValueError(f"Unsupported SURVEY_DATE={raw_date!r} at source row {row_number}")
         season = source["season"].strip().lower()
         if season not in {"fall", "winter", "spring", "summer"}:
             raise ValueError(f"Unknown SEASON={season!r} at source row {row_number}")
