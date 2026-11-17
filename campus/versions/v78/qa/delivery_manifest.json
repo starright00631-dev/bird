@@ -1,0 +1,14 @@
+{
+  "version": "v78",
+  "asset_storage": "ChatGPT Library: /BNBU_campus_geometry_v78_2026-11-12.zip",
+  "zip_sha256": "f7421142d18845d9fb80db2ede12a313f9187ba6d5dba60c3de75563c26ec66f",
+  "zip_size_bytes": 75759156,
+  "main_glb_sha256": "6a89879e5b64e7d56581cee54cbc7e1b62b60eb1f48cb57b56bdbbb7dbbb23b4",
+  "main_baseline_commit": "ba44ac36fa95da808995bca131d8396f112df74c",
+  "binary_not_in_git": true,
+  "readme": "README.md",
+  "validation": "qa/v78_independent_validation.json",
+  "local_browser_status": "blocked by admin in this container",
+  "viewer_mesh_guard": 1380,
+  "original_layer_groups_preserved": 10
+}

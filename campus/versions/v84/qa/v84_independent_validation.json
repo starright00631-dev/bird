@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "version": "v84",
+  "main_nodes": 1346,
+  "main_source_faces": 691593,
+  "unchanged_nodes_exact_vertices_faces_transforms_colors": 1346,
+  "removed_geometry_overlay_faces": 314,
+  "ROAD_000_retained_faces": 416,
+  "sky_faces_unchanged": 34816,
+  "v52_verified_source_faces_unchanged": 12,
+  "GPKG_layers": 146,
+  "geojson_features": 534,
+  "kml_placemarks": 534,
+  "viewer_webgl_guard_corrected": true,
+  "viewer_main_GLBSHA256_embedded": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848",
+  "CPU_fallback_embedded_identical_to_sidecar": true,
+  "measurement_qualified_new_geometry": 0,
+  "no_new_windows_routes_trees_roof_machinery": true
+}

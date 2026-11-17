@@ -1,0 +1,165 @@
+{
+  "version": "v80",
+  "parent": "v79",
+  "change": "quarantine six non-surveyed V49 radial-to-court inferred connectors",
+  "main_n": 1374,
+  "parent_n": 1380,
+  "display_only_n": 6,
+  "unchanged_node_n": 1374,
+  "removed_names": [
+    "V49_PHASEII_D1_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D2_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D3_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D4_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D5_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D6_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+  ],
+  "archive_names": [
+    "V49_PHASEII_D1_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D2_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D3_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D4_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D5_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+    "V49_PHASEII_D6_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE"
+  ],
+  "removed_triangles": 448,
+  "parent_sha256": "6a89879e5b64e7d56581cee54cbc7e1b62b60eb1f48cb57b56bdbbb7dbbb23b4",
+  "main_sha256": "07099bad0d9960bc28dd04674cdcef86e0a1dfc827217d418edb35f37ff6dca9",
+  "archive_sha256": "9aea0419cee9a336c69c6499f29816c2dadb092232a815354a4ca8cf675d97ff",
+  "official_map": "https://www.bnbu.edu.cn/en/images/shouhuiditu2025.jpg",
+  "photo_phaseII_construction": "https://www.bnbu.edu.cn/info/1078/13974.htm",
+  "surveyed_ground_connections": 0,
+  "new_approved_routes": 0,
+  "new_windows_glass_tree_roofrooms": 0,
+  "GIS_crs": "EPSG:4326",
+  "GLB_crs": "EPSG:32649 XY minus 758940,2474080; Z relative",
+  "active_geojson_count": 561,
+  "display_only_geojson_count": 6,
+  "gpkg_layers": 145,
+  "v49_legacy_layer_removed": true,
+  "v80_archive_layer_present": true,
+  "photographic_reconstruction": "Not performed; 2022 aerial shows radial topology, does not survey individual centerlines",
+  "github_pages": "Not verified as live; offline viewer is self-contained",
+  "components": [
+    {
+      "name": "V49_PHASEII_D1_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+      "vertices": 42,
+      "triangles": 80,
+      "model_xyz_min": [
+        -328.628296,
+        920.113525,
+        -0.046
+      ],
+      "model_xyz_max": [
+        -322.662262,
+        923.967773,
+        0.055
+      ],
+      "watertight": true,
+      "source": "v49 inherited, path alignment unverified",
+      "display_only": true,
+      "is_routable": false,
+      "is_surveyed": false
+    },
+    {
+      "name": "V49_PHASEII_D2_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+      "vertices": 38,
+      "triangles": 72,
+      "model_xyz_min": [
+        -308.608429,
+        861.42572,
+        -0.046
+      ],
+      "model_xyz_max": [
+        -300.256042,
+        866.323792,
+        0.055
+      ],
+      "watertight": true,
+      "source": "v49 inherited, path alignment unverified",
+      "display_only": true,
+      "is_routable": false,
+      "is_surveyed": false
+    },
+    {
+      "name": "V49_PHASEII_D3_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+      "vertices": 38,
+      "triangles": 72,
+      "model_xyz_min": [
+        -341.259064,
+        821.03772,
+        -0.046
+      ],
+      "model_xyz_max": [
+        -331.153473,
+        845.227966,
+        0.055
+      ],
+      "watertight": true,
+      "source": "v49 inherited, path alignment unverified",
+      "display_only": true,
+      "is_routable": false,
+      "is_surveyed": false
+    },
+    {
+      "name": "V49_PHASEII_D4_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+      "vertices": 42,
+      "triangles": 80,
+      "model_xyz_min": [
+        -398.146149,
+        825.679382,
+        -0.046
+      ],
+      "model_xyz_max": [
+        -392.397278,
+        829.455505,
+        0.055
+      ],
+      "watertight": true,
+      "source": "v49 inherited, path alignment unverified",
+      "display_only": true,
+      "is_routable": false,
+      "is_surveyed": false
+    },
+    {
+      "name": "V49_PHASEII_D5_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+      "vertices": 38,
+      "triangles": 72,
+      "model_xyz_min": [
+        -420.794983,
+        883.992554,
+        -0.046
+      ],
+      "model_xyz_max": [
+        -412.641388,
+        888.833557,
+        0.055
+      ],
+      "watertight": true,
+      "source": "v49 inherited, path alignment unverified",
+      "display_only": true,
+      "is_routable": false,
+      "is_surveyed": false
+    },
+    {
+      "name": "V49_PHASEII_D6_GRADE_MATCH_GROUND_LINK_INFERRED_NOT_BRIDGE",
+      "vertices": 38,
+      "triangles": 72,
+      "model_xyz_min": [
+        -390.240265,
+        904.585938,
+        -0.046
+      ],
+      "model_xyz_max": [
+        -380.153351,
+        928.735229,
+        0.055
+      ],
+      "watertight": true,
+      "source": "v49 inherited, path alignment unverified",
+      "display_only": true,
+      "is_routable": false,
+      "is_surveyed": false
+    }
+  ]
+}

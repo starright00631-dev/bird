@@ -1,0 +1,19 @@
+{
+  "version": "v83",
+  "browser_executed": "Chromium set_content with original HTML source",
+  "native_file_http_webgl_navigation": "not tested/blocked by runtime",
+  "console_page_errors": [],
+  "cpu_browser": {
+    "rendered": true,
+    "mesh_count": 1347,
+    "full_visible": 36932,
+    "LRC_visible": 51828,
+    "dorm_visible": 7652
+  },
+  "bridge_browser": {
+    "rendered": true,
+    "endpoint_selection_ok": true,
+    "full_bridges_visible_triangles": 1035,
+    "orbit_drag_ok": true
+  }
+}

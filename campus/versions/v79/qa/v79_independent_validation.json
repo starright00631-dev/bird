@@ -1,0 +1,19 @@
+{
+  "version": "v79",
+  "pass": true,
+  "main_GLb_meshes_untouched": 1380,
+  "source_face_submesh_nodes": 130,
+  "byte_exact_clip_vertices": true,
+  "outward_navigability_not_asserted": true,
+  "roof_vs_base_Z30_plus_in_all_D1_to_D6": true,
+  "dorm_base_faces_downward_not_walkways": true,
+  "model_relative_z_disclosed": true,
+  "GPKG_spatial_layers": 143,
+  "GIS_nonspatial_QA_rows": 130,
+  "geojson_features": 567,
+  "KML_inherited_sha256_verified": true,
+  "source_v10_archive_retained": true,
+  "no_new_survey_claim": true,
+  "no_osm_way_data": true,
+  "full_v78_WebGL_viewer_runtime": "unverified here; environment WebGL1/WebGL2 context unavailable"
+}

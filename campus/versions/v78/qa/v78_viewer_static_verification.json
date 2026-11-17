@@ -1,0 +1,15 @@
+{
+  "version": "v78",
+  "checked_js_file": "viewer/viewer.js",
+  "node_check_rc": 0,
+  "embedded_js_syntax_check": true,
+  "relative_asset_urls": 16,
+  "missing_relative_asset_urls": [],
+  "main_model_asset_matches": true,
+  "scene_mesh_guard": true,
+  "toggle_lrc": true,
+  "toggle_seams_default_unchecked": true,
+  "headless_chromium_in_this_sandbox": "blocked local file and 127.0.0.1 navigation (net::ERR_BLOCKED_BY_ADMINISTRATOR)",
+  "browser_runtime_pass": false,
+  "deployed_pages_confirmed": false
+}

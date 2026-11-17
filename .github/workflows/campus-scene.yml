@@ -1,14 +1,22 @@
 name: BNBU campus scene integrity
 on:
   push:
+    branches:
+      - main
     paths:
       - 'campus/**'
       - '.github/workflows/campus-scene.yml'
   pull_request:
+    branches:
+      - main
     paths:
       - 'campus/**'
       - '.github/workflows/campus-scene.yml'
   workflow_dispatch:
+concurrency:
+  group: campus-scene-integrity-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest

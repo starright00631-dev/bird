@@ -1,0 +1,1000 @@
+{
+  "type": "FeatureCollection",
+  "name": "BNBU_v88_BUILDING_ASSET_ANCHORS_QA_ONLY",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4326"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51523065892265,
+          22.351956673277893
+        ]
+      },
+      "properties": {
+        "asset_id": "T1",
+        "display_label": "T1 · Business and Management Building",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T1",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51487063232602,
+          22.35238532631458
+        ]
+      },
+      "properties": {
+        "asset_id": "T2",
+        "display_label": "T2 · Humanities Building",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T2",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 89
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51455059438032,
+          22.3527531319819
+        ]
+      },
+      "properties": {
+        "asset_id": "T3",
+        "display_label": "T3 · Science Building",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T3",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 58
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51678999717944,
+          22.353009996207703
+        ]
+      },
+      "properties": {
+        "asset_id": "T4",
+        "display_label": "T4 · Teaching Building T4",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T4",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5163100002568,
+          22.353190001322147
+        ]
+      },
+      "properties": {
+        "asset_id": "T5",
+        "display_label": "T5 · Teaching Building T5",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T5",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51577999889341,
+          22.353350000023685
+        ]
+      },
+      "properties": {
+        "asset_id": "T6",
+        "display_label": "T6 · Teaching Building T6",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T6",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.515319997865,
+          22.353600001227584
+        ]
+      },
+      "properties": {
+        "asset_id": "T7",
+        "display_label": "T7 · Teaching Building T7",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T7",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51481000165911,
+          22.353809998812018
+        ]
+      },
+      "properties": {
+        "asset_id": "T8",
+        "display_label": "T8 · CEFC Building",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_T8",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5167905493733,
+          22.35427067185225
+        ]
+      },
+      "properties": {
+        "asset_id": "V15",
+        "display_label": "V15 · Ming Xin House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V15",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51697000070476,
+          22.353879995805926
+        ]
+      },
+      "properties": {
+        "asset_id": "V16",
+        "display_label": "V16 · Shang Xian House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V16",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51592057217931,
+          22.35474180636955
+        ]
+      },
+      "properties": {
+        "asset_id": "V17",
+        "display_label": "V17 · Ren Ai House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V17",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51602000079862,
+          22.35415000018595
+        ]
+      },
+      "properties": {
+        "asset_id": "V18",
+        "display_label": "V18 · Bao Pu House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V18",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5151705190302,
+          22.354778891558222
+        ]
+      },
+      "properties": {
+        "asset_id": "V19",
+        "display_label": "V19 · Zhen Zhi House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V19",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51519999774239,
+          22.354330001725238
+        ]
+      },
+      "properties": {
+        "asset_id": "V20",
+        "display_label": "V20 · Du Xing House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V20",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51450048102417,
+          22.354756671407724
+        ]
+      },
+      "properties": {
+        "asset_id": "V21",
+        "display_label": "V21 · Bo Wen House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V21",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51447999851922,
+          22.354309997696614
+        ]
+      },
+      "properties": {
+        "asset_id": "V22",
+        "display_label": "V22 · Ya Zhi House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V22",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51372043562986,
+          22.35450444558637
+        ]
+      },
+      "properties": {
+        "asset_id": "V23",
+        "display_label": "V23 · Xue Qin House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V23",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5133500007434,
+          22.354360000425793
+        ]
+      },
+      "properties": {
+        "asset_id": "V24",
+        "display_label": "V24 · Yang Ming House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V24",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51390034211471,
+          22.35317893399742
+        ]
+      },
+      "properties": {
+        "asset_id": "V25",
+        "display_label": "V25 · Dong Po House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V25",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51337999875767,
+          22.35335999974883
+        ]
+      },
+      "properties": {
+        "asset_id": "V26",
+        "display_label": "V26 · Goethe House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V26",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5126806186718,
+          22.35354447091752
+        ]
+      },
+      "properties": {
+        "asset_id": "V27",
+        "display_label": "V27 · Hugo House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V27",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51365000269396,
+          22.352460003158264
+        ]
+      },
+      "properties": {
+        "asset_id": "V28",
+        "display_label": "V28 · Shakespeare House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V28",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51318000065686,
+          22.35297999937683
+        ]
+      },
+      "properties": {
+        "asset_id": "V29",
+        "display_label": "V29 · Yung Wing House",
+        "record_group": "core_30",
+        "source_anchor_node": "MAIN_V29",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51161000241738,
+          22.361859997827477
+        ]
+      },
+      "properties": {
+        "asset_id": "D1",
+        "display_label": "D1 · D1, Residence Cluster of Phase II Campus",
+        "record_group": "core_30",
+        "source_anchor_node": "PHASEII_DORM_D1",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51180999906397,
+          22.360979998639248
+        ]
+      },
+      "properties": {
+        "asset_id": "D2",
+        "display_label": "D2 · D2, Residence Cluster of Phase II Campus",
+        "record_group": "core_30",
+        "source_anchor_node": "PHASEII_DORM_D2",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51139000037857,
+          22.360280003090626
+        ]
+      },
+      "properties": {
+        "asset_id": "D3",
+        "display_label": "D3 · D3, Residence Cluster of Phase II Campus",
+        "record_group": "core_30",
+        "source_anchor_node": "PHASEII_DORM_D3",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51027999821605,
+          22.360370001152287
+        ]
+      },
+      "properties": {
+        "asset_id": "D4",
+        "display_label": "D4 · D4, Residence Cluster of Phase II Campus",
+        "record_group": "core_30",
+        "source_anchor_node": "PHASEII_DORM_D4",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51006999960616,
+          22.361260003836282
+        ]
+      },
+      "properties": {
+        "asset_id": "D5",
+        "display_label": "D5 · D5, Residence Cluster of Phase II Campus",
+        "record_group": "core_30",
+        "source_anchor_node": "PHASEII_DORM_D5",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51049000053504,
+          22.361950000012786
+        ]
+      },
+      "properties": {
+        "asset_id": "D6",
+        "display_label": "D6 · D6, Residence Cluster of Phase II Campus",
+        "record_group": "core_30",
+        "source_anchor_node": "PHASEII_DORM_D6",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51578006849168,
+          22.352488349157287
+        ]
+      },
+      "properties": {
+        "asset_id": "LRC",
+        "display_label": "LRC · Phase I Learning Resource Centre",
+        "record_group": "core_30",
+        "source_anchor_node": "ROOF_DECK_LRC",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_or_name_model_anchor_not_surveyed",
+        "component_count": 353
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51388035112659,
+          22.35395952615758
+        ]
+      },
+      "properties": {
+        "asset_id": "T29",
+        "display_label": "T29 · Teaching Building Block 29 / T29教学楼",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "ROOF_DECK_T29",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_id_model_anchor_not_surveyed",
+        "component_count": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51612000136664,
+          22.35096000106968
+        ]
+      },
+      "properties": {
+        "asset_id": "ADMIN",
+        "display_label": "Administration Building / 行政楼",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "ROOF_DECK_ADMIN",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_facility_id_model_anchor_not_surveyed",
+        "component_count": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51576999820072,
+          22.35105999999167
+        ]
+      },
+      "properties": {
+        "asset_id": "HALL",
+        "display_label": "University Hall / 大学会堂",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "ROOF_DECK_HALL",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_facility_id_model_anchor_not_surveyed",
+        "component_count": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51471000342057,
+          22.351550000899188
+        ]
+      },
+      "properties": {
+        "asset_id": "SPORT",
+        "display_label": "Sports Complex / 体育馆",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "ROOF_DECK_SPORT",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_facility_id_model_anchor_not_surveyed",
+        "component_count": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51639061826918,
+          22.351404460579836
+        ]
+      },
+      "properties": {
+        "asset_id": "THEATRE",
+        "display_label": "Performance Theatre / 表演剧场",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "ROOF_DECK_THEATRE",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_facility_id_model_anchor_not_surveyed",
+        "component_count": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51745902681253,
+          22.35181198891397
+        ]
+      },
+      "properties": {
+        "asset_id": "CC",
+        "display_label": "Cultural Creativity Clusters / 文化创意群落",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "ROOF_DECK_CC",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "official_facility_id_model_anchor_not_surveyed",
+        "component_count": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51251579669648,
+          22.353114802372758
+        ]
+      },
+      "properties": {
+        "asset_id": "YUZHAN",
+        "display_label": "YUZHAN · model label, official identity unresolved",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "ROOF_DECK_YUZHAN",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "model_semantic_label_official_identity_unresolved",
+        "component_count": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.51094182353367,
+          22.36111679962355
+        ]
+      },
+      "properties": {
+        "asset_id": "P2_CIRCULAR_COMMONS",
+        "display_label": "Phase II circular commons · model label only",
+        "record_group": "extended_mapped",
+        "source_anchor_node": "V24_P2_CIRCULAR_COMMONS_01_BASE_PLINTH",
+        "geometry_semantics": "model_bbox_center_not_surveyed_footprint",
+        "crs_source": "EPSG:32649",
+        "z_datum": "model_relative",
+        "is_surveyed": false,
+        "is_building_footprint": false,
+        "is_glass": false,
+        "is_routable": false,
+        "birdstrike_eligible": false,
+        "identity_status": "model_semantic_label_official_identity_unresolved",
+        "component_count": 11
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "full_glb_embedded_sha256": "2b694603f2d592499196f40bf74b569de55ccf42d2c63217b82bf76dce717b36",
+  "full_webgl_js_syntax": [],
+  "full_webgl_browser_navigation_test": "not validated: restricted in this runtime",
+  "no_webgl_cpu_browser_test": true,
+  "browser_test_mode": "chromium set_content (no file navigation)",
+  "initial_drawn_source_faces": 35129,
+  "lrc_focus_drawn_source_faces": 50530,
+  "after_terrain_toggle_drawn_faces": 33963,
+  "orbit_drag_pass": true,
+  "javascript_page_errors": [],
+  "cpu_viewer_html_sha256": "524d4107d168c0ab0b338f9cefc7e23e05639a12a643d266a5767e1af219dcc2"
+}

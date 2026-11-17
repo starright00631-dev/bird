@@ -1,6 +1,8 @@
 name: BNBU v76 online viewer deployment, offline QA and campus integrity
 on:
   push:
+    branches:
+      - main
     paths:
       - "campus/interface/**"
       - "campus/viewer.html"
@@ -23,6 +25,8 @@ on:
       - "campus/PHOTO_CONNECTION_AUDIT_V72.md"
       - ".github/workflows/campus-package.yml"
   pull_request:
+    branches:
+      - main
     paths:
       - "campus/interface/**"
       - "campus/viewer.html"

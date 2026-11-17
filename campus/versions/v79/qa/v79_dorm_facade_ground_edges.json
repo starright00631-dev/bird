@@ -1,0 +1,110 @@
+[
+  {
+    "dorm": "D1",
+    "road_to_existing_vertical_facade_base_model_m": 20.619067,
+    "facade_base_xy_local": [
+      -294.681427,
+      920.483154
+    ],
+    "vertical_sidewall_source_node": "PHASEII_DORM_D1",
+    "vertical_sidewall_source_triangle": 5,
+    "wall_face_normal_xyz": [
+      -0.628628,
+      -0.777706,
+      -0.0
+    ],
+    "candidate_entrance_verified": false,
+    "public_walkable_connection_verified": false,
+    "note": "Closest model facade-base edge is not a mapped door. Z=0 floor face points down."
+  },
+  {
+    "dorm": "D2",
+    "road_to_existing_vertical_facade_base_model_m": 19.744116,
+    "facade_base_xy_local": [
+      -294.78421,
+      886.929504
+    ],
+    "vertical_sidewall_source_node": "PHASEII_DORM_D2",
+    "vertical_sidewall_source_triangle": 106,
+    "wall_face_normal_xyz": [
+      -0.98863,
+      0.150366,
+      0.0
+    ],
+    "candidate_entrance_verified": false,
+    "public_walkable_connection_verified": false,
+    "note": "Closest model facade-base edge is not a mapped door. Z=0 floor face points down."
+  },
+  {
+    "dorm": "D3",
+    "road_to_existing_vertical_facade_base_model_m": 19.453103,
+    "facade_base_xy_local": [
+      -307.629883,
+      819.547424
+    ],
+    "vertical_sidewall_source_node": "PHASEII_DORM_D3",
+    "vertical_sidewall_source_triangle": 106,
+    "wall_face_normal_xyz": [
+      -0.460948,
+      0.887427,
+      0.0
+    ],
+    "candidate_entrance_verified": false,
+    "public_walkable_connection_verified": false,
+    "note": "Closest model facade-base edge is not a mapped door. Z=0 floor face points down."
+  },
+  {
+    "dorm": "D4",
+    "road_to_existing_vertical_facade_base_model_m": 20.329077,
+    "facade_base_xy_local": [
+      -391.527374,
+      800.25415
+    ],
+    "vertical_sidewall_source_node": "PHASEII_DORM_D4",
+    "vertical_sidewall_source_triangle": 106,
+    "wall_face_normal_xyz": [
+      0.623081,
+      0.782158,
+      0.0
+    ],
+    "candidate_entrance_verified": false,
+    "public_walkable_connection_verified": false,
+    "note": "Closest model facade-base edge is not a mapped door. Z=0 floor face points down."
+  },
+  {
+    "dorm": "D5",
+    "road_to_existing_vertical_facade_base_model_m": 18.583973,
+    "facade_base_xy_local": [
+      -419.75827,
+      905.234253
+    ],
+    "vertical_sidewall_source_node": "PHASEII_DORM_D5",
+    "vertical_sidewall_source_triangle": 69,
+    "wall_face_normal_xyz": [
+      0.987496,
+      -0.157643,
+      0.0
+    ],
+    "candidate_entrance_verified": false,
+    "public_walkable_connection_verified": false,
+    "note": "Closest model facade-base edge is not a mapped door. Z=0 floor face points down."
+  },
+  {
+    "dorm": "D6",
+    "road_to_existing_vertical_facade_base_model_m": 20.03317,
+    "facade_base_xy_local": [
+      -375.427399,
+      950.598267
+    ],
+    "vertical_sidewall_source_node": "PHASEII_DORM_D6",
+    "vertical_sidewall_source_triangle": 69,
+    "wall_face_normal_xyz": [
+      0.464997,
+      -0.885312,
+      0.0
+    ],
+    "candidate_entrance_verified": false,
+    "public_walkable_connection_verified": false,
+    "note": "Closest model facade-base edge is not a mapped door. Z=0 floor face points down."
+  }
+]

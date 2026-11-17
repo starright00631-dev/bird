@@ -1,0 +1,598 @@
+{
+  "version": "v85",
+  "parent": "v84",
+  "parent_sha256": "242ade4c7cf25a4437e674b271ea451f9367449c23530ca95679b33749989848",
+  "parent_source_nodes": 1346,
+  "parent_source_triangles": 691593,
+  "v52_source_faces_checked_unchanged": 12,
+  "v60_source_faces": 796,
+  "v60_mesh_transform": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "v60_ends": [
+    {
+      "id": "V60_W",
+      "bridge_node": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+      "end": "W",
+      "endpoint_definition": "centroid of extreme west upward-facing deck source triangle; NOT surveyed landing",
+      "xyz_local_model": [
+        186.7238616943,
+        -93.216855367,
+        0.9100000262
+      ],
+      "model_z": 0.9100000262260437,
+      "source_face_index": 104,
+      "source_triangle_xyz": [
+        [
+          185.9594879,
+          -90.909935,
+          0.91
+        ],
+        [
+          186.4245148,
+          -94.4596024,
+          0.91
+        ],
+        [
+          187.7875824,
+          -94.2810287,
+          0.91
+        ]
+      ],
+      "source_face_normal_xyz": [
+        -0.0,
+        0.0,
+        1.0
+      ],
+      "parent_mesh_triangle_count": 796,
+      "candidate_model_neighbors": [
+        {
+          "node": "V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_01_NOT_SURVEYED",
+          "distance_3d_model_m": 0.66205514,
+          "distance_xy_model_m": 0.16946087,
+          "source_face_index": 1,
+          "nearest_point_xyz_model": [
+            186.793692,
+            -93.3712598,
+            0.27
+          ],
+          "delta_z_model_m": -0.64000002,
+          "face_normal": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              185.1028442,
+              -94.1359558,
+              0.27
+            ],
+            [
+              188.1585541,
+              -94.4803848,
+              0.27
+            ],
+            [
+              187.5103607,
+              -93.047142,
+              0.27
+            ]
+          ],
+          "surface_type": "unsurveyed_landing_proxy"
+        },
+        {
+          "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+          "distance_3d_model_m": 1.33971237,
+          "distance_xy_model_m": 1.1769576,
+          "source_face_index": 2,
+          "nearest_point_xyz_model": [
+            187.7433472,
+            -93.8049698,
+            0.27
+          ],
+          "delta_z_model_m": -0.64000002,
+          "face_normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              190.1887207,
+              -93.2851944,
+              0.27
+            ],
+            [
+              187.7433472,
+              -93.8049698,
+              0.27
+            ],
+            [
+              191.40625,
+              -94.917717,
+              0.27
+            ]
+          ],
+          "surface_type": "unsurveyed_landing_proxy"
+        },
+        {
+          "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_01_UNSURVEYED",
+          "distance_3d_model_m": 1.9157705,
+          "distance_xy_model_m": 1.80570668,
+          "source_face_index": 22,
+          "nearest_point_xyz_model": [
+            185.2979736,
+            -94.3247452,
+            0.27
+          ],
+          "delta_z_model_m": -0.64000002,
+          "face_normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              187.3274536,
+              -98.8122177,
+              0.27
+            ],
+            [
+              185.2979736,
+              -94.3247452,
+              0.27
+            ],
+            [
+              184.7953491,
+              -99.6619492,
+              0.27
+            ]
+          ],
+          "surface_type": "unsurveyed_landing_proxy"
+        },
+        {
+          "node": "V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_02_NOT_SURVEYED",
+          "distance_3d_model_m": 8.29959811,
+          "distance_xy_model_m": 8.27488542,
+          "source_face_index": 0,
+          "nearest_point_xyz_model": [
+            194.8180695,
+            -91.4971085,
+            0.27
+          ],
+          "delta_z_model_m": -0.64000002,
+          "face_normal": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              194.8180695,
+              -91.4971085,
+              0.27
+            ],
+            [
+              195.1451111,
+              -93.0357361,
+              0.27
+            ],
+            [
+              197.7861176,
+              -92.4743729,
+              0.27
+            ]
+          ],
+          "surface_type": "unsurveyed_landing_proxy"
+        },
+        {
+          "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+          "distance_3d_model_m": 10.92211199,
+          "distance_xy_model_m": 10.90334491,
+          "source_face_index": 6,
+          "nearest_point_xyz_model": [
+            197.5247803,
+            -91.725853,
+            0.27
+          ],
+          "delta_z_model_m": -0.64000002,
+          "face_normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              202.3500366,
+              -90.7002182,
+              0.27
+            ],
+            [
+              197.5247803,
+              -91.725853,
+              0.27
+            ],
+            [
+              203.578125,
+              -92.3304977,
+              0.27
+            ]
+          ],
+          "surface_type": "unsurveyed_landing_proxy"
+        },
+        {
+          "node": "SHORE_00",
+          "distance_3d_model_m": 17.86947784,
+          "distance_xy_model_m": 17.84705054,
+          "source_face_index": 2789,
+          "nearest_point_xyz_model": [
+            204.5034943,
+            -94.766655,
+            0.015
+          ],
+          "delta_z_model_m": -0.89500003,
+          "face_normal": [
+            -0.23875,
+            0.0133514,
+            0.9709893
+          ],
+          "triangle_xyz": [
+            [
+              205.3123016,
+              -94.8451614,
+              0.2149516
+            ],
+            [
+              204.5034943,
+              -94.766655,
+              0.015
+            ],
+            [
+              204.499939,
+              -94.8302307,
+              0.015
+            ]
+          ],
+          "surface_type": "shore"
+        },
+        {
+          "node": "WALK_045",
+          "distance_3d_model_m": 18.52323895,
+          "distance_xy_model_m": 18.50232367,
+          "source_face_index": 0,
+          "nearest_point_xyz_model": [
+            202.7046051,
+            -83.8920593,
+            0.03
+          ],
+          "delta_z_model_m": -0.88000003,
+          "face_normal": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              202.7046051,
+              -83.8920593,
+              0.03
+            ],
+            [
+              204.1998138,
+              -84.9667816,
+              0.03
+            ],
+            [
+              206.2965546,
+              -82.3434677,
+              0.03
+            ]
+          ],
+          "surface_type": "walk_or_road_model"
+        }
+      ],
+      "water_model_neighbors": [
+        {
+          "node": "V50_LAKE_00_WATER_SHORE_015_LOCAL_SEAM_CLOSURE_NOT_SURVEYED",
+          "distance_3d_model_m": 21.11766756,
+          "distance_xy_model_m": 21.09537824,
+          "source_face_index": 12,
+          "nearest_point_xyz_model": [
+            207.7377472,
+            -95.069313,
+            -0.06
+          ],
+          "delta_z_model_m": -0.97000002,
+          "face_normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              207.7377472,
+              -95.069313,
+              -0.06
+            ],
+            [
+              207.7371063,
+              -95.080658,
+              -0.06
+            ],
+            [
+              207.8887024,
+              -95.0834427,
+              -0.06
+            ]
+          ],
+          "surface_type": "water"
+        },
+        {
+          "node": "LAKE_00",
+          "distance_3d_model_m": 21.26912152,
+          "distance_xy_model_m": 21.24699108,
+          "source_face_index": 40,
+          "nearest_point_xyz_model": [
+            207.8887024,
+            -95.0834427,
+            -0.06
+          ],
+          "delta_z_model_m": -0.97000002,
+          "face_normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              208.7362671,
+              -101.4038391,
+              -0.06
+            ],
+            [
+              207.8887024,
+              -95.0834427,
+              -0.06
+            ],
+            [
+              208.2896576,
+              -99.834198,
+              -0.06
+            ]
+          ],
+          "surface_type": "water"
+        }
+      ],
+      "nearest_land_3d_model_m": 0.66205514,
+      "nearest_land_node": "V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_01_NOT_SURVEYED",
+      "is_verified_connected": false,
+      "is_routable": false,
+      "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+      "confidence": "EXACT_INHERITED_TRIANGLE_BUT_UNSURVEYED_WORLD_COORDINATES",
+      "surface_qualifier": "V60 deck photo supports type; neither end confirms an accessible landing",
+      "note": "All distances and z-values are relative to one unsurveyed scene; do not create bridge, ramp, or road from XY proximity."
+    },
+    {
+      "id": "V60_E",
+      "bridge_node": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+      "end": "E",
+      "endpoint_definition": "centroid of extreme east upward-facing deck source triangle; NOT surveyed landing",
+      "xyz_local_model": [
+        320.749593099,
+        -90.9512532552,
+        0.9100000262
+      ],
+      "model_z": 0.9100000262260437,
+      "source_face_index": 134,
+      "source_triangle_xyz": [
+        [
+          322.4584351,
+          -91.0168915,
+          0.91
+        ],
+        [
+          319.2468567,
+          -89.092598,
+          0.91
+        ],
+        [
+          320.5434875,
+          -92.7442703,
+          0.91
+        ]
+      ],
+      "source_face_normal_xyz": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "parent_mesh_triangle_count": 796,
+      "candidate_model_neighbors": [
+        {
+          "node": "SHORE_00",
+          "distance_3d_model_m": 17.41096728,
+          "distance_xy_model_m": 17.39769419,
+          "source_face_index": 20005,
+          "nearest_point_xyz_model": [
+            333.9268188,
+            -102.3108521,
+            0.2302808
+          ],
+          "delta_z_model_m": -0.67971927,
+          "face_normal": [
+            0.7751873,
+            -0.6136465,
+            0.1500755
+          ],
+          "triangle_xyz": [
+            [
+              333.9362488,
+              -102.3190765,
+              0.1479429
+            ],
+            [
+              333.9268188,
+              -102.3108521,
+              0.2302808
+            ],
+            [
+              333.595459,
+              -102.7295074,
+              0.2300112
+            ]
+          ],
+          "surface_type": "shore"
+        },
+        {
+          "node": "WALK_044",
+          "distance_3d_model_m": 17.46992175,
+          "distance_xy_model_m": 17.44774387,
+          "source_face_index": 10,
+          "nearest_point_xyz_model": [
+            333.9645386,
+            -102.34375,
+            0.03
+          ],
+          "delta_z_model_m": -0.88000003,
+          "face_normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              333.9645386,
+              -102.34375,
+              0.03
+            ],
+            [
+              332.6420288,
+              -104.014679,
+              0.03
+            ],
+            [
+              335.4818726,
+              -104.7498627,
+              0.03
+            ]
+          ],
+          "surface_type": "walk_or_road_model"
+        }
+      ],
+      "water_model_neighbors": [
+        {
+          "node": "LAKE_00",
+          "distance_3d_model_m": 0.97000002,
+          "distance_xy_model_m": 0.0,
+          "source_face_index": 80,
+          "nearest_point_xyz_model": [
+            320.7495931,
+            -90.9512533,
+            -0.06
+          ],
+          "delta_z_model_m": -0.97000002,
+          "face_normal": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              330.3963318,
+              -107.3379898,
+              -0.06
+            ],
+            [
+              313.5792847,
+              -67.2711334,
+              -0.06
+            ],
+            [
+              313.6229248,
+              -119.5564423,
+              -0.06
+            ]
+          ],
+          "surface_type": "water"
+        },
+        {
+          "node": "V50_LAKE_00_WATER_SHORE_015_LOCAL_SEAM_CLOSURE_NOT_SURVEYED",
+          "distance_3d_model_m": 17.27479007,
+          "distance_xy_model_m": 17.24753524,
+          "source_face_index": 62,
+          "nearest_point_xyz_model": [
+            333.8136597,
+            -102.2121429,
+            -0.06
+          ],
+          "delta_z_model_m": -0.97000002,
+          "face_normal": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "triangle_xyz": [
+            [
+              333.8136597,
+              -102.2121429,
+              -0.06
+            ],
+            [
+              332.4794006,
+              -103.8978806,
+              -0.06
+            ],
+            [
+              333.9280701,
+              -102.3119125,
+              -0.06
+            ]
+          ],
+          "surface_type": "water"
+        }
+      ],
+      "nearest_land_3d_model_m": 17.41096728,
+      "nearest_land_node": "SHORE_00",
+      "is_verified_connected": false,
+      "is_routable": false,
+      "status": "UNVERIFIED_MODEL_GEOMETRY_ONLY",
+      "confidence": "EXACT_INHERITED_TRIANGLE_BUT_UNSURVEYED_WORLD_COORDINATES",
+      "surface_qualifier": "V60 deck photo supports type; neither end confirms an accessible landing",
+      "note": "All distances and z-values are relative to one unsurveyed scene; do not create bridge, ramp, or road from XY proximity."
+    }
+  ],
+  "total_endpoint_probes": 14,
+  "new_scientific_geometry_count": 0,
+  "change_class": "read-only exact source-surface inspection, interactively inspectable independent downstream geometry validation",
+  "coordinate_frame": "model XY relative UTM EPSG32649 offset (758940,2474080); unsurveyed Z relative; GIS EPSG4326",
+  "birdstrike_glass_area_eligible": false,
+  "routable_endpoints_certified": 0,
+  "inspector_faces_rendered_from_original_source": 2500,
+  "viewer_sha256": "4a86234d5063b933ed3a856e83e7b44e4dba45ec0ca87e1f9c5dcdefae84e1e6",
+  "verified_never_add_roads_due_to_xy_proximity": true,
+  "no_guessed_glazing_rails_roof_or_route_added": true
+}

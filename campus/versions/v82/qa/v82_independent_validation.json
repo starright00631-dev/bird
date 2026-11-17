@@ -1,0 +1,29 @@
+{
+  "pass": true,
+  "version": "v82",
+  "parent": "v81",
+  "all_nodes": 1347,
+  "all_parent_faces": 691907,
+  "unchanged_parent_meshes_vertex_face_transform_visual_exact": 1345,
+  "changed_existing_meshes_face_winding_only": 2,
+  "changed_source_faces_reoriented": 16,
+  "changed_new_faces": 0,
+  "changed_new_vertices": 0,
+  "both_target_meshes_watertight_winding_consistent_positive_volume": true,
+  "lrc_skylight_from_v76_preserved": true,
+  "v81_unverified_piers_absent_from_main": true,
+  "forbidden_690_glass_6_rails_5_plantrooms_stay_absent": true,
+  "geojson_active_features": 534,
+  "gpkg_layers": 146,
+  "kml_active_placemarks": 534,
+  "gis_files_including_27_display_only_features_bit_identical_to_v81": true,
+  "gis_sha256": {
+    "EDITABLE_GIS.gpkg": "6bf8807eea0c7811b18c1569551bd806e117d518ba50f6ad0979686a29d78374",
+    "ACTIVE.geojson": "a2cf23094f388eb1004a58c206862773161a3a7866d4b25791dd8f34800f08fa",
+    "ACTIVE.kml": "a81286cb18108ff56b61a4b22ca689a36c60f04974055592674759e0d05a50b3",
+    "DISPLAY_ONLY.geojson": "24a284c7853bb0d4b1dfbb3851e09aa0428da44445f988ea422998273b1d4a1d",
+    "DISPLAY_ONLY.kml": "5a2ed652463786b9224a040821a55052ed782f64fad195abe7679dafc77f456e"
+  },
+  "main_glb_sha256": "2b694603f2d592499196f40bf74b569de55ccf42d2c63217b82bf76dce717b36",
+  "geometry_truth": "Normals only. XY/Z and all surfaces inherited proxy; no orthophoto, OSM way or surveyed vertical datum."
+}

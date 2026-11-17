@@ -1,0 +1,70 @@
+{
+  "version": "v82",
+  "parent": "v81",
+  "main_meshes": 1347,
+  "total_parent_faces": 691907,
+  "changed_meshes": 2,
+  "edited_triangles_total": 16,
+  "new_model_vertices": 0,
+  "new_model_faces": 0,
+  "new_osm_ways": 0,
+  "new_windows": 0,
+  "new_bridges": 0,
+  "new_roads": 0,
+  "glb_model_crs": "EPSG:32649 offset (758940,2474080), model relative Z",
+  "gis_model_crs": "EPSG:4326, inherited v81 position; no orthophoto registration",
+  "changes": [
+    {
+      "node": "V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_01_NOT_SURVEYED",
+      "face_count": 12,
+      "reoriented_faces": 8,
+      "old_signed_volume": -0.748137182943078,
+      "new_signed_volume": 0.748137182943078,
+      "local_bounds": [
+        [
+          185.10284423828125,
+          -95.56919860839844,
+          0.09000000357627869
+        ],
+        [
+          188.15855407714844,
+          -93.0471420288086,
+          0.27000001072883606
+        ]
+      ],
+      "vertex_delta_max": 0,
+      "area_before_model_m2": 9.830137610768233,
+      "area_after_model_m2": 9.830137610768233,
+      "model_Z_min": 0.09000000357627869,
+      "model_Z_max": 0.27000001072883606,
+      "source": "v81 exact existing geometry; v71 parent grade-joint construction",
+      "confidence": "Inherited proxy, unregistered, unmeasured; winding fix only"
+    },
+    {
+      "node": "V71_LRC_LAKESIDE_SOURCE_MATCHED_GRADE_JOINT_02_NOT_SURVEYED",
+      "face_count": 12,
+      "reoriented_faces": 8,
+      "old_signed_volume": -0.76448066758257,
+      "new_signed_volume": 0.76448066758257,
+      "local_bounds": [
+        [
+          194.8180694580078,
+          -93.03573608398438,
+          0.09000000357627869
+        ],
+        [
+          197.78611755371094,
+          -90.93574523925781,
+          0.27000001072883606
+        ]
+      ],
+      "vertex_delta_max": 0,
+      "area_before_model_m2": 10.03251253677699,
+      "area_after_model_m2": 10.03251253677699,
+      "model_Z_min": 0.09000000357627869,
+      "model_Z_max": 0.27000001072883606,
+      "source": "v81 exact existing geometry; v71 parent grade-joint construction",
+      "confidence": "Inherited proxy, unregistered, unmeasured; winding fix only"
+    }
+  ]
+}

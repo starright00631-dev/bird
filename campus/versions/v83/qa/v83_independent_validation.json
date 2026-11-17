@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "main_glb_byte_identical_to_v82": true,
+  "main_scene_meshes": 1347,
+  "main_faces": 691907,
+  "physical_gis_files_all_byte_identical": true,
+  "parent_GPKG_layers": 146,
+  "v52_real_source_meshes": 6,
+  "endpoints_source_checked": 12,
+  "nearest_face_3d_distance_verified": true,
+  "diagnostic_glb_source_face_clips": 24,
+  "all_endpoints_not_surveyed_and_not_routable": true,
+  "zero_fabricated_windows_glass_bridges_trees": true,
+  "latest_offline_webgl_embedded_exact_GLBSHA256": "2b694603f2d592499196f40bf74b569de55ccf42d2c63217b82bf76dce717b36",
+  "metric_caveat": "All coordinate consistency is internal to an unregistered model; no independent actual site survey."
+}

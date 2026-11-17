@@ -1,0 +1,2938 @@
+{
+  "summary": {
+    "version": "v78",
+    "main_mesh_count": 1380,
+    "original_47_hotspots_rechecked": 47,
+    "hotspot_both_xy_project_to_current_mesh": 47,
+    "hotspot_missing_source_triangle": 0,
+    "V52_bridge_endpoint_count": 12,
+    "V52_endpoint_has_source_triangle": 12,
+    "PhaseII_dorm_to_radial_candidates": 6,
+    "PhaseII_radial_to_ring_candidates": 6,
+    "route_links_added": 0,
+    "assumed_glass_area_added": 0,
+    "horizontal_crs": "EPSG:32649 minus (758940,2474080)",
+    "vertical": "relative model Z, NOT surveying",
+    "important": "Source triangles and normals are local model diagnostics, not proof of pedestrian accessibility, photo registration or door geometry."
+  },
+  "hotspot_pairs": [
+    {
+      "source_a": "ROAD_000",
+      "source_b": "ROAD_001",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "ROAD_000",
+        "surface_z_model_relative": 0.02,
+        "face_index": 60,
+        "normal_xyz": [
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.02312,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "ROAD_001",
+        "surface_z_model_relative": 0.02,
+        "face_index": 52,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.0473,
+        "multiple_triangles_xy": 6
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 0.0,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "ROAD_000",
+      "source_b": "WALK_000",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "ROAD_000",
+        "surface_z_model_relative": 0.02,
+        "face_index": 20,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 736.3774,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_000",
+        "surface_z_model_relative": 0.03,
+        "face_index": 40,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 157.28584,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": -0.01,
+      "local_actual_surface_3d_gap_m": 0.01,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "ROAD_000",
+      "source_b": "WALK_037",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "ROAD_000",
+        "surface_z_model_relative": 0.02,
+        "face_index": 22,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 784.37937,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_037",
+        "surface_z_model_relative": 0.03,
+        "face_index": 29,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 126.15531,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": -0.01,
+      "local_actual_surface_3d_gap_m": 0.01,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "ROAD_000",
+      "source_b": "WALK_040",
+      "model_plan_endpoint_gap_m": 1.1428,
+      "a": {
+        "covered": true,
+        "node": "ROAD_000",
+        "surface_z_model_relative": 0.02,
+        "face_index": 47,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 524.90472,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_040",
+        "surface_z_model_relative": 0.03,
+        "face_index": 20,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00578,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": -0.01,
+      "local_actual_surface_3d_gap_m": 1.14286,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_004",
+      "source_b": "WALK_006",
+      "model_plan_endpoint_gap_m": 13.0475,
+      "a": {
+        "covered": true,
+        "node": "WALK_004",
+        "surface_z_model_relative": 0.03,
+        "face_index": 2,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 4.10889,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_006",
+        "surface_z_model_relative": 0.03,
+        "face_index": 13,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 45.57412,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 13.04745,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_007",
+      "source_b": "WALK_012",
+      "model_plan_endpoint_gap_m": 12.516,
+      "a": {
+        "covered": true,
+        "node": "WALK_007",
+        "surface_z_model_relative": 0.03,
+        "face_index": 9,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 1.43583,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_012",
+        "surface_z_model_relative": 0.03,
+        "face_index": 23,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.48371,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 12.51603,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_009",
+      "source_b": "WALK_030",
+      "model_plan_endpoint_gap_m": 7.3716,
+      "a": {
+        "covered": true,
+        "node": "WALK_009",
+        "surface_z_model_relative": 0.03,
+        "face_index": 10,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 50.91341,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_030",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 4.98327,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 7.37158,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_010",
+      "source_b": "WALK_011",
+      "model_plan_endpoint_gap_m": 1.3483,
+      "a": {
+        "covered": true,
+        "node": "WALK_010",
+        "surface_z_model_relative": 0.03,
+        "face_index": 2,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.72788,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_011",
+        "surface_z_model_relative": 0.03,
+        "face_index": 4,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.0859,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 1.34826,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_010",
+      "source_b": "WALK_030",
+      "model_plan_endpoint_gap_m": 12.1758,
+      "a": {
+        "covered": true,
+        "node": "WALK_010",
+        "surface_z_model_relative": 0.03,
+        "face_index": 2,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.72788,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_030",
+        "surface_z_model_relative": 0.03,
+        "face_index": 3,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 7.61834,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 12.17585,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_011",
+      "source_b": "WALK_030",
+      "model_plan_endpoint_gap_m": 4.8124,
+      "a": {
+        "covered": true,
+        "node": "WALK_011",
+        "surface_z_model_relative": 0.03,
+        "face_index": 4,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.0859,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_030",
+        "surface_z_model_relative": 0.03,
+        "face_index": 3,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 7.61834,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 4.81242,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_011",
+      "source_b": "WALK_031",
+      "model_plan_endpoint_gap_m": 2.3693,
+      "a": {
+        "covered": true,
+        "node": "WALK_011",
+        "surface_z_model_relative": 0.03,
+        "face_index": 2,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.95707,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_031",
+        "surface_z_model_relative": 0.03,
+        "face_index": 3,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 45.29555,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 2.36927,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_013",
+      "source_b": "WALK_014",
+      "model_plan_endpoint_gap_m": 1.8751,
+      "a": {
+        "covered": true,
+        "node": "WALK_013",
+        "surface_z_model_relative": 0.03,
+        "face_index": 44,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 50.0745,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_014",
+        "surface_z_model_relative": 0.03,
+        "face_index": 6,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 10.21815,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 1.8751,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_014",
+      "source_b": "WALK_017",
+      "model_plan_endpoint_gap_m": 6.0841,
+      "a": {
+        "covered": true,
+        "node": "WALK_014",
+        "surface_z_model_relative": 0.03,
+        "face_index": 20,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 10.00114,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_017",
+        "surface_z_model_relative": 0.03,
+        "face_index": 16,
+        "normal_xyz": [
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00106,
+        "multiple_triangles_xy": 10
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 6.08412,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_017",
+      "source_b": "WALK_036",
+      "model_plan_endpoint_gap_m": 14.3049,
+      "a": {
+        "covered": true,
+        "node": "WALK_017",
+        "surface_z_model_relative": 0.03,
+        "face_index": 0,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00106,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_036",
+        "surface_z_model_relative": 0.03,
+        "face_index": 142,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 198.61842,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 14.3049,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_018",
+      "source_b": "WALK_037",
+      "model_plan_endpoint_gap_m": 11.5795,
+      "a": {
+        "covered": true,
+        "node": "WALK_018",
+        "surface_z_model_relative": 0.03,
+        "face_index": 4,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 40.69245,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_037",
+        "surface_z_model_relative": 0.03,
+        "face_index": 16,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 69.00042,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 11.57945,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_019",
+      "source_b": "WALK_020",
+      "model_plan_endpoint_gap_m": 14.4842,
+      "a": {
+        "covered": true,
+        "node": "WALK_019",
+        "surface_z_model_relative": 0.03,
+        "face_index": 8,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.60131,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_020",
+        "surface_z_model_relative": 0.03,
+        "face_index": 91,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.03947,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 14.4842,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_021",
+      "source_b": "WALK_022",
+      "model_plan_endpoint_gap_m": 9.3464,
+      "a": {
+        "covered": true,
+        "node": "WALK_021",
+        "surface_z_model_relative": 0.03,
+        "face_index": 0,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 45.44512,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_022",
+        "surface_z_model_relative": 0.03,
+        "face_index": 36,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 7.72642,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 9.34641,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_026",
+      "source_b": "WALK_027",
+      "model_plan_endpoint_gap_m": 2.7262,
+      "a": {
+        "covered": true,
+        "node": "WALK_026",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 83.20588,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_027",
+        "surface_z_model_relative": 0.03,
+        "face_index": 8,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.15578,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 2.72625,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_028",
+      "source_b": "WALK_029",
+      "model_plan_endpoint_gap_m": 6.3146,
+      "a": {
+        "covered": true,
+        "node": "WALK_028",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00227,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_029",
+        "surface_z_model_relative": 0.03,
+        "face_index": 37,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 7.61965,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 6.31464,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_029",
+      "source_b": "WALK_031",
+      "model_plan_endpoint_gap_m": 14.4668,
+      "a": {
+        "covered": true,
+        "node": "WALK_029",
+        "surface_z_model_relative": 0.03,
+        "face_index": 21,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.50346,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_031",
+        "surface_z_model_relative": 0.03,
+        "face_index": 2,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 1.64742,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 14.46681,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_037",
+      "source_b": "WALK_038",
+      "model_plan_endpoint_gap_m": 10.042,
+      "a": {
+        "covered": true,
+        "node": "WALK_037",
+        "surface_z_model_relative": 0.03,
+        "face_index": 17,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 119.68372,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_038",
+        "surface_z_model_relative": 0.03,
+        "face_index": 17,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 49.74365,
+        "multiple_triangles_xy": 4
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 10.04199,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_038",
+      "source_b": "WALK_039",
+      "model_plan_endpoint_gap_m": 0.6424,
+      "a": {
+        "covered": true,
+        "node": "WALK_038",
+        "surface_z_model_relative": 0.03,
+        "face_index": 3,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00578,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_039",
+        "surface_z_model_relative": 0.03,
+        "face_index": 10,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 14.26054,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 0.64244,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_040",
+      "source_b": "WALK_042",
+      "model_plan_endpoint_gap_m": 11.5131,
+      "a": {
+        "covered": true,
+        "node": "WALK_040",
+        "surface_z_model_relative": 0.03,
+        "face_index": 72,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 333.07546,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_042",
+        "surface_z_model_relative": 0.03,
+        "face_index": 65,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.32256,
+        "multiple_triangles_xy": 4
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 11.51308,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_041",
+      "source_b": "WALK_042",
+      "model_plan_endpoint_gap_m": 12.2839,
+      "a": {
+        "covered": true,
+        "node": "WALK_041",
+        "surface_z_model_relative": 0.03,
+        "face_index": 11,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 29.02751,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_042",
+        "surface_z_model_relative": 0.03,
+        "face_index": 106,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 31.16104,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 12.28389,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_042",
+      "source_b": "WALK_044",
+      "model_plan_endpoint_gap_m": 6.017,
+      "a": {
+        "covered": true,
+        "node": "WALK_042",
+        "surface_z_model_relative": 0.03,
+        "face_index": 217,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 112.80469,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_044",
+        "surface_z_model_relative": 0.03,
+        "face_index": 7,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.92451,
+        "multiple_triangles_xy": 4
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 6.01697,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_043",
+      "source_b": "WALK_049",
+      "model_plan_endpoint_gap_m": 8.2239,
+      "a": {
+        "covered": true,
+        "node": "WALK_043",
+        "surface_z_model_relative": 0.03,
+        "face_index": 6,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 62.9615,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_049",
+        "surface_z_model_relative": 0.03,
+        "face_index": 7,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00357,
+        "multiple_triangles_xy": 8
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 8.22394,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_045",
+      "source_b": "WALK_047",
+      "model_plan_endpoint_gap_m": 6.8536,
+      "a": {
+        "covered": true,
+        "node": "WALK_045",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 4.67874,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_047",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.50341,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 6.85356,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_046",
+      "source_b": "WALK_047",
+      "model_plan_endpoint_gap_m": 4.1377,
+      "a": {
+        "covered": true,
+        "node": "WALK_046",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.07738,
+        "multiple_triangles_xy": 6
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_047",
+        "surface_z_model_relative": 0.03,
+        "face_index": 0,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.40112,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 4.13767,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_046",
+      "source_b": "WALK_048",
+      "model_plan_endpoint_gap_m": 14.0248,
+      "a": {
+        "covered": true,
+        "node": "WALK_046",
+        "surface_z_model_relative": 0.03,
+        "face_index": 4,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.67306,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_048",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 62.24558,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 14.02476,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_052",
+      "source_b": "WALK_053",
+      "model_plan_endpoint_gap_m": 9.6409,
+      "a": {
+        "covered": true,
+        "node": "WALK_052",
+        "surface_z_model_relative": 0.03,
+        "face_index": 10,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 46.89859,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_053",
+        "surface_z_model_relative": 0.03,
+        "face_index": 3,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 75.73445,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 9.64089,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "walk_road",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "source_b": "WALK_048",
+      "model_plan_endpoint_gap_m": 1.5683,
+      "a": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 55,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.04107,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_048",
+        "surface_z_model_relative": 0.03,
+        "face_index": 0,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 82.0162,
+        "multiple_triangles_xy": 12
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 4.27,
+      "local_actual_surface_3d_gap_m": 4.54889,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "upper_bridge_vs_ground",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "source_b": "WALK_025",
+      "model_plan_endpoint_gap_m": 3.1846,
+      "a": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 28,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00082,
+        "multiple_triangles_xy": 6
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_025",
+        "surface_z_model_relative": 0.03,
+        "face_index": 14,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 7.4968,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 4.27,
+      "local_actual_surface_3d_gap_m": 5.32679,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "upper_bridge_vs_ground",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "source_b": "WALK_026",
+      "model_plan_endpoint_gap_m": 6.3389,
+      "a": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 29,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00027,
+        "multiple_triangles_xy": 6
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_026",
+        "surface_z_model_relative": 0.03,
+        "face_index": 4,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 84.01873,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 4.27,
+      "local_actual_surface_3d_gap_m": 7.64295,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "upper_bridge_vs_ground",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "source_b": "WALK_021",
+      "model_plan_endpoint_gap_m": 7.7161,
+      "a": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.8,
+        "face_index": 12,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.02407,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_021",
+        "surface_z_model_relative": 0.03,
+        "face_index": 0,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 45.44512,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 3.77,
+      "local_actual_surface_3d_gap_m": 8.58789,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "upper_bridge_vs_ground",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "source_b": "WALK_022",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.8,
+        "face_index": 60,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 53.96622,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_022",
+        "surface_z_model_relative": 0.03,
+        "face_index": 47,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 67.36037,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 3.77,
+      "local_actual_surface_3d_gap_m": 3.77,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "upper_bridge_vs_ground",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "source_b": "WALK_023",
+      "model_plan_endpoint_gap_m": 3.5699,
+      "a": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.8,
+        "face_index": 16,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.01577,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_023",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 40.50825,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 3.77,
+      "local_actual_surface_3d_gap_m": 5.19205,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "upper_bridge_vs_ground",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_01_UNSURVEYED",
+      "source_b": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+      "model_plan_endpoint_gap_m": 2.4423,
+      "a": {
+        "covered": true,
+        "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_01_UNSURVEYED",
+        "surface_z_model_relative": 0.27,
+        "face_index": 22,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 6.54363,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+        "surface_z_model_relative": 0.27,
+        "face_index": 2,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.31248,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 2.44229,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+      "source_b": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+      "model_plan_endpoint_gap_m": 2.5,
+      "a": {
+        "covered": true,
+        "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+        "surface_z_model_relative": 0.27,
+        "face_index": 0,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.31252,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+        "surface_z_model_relative": 0.27,
+        "face_index": 6,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 4.56304,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 2.5,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+      "source_b": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+        "surface_z_model_relative": 0.91,
+        "face_index": 252,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.44324,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_03_UNSURVEYED",
+        "surface_z_model_relative": 0.27,
+        "face_index": 0,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.31252,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.64,
+      "local_actual_surface_3d_gap_m": 0.64,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+      "source_b": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+        "surface_z_model_relative": 0.91,
+        "face_index": 6,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.79063,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+        "surface_z_model_relative": 0.27,
+        "face_index": 74,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.65273,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.64,
+      "local_actual_surface_3d_gap_m": 0.64,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+      "source_b": "V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "V60_P1_EASTLAKE_EXISTING_BOARDWALK_CLOSED_OPAQUE_3D_DECK_PHOTO_TYPE",
+        "surface_z_model_relative": 0.91,
+        "face_index": 134,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 4.61627,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH",
+        "surface_z_model_relative": 0.841506,
+        "face_index": 1,
+        "normal_xyz": [
+          0.03668,
+          -0.00903,
+          0.99929
+        ],
+        "normal_z_abs": 0.99929,
+        "source_triangle_area": 1.38588,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.06849,
+      "local_actual_surface_3d_gap_m": 0.06849,
+      "both_face_normals_z_abs": [
+        1.0,
+        0.99929
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH",
+      "source_b": "WALK_044",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "V54_LAKE00_EAST_WATER_CROSSING_SHORE_RAMP_INFERRED_ENDPOINT_MATCH",
+        "surface_z_model_relative": 0.079462,
+        "face_index": 27,
+        "normal_xyz": [
+          0.03475,
+          -0.01481,
+          0.99929
+        ],
+        "normal_z_abs": 0.99929,
+        "source_triangle_area": 2.35197,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_044",
+        "surface_z_model_relative": 0.03,
+        "face_index": 39,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 4.34371,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.04946,
+      "local_actual_surface_3d_gap_m": 0.04946,
+      "both_face_normals_z_abs": [
+        0.99929,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+      "source_b": "WALK_045",
+      "model_plan_endpoint_gap_m": 0.0,
+      "a": {
+        "covered": true,
+        "node": "V61_P1_LRC_SHORE_PROMENADE_RETOPOLOGIZED_OPAQUE_SLAB_02_UNSURVEYED",
+        "surface_z_model_relative": 0.27,
+        "face_index": 46,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.11698,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_045",
+        "surface_z_model_relative": 0.03,
+        "face_index": 3,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 1.26935,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.24,
+      "local_actual_surface_3d_gap_m": 0.24,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "ROAD_000",
+      "source_b": "WALK_040",
+      "model_plan_endpoint_gap_m": 1.1428,
+      "a": {
+        "covered": true,
+        "node": "ROAD_000",
+        "surface_z_model_relative": 0.02,
+        "face_index": 47,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 524.90472,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_040",
+        "surface_z_model_relative": 0.03,
+        "face_index": 20,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 0.00578,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": -0.01,
+      "local_actual_surface_3d_gap_m": 1.14286,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_044",
+      "source_b": "WALK_042",
+      "model_plan_endpoint_gap_m": 6.017,
+      "a": {
+        "covered": true,
+        "node": "WALK_044",
+        "surface_z_model_relative": 0.03,
+        "face_index": 7,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.92451,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_042",
+        "surface_z_model_relative": 0.03,
+        "face_index": 217,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 112.80469,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 6.01697,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_042",
+      "source_b": "WALK_040",
+      "model_plan_endpoint_gap_m": 11.5131,
+      "a": {
+        "covered": true,
+        "node": "WALK_042",
+        "surface_z_model_relative": 0.03,
+        "face_index": 65,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.32256,
+        "multiple_triangles_xy": 4
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_040",
+        "surface_z_model_relative": 0.03,
+        "face_index": 72,
+        "normal_xyz": [
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 333.07546,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 11.51308,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    },
+    {
+      "source_a": "WALK_045",
+      "source_b": "WALK_046",
+      "model_plan_endpoint_gap_m": 15.3989,
+      "a": {
+        "covered": true,
+        "node": "WALK_045",
+        "surface_z_model_relative": 0.03,
+        "face_index": 1,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 4.67874,
+        "multiple_triangles_xy": 2
+      },
+      "b": {
+        "covered": true,
+        "node": "WALK_046",
+        "surface_z_model_relative": 0.03,
+        "face_index": 7,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.31547,
+        "multiple_triangles_xy": 2
+      },
+      "navigable_verified": false,
+      "photo_registered": false,
+      "local_surface_z_delta_m": 0.0,
+      "local_actual_surface_3d_gap_m": 15.39895,
+      "both_face_normals_z_abs": [
+        1.0,
+        1.0
+      ],
+      "original_category": "v71",
+      "original_provenance": "inherited_v66_GIS_and_v71_GLB_no_new_physical_mesh",
+      "original_navigation_connection_proven": false
+    }
+  ],
+  "bridge_12_ends": [
+    {
+      "bridge_id": "V52_00",
+      "end": "end_A",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        241.2132,
+        -29.3355,
+        4.3
+      ],
+      "candidate_building": "T4",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 61,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 6.49416,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_00",
+      "end": "end_B",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        207.9807,
+        -16.4445,
+        4.3
+      ],
+      "candidate_building": "T5",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_00_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 64,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 6.49412,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_01",
+      "end": "end_A",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        158.4681,
+        12.9492,
+        4.3
+      ],
+      "candidate_building": "T6",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 57,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 6.49416,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_01",
+      "end": "end_B",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        194.3898,
+        -0.8773,
+        4.3
+      ],
+      "candidate_building": "T5",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_01_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 4,
+        "normal_xyz": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 3.1575,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_02",
+      "end": "end_A",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        108.1531,
+        32.8287,
+        4.3
+      ],
+      "candidate_building": "T7",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 22,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 3.15802,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_02",
+      "end": "end_B",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        140.9566,
+        19.5415,
+        4.3
+      ],
+      "candidate_building": "T6",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_02_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.3,
+        "face_index": 53,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 6.4997,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_03",
+      "end": "end_A",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_03_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        51.8686,
+        48.2073,
+        3.7093
+      ],
+      "candidate_building": "T8",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_03_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.709264,
+        "face_index": 21,
+        "normal_xyz": [
+          -0.01619,
+          0.0,
+          0.99987
+        ],
+        "normal_z_abs": 0.99987,
+        "source_triangle_area": 0.15053,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_03",
+      "end": "end_B",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_03_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        87.7737,
+        33.6652,
+        4.2906
+      ],
+      "candidate_building": "T7",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_03_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 4.290621,
+        "face_index": 70,
+        "normal_xyz": [
+          -0.01619,
+          -0.0,
+          0.99987
+        ],
+        "normal_z_abs": 0.99987,
+        "source_triangle_area": 6.50056,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_04",
+      "end": "end_A",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        88.3097,
+        -125.0253,
+        3.8
+      ],
+      "candidate_building": "T1",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.8,
+        "face_index": 5,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.05393,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_04",
+      "end": "end_B",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        66.6461,
+        -107.9383,
+        3.8
+      ],
+      "candidate_building": "T2",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.8,
+        "face_index": 61,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.05653,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_05",
+      "end": "end_A",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        46.5477,
+        -45.4878,
+        3.8
+      ],
+      "candidate_building": "T3",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.8,
+        "face_index": 52,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 2.05446,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    },
+    {
+      "bridge_id": "V52_05",
+      "end": "end_B",
+      "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+      "model_xyz": [
+        63.4512,
+        -57.0516,
+        3.8
+      ],
+      "candidate_building": "T2",
+      "source_face": {
+        "covered": true,
+        "node": "V52_LEVEL2_PEDESTRIAN_CONNECTION_05_CLOSED_SLAB_EXISTING_TOPOGRAPHY",
+        "surface_z_model_relative": 3.8,
+        "face_index": 59,
+        "normal_xyz": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal_z_abs": 1.0,
+        "source_triangle_area": 5.05708,
+        "multiple_triangles_xy": 2
+      },
+      "door_threshold_verified": false,
+      "photo_registration": false
+    }
+  ],
+  "phaseII_12_gap_types": [
+    {
+      "dorm": "D1",
+      "dorm_to_radial": {
+        "source_a": "PHASEII_DORM_D1",
+        "source_b": "PHASEII_V12_PAVING_phaseII_radial_D1_surface",
+        "model_plan_endpoint_gap_m": 20.6191,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_DORM_D1",
+          "surface_z_model_relative": 32.0,
+          "face_index": 64,
+          "normal_xyz": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 4.68364,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D1_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 29.61528,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 31.956,
+        "local_actual_surface_3d_gap_m": 38.03067,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "radial_to_ring": {
+        "source_a": "PHASEII_V12_PAVING_phaseII_radial_D1_surface",
+        "source_b": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+        "model_plan_endpoint_gap_m": 40.8975,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D1_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 29.61528,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 32,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 15.45097,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 0.0,
+        "local_actual_surface_3d_gap_m": 40.89748,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "route_or_portal_verified": false,
+      "do_not_create_road": true
+    },
+    {
+      "dorm": "D2",
+      "dorm_to_radial": {
+        "source_a": "PHASEII_DORM_D2",
+        "source_b": "PHASEII_V12_PAVING_phaseII_radial_D2_surface",
+        "model_plan_endpoint_gap_m": 19.7441,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_DORM_D2",
+          "surface_z_model_relative": 32.0,
+          "face_index": 37,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 16.24229,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D2_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 2.42874,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 31.956,
+        "local_actual_surface_3d_gap_m": 37.56349,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "radial_to_ring": {
+        "source_a": "PHASEII_V12_PAVING_phaseII_radial_D2_surface",
+        "source_b": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+        "model_plan_endpoint_gap_m": 47.5612,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D2_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 2.42874,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 0,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 37.33775,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 0.0,
+        "local_actual_surface_3d_gap_m": 47.56115,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "route_or_portal_verified": false,
+      "do_not_create_road": true
+    },
+    {
+      "dorm": "D3",
+      "dorm_to_radial": {
+        "source_a": "PHASEII_DORM_D3",
+        "source_b": "PHASEII_V12_PAVING_phaseII_radial_D3_surface",
+        "model_plan_endpoint_gap_m": 19.4531,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_DORM_D3",
+          "surface_z_model_relative": 32.0,
+          "face_index": 37,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 17.48236,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D3_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 23.09886,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 31.956,
+        "local_actual_surface_3d_gap_m": 37.41134,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "radial_to_ring": {
+        "source_a": "PHASEII_V12_PAVING_phaseII_radial_D3_surface",
+        "source_b": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+        "model_plan_endpoint_gap_m": 40.6345,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D3_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 23.09886,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 8,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 27.76559,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 0.0,
+        "local_actual_surface_3d_gap_m": 40.63451,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "route_or_portal_verified": false,
+      "do_not_create_road": true
+    },
+    {
+      "dorm": "D4",
+      "dorm_to_radial": {
+        "source_a": "PHASEII_DORM_D4",
+        "source_b": "PHASEII_V12_PAVING_phaseII_radial_D4_surface",
+        "model_plan_endpoint_gap_m": 20.329,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_DORM_D4",
+          "surface_z_model_relative": 32.0,
+          "face_index": 37,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 17.88805,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D4_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 31.3924,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 31.956,
+        "local_actual_surface_3d_gap_m": 37.8742,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "radial_to_ring": {
+        "source_a": "PHASEII_V12_PAVING_phaseII_radial_D4_surface",
+        "source_b": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+        "model_plan_endpoint_gap_m": 40.1898,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D4_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 31.3924,
+          "multiple_triangles_xy": 4
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 6,
+          "normal_xyz": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 14.95297,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 0.0,
+        "local_actual_surface_3d_gap_m": 40.18979,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "route_or_portal_verified": false,
+      "do_not_create_road": true
+    },
+    {
+      "dorm": "D5",
+      "dorm_to_radial": {
+        "source_a": "PHASEII_DORM_D5",
+        "source_b": "PHASEII_V12_PAVING_phaseII_radial_D5_surface",
+        "model_plan_endpoint_gap_m": 18.584,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_DORM_D5",
+          "surface_z_model_relative": 32.0,
+          "face_index": 0,
+          "normal_xyz": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 15.65558,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D5_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 2.40987,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 31.956,
+        "local_actual_surface_3d_gap_m": 36.9669,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "radial_to_ring": {
+        "source_a": "PHASEII_V12_PAVING_phaseII_radial_D5_surface",
+        "source_b": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+        "model_plan_endpoint_gap_m": 46.6199,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D5_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 2.40987,
+          "multiple_triangles_xy": 4
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 26,
+          "normal_xyz": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 40.89356,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 0.0,
+        "local_actual_surface_3d_gap_m": 46.61985,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "route_or_portal_verified": false,
+      "do_not_create_road": true
+    },
+    {
+      "dorm": "D6",
+      "dorm_to_radial": {
+        "source_a": "PHASEII_DORM_D6",
+        "source_b": "PHASEII_V12_PAVING_phaseII_radial_D6_surface",
+        "model_plan_endpoint_gap_m": 20.0332,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_DORM_D6",
+          "surface_z_model_relative": 32.0,
+          "face_index": 0,
+          "normal_xyz": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 17.65582,
+          "multiple_triangles_xy": 2
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D6_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 23.72172,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 31.956,
+        "local_actual_surface_3d_gap_m": 37.71624,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "radial_to_ring": {
+        "source_a": "PHASEII_V12_PAVING_phaseII_radial_D6_surface",
+        "source_b": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+        "model_plan_endpoint_gap_m": 41.1996,
+        "a": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_radial_D6_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 16,
+          "normal_xyz": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 23.72172,
+          "multiple_triangles_xy": 4
+        },
+        "b": {
+          "covered": true,
+          "node": "PHASEII_V12_PAVING_phaseII_inner_college_ring_surface",
+          "surface_z_model_relative": 0.044,
+          "face_index": 34,
+          "normal_xyz": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "normal_z_abs": 1.0,
+          "source_triangle_area": 26.38897,
+          "multiple_triangles_xy": 4
+        },
+        "navigable_verified": false,
+        "photo_registered": false,
+        "local_surface_z_delta_m": 0.0,
+        "local_actual_surface_3d_gap_m": 41.19964,
+        "both_face_normals_z_abs": [
+          1.0,
+          1.0
+        ]
+      },
+      "route_or_portal_verified": false,
+      "do_not_create_road": true
+    }
+  ]
+}

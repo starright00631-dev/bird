@@ -1,0 +1,35 @@
+{
+  "node_check": "PASS",
+  "browser": "Chromium set_content (local file/http navigation blocked by environment policy)",
+  "success": true,
+  "first_state": {
+    "ready": true,
+    "version": "v85",
+    "sourceProbes": 14,
+    "visibleTriangles": 289,
+    "selected": "00_A",
+    "webgl": false
+  },
+  "selections": [
+    {
+      "index": 12,
+      "selected": "V60_W",
+      "visibleTriangles": 902,
+      "mentions_exact_mesh": true
+    },
+    {
+      "index": 13,
+      "selected": "V60_E",
+      "visibleTriangles": 818,
+      "mentions_exact_mesh": true
+    },
+    {
+      "index": 0,
+      "selected": "00_A",
+      "visibleTriangles": 289,
+      "mentions_exact_mesh": true
+    }
+  ],
+  "all_visibleTriangles": 1502,
+  "page_errors": []
+}

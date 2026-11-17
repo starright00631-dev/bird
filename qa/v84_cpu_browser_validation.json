@@ -1,0 +1,40 @@
+{
+  "success": true,
+  "browser": "Chromium set_content",
+  "node_check": "PASS",
+  "self_contained": true,
+  "page_errors": [],
+  "initial_state": {
+    "ready": true,
+    "mode": "cpu-3d",
+    "sourceMeshCount": 1346,
+    "sourceTriangles": 691593,
+    "visibleFaces": 37358,
+    "selectedNode": null
+  },
+  "focus_switching": [
+    {
+      "focus": "all",
+      "visible_faces": 37358
+    },
+    {
+      "focus": "lrc",
+      "visible_faces": 52054
+    },
+    {
+      "focus": "dorm",
+      "visible_faces": 7780
+    },
+    {
+      "focus": "road",
+      "visible_faces": 5708
+    },
+    {
+      "focus": "terrain",
+      "visible_faces": 1940
+    }
+  ],
+  "zoom_pitch_reset": "PASS",
+  "file_http_navigation": "not exercised in restricted local environment",
+  "native_webgl": "not applicable; this is the complete CPU canvas viewer"
+}

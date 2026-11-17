@@ -1,0 +1,51 @@
+{
+  "node_JS_syntax": [
+    [
+      "BNBU_Campus_3D_CPU_v84.html",
+      1,
+      0,
+      ""
+    ],
+    [
+      "BNBU_Campus_3D_Offline_v84.html",
+      0,
+      0,
+      ""
+    ],
+    [
+      "BNBU_Campus_3D_Offline_v84.html",
+      18,
+      0,
+      ""
+    ],
+    [
+      "BNBU_Campus_3D_Offline_v84.html",
+      20,
+      0,
+      ""
+    ],
+    [
+      "BNBU_v84_V52_Actual_Triangle_3D_Inspector.html",
+      0,
+      0,
+      ""
+    ]
+  ],
+  "browser_full_webgl_runtime_status": "not tested",
+  "cpu_standalone": {
+    "ready": true,
+    "source_meshes": 1346,
+    "source_triangles": 691593,
+    "default_visible_faces": 35156,
+    "road_visible_faces": 5215
+  },
+  "full_document_embedded_cpu_fallback": {
+    "success": true,
+    "mode": "automatic_after_WebGL_context_error",
+    "loaded_meshes": 1346,
+    "loaded_faces": 691593
+  },
+  "console_page_errors": [
+    "full: Error creating WebGL context."
+  ]
+}
