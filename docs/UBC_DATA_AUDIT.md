@@ -33,6 +33,21 @@ One missing result while at risk occurs at each of searches 3, 4 and 5. Once a c
 
 These are descriptive trial hazards only. They are not the final GenEst search-efficiency parameter, not a BNBU correction factor, and not enough to correct observed collisions without the persistence model and search schedule.
 
+### Codebook findings from READ.ME.xlsx (bounded CI inspection)
+
+The checksum-verified workbook contains five sheets: UBC.point.counts, Observed.Collision.Counts, Search.Schedule, Search.Efficiency and Carcass.Persistence. The CI preview is complete for these sheets (5 sheets; workbook SHA-256 554ab07b1a1975319b9d9201bd163ded86a574ca5ec22daa1f86daaa2faa653f).
+
+| Source sheet | Codebook-defined fields | Modelling implication |
+|---|---|---|
+| Observed.Collision.Counts | COLLISIONMORTALITY_X: 0 means no mortality observed; 1 or more is the number of collision fatalities. METHOD: 1 is a 24-hour gap between collision surveys (or a clean-up survey); 2 is a 48-hour gap. | This is a count outcome, not a binary response. The 24/48-hour observation interval changes exposure and carcass availability; do not treat each row as equal-duration exposure without modelling the interval and detection process. |
+| Observed.Collision.Counts | VEGE_CAT is a high/low vegetation stratum from the study's stratified design; VEGE_PERC is the actual vegetation percentage within 50 m of the building, measured in ArcGIS; STOREYS is the number of stories of the building façade. | VEGE_PERC is a building-level 50 m covariate, not pane-level or multi-scale vegetation. VEGE_CAT is a design stratum, not an independent continuous vegetation measure. |
+| Search.Efficiency | s1-s6 are successive searches after carcass placement; 0 means not found, 1 found, NA not applicable. | Detection ends the at-risk sequence. NA must not be converted to a failed search or zero detection. |
+| Carcass.Persistence | LastPresent and FirstAbsent are elapsed days since placement at the last present and first absent checks. | Removal time is interval-censored, not an exact event time. |
+| Search.Schedule | SearchDate plus one column for each of eight study buildings. | Reconstruct survey intervals by building; an absent date or unvisited building is not a zero-collision observation. |
+| UBC.point.counts | Species, Count, Location, Date, JulianDay, Start, Interval, Duration_mins, Distance_m, Num_obs, Complete_Checklist and Num_spp_in_count. | Bird abundance/count models need to preserve point-count effort, checklist completeness, observer count and survey duration. |
+
+**Important boundary:** this is a codebook-based schema description. No row-level join, field recoding, model fit or causal effect estimate has been produced from the five non-committed source files. The 50 m vegetation feature cannot be substituted for BNBU's requested multi-scale canopy/reflection features.
+
 ### B. Zulian et al. (2023), repeated façade-survey Appendix 1
 
 - Article: [Avian Conservation and Ecology 18(2):15, DOI 10.5751/ACE-02482-180215](https://doi.org/10.5751/ACE-02482-180215)
