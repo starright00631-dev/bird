@@ -123,3 +123,22 @@ python -m pytest -q tests
 ~~~
 
 The first command audits files already present. The second fetches the six Dryad files and refuses any file whose checksum differs from the pinned record. The 2023 appendix is supplied separately with --appendix1 after download and attribution checks. The UBC pinned-source workflow fetches all six archive files, verifies their MD5 values, and inspects the READ.ME.xlsx workbook. The codebook preview reports sheet names, dimensions and bounded non-empty rows; it is schema discovery only, not an automatic column mapping.
+
+
+## Zulian et al. (2023) Appendix 1: schema discovery
+
+Source: https://ace-eco.org/vol18/iss2/art15/appendix1.csv  
+Paper DOI: https://doi.org/10.5751/ACE-02482-180215  
+Article license: CC BY 4.0 (attribute the authors/source and identify changes).
+
+The appendix is downloaded separately from the De Groot Dryad archive. It is a
+façade-level covariate table, not the repeated collision-survey outcome table.
+The CI discovery step records its byte count, SHA-256, exact header names,
+candidate building/façade key columns, duplicate composite keys, missingness
+and numeric ranges for FacArea, AreaGlass, VegPer, TreeCov and StorReflVeg.
+
+At this stage the appendix is **schema-discovered, not yet joined or used for
+model fitting**. The exact key labels, 57-row coverage, and one-to-one mapping
+to the 57 façade labels in Observed.Collision.Counts.csv must be verified
+before the model builder can use it. The first discovery run is not treated
+as checksum-pinned until its SHA-256 is committed as a fixed expected value.

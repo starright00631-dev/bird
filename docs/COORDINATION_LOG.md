@@ -61,3 +61,11 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - Searcher efficiency: 29 trials; carcass persistence: 103 trials (85 finite intervals, 18 right-censored); point counts: 303 species rows in 86 checklists.
 - The codebook is inspected; the 50-m VEGE_PERC is building-level and is not interchangeable with the 2023 façade-level TreeCov or StorReflVeg.
 - Next model input is the separately published Zulian et al. 2023 Appendix 1. Verify its exact keys and 57-façade grain before joining to the survey panel.
+
+
+## Zulian façade covariate ingestion (2026-11-17)
+
+- Added a separate downloader/schema inspector for the ACE-ECO Appendix 1 CSV from Zulian et al. (2023).
+- First CI pass is discovery-only: capture the raw header, row count, SHA-256, candidate Building/Facade key uniqueness and numeric summaries for FacArea, AreaGlass, VegPer, TreeCov and StorReflVeg.
+- Do not join it to the De Groot panel until the appendix key labels and 57-façade one-to-one coverage are confirmed. The appendix is not a collision-outcome table.
+- Next: pin the discovered SHA-256, confirm key coverage against the 57 facade labels in Observed.Collision.Counts.csv, build a one-row-per-facade feature table, then fit the season-specific binomial mixed model with log survey-hours offset.
