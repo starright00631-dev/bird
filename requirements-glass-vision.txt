@@ -1,0 +1,4 @@
+# Optional only; the scientific core does not require these packages.
+torch>=2.4
+transformers>=4.45
+Pillow>=10.0

@@ -2,7 +2,7 @@
 
 Evidence-led research to explain **where, why and under what conditions birds collide with glass**, and to compare interventions for existing façades. The goal is a transparent, testable decision system—not a single opaque risk score or an unsupported end-to-end claim.
 
-> **Status (2026-11-16):** executable mechanistic components, an evidence-aware façade decision system, a pinned UVic survey-data adapter and an effort-offset Poisson GEE baseline exist. This is not yet a glass/vegetation-trained or site-calibrated BNBU collision model. DINOv2 glass recognition and automatic vegetation segmentation are not implemented.
+> **Status (2026-11-17):** the repository includes a pinned UBC façade glass/vegetation association benchmark, an evidence-aware BNBU façade assessment adapter, structured glass and vegetation field schemas, optional pinned CLIP photo triage, auditable annular-mask summaries and a source-linked intervention evidence registry. The UBC model is descriptive only and did not demonstrate predictive improvement over an exposure-only baseline on held-out buildings. No BNBU-calibrated absolute collision probability or local treatment efficacy is claimed.
 
 ## Model architecture
 
@@ -25,15 +25,17 @@ The output is a **pathway profile plus an evidence-gated intervention comparison
 | `birdglass/risk.py`, `approach_events.py` | Observation identifiability and approach censoring |
 | `birdglass/source_splits.py`, `stereo_tracks.py` | Leakage audit and external trajectory schema |
 | `birdglass/solar.py` | Approximate ENU sun position and specular geometry |
-| `birdglass/evidence.py`, `glazing.py`, `vegetation.py`, `decision.py` | Evidence tiers, glazing, five vegetation scales and conditional decisions |
+| `birdglass/evidence.py`, `glazing.py`, `vegetation.py`, `decision.py` | Canonical evidence tiers, glazing, five non-overlapping vegetation bands and conditional decisions |
+| `birdglass/glass_observation.py`, `vegetation_observation.py`, `facade_decision_report.py` | Human/spec/instrument intake adapters into the canonical façade decision engine |
+| `birdglass/glass_image_classifier.py`, `vegetation_segmentation.py` | Optional pinned CLIP photo triage and provenance-aware summaries of supplied annular masks (not segmentation inference) |
 | `birdglass/uvic_panel.py` | Pinned UVic source verification, facade-period aggregation and observed-evidence Poisson GEE baseline |
 
 The façade decision layer separates measured evidence from proxies, reflection from through-glass false passage, local canopy from landscape cover, selected clips from continuous approach video, and mechanism fit from measured intervention efficacy.
 
 ## Not yet implemented or calibrated
 
-- DINOv2/ViT/CNN glass-image classification.
-- Automatic tree-crown segmentation, NDVI and multi-buffer remote-sensing extraction.
+- BNBU-calibrated glass/vegetation collision model with held-out-building/site validation.
+- Automatic vegetation segmentation inference; the current mask utility only summarizes externally produced, human-QA masks.
 - Harmonized external training table with comparable survey effort and non-event observations.
 - Full detection-corrected GenEst/JAGS reproduction and a BNBU-calibrated GAMM/GLMM with measured glass and vegetation predictors.
 - Trained CatBoost/Random Forest challenger model.
@@ -44,7 +46,7 @@ These are engineering gates, not features to infer from the current rule engine.
 
 ## Evidence and data
 
-See the [data registry](docs/data_registry.csv), [source register](docs/SOURCE_REGISTER.csv), [experiment ledger](docs/EXPERIMENT_LEDGER.csv), [research gates](docs/RESEARCH_GATES.md), [intervention evidence matrix](docs/INTERVENTION_EVIDENCE_MATRIX.md), [UBC data audit](docs/UBC_DATA_AUDIT.md), [BNBU local-data audit](docs/BNBU_LOCAL_DATA_AUDIT.md), and [shared coordination log](docs/COORDINATION_LOG.md).
+See the [final model specification](docs/FINAL_MODEL_SPECIFICATION.md), [glass observation template](data/templates/facade_glass_observations_template.csv), [vegetation exposure template](data/templates/facade_vegetation_exposure_template.csv), [approach-monitoring template](data/templates/facade_approach_monitoring_template.csv), [machine-readable intervention evidence](data/reference/intervention_evidence.csv), [data registry](docs/data_registry.csv), [source register](docs/SOURCE_REGISTER.csv), [experiment ledger](docs/EXPERIMENT_LEDGER.csv), [research gates](docs/RESEARCH_GATES.md), [intervention evidence matrix](docs/INTERVENTION_EVIDENCE_MATRIX.md), [UBC data audit](docs/UBC_DATA_AUDIT.md), [BNBU local-data audit](docs/BNBU_LOCAL_DATA_AUDIT.md), and [shared coordination log](docs/COORDINATION_LOG.md).
 
 - UVic: 6,337 raw source rows collapse to 6,298 unique facade-day visits across 50 facades, 6 buildings and 6 survey windows. A pinned adapter builds 300 facade-period rows, a descriptive effort-offset Poisson GEE and an NB2 sensitivity check. A separate adapter audits 79 searcher-efficiency trials, 82 carcass-persistence trials and 126 scheduled survey dates. This validates the observation layer, not BNBU pane risk or glass/vegetation effects; full GenEst/JAGS refit remains pending. See [UVic reproduction and model notes](docs/UVIC_REPRODUCTION_AND_MODEL.md).
 - Neotropical database: 4,103 event reports and 571 species; event-only, no non-event denominator.
@@ -134,9 +136,9 @@ The viewer and source evidence are documented in [campus/README.md](campus/READM
 
 ## Next build sequence
 
-1. Extend the UVic baseline with the authors' searcher-efficiency and carcass-persistence correction; do not label the current GEE as GenEst/JAGS reproduction.
-2. Acquire/harmonize facade-level glass, vegetation, lighting and survey-effort data from comparable subtropical studies.
-3. Build human-audited glass-image and tree-crown feature extraction with site-held-out validation.
-4. Fit glass/vegetation count-rate models with exposure offsets, then compare predictive challengers.
-5. Estimate intervention effects only from comparable field designs and produce an uncertainty-aware multi-objective frontier.
-6. Use BNBU field verification to localize and calibrate, not to manufacture accuracy from 48 opportunistic submissions.
+1. Complete the BNBU pane inventory with human-reviewed glass appearance, coating position, full-assembly VLR/VLT or spectral R/T, marker geometry and source photos/specifications.
+2. Populate the five non-overlapping vegetation bands plus façade-specific 50-m porous/tree cover, canopy height/distance, vertical reflection context and measured reflected-scene share.
+3. Run standardized pane-level patrols and continuous-video sampling with explicit zeroes, comparable effort, all at-risk approaches, glass/opaque/no-contact outcomes and censoring.
+4. Add local searcher-efficiency and carcass-persistence trials, then fit BNBU seasonal GLMM/GAMM baselines with measured glass × vegetation interactions.
+5. Compare ML challengers using held-out buildings and time blocks; calibrate only on BNBU data.
+6. Compare retrofit candidates with matched/randomized BACI and cost/safety/ecological constraints. Do not transport external efficacy percentages.

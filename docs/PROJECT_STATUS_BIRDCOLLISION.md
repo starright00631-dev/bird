@@ -14,12 +14,12 @@ The repository now has a mechanistic research codebase and a multi-pathway faça
 |---|---|---|
 | Regional bird availability | Schema and external evidence identified | Acquire Guangdong/Zhuhai species-by-week occurrence with sampling effort and taxonomy |
 | Local approach flow | Identifiability and approach-event contracts exist | Continuous approach observations or a defensible effort-corrected movement proxy |
-| Glass optics | Finite-pane reflection/transmission and solar geometry exist | Full-assembly VLR/VLT/spectral R/T and multi-time bird-facing imagery |
+| Glass optics | Canonical glazing engine plus human/spec/instrument intake adapter; optional pinned CLIP triage | Complete pane inventory, full-assembly VLR/VLT/spectral R/T and multi-time bird-facing imagery |
 | Flight/contact | 3D movement/control/contact modules exist | Independent metric trajectories and held-out bird/trial validation |
 | Observation bias | UVic and UBC searcher-efficiency/persistence sources are pinned and audited; UBC De Groot observation-process sensitivities are separate from collision outcomes | Obtain BNBU search effort, carcass persistence and searcher-detection trials before local correction |
-| Vegetation | Five buffers and four distinct ecological pathways exist | Human-audited canopy/land-cover layers, species/resources and route features |
+| Vegetation | Five non-overlapping annular bands, façade 50-m porous/tree cover, vertical reflection context and mask provenance adapter | Human-QA georeferenced masks, species/resources and route features; measured reflection remains separate |
 | External facade benchmark | Zulian 2023 Appendix 1 is pinned as an 8,835-row, 57-facade x 155-date panel; paper-aligned seasonal binomial GLMM, AICc comparison, DHARMa diagnostics and 32-fold leave-one-building-out validation run in CI | AICc support pattern matches the paper, but held-out-building Brier is worse than the offset-only baseline in all four seasons; retain as descriptive UBC benchmark, not transferable predictor or BNBU calibration | 
-| Intervention | Evidence-gated candidate comparison exists | Matched/randomized BACI with pane-specific approach denominators and safety/cost measures |
+| Intervention | Canonical mechanism-fit comparison is linked to Ottawa, Oklahoma, Klem, UV and guidance evidence; no efficacy ranking | Matched/randomized BACI with pane-specific approach denominators, detection correction, cost/safety/ecological side effects |
 
 ## UBC benchmark interpretation
 
@@ -47,3 +47,12 @@ The repository now has a mechanistic research codebase and a multi-pathway faça
 6. Implement field-ready BNBU pane-level survey and intervention monitoring records with costs, daylight, maintenance, safety, ecological effects and adjacent-pane risk transfer; estimate efficacy only from comparable controlled designs.
 
 All new project work must use a feature branch and pull request, with review and passing CI before merge to `main`. Campus 3D remains a separate supporting workstream; it is not the main research deliverable or a prerequisite for external-data model development.
+
+
+## Final model acceptance boundary (2026-11-17)
+
+- The external UBC seasonal GLMM is a descriptive association benchmark only. Its held-out-building Brier and log-loss scores did not demonstrate improvement over an exposure-only baseline; eight building clusters are insufficient for confident cross-campus transfer.
+- The BNBU output is currently a mechanism profile and evidence-gated intervention comparison, not an absolute probability. A probability is accepted only with a pinned model artifact, explicit endpoint/exposure definition, BNBU site calibration and held-out validation report.
+- Glass photo/CLIP labels are provisional until human-reviewed or confirmed by a qualifying local/spec/instrument record. Pattern checks are general geometry screens, not ABC product certification.
+- Vegetation bands are five non-overlapping annuli. Façade 50-m cover, building-level vegetation proportion and stories reflecting canopy remain separate variables. Stories reflecting canopy is not direct proof of an actual reflected scene.
+- No tree removal or intervention efficacy percentage is inferred from canopy cover or external observational associations.

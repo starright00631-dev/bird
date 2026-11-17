@@ -1,0 +1,65 @@
+name: Facade observation and decision adapters
+on:
+  push:
+    branches: [main]
+    paths:
+      - "birdglass/glazing.py"
+      - "birdglass/vegetation.py"
+      - "birdglass/decision.py"
+      - "birdglass/glass_observation.py"
+      - "birdglass/vegetation_observation.py"
+      - "birdglass/glass_image_classifier.py"
+      - "birdglass/vegetation_segmentation.py"
+      - "birdglass/facade_decision_report.py"
+      - "tests/test_glass_observation.py"
+      - "tests/test_vegetation_observation.py"
+      - "tests/test_glass_image_classifier.py"
+      - "tests/test_vegetation_segmentation.py"
+      - "tests/test_facade_decision_report.py"
+      - "data/reference/intervention_evidence.csv"
+      - "docs/FINAL_MODEL_SPECIFICATION.md"
+  pull_request:
+    branches: [main]
+    paths:
+      - "birdglass/glazing.py"
+      - "birdglass/vegetation.py"
+      - "birdglass/decision.py"
+      - "birdglass/glass_observation.py"
+      - "birdglass/vegetation_observation.py"
+      - "birdglass/glass_image_classifier.py"
+      - "birdglass/vegetation_segmentation.py"
+      - "birdglass/facade_decision_report.py"
+      - "tests/test_glass_observation.py"
+      - "tests/test_vegetation_observation.py"
+      - "tests/test_glass_image_classifier.py"
+      - "tests/test_vegetation_segmentation.py"
+      - "tests/test_facade_decision_report.py"
+      - "data/reference/intervention_evidence.csv"
+      - "docs/FINAL_MODEL_SPECIFICATION.md"
+      - "requirements.txt"
+      - ".github/workflows/facade-observation-tests.yml"
+concurrency:
+  group: facade-observation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  adapters-and-decision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install base dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run focused façade observation and decision tests
+        run: >-
+          python -m pytest -q
+          tests/test_glass_observation.py
+          tests/test_vegetation_observation.py
+          tests/test_glass_image_classifier.py
+          tests/test_vegetation_segmentation.py
+          tests/test_facade_decision_report.py
+      - name: Run full scientific regression suite
+        run: python -m pytest -q tests

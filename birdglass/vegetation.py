@@ -35,8 +35,8 @@ def _check_range(measurement: Measurement | None, unit: str,
 class VegetationProfile:
     """Vegetation measurements around one glass panel.
 
-    cover_pct keys are fixed, nested spatial buffers. Use the same land-cover
-    definition, season and raster resolution across buffers.
+    cover_pct keys are fixed, non-overlapping annular bands. Use the same
+    land-cover definition, season and raster resolution across bands.
     """
 
     cover_pct: Mapping[str, Measurement] = field(default_factory=dict)
@@ -47,6 +47,10 @@ class VegetationProfile:
     canopy_overlap_share: Measurement | None = None
     corridor_obstruction_share: Measurement | None = None
     resource_attraction_note: str | None = None
+    facade_porous_cover_50m_percent: Measurement | None = None
+    facade_tree_cover_50m_percent: Measurement | None = None
+    stories_reflecting_canopy: Measurement | None = None
+    building_vegetation_proportion: Measurement | None = None
 
     def __post_init__(self) -> None:
         unknown = set(self.cover_pct) - set(VEGETATION_BUFFERS)
@@ -66,6 +70,14 @@ class VegetationProfile:
         _check_range(self.canopy_height_m, "m", 0.0, 200.0, "canopy_height_m")
         _check_range(self.pane_sill_height_m, "m", 0.0, 1000.0,
                      "pane_sill_height_m")
+        _check_range(self.facade_porous_cover_50m_percent, "percent", 0.0, 100.0,
+                     "facade_porous_cover_50m_percent")
+        _check_range(self.facade_tree_cover_50m_percent, "percent", 0.0, 100.0,
+                     "facade_tree_cover_50m_percent")
+        _check_range(self.stories_reflecting_canopy, "stories", 0.0, 100.0,
+                     "stories_reflecting_canopy")
+        _check_range(self.building_vegetation_proportion, "fraction", 0.0, 1.0,
+                     "building_vegetation_proportion")
 
     def as_dict(self) -> dict:
         return {
@@ -113,6 +125,21 @@ def vegetation_pathways(profile: VegetationProfile) -> dict:
             "canopy_overlap_share": measurement_dict(profile.canopy_overlap_share),
             "corridor_obstruction_share": measurement_dict(
                 profile.corridor_obstruction_share),
+        },
+        "facade_specific_50m_buffer": {
+            "porous_and_ground_shrub_cover_percent": measurement_dict(
+                profile.facade_porous_cover_50m_percent),
+            "tree_canopy_cover_percent": measurement_dict(
+                profile.facade_tree_cover_50m_percent),
+            "interpretation": "Façade-specific 50-m buffer variables; do not substitute building-level vegetation proportion.",
+        },
+        "vertical_reflection_context": {
+            "stories_reflecting_canopy": measurement_dict(profile.stories_reflecting_canopy),
+            "interpretation": "Potential vertical reflection exposure only; not proof that canopy is visible in the pane from a bird approach view.",
+        },
+        "building_level_context": {
+            "vegetation_proportion": measurement_dict(profile.building_vegetation_proportion),
+            "interpretation": "Building-level vegetation proportion; not interchangeable with façade-level 50-m cover or the five annular bands.",
         },
         "optical_scene": {
             "reflected_vegetation_share": measurement_dict(
