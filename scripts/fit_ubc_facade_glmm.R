@@ -435,9 +435,18 @@ for (season in seasons) {
     }
   }
   diagnostics[[season]] <- run_dharma_diagnostics(best_fit, season)
-  season_curves <- make_response_curves(best_fit, season_data, season, best_name, scales)
-  if (nrow(season_curves) > 0) {
+  # Match the paper's figure convention: plot every plausible model within
+  # delta AICc <= 2 (not only the single best-ranked model).
+  plausible_names <- valid$model[valid$AICc - min(valid$AICc) <= 2]
+  season_curves <- do.call(rbind, lapply(plausible_names, function(model_name) {
+    make_response_curves(
+      fits[[model_name]]$fit, season_data, season, model_name, scales
+    )
+  }))
+  if (!is.null(season_curves) && nrow(season_curves) > 0) {
     response_curve_rows[[length(response_curve_rows) + 1]] <- season_curves
+  } else {
+    season_curves <- data.frame()
   }
   seasonal_fits[[season]] <- list(
     n = nrow(season_data),
@@ -512,8 +521,9 @@ report <- list(
     scaling = "predictors standardized to mean 0 and SD 1 on the full balanced panel",
     model_selection = "AICc; delta AICc <= 2 reported as plausible",
     conditional_response_curves = paste(
-      "Fixed-effect predictions with random effects excluded; other predictors held at their season-specific medians.",
-      "Both 24-hour and 48-hour survey exposures are shown; confidence intervals are Wald intervals on the link scale."
+      "Fixed-effect predictions from every model within delta AICc <= 2; random effects are excluded.",
+      "Other predictors are held at their season-specific medians; both 24-hour and 48-hour exposures are shown.",
+      "Confidence intervals are Wald intervals on the link scale; curves are observational predictions, not causal treatment effects."
     ),
     diagnostics = diagnostics,
     lobo_validation = "leave-one-building-out on the full candidate model; population-level predictions exclude held-out random effects"
