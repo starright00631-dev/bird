@@ -86,3 +86,11 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - PR #23 merged as `ff7377b2c954be32d215bc96c7582088e441e77e`.
 - `scene_ray` now checks both bird-to-pane and real-scene-source-to-pane occlusion legs; reflection checks the real source coordinate rather than the virtual image. Source-side reflection and transmission regressions were added.
 - The change is geometric-only and makes no behavioral-recognition or collision-probability claim. Post-merge CI is being checked.
+
+
+## Reflected-canopy predictor semantics correction (2026-11-17)
+
+- The released Zulian Appendix 1 `STORIES_REFLECT_CANOPY` field is not integer-valued: 26/57 façade groups have fractional values (range 0-8; mean 2.232).
+- Preserve the source values as a continuous exposure index; do not round or reject them. This follows the observed source values and avoids discarding information.
+- `METHOD` remains a categorical integer code 1/2 and is converted to 24/48 hours for the log-exposure offset.
+- A fixture test now protects fractional reflected-canopy values against accidental integer validation.

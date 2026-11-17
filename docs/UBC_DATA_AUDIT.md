@@ -174,6 +174,13 @@ StorReflVeg maps to STORIES_REFLECT_CANOPY. All façade predictors are constant
 within each façade across its 155 repeated survey rows. Fractional STOREYS
 values are retained; they are not rounded.
 
+The source field `STORIES_REFLECT_CANOPY` is treated as a continuous
+reflected-canopy exposure index. Although the paper describes the concept as
+the number of stories reflecting vegetation, the released Appendix 1 contains
+fractional values (26 of 57 façades; range 0-8; mean 2.232). Preserve the
+published values exactly and standardize them as a continuous predictor; do
+not round or reject fractional values.
+
 The paper's model uses a binomial logit mixed model with a log-hours offset,
 season-specific fits, a BUILDING_X:FACADE random intercept, and four candidate
 sets: full, building-only, vegetation-only and null. The full model includes

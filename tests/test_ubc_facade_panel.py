@@ -119,8 +119,15 @@ def test_build_panel_rejects_fractional_method_code():
         build_panel(csv_bytes(rows), strict_source=False)
 
 
-def test_build_panel_rejects_fractional_stories_reflecting_canopy():
+def test_build_panel_preserves_fractional_stories_reflecting_canopy():
     rows = fixture_rows()
+    # The published Appendix 1 contains fractional values on 26 of 57 facades.
+    # This is a continuous reflected-canopy exposure measure; never round it.
     rows[0]["STORIES_REFLECT_CANOPY"] = "2.5"
-    with pytest.raises(ValueError, match="Non-integer stories_reflecting_canopy"):
-        build_panel(csv_bytes(rows), strict_source=False)
+    rows[1]["STORIES_REFLECT_CANOPY"] = "2.5"
+    panel, _ = build_panel(csv_bytes(rows), strict_source=False)
+    values = {
+        row["stories_reflecting_canopy"]
+        for row in panel if row["facade_id"] == "A::A1"
+    }
+    assert values == {2.5}
