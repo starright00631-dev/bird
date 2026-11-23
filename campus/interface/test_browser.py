@@ -75,6 +75,12 @@ def check_pane_evidence(page):
     assert len(calls) == 3
     page.unroute(endpoint,api)
     page.locator("#show-data").click()
+    return {
+        "known_fact_checks": {"passed": 6, "total": 6},
+        "source_navigation_checks": {"passed": 2, "total": 2},
+        "abstention_checks": {"passed": 4, "total": 4},
+        "api": "simulated",
+    }
 
 def check(page,label,offline=False):
     print(f"Checking {label}: chat", flush=True)
@@ -141,7 +147,7 @@ def check(page,label,offline=False):
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
     assert page.evaluate("window.__BNBU_VERSION__")=="v89"
-    check_pane_evidence(page)
+    pane_evidence = check_pane_evidence(page)
     assert page.locator("#layers input[type=checkbox]").count()==10
     assert page.locator("#layers label.bp6-checkbox").count() == 10
     assert page.locator(".topbar.bp6-navbar").is_visible()
@@ -304,7 +310,7 @@ def check(page,label,offline=False):
             "gis_features":49,"independent_dsm":True,"v74_junction_hotspots":47,"v74_pairs":1876,
             "v75_glass_balustrade_source_points":340,"v75_bridge_systems":7,"v75_ends":12,
             "v89_mapped_buildings":41,"v76_architectural_buildings":30,"v76_building_families":5,"v89_layout_corrected":True,
-            "browser_errors":failures,"console_errors":console}
+            "browser_errors":failures,"console_errors":console,"pane_evidence":pane_evidence}
 
 def main():
     assert PACKAGE.is_dir()
