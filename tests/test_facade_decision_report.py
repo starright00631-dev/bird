@@ -99,7 +99,7 @@ def test_intervention_evidence_ids_resolve_in_machine_readable_registry():
         assert set(item["evidence_source_ids"]).issubset(source_ids)
 
 
-def test_validated_bnbu_prediction_is_returned_with_endpoint_and_provenance():
+def test_claimed_bnbu_prediction_is_withheld_without_verified_artifacts():
     prediction = ValidatedRiskPrediction(
         value=0.12,
         endpoint="detected_carcass_presence",
@@ -113,7 +113,7 @@ def test_validated_bnbu_prediction_is_returned_with_endpoint_and_provenance():
         validation_report_id="BNBU-VALIDATION-REPORT-001",
     )
     report = build_facade_decision_report(make_glass(), make_vegetation(), prediction=prediction)
-    assert report["risk_prediction"]["status"] == "site_calibrated"
-    assert report["risk_prediction"]["value"] == pytest.approx(0.12)
+    assert report["risk_prediction"]["status"] == "validation_artifact_unverified"
+    assert report["risk_prediction"]["value"] is None
     assert report["risk_prediction"]["endpoint"] == "detected_carcass_presence"
     assert report["risk_prediction"]["model_artifact_sha256"] == "b" * 64

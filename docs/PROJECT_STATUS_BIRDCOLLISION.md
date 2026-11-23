@@ -2,7 +2,7 @@
 
 **Primary project:** BNBU bird–glass collision research.  
 **Primary development branch:** `main`.  
-**Last project update:** 2026-11-17.
+**Last project update:** 2026-11-23.
 
 ## Current deliverable
 
@@ -42,11 +42,22 @@ The repository now has a mechanistic research codebase and a multi-pathway faça
 1. Reproduce the De Groot observation-process correction (GenEst pkm searcher efficiency, cpm carcass persistence and estM survey schedule) from the pinned trial inputs; reconcile the original model-list selections against complete AICc tables before using corrected mortality.
 2. Acquire and harmonize an independent subtropical façade-survey dataset with explicit zeros, 24/48-hour effort, façade glass/vegetation features, searcher detection and carcass persistence; retain exact source versions and hashes.
 3. Acquire effort-aware bird occurrence/activity data for Guangdong/Zhuhai; do not treat regional presence as pane approach flow or collision exposure.
-4. Build pane-level measured glass appearance and whole-assembly spectral R/T records; link them to finite-pane reflection/transmission geometry and independent multi-view validation.
-5. Collect continuous approach/avoidance trajectories and species morphology before fitting recognition, control or swept-contact parameters; keep synthetic kinematics as code tests only.
-6. Implement field-ready BNBU pane-level survey and intervention monitoring records with costs, daylight, maintenance, safety, ecological effects and adjacent-pane risk transfer; estimate efficacy only from comparable controlled designs.
+4. Populate the [pane registry](BNBU_PANE_REGISTRY.md) with independently locatable field panes, whole-assembly optical evidence and surrounding control panes. Retain candidate sets or microzone precision when the impact pane remains unknown.
+5. Collect continuous approach/avoidance trajectories, standardized patrols and detection/persistence trials. Validate the [monitoring pipeline](BNBU_MONITORING_PIPELINE.md) on these data before fitting recognition, control or pane-risk models.
+6. Run the first matched or randomized BNBU retrofit trial with costs, daylight, maintenance, safety, ecological effects and adjacent-pane risk transfer tracked. Estimate efficacy only from comparable controlled designs.
 
 All new project work must use a feature branch and pull request, with review and passing CI before merge to `main`. Campus 3D remains a separate supporting workstream; it is not the main research deliverable or a prerequisite for external-data model development.
+
+## First field walkthrough
+
+Use the candidate-microzone queue to choose an accessible location. Confirm at
+least two distinct optical appearances plus an adjacent control, record the
+physical locator and image/geometry references, and have a second reviewer
+independently find each pane. Check the same ID, evidence timestamp, units and
+source from field intake through the report and workbench. Keep all older
+reports at their recorded precision. Record disagreements and missing sources
+before proceeding to the trial. The [BNBU pilot roadmap](https://github.com/starright00631-dev/bird/issues/29)
+remains open until the field walkthrough and validation evidence are available.
 
 
 ## Final model acceptance boundary (2026-11-17)

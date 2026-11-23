@@ -118,7 +118,11 @@
         <p id="v72-profile-status" style="font-size:10px;">高程源样本读取中…</p>
       </div>
     </section>
-    <section class="selected-panel"><div class="section-header"><h2>结构信息</h2><small id="match-count">0 项关联</small></div><div id="selection" class="selection-text">点击左侧 3D 网格查看名称、类型及 GIS 记录。</div></section>
+    <section class="selected-panel"><div class="section-header"><h2>结构信息</h2><small id="match-count">0 项关联</small></div><div id="selection" class="selection-text">点击左侧 3D 网格查看名称、类型及 GIS 记录。</div>
+      <label for="pane-evidence-file">打开窗片证据包</label><input id="pane-evidence-file" type="file" accept=".json,application/json" disabled>
+      <label for="pane-evidence-select" id="pane-evidence-select-label" hidden>定位窗片</label><select id="pane-evidence-select" hidden></select>
+      <p id="pane-evidence-status" role="status">当前场景未载入窗片证据。</p><div id="pane-evidence-detail"></div>
+    </section>
     <div class="disclaimer"><strong>v76 T/V/D/LRC 建筑色彩、棱线是源几何判读层，不是新增窗格或可调查通行的建筑构件。</strong> v76 建筑周边平面间距不等于实地可通行连接。<strong>v75 透明栏板 ≠ 校准窗格或可计入鸟撞暴露的玻璃面积。</strong> 六段二层连接的具体窗户尚未通过摄影配准，保留无窗玻璃实体的原模型及可逐构件核对的记录。<strong>照片证明连接类型 ≠ 可测量高程及位置。</strong> v71 新增 2 处源模型同标高修复；v72 从已有 122 顶点东坡道及 19 级 LRC 台阶提取扶手轨迹，高度只是可关闭的类型示意，不代表现场建造或测量。3 处桥面/铺装高差、两处远距离道路断裂、山地塘边轮廓仍待独立配准。<strong>照片证明类型 ≠ 测绘位置。</strong> 新栏杆的轨迹仅由旧版 V60 步道边界推得，护栏高与立柱间距为示意。水岸、绿地、道路与真实池塘边界均未摄影配准。所有新增视觉细节不可作为鸟撞玻璃面积或工程测量值。</div>
   </div></aside>
 </main>

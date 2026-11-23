@@ -1,4 +1,5 @@
 import './chat.jsx';
+import {factText, getWorkspaceContext, parsePaneEvidence, refreshWorkspaceContext, setPaneEvidence, setWorkspaceSelection, subscribeWorkspace} from './pane_evidence.js';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
@@ -123,7 +124,113 @@ function indexCampus(){
   }
  }
  renderLayerControls();
+ $('pane-evidence-file').disabled=false;
 }
+
+function renderPaneEvidence(){
+ const context=getWorkspaceContext(), detail=$('pane-evidence-detail');
+ $('pane-evidence-select').value=context.pane ? context.object_name : '';
+ detail.replaceChildren();
+ if (!context.pane){
+  if (context.status==='schematic_pane') detail.textContent='示意玻璃面，尚无物理窗片身份或本地证据。';
+  return;
+ }
+ const heading=document.createElement('h3');
+ const label={field_registered:'实地注册窗片',synthetic:'合成窗片示例',stale:'证据包已过期'}[context.status];
+ heading.textContent=label+' · '+context.pane.pane_id;
+ const identity=document.createElement('p');
+ identity.textContent=[context.pane.building_id,context.pane.facade_id,'楼层 '+context.floor,'窗格 '+context.bay,
+  '几何版本 '+context.pane.model_version,'映射来源 '+context.mapping_source_id].join(' · ');
+ const report=document.createElement('p');
+ report.textContent='监测报告 '+context.evidence_snapshot_id+' · SHA-256 '+context.report_sha256;
+ const digests=document.createElement('details');
+ const digestsHeading=document.createElement('summary');
+ digestsHeading.textContent='查看其他证据输入校验值';
+ const digestList=document.createElement('ul');
+ const inputNames={registry:'窗片台账',mapping:'3D 映射',vegetation:'植被报告',glass:'玻璃观测'};
+ for (const [input,digest] of Object.entries(context.input_sha256)){
+  const row=document.createElement('li');
+  row.textContent=inputNames[input]+' · SHA-256 '+digest;
+  digestList.append(row);
+ }
+ digests.append(digestsHeading,digestList);
+ const list=document.createElement('ul'), sourceReferences=new Map();
+ for (const fact of context.facts){
+  const row=document.createElement('li');
+  row.id='pane-fact-'+fact.id;
+  row.tabIndex=-1;
+  row.textContent=factText(fact);
+  for (const source of fact.source_ids){
+   if (!sourceReferences.has(source)) sourceReferences.set(source,[]);
+   sourceReferences.get(source).push(fact.id);
+   const link=document.createElement('a');
+   const id='pane-source-'+encodeURIComponent(source);
+   link.href='#'+id;
+   link.textContent=source;
+   link.addEventListener('click',event=>{
+    event.preventDefault();
+    const entry=$(id);
+    entry.focus();
+    entry.scrollIntoView({block:'center'});
+   });
+   row.append(' · ',link);
+  }
+  list.append(row);
+ }
+ const sourceTitle=document.createElement('h4'), sourceList=document.createElement('ul');
+ sourceTitle.textContent='来源索引';
+ for (const [source, factIds] of sourceReferences){
+  const row=document.createElement('li');
+  row.id='pane-source-'+encodeURIComponent(source);
+  row.tabIndex=-1;
+  row.textContent=source+' · 报告 '+context.evidence_snapshot_id+' · '+factIds.join('、');
+  sourceList.append(row);
+ }
+ detail.append(heading,identity,report,digests,list,sourceTitle,sourceList);
+}
+subscribeWorkspace(renderPaneEvidence);
+window.addEventListener('focus',refreshWorkspaceContext);
+setInterval(refreshWorkspaceContext,30_000);
+$('pane-evidence-file').addEventListener('change', async event=>{
+ const file=event.target.files[0];
+ if (!file) return;
+ const choice=$('pane-evidence-select'), choiceLabel=$('pane-evidence-select-label');
+ choice.replaceChildren();
+ choice.hidden=choiceLabel.hidden=true;
+ setPaneEvidence(null);
+ try {
+  if (file.size>5_000_000) throw Error('证据文件过大');
+  const raw=JSON.parse(await file.text());
+  if (event.target.files[0]!==file) return;
+  const counts=new Map(), registrations=new Map();
+  for (const mesh of meshes){
+   counts.set(mesh.name,(counts.get(mesh.name)||0)+1);
+   if (mesh.userData.pane_id) registrations.set(mesh.name,mesh.userData);
+  }
+  const bundle=parsePaneEvidence(raw,'v89',counts,registrations);
+  choice.add(new Option('请选择窗片',''));
+  for (const [name, binding] of bundle.bindings) choice.add(new Option(binding.pane.pane_id,name));
+  choice.hidden=choiceLabel.hidden=bundle.bindings.size===0;
+  setPaneEvidence(bundle);
+  $('pane-evidence-status').textContent='已载入 '+bundle.bindings.size+' 个'+(bundle.dataset_kind==='synthetic'?'合成':'已注册')+'窗片绑定。';
+ } catch (err) {
+  if (event.target.files[0]===file) $('pane-evidence-status').textContent='窗片证据加载失败：'+err.message;
+ }
+});
+$('pane-evidence-select').addEventListener('change',async event=>{
+ const mesh=meshes.find(mesh=>mesh.name===event.target.value);
+ if (!mesh) {clearSelection();return;}
+ try {
+  await switchScene('campus');
+  if (event.target.value!==mesh.name && event.target.value!=='') return;
+  if (!mesh.parent.visible) {
+   toggleLayer(mesh.userData.bnbuCategory,true);
+   renderLayerControls();
+  }
+  selectMesh(mesh);
+  fit(boxWorld(mesh));
+ } catch (error) {showError(error);}
+});
 
 function renderLayerControls(){
  const target=$('layers');target.textContent='';
@@ -148,6 +255,7 @@ $('hide-all').addEventListener('click',()=>{visible.clear();for(const g of group
 
 function focusGroup(key){
  if(current!=='campus')return;
+ clearSelection();
  const g=groups.get(key);
  if(g){if(!g.visible){toggleLayer(key,true);renderLayerControls();}fit(boxWorld(g));}
 }
@@ -620,6 +728,7 @@ function focusWaterfront(name){
 }
 
 function focusPreset(key){
+ clearSelection();
  if(current==='dsm'){fit(allBox(),key==='all');return;}
  if(!campus)return;
  if(key==='all'){fit(allBox());return;}
@@ -654,6 +763,7 @@ function updateSceneVisibility(){
 async function switchScene(which){
  if(which===current&&activeRoot)return;
  current=which;
+ clearSelection();
  updateSceneVisibility();
  if(which==='campus'){
   if(!campus)await ensureCampus();
@@ -708,6 +818,14 @@ function showError(e){
 function clearOutline(){
  if(outline){scene.remove(outline);outline.geometry?.dispose?.();outline.material?.dispose?.();outline=null;}
 }
+function clearSelection(){
+ selectedName=null;
+ clearOutline();
+ $('selection').textContent=current==='campus'?'点击左侧 3D 网格查看名称、类型及 GIS 记录。':'点击遥感地形查看插值高程。';
+ $('match-count').textContent='0 项关联';
+ setWorkspaceSelection({scene:current,status:'empty'});
+ redraw();
+}
 function selectMesh(mesh,position=null){
  if(!mesh)return;
  selectedName=mesh.name;clearOutline();
@@ -718,6 +836,8 @@ function selectMesh(mesh,position=null){
  const confidence=p.confidence||p.confidence_geometry||'尚未实测确认';
  const text='<strong>'+esc(mesh.name)+'</strong><div class="kv">图层：'+esc(names[mesh.userData.bnbuCategory]||'遥感高程')+'</div><div class="kv">GIS 关联：'+matches.length+' 条</div><div class="kv">来源：'+esc(source)+'</div><div class="kv">置信状态：'+esc(confidence)+'</div>';
  $('selection').innerHTML=text;$('match-count').textContent=matches.length+' 项关联';
+ const schematic=mesh.userData.bnbuCategory==='glass_proxies_unregistered';
+ setWorkspaceSelection({scene:'campus',object_name:mesh.name,status:schematic?'schematic_pane':'model_object'});
  redraw();
 }
 const raycaster=new THREE.Raycaster(),point=new THREE.Vector2();
@@ -731,10 +851,11 @@ renderer.domElement.addEventListener('pointerup',event=>{
  raycaster.setFromCamera(point,cam);
  const targets=current==='campus'?meshes.filter(m=>m.visible&&m.parent?.visible):dsm?.children||[];
  const hits=raycaster.intersectObjects(targets,true);
- if(!hits.length)return;
+ if(!hits.length){clearSelection();return;}
  if(current==='campus')selectMesh(hits[0].object);
  else{
   const hit=hits[0].point;
+  setWorkspaceSelection({scene:'dsm',status:'terrain_reference'});
   $('selection').innerHTML='<strong>ALOS DSM 插值曲面</strong><div class="kv">表面高程 ≈ '+hit.y.toFixed(1)+' 米（像元间插值，非地面实测）</div><div class="kv">本场景未与建筑模型标高配准</div>';
  }
 });
@@ -1145,6 +1266,7 @@ function architectureChoose76(){
  const allRecs=[...(architecture76.building_records||[]),...(architecture76.extended_records||[])];
  const record=allRecs.find(b=>b.id===id);
  if(!record)return;
+ clearSelection();
  const bounds=new THREE.Box3();
  for(const nm of record.existing_component_names||[]){
   const m=meshes.find(x=>x.name===nm);

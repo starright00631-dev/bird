@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "scene_version": "v89",
+  "dataset_kind": "synthetic",
+  "evidence_snapshot_id": "synthetic-monitoring-v1",
+  "report_sha256": "b35331153cbce6c9d35c1e5c755f11126b08438315f1653f76b600aa530650b9",
+  "input_sha256": {
+    "registry": "6378404f3bda6bd4f8026c8d0f9cf8268dbcbddbc7dcf52a0bbe29f3a4a5d219",
+    "mapping": "aae2193660dc3c7c25705d53bb9f6d1b87a32dcab7687fcb2b32d8f42aeca2a7",
+    "vegetation": "20016bd739a6b3e206aab783c1dfac43927bfb4879b746803b1ea3397d253b73",
+    "glass": "c7abdb0ca617e24861de552819844d8318435cceb2c17c22ac1f467970b727ac"
+  },
+  "valid_until": "2099-01-01T00:00:00Z",
+  "bindings": [
+    {
+      "object_name": "MAIN_CC",
+      "pane": {
+        "pane_id": "SYN-A-1",
+        "building_id": "SYN-A",
+        "facade_id": "SYN-A-N",
+        "model_version": "synthetic-v1"
+      },
+      "floor": "1",
+      "bay": "SYN-A-1",
+      "mapping_source_id": "synthetic_browser_fixture",
+      "facts": [
+        {
+          "id": "optical_mechanism",
+          "value": null,
+          "unit": null,
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "exterior_vlr",
+          "value": null,
+          "unit": "%",
+          "status": "conflict",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [
+            "synthetic-assembly-one",
+            "synthetic-assembly-two"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "exterior_vlt",
+          "value": 60,
+          "unit": "%",
+          "status": "inferred",
+          "observed_at": "2026-01-09T09:00:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-assembly-one"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_0_5_m",
+          "value": 0.5,
+          "unit": "fraction",
+          "status": "inferred",
+          "observed_at": "2026-01-08T08:10:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-orthomap"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_5_25_m",
+          "value": 0.5,
+          "unit": "fraction",
+          "status": "inferred",
+          "observed_at": "2026-01-08T08:10:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-orthomap"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_25_100_m",
+          "value": 0.5,
+          "unit": "fraction",
+          "status": "inferred",
+          "observed_at": "2026-01-08T08:10:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-orthomap"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_100_1000_m",
+          "value": 0.5,
+          "unit": "fraction",
+          "status": "inferred",
+          "observed_at": "2026-01-08T08:10:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-orthomap"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_1000_10000_m",
+          "value": 0.5,
+          "unit": "fraction",
+          "status": "inferred",
+          "observed_at": "2026-01-08T08:10:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-orthomap"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "reflected_vegetation:synthetic-afternoon",
+          "value": 0.0,
+          "unit": "fraction",
+          "status": "inferred",
+          "observed_at": "2026-01-08T15:15:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-afternoon-photo"
+          ],
+          "view_id": "synthetic-afternoon"
+        },
+        {
+          "id": "reflected_vegetation:synthetic-evening",
+          "value": null,
+          "unit": "fraction",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": "synthetic-evening"
+        },
+        {
+          "id": "reflected_vegetation:synthetic-morning",
+          "value": 0.3333333333333333,
+          "unit": "fraction",
+          "status": "inferred",
+          "observed_at": "2026-01-08T08:10:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-morning-photo"
+          ],
+          "view_id": "synthetic-morning"
+        },
+        {
+          "id": "approach_count",
+          "value": 5,
+          "unit": "count",
+          "status": "inferred",
+          "observed_at": "2026-01-02T08:05:00+08:00",
+          "expires_at": null,
+          "evidence_tier": "assumption",
+          "source_ids": [
+            "synthetic-annotations-clip-A-early",
+            "synthetic-annotations-clip-A-late"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "glass_contact_risk",
+          "value": null,
+          "unit": null,
+          "status": "withheld",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [
+            "synthetic-monitoring-v1"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "carcass_detection_risk",
+          "value": null,
+          "unit": null,
+          "status": "withheld",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [
+            "synthetic-monitoring-v1"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "local_treatment_effect",
+          "value": null,
+          "unit": null,
+          "status": "withheld",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        }
+      ]
+    },
+    {
+      "object_name": "LAKE_00",
+      "pane": {
+        "pane_id": "SYN-A-2",
+        "building_id": "SYN-A",
+        "facade_id": "SYN-A-N",
+        "model_version": "synthetic-v1"
+      },
+      "floor": "1",
+      "bay": "SYN-A-2",
+      "mapping_source_id": "synthetic_browser_fixture",
+      "facts": [
+        {
+          "id": "optical_mechanism",
+          "value": null,
+          "unit": null,
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "exterior_vlr",
+          "value": null,
+          "unit": "%",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "exterior_vlt",
+          "value": null,
+          "unit": "%",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_0_5_m",
+          "value": null,
+          "unit": "fraction",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_5_25_m",
+          "value": null,
+          "unit": "fraction",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_25_100_m",
+          "value": null,
+          "unit": "fraction",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_100_1000_m",
+          "value": null,
+          "unit": "fraction",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "tree_cover_1000_10000_m",
+          "value": null,
+          "unit": "fraction",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "reflected_vegetation",
+          "value": null,
+          "unit": "fraction",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "approach_count",
+          "value": null,
+          "unit": "count",
+          "status": "missing",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        },
+        {
+          "id": "glass_contact_risk",
+          "value": null,
+          "unit": null,
+          "status": "withheld",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [
+            "synthetic-monitoring-v1"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "carcass_detection_risk",
+          "value": null,
+          "unit": null,
+          "status": "withheld",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [
+            "synthetic-monitoring-v1"
+          ],
+          "view_id": null
+        },
+        {
+          "id": "local_treatment_effect",
+          "value": null,
+          "unit": null,
+          "status": "withheld",
+          "observed_at": null,
+          "expires_at": null,
+          "evidence_tier": "unknown",
+          "source_ids": [],
+          "view_id": null
+        }
+      ]
+    }
+  ]
+}

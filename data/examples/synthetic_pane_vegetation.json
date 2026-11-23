@@ -1,0 +1,245 @@
+{
+  "pane": {
+    "pane_id": "synthetic-pane-A",
+    "building_id": "synthetic-building",
+    "facade_id": "synthetic-facade",
+    "model_version": "synthetic-v1"
+  },
+  "dataset_kind": "synthetic",
+  "land_cover": {
+    "pane": {
+      "pane_id": "synthetic-pane-A",
+      "building_id": "synthetic-building",
+      "facade_id": "synthetic-facade",
+      "model_version": "synthetic-v1"
+    },
+    "status": "reviewed",
+    "source_id": "synthetic-orthomap",
+    "source_ref": "synthetic:orthomap",
+    "recorded_at": "2026-01-08T08:10:00+08:00",
+    "evidence_tier": "assumption",
+    "reviewer_id": "synthetic-reviewer",
+    "annotation_version": "synthetic-v1",
+    "crs": "EPSG:32650",
+    "position_reference": "synthetic:projected-pixel-grid",
+    "center_xy_m": [
+      10000,
+      10000
+    ],
+    "season": "winter",
+    "pixel_resolution_m": 1,
+    "bands": {
+      "0_5m": {
+        "upper_left_pixel_center_xy_m": [
+          10000,
+          10000
+        ],
+        "mask": [
+          [
+            "tree_canopy",
+            "impervious"
+          ],
+          [
+            "occluded",
+            "unclassified"
+          ]
+        ],
+        "uncertainty_missing_reason": "Synthetic classification exercise; no field accuracy estimate"
+      },
+      "5_25m": {
+        "upper_left_pixel_center_xy_m": [
+          10005,
+          10000
+        ],
+        "mask": [
+          [
+            "tree_canopy",
+            "grass"
+          ],
+          [
+            "occluded",
+            "unclassified"
+          ]
+        ],
+        "uncertainty_missing_reason": "Synthetic classification exercise; no field accuracy estimate"
+      },
+      "25_100m": {
+        "upper_left_pixel_center_xy_m": [
+          10025,
+          10000
+        ],
+        "mask": [
+          [
+            "tree_canopy",
+            "impervious"
+          ],
+          [
+            "occluded",
+            "unclassified"
+          ]
+        ],
+        "uncertainty_missing_reason": "Synthetic classification exercise; no field accuracy estimate"
+      },
+      "100m_1km": {
+        "upper_left_pixel_center_xy_m": [
+          10100,
+          10000
+        ],
+        "mask": [
+          [
+            "tree_canopy",
+            "grass"
+          ],
+          [
+            "occluded",
+            "unclassified"
+          ]
+        ],
+        "uncertainty_missing_reason": "Synthetic classification exercise; no field accuracy estimate"
+      },
+      "1_10km": {
+        "upper_left_pixel_center_xy_m": [
+          11000,
+          10000
+        ],
+        "mask": [
+          [
+            "tree_canopy",
+            "impervious"
+          ],
+          [
+            "occluded",
+            "unclassified"
+          ]
+        ],
+        "uncertainty_missing_reason": "Synthetic classification exercise; no field accuracy estimate"
+      }
+    }
+  },
+  "site_context": {
+    "pane": {
+      "pane_id": "synthetic-pane-A",
+      "building_id": "synthetic-building",
+      "facade_id": "synthetic-facade",
+      "model_version": "synthetic-v1"
+    },
+    "status": "reviewed",
+    "source_id": "synthetic-facade-context",
+    "source_ref": "synthetic:facade-context",
+    "recorded_at": "2026-01-08T08:10:00+08:00",
+    "evidence_tier": "assumption",
+    "reviewer_id": "synthetic-reviewer",
+    "annotation_version": "synthetic-v1",
+    "facade_tree_cover_50m_percent": 35,
+    "facade_porous_cover_50m_percent": 27,
+    "nearest_crown_distance_m": 3.8,
+    "canopy_height_m": 6.2,
+    "pane_sill_height_m": 2.1,
+    "corridor_obstruction_share": 0.15,
+    "resource_attraction_note": "Synthetic exercise marking candidate fruiting tree habitat"
+  },
+  "reflections": [
+    {
+      "pane": {
+        "pane_id": "synthetic-pane-A",
+        "building_id": "synthetic-building",
+        "facade_id": "synthetic-facade",
+        "model_version": "synthetic-v1"
+      },
+      "status": "reviewed",
+      "source_id": "synthetic-morning-photo",
+      "source_ref": "synthetic:morning-photo",
+      "recorded_at": "2026-01-08T08:10:00+08:00",
+      "evidence_tier": "assumption",
+      "reviewer_id": "synthetic-reviewer",
+      "annotation_version": "synthetic-v1",
+      "view_id": "synthetic-morning",
+      "approach_bearing_deg": 80,
+      "light_conditions": "low east sun",
+      "mask": [
+        [
+          "reflected_vegetation",
+          "reflected_other"
+        ],
+        [
+          "transmitted_vegetation",
+          "occluded"
+        ]
+      ]
+    },
+    {
+      "pane": {
+        "pane_id": "synthetic-pane-A",
+        "building_id": "synthetic-building",
+        "facade_id": "synthetic-facade",
+        "model_version": "synthetic-v1"
+      },
+      "status": "reviewed",
+      "source_id": "synthetic-afternoon-photo",
+      "source_ref": "synthetic:afternoon-photo",
+      "recorded_at": "2026-01-08T15:15:00+08:00",
+      "evidence_tier": "assumption",
+      "reviewer_id": "synthetic-reviewer",
+      "annotation_version": "synthetic-v1",
+      "view_id": "synthetic-afternoon",
+      "approach_bearing_deg": 80,
+      "light_conditions": "cloudy afternoon",
+      "mask": [
+        [
+          "reflected_other",
+          "transmitted_vegetation"
+        ],
+        [
+          "transmitted_other",
+          "unclassified"
+        ]
+      ]
+    },
+    {
+      "pane": {
+        "pane_id": "synthetic-pane-A",
+        "building_id": "synthetic-building",
+        "facade_id": "synthetic-facade",
+        "model_version": "synthetic-v1"
+      },
+      "view_id": "synthetic-evening",
+      "approach_bearing_deg": 100,
+      "light_conditions": "twilight",
+      "status": "missing",
+      "reason": "No photo taken; return for an evening capture"
+    }
+  ],
+  "monitoring": [
+    {
+      "pane": {
+        "pane_id": "synthetic-pane-A",
+        "building_id": "synthetic-building",
+        "facade_id": "synthetic-facade",
+        "model_version": "synthetic-v1"
+      },
+      "status": "reviewed",
+      "source_id": "synthetic-continuous-video",
+      "source_ref": "synthetic:continuous-video",
+      "recorded_at": "2026-01-08T08:30:00+08:00",
+      "evidence_tier": "assumption",
+      "reviewer_id": "synthetic-reviewer",
+      "annotation_version": "synthetic-v1",
+      "session_id": "synthetic-morning-watch",
+      "starts_at": "2026-01-08T08:15:00+08:00",
+      "ends_at": "2026-01-08T08:30:00+08:00",
+      "coverage_mode": "continuous",
+      "effort_s": 900,
+      "phenology": "winter",
+      "weather": "clear, calm",
+      "routes": [
+        {
+          "track_id": "synthetic-route-1",
+          "track_ref": "synthetic:continuous-video#frame=100-180",
+          "observed_at": "2026-01-08T08:17:00+08:00",
+          "species_or_guild": "illustrative canopy-foraging guild",
+          "approach_bearing_deg": 80
+        }
+      ]
+    }
+  ]
+}
