@@ -1,0 +1,63 @@
+{
+  "dataset_kind": "synthetic",
+  "panes": [
+    {
+      "identity": {
+        "pane_id": "SYNTHETIC-A",
+        "building_id": "SYNTHETIC-BLDG",
+        "facade_id": "SYNTHETIC-FACADE",
+        "model_version": "synthetic-geometry-1"
+      },
+      "floor": "1",
+      "bay": "A",
+      "microzone_id": "SYNTHETIC-ZONE",
+      "coordinate_system": "SYNTHETIC-local-ENU",
+      "corners_m": [[0, 0, 1], [0, 2, 1], [0, 2, 3], [0, 0, 3]],
+      "outward_azimuth_deg": 270,
+      "registration_error_m": 0.03,
+      "geometry_source_id": "SYNTHETIC-geometry-A",
+      "photos": [
+        {
+          "photo_id": "SYNTHETIC-photo-A",
+          "source_id": "SYNTHETIC-no-image-file",
+          "captured_at": "2026-01-15T09:00:00+08:00"
+        }
+      ],
+      "field_verified_at": "2026-01-15T09:30:00+08:00"
+    },
+    {
+      "identity": {
+        "pane_id": "SYNTHETIC-B",
+        "building_id": "SYNTHETIC-BLDG",
+        "facade_id": "SYNTHETIC-FACADE",
+        "model_version": "synthetic-geometry-1"
+      },
+      "floor": "1",
+      "bay": "B",
+      "microzone_id": "SYNTHETIC-ZONE",
+      "coordinate_system": "SYNTHETIC-local-ENU",
+      "corners_m": [[0, 2, 1], [0, 4, 1], [0, 4, 3], [0, 2, 3]],
+      "outward_azimuth_deg": 270,
+      "registration_error_m": 0.04,
+      "geometry_source_id": "SYNTHETIC-geometry-B",
+      "photos": [
+        {
+          "photo_id": "SYNTHETIC-photo-B",
+          "source_id": "SYNTHETIC-no-image-file",
+          "captured_at": "2026-01-15T09:00:00+08:00"
+        }
+      ],
+      "field_verified_at": "2026-01-15T09:30:00+08:00"
+    },
+    {
+      "identity": {
+        "pane_id": "SYNTHETIC-C",
+        "building_id": "SYNTHETIC-CTRL",
+        "facade_id": "SYNTHETIC-CTRL-FACADE",
+        "model_version": "synthetic-geometry-1"
+      },
+      "floor": "1",
+      "bay": "A"
+    }
+  ]
+}

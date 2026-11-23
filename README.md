@@ -2,7 +2,7 @@
 
 Evidence-led research to explain **where, why and under what conditions birds collide with glass**, and to compare interventions for existing façades. The goal is a transparent, testable decision system—not a single opaque risk score or an unsupported end-to-end claim.
 
-> **Status (2026-11-17):** the repository includes a pinned UBC façade glass/vegetation association benchmark, an evidence-aware BNBU façade assessment adapter, structured glass and vegetation field schemas, optional pinned CLIP photo triage, auditable annular-mask summaries and a source-linked intervention evidence registry. The UBC model is descriptive only and did not demonstrate predictive improvement over an exposure-only baseline on held-out buildings. No BNBU-calibrated absolute collision probability or local treatment efficacy is claimed.
+> **Status (2026-11-23).** The BNBU pane pilot has executable intake, synthetic monitoring and a source-linked assessment. BNBU field validation and treatment evaluation are pending. The pinned UBC model remains a descriptive benchmark after its held-out comparison with the exposure-only baseline.
 
 ## Model architecture
 
@@ -31,6 +31,15 @@ The output is a **pathway profile plus an evidence-gated intervention comparison
 | `birdglass/uvic_panel.py` | Pinned UVic source verification, facade-period aggregation and observed-evidence Poisson GEE baseline |
 
 The façade decision layer separates measured evidence from proxies, reflection from through-glass false passage, local canopy from landscape cover, selected clips from continuous approach video, and mechanism fit from measured intervention efficacy.
+
+## Pane pilot and reproducibility
+
+- [Pane registry and glass intake](docs/BNBU_PANE_REGISTRY.md) define the join across building, façade, physical pane and geometry version. The checked-in adjacent panes are synthetic. T29 and LRC are candidates for on-site verification.
+- [Pane vegetation summaries](docs/PANE_VEGETATION.md) preserve five reviewed cover bands, dated reflection views and independent approach-monitoring sources. The same pane key keeps adjacent windows' evidence separate.
+- [Monitoring pipeline](docs/BNBU_MONITORING_PIPELINE.md) runs an optical and first-contact replay, audits censoring and survey zeros, and evaluates exposure-only baselines with held-out buildings and later time blocks. The [scientific workflow](https://github.com/starright00631-dev/bird/actions/workflows/pytest.yml) exercises the synthetic replay and the empty local intake through the test suite.
+- [Retrofit trial preregistration](docs/BNBU_RETROFIT_TRIAL.md) records matched controls, effort, adjacent-surface monitoring and safety or ecological vetoes. The output gives first-test candidates and the evidence needed to compare effects.
+- [Policy stress replay](docs/IMPORT_STATUS.md) fixes the simulated pane draw order and records current source, input and output hashes. The archived historical simulation and independent local motion validation remain open.
+- The [BNBU pilot roadmap](https://github.com/starright00631-dev/bird/issues/29) tracks the first independently locatable field walkthrough and the evidence needed for site-specific decisions.
 
 ## Not yet implemented or calibrated
 
@@ -72,6 +81,9 @@ Python 3.11 is used in CI.
 ~~~bash
 python -m pip install -r requirements.txt
 python -m pytest -q tests
+
+# Replay the synthetic pane monitoring pipeline without a field dataset
+python -m birdglass.bnbu_monitoring data/examples/synthetic_bnbu_monitoring.json monitoring-demo
 
 # Rebuild the pinned UVic facade-period panel and fit the observed-evidence baseline
 python scripts/build_uvic_facade_panel.py --fetch-pinned
@@ -132,7 +144,9 @@ The viewer and source evidence are documented in [campus/README.md](campus/READM
 
 ### 空间研究工作台与 AI 对话
 
-右侧默认显示 AIP 对话，选择「模型数据」可打开原有 GIS、图层和证据面板。设置按钮支持配置 OpenAI 兼容 API 基础地址、模型 ID 和 API Key，默认使用 DeepSeek 的 `https://api.deepseek.com` 与 `deepseek-flash`。密钥只保存在当前页面内，刷新后需重新输入；对话直接从浏览器发送给所配置的服务，服务须支持浏览器跨域（离线 HTML 的 `file://` 来源尤其需要服务商允许）。3D 模型仍可离线使用，AI 对话需要网络和有效密钥。发送时包含当前场景、选中对象的显示信息和对话内容；请勿发送不愿提供给服务商的数据。模型无法自动读取整个场景或证据库，回答须结合研究资料核验。
+右侧默认显示 AIP 对话，选择「模型数据」可查看 GIS、图层和证据面板。工作台可打开本地窗片证据包，详情和窗片对话按同一个 `pane_id` 展示来源、采集时间、单位和证据状态。切换窗片会清除旧窗片的对话上下文。没有映射的示意模型仍可用于校园导航。使用附带的合成样例可以验证两块相邻窗片的切换和追溯流程。[窗片证据包与离线工作台](docs/BNBU_WORKSPACE_EVIDENCE.md)
+
+设置页支持配置 OpenAI 兼容 API 的基础地址、模型 ID 和密钥。密钥仅保存在当前页面，浏览器把请求发送给配置的服务地址。服务商须允许网页来源跨域调用，本地单文件入口的来源可能是 `null`。3D 浏览和本地证据详情可离线使用。窗片对话将问题及所选窗片可公开的结构化事实发给服务，请据此选择要载入和发送的资料。
 
 ## Next build sequence
 

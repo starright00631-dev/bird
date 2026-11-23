@@ -24,6 +24,31 @@ def test_corner_grazing():
     assert d==pytest.approx(np.sqrt(2),abs=1e-10)
     assert first_sphere_contact((-1,2,2),(1,2,2),pane,1.0) is None
 
+
+def test_tangent_corner_contact_and_small_clearance():
+    pane = RectPane("corner", 0, -1, 1, -1, 1)
+    radius = .625
+    start, end = (-1, 1.375, 1.5), (1, 1.375, 1.5)
+
+    assert first_sphere_contact(start, end, pane, radius) == pytest.approx(
+        (.5, radius), abs=1e-8,
+    )
+    assert first_sphere_contact(start, end, pane, radius - 1e-6) is None
+
+
+def test_contact_on_shared_edge_has_deterministic_attribution():
+    glass = RectPane("z-glass", 0, -1, 0, -1, 1)
+    opaque = RectPane("a-frame", 0, 0, 1, -1, 1, "opaque")
+    start, end, velocity = (-1, 0, 0), (1, 0, 0), (2, 0, 0)
+
+    forward = first_contact(start, end, velocity, [glass, opaque], .05, .2)
+    backward = first_contact(start, end, velocity, [opaque, glass], .05, .2)
+
+    assert forward == backward
+    assert forward.pane_id == "a-frame"
+    assert forward.material == "opaque"
+    assert forward.t == pytest.approx(.475, abs=1e-12)
+
 def test_no_tunneling():
     pane=RectPane("p",0,-1,1,-1,1)
     assert first_sphere_contact((-100,0,0),(100,0,0),pane,.02) is not None
