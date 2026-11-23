@@ -2,7 +2,7 @@
 
 Evidence-led research to explain **where, why and under what conditions birds collide with glass**, and to compare interventions for existing façades. The goal is a transparent, testable decision system—not a single opaque risk score or an unsupported end-to-end claim.
 
-> **Status (2026-11-17):** the repository includes a pinned UBC façade glass/vegetation association benchmark, an evidence-aware BNBU façade assessment adapter, structured glass and vegetation field schemas, optional pinned CLIP photo triage, auditable annular-mask summaries and a source-linked intervention evidence registry. The UBC model is descriptive only and did not demonstrate predictive improvement over an exposure-only baseline on held-out buildings. No BNBU-calibrated absolute collision probability or local treatment efficacy is claimed.
+> **Status (2026-11-23).** The BNBU pane pilot has executable intake, synthetic monitoring and a source-linked assessment. BNBU field validation and treatment evaluation are pending. The pinned UBC model remains a descriptive benchmark after its held-out comparison with the exposure-only baseline.
 
 ## Model architecture
 
@@ -31,6 +31,15 @@ The output is a **pathway profile plus an evidence-gated intervention comparison
 | `birdglass/uvic_panel.py` | Pinned UVic source verification, facade-period aggregation and observed-evidence Poisson GEE baseline |
 
 The façade decision layer separates measured evidence from proxies, reflection from through-glass false passage, local canopy from landscape cover, selected clips from continuous approach video, and mechanism fit from measured intervention efficacy.
+
+## Pane pilot and reproducibility
+
+- [Pane registry and glass intake](docs/BNBU_PANE_REGISTRY.md) define the join across building, façade, physical pane and geometry version. The checked-in adjacent panes are synthetic. T29 and LRC are candidates for on-site verification.
+- [Pane vegetation summaries](docs/PANE_VEGETATION.md) preserve five reviewed cover bands, dated reflection views and independent approach-monitoring sources. The same pane key keeps adjacent windows' evidence separate.
+- [Monitoring pipeline](docs/BNBU_MONITORING_PIPELINE.md) runs an optical and first-contact replay, audits censoring and survey zeros, and evaluates exposure-only baselines with held-out buildings and later time blocks. The [scientific workflow](https://github.com/starright00631-dev/bird/actions/workflows/pytest.yml) exercises the synthetic replay and the empty local intake through the test suite.
+- [Retrofit trial preregistration](docs/BNBU_RETROFIT_TRIAL.md) records matched controls, effort, adjacent-surface monitoring and safety or ecological vetoes. The output gives first-test candidates and the evidence needed to compare effects.
+- [Policy stress replay](docs/IMPORT_STATUS.md) fixes the simulated pane draw order and records current source, input and output hashes. The archived historical simulation and independent local motion validation remain open.
+- The [BNBU pilot roadmap](https://github.com/starright00631-dev/bird/issues/29) tracks the first independently locatable field walkthrough and the evidence needed for site-specific decisions.
 
 ## Not yet implemented or calibrated
 
@@ -72,6 +81,9 @@ Python 3.11 is used in CI.
 ~~~bash
 python -m pip install -r requirements.txt
 python -m pytest -q tests
+
+# Replay the synthetic pane monitoring pipeline without a field dataset
+python -m birdglass.bnbu_monitoring data/examples/synthetic_bnbu_monitoring.json monitoring-demo
 
 # Rebuild the pinned UVic facade-period panel and fit the observed-evidence baseline
 python scripts/build_uvic_facade_panel.py --fetch-pinned
