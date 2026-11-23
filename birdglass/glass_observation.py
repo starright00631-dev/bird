@@ -25,6 +25,7 @@ VISUAL_CLASS_TO_CANONICAL = {
     "transparent": GlassAppearance.CLEAR_TRANSPARENT,
     "reflective": GlassAppearance.HIGHLY_REFLECTIVE,
     "mirrored": GlassAppearance.HIGHLY_REFLECTIVE,
+    "reflective_and_transparent": GlassAppearance.REFLECTIVE_AND_TRANSPARENT,
     "tinted": GlassAppearance.TINTED_OR_LOW_E,
     "fritted": GlassAppearance.FRITTED_OR_PATTERNED,
     "patterned": GlassAppearance.FRITTED_OR_PATTERNED,
