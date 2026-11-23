@@ -16,7 +16,7 @@ VALIDATION_DESIGNS = {"held_out_facade", "held_out_building", "held_out_time", "
 
 @dataclass(frozen=True)
 class ValidatedRiskPrediction:
-    """A site-calibrated prediction record; a bare float is never accepted."""
+    """Metadata supplied with a prediction claim, pending independent artifact verification."""
 
     value: float
     endpoint: str
@@ -129,15 +129,16 @@ def build_facade_decision_report(
         }
     else:
         risk_prediction = {
-            "status": "site_calibrated",
-            "value": prediction.value,
+            "status": "validation_artifact_unverified",
+            "value": None,
+            "reason": "The supplied metadata does not verify a BNBU model artifact and held-out validation report.",
             "endpoint": prediction.endpoint,
             "exposure_definition": prediction.exposure_definition,
             "model_name": prediction.model_name,
             "model_artifact_sha256": prediction.model_artifact_sha256,
             "training_data_source": prediction.training_data_source,
             "target_site": prediction.target_site,
-            "calibration_status": prediction.calibration_status,
+            "declared_calibration_status": prediction.calibration_status,
             "validation_design": prediction.validation_design,
             "validation_report_id": prediction.validation_report_id,
             "warning": "A predicted endpoint is not interchangeable with another endpoint or exposure interval.",
