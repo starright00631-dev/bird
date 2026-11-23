@@ -21,9 +21,15 @@ class Scenario:
 
 def assess(panes,flights,scenarios,policy_delta,seed=17,dt=.025,
            planner_strategy="geometric"):
-    """flights are (start, velocity, destination, body_radius, span, weight)."""
+    """Evaluate ordered flights of (start, velocity, destination, body radius, span, weight).
+
+    Assign shared recognition draws in sorted glass-pane ID order so the same
+    seed and flights give identical results across processes and pane orderings.
+    Pane transfer values are signed changes in weighted first-contact rates.
+    """
     if not flights or not scenarios:raise ValueError("need trials and scenarios")
-    glass={x.id for x in panes if x.material=="glass"}
+    glass = sorted(pane.id for pane in panes if pane.material == "glass")
+    opaque = sorted(pane.id for pane in panes if pane.material == "opaque")
     if not set(policy_delta).issubset(glass):raise ValueError("only glass panes can be marked")
     if any(not np.isfinite(v) or not 0<=v<=1 for v in policy_delta.values()):
         raise ValueError("invalid hypothetical cue effect")
@@ -49,16 +55,25 @@ def assess(panes,flights,scenarios,policy_delta,seed=17,dt=.025,
             per_policy.append(outcomes)
         base,changed=per_policy
         denom=sum(row[2] for row in base)
-        def rate(rows,kind):
-            return sum(w for outcome,_,w,_ in rows if outcome==kind)/denom
+        def rate(rows, kind, pane_id=None):
+            return sum(
+                weight for outcome, pane, weight, _ in rows
+                if outcome == kind and (pane_id is None or pane == pane_id)
+            ) / denom
+
+        def transfer(kind, pane_ids):
+            return {
+                pane: rate(changed, kind, pane) - rate(base, kind, pane)
+                for pane in pane_ids
+            }
+
         gb,ga=rate(base,"glass"),rate(changed,"glass")
         wb,wa=rate(base,"opaque"),rate(changed,"opaque")
         result.append({"scenario":h.name,"glass_before":gb,"glass_after":ga,
              "opaque_before":wb,"opaque_after":wa,
              "total_contact_reduction":(gb+wb)-(ga+wa),
-             "pane_transfer":{pane:sum(w for o,p,w,_ in changed if o=="glass" and p==pane)/denom
-                               -sum(w for o,p,w,_ in base if o=="glass" and p==pane)/denom
-                               for pane in glass},
+             "pane_transfer": transfer("glass", glass),
+             "opaque_pane_transfer": transfer("opaque", opaque),
              "planning_strategy":planner_strategy,
              "planning_no_crossing_baseline":sum(
                  w for _,_,w,s in base

@@ -14,6 +14,23 @@ Repository status: **executable mechanistic research code plus an evidence-aware
 - Approach-event gates, right-censoring and observation identifiability.
 - Source graph/leakage checks and a 2026 stereo-bird trajectory schema adapter.
 
+#### Reproduce the paired-policy stress benchmark
+
+From the checkout root, run `python scripts/reproduce_policy_stress.py --out-dir <directory>`.
+The versioned synthetic fixture covers neighboring glass and opaque surfaces,
+immediate and delayed recognition responses, and multiple integration step
+sizes. `policy_stress.json` records both aggregate contact and per-pane
+transfer, including opaque contact. `manifest.json` binds that result to the
+exact synthetic input and simulation source bytes by SHA-256 and records the
+Python and NumPy versions. The seed uses a fixed ordering of the glass pane
+IDs. Keep the flight records in their original order to repeat the same draw
+assignments.
+
+The archived scenario, pane, reachability and intervention CSVs were imported
+as outputs. Exact reproduction requires their original generators,
+configuration, and evidence snapshots. The new stress fixture is independent
+of those historical outputs and uses fictional geometry and assumed responses.
+
 ### Evidence-aware façade decision layer
 
 - Typed `Measurement` and `EvidenceTier` values preserve units, provenance, uncertainty and missingness.

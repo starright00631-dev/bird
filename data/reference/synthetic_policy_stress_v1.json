@@ -1,0 +1,26 @@
+{
+  "snapshot_id": "synthetic_policy_stress_v1",
+  "evidence_kind": "synthetic",
+  "seed": 1,
+  "panes": [
+    {"id": "target-glass", "x": 0, "ymin": -0.4, "ymax": 0.4, "zmin": 0.8, "zmax": 1.2},
+    {"id": "adjacent-frame", "x": 0, "ymin": -0.4, "ymax": 0.4, "zmin": 0.65, "zmax": 0.75, "material": "opaque"},
+    {"id": "neighbor-glass", "x": 0, "ymin": 3, "ymax": 4, "zmin": 0.8, "zmax": 1.2}
+  ],
+  "flights": [
+    {"start": [-4, 0, 1], "velocity": [4, 0, 0], "destination": [2, 0, 1], "body_radius": 0.04, "wingspan": 0.2, "weight": 1.0},
+    {"start": [-4, 3.5, 1], "velocity": [4, 0, 0], "destination": [2, 3.5, 1], "body_radius": 0.04, "wingspan": 0.2, "weight": 1.0},
+    {"start": [-4, 0, 1.8], "velocity": [4, 0, 0], "destination": [2, 0, 1.8], "body_radius": 0.04, "wingspan": 0.2, "weight": 1.0}
+  ],
+  "scenarios": [
+    {"name": "immediate_recognition_response", "latency": 0, "gain": 5, "max_lateral_accel": 20, "detection_range": 7, "baseline_recognition": {}},
+    {"name": "delayed_recognition_response", "latency": 0.15, "gain": 5, "max_lateral_accel": 20, "detection_range": 7, "baseline_recognition": {"target-glass": 0.96}}
+  ],
+  "policy_delta": {"target-glass": 1.0},
+  "runs": [
+    {"planner_strategy": "geometric", "dt": 0.05},
+    {"planner_strategy": "geometric", "dt": 0.025},
+    {"planner_strategy": "geometric", "dt": 0.0125},
+    {"planner_strategy": "screened", "dt": 0.025}
+  ]
+}
