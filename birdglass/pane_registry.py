@@ -469,6 +469,11 @@ def audit_glass_evidence(registry: PaneRegistry, rows: Iterable[PaneGlassObserva
                 (field, getattr(left.observation, field), getattr(right.observation, field))
                 for field in ("surface_treatment", "coating_position")
             ]
+            if (left.observed_at == right.observed_at and left.view_id is not None
+                    and (left.view_id, left.approach_azimuth_deg, left.lighting_context)
+                    == (right.view_id, right.approach_azimuth_deg, right.lighting_context)
+                    and left.observation.visual_class_confirmed and right.observation.visual_class_confirmed):
+                compared.append(("visual_class", left.observation.visual_class, right.observation.visual_class))
             if left.incidence_angle_deg is not None and right.incidence_angle_deg is not None and isclose(
                 left.incidence_angle_deg, right.incidence_angle_deg, abs_tol=1e-6
             ):

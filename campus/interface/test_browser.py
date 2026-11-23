@@ -10,11 +10,71 @@ import threading
 from playwright.sync_api import sync_playwright
 
 PACKAGE = Path(__file__).resolve().parents[2] / "dist/BNBU_Campus_Full_v89"
+PANE_FIXTURE = Path(__file__).resolve().parents[2] / "data/examples/synthetic_workspace_evidence.json"
 RESULT = PACKAGE.parents[0] / "qa"
 RESULT.mkdir(parents=True,exist_ok=True)
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
+
+def check_pane_evidence(page):
+    page.locator("#pane-evidence-file").set_input_files(PANE_FIXTURE)
+    select = page.locator("#pane-evidence-select")
+    select.wait_for()
+    select.select_option(label="SYN-A-1")
+    page.get_by_text("合成窗片示例 · SYN-A-1").wait_for()
+    detail = page.locator("#pane-evidence-detail")
+    assert "来源冲突" in detail.locator("#pane-fact-exterior_vlr").inner_text()
+    assert "60%" in detail.locator("#pane-fact-exterior_vlt").inner_text()
+    assert "2026-01-09T09:00:00+08:00" in detail.locator("#pane-fact-exterior_vlt").inner_text()
+    calls = []
+    replies = iter([
+        {"pane_id":"SYN-A-1","fact_ids":["exterior_vlr","exterior_vlt","local_treatment_effect"]},
+        {"pane_id":"SYN-A-1","fact_ids":["exterior_vlt"]},
+        {"pane_id":"SYN-A-2","fact_ids":["tree_cover_0_5_m","glass_contact_risk"]},
+    ])
+    endpoint = "https://api.deepseek.com/chat/completions"
+    def api(route):
+        headers = {"access-control-allow-origin":"*", "access-control-allow-methods":"POST, OPTIONS",
+                   "access-control-allow-headers":"authorization, content-type"}
+        if route.request.method == "OPTIONS":
+            route.fulfill(status=204, headers=headers)
+            return
+        calls.append(route.request.post_data_json)
+        payload = {"choices":[{"message":{"content":json.dumps(next(replies))}}]}
+        route.fulfill(status=200,headers=headers,content_type="application/json",body=json.dumps(payload))
+    page.route(endpoint,api)
+    page.locator("#show-chat").click()
+    page.get_by_label("输入消息").fill("解释当前窗片的玻璃和本地改造效果")
+    page.get_by_role("button",name="发送").click()
+    page.locator(".aip-message.assistant").get_by_text("外表面可见光透射率",exact=False).wait_for()
+    assert "SYN-A-2" not in calls[0]["messages"][0]["content"]
+    page.get_by_role("button",name="查看证据").nth(1).click()
+    assert page.evaluate("document.activeElement.id") == "pane-fact-exterior_vlt"
+    detail.locator("#pane-fact-exterior_vlr a").first.click()
+    assert page.evaluate("document.activeElement.id").startswith("pane-source-synthetic-assembly")
+    select.select_option(label="SYN-A-2")
+    page.get_by_text("合成窗片示例 · SYN-A-2").wait_for()
+    page.locator("#show-chat").click()
+    assert page.locator(".aip-message.assistant").count() == 0
+    page.get_by_label("输入消息").fill("这块窗片有实测玻璃数据吗")
+    page.get_by_role("button",name="发送").click()
+    page.get_by_text("接口回复与当前窗片",exact=False).wait_for()
+    assert page.locator(".aip-message.assistant").count() == 0
+    assert "SYN-A-1" not in calls[1]["messages"][0]["content"]
+    page.get_by_label("输入消息").fill("植被和风险如何")
+    page.get_by_role("button",name="发送").click()
+    assert "缺少证据" in page.locator(".aip-message.assistant").inner_text()
+    assert "暂不提供结论" in page.locator(".aip-message.assistant").inner_text()
+    page.locator("#show-data").click()
+    select.select_option(value="")
+    page.locator("#show-chat").click()
+    page.get_by_label("输入消息").fill("给出窗片校准碰撞概率")
+    page.get_by_role("button",name="发送").click()
+    page.get_by_text("碰撞概率和本地改造效果仍待验证",exact=False).wait_for()
+    assert len(calls) == 3
+    page.unroute(endpoint,api)
+    page.locator("#show-data").click()
 
 def check(page,label,offline=False):
     print(f"Checking {label}: chat", flush=True)
@@ -81,6 +141,7 @@ def check(page,label,offline=False):
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
     assert page.evaluate("window.__BNBU_VERSION__")=="v89"
+    check_pane_evidence(page)
     assert page.locator("#layers input[type=checkbox]").count()==10
     assert page.locator("#layers label.bp6-checkbox").count() == 10
     assert page.locator(".topbar.bp6-navbar").is_visible()
