@@ -1,0 +1,106 @@
+{
+  "version": "v89",
+  "building": {
+    "id": "T1",
+    "label": "T1 厚德楼",
+    "anchor_node": "ROOF_DECK_T1",
+    "description": "位于一期教学区，工商管理学院在此办公。选择下方构件可以查看主楼、连廊和低翼。",
+    "facts": [
+      {"label": "建筑轮廓面积", "value": 2012, "unit": "m²", "source_ids": ["layout"]},
+      {"label": "主体高度", "value": 21.6, "unit": "m", "source_ids": ["layout"]},
+      {"label": "离主湖岸最近", "value": 37.2, "unit": "m", "source_ids": ["shoreline"]},
+      {"label": "工商管理学院办公点", "value": "T1-602", "unit": "", "source_ids": ["campus-office"]}
+    ]
+  },
+  "modules": [
+    {
+      "id": "main-east",
+      "label": "主楼东侧立面",
+      "mesh_names": ["T1_PART_02", "ROOF_DECK_T1_02", "ROOF_PARAPET_T1_02", "V89_STORYBAND_T1_02"],
+      "keywords": ["主楼", "立面", "东侧", "主湖", "反光", "倒影", "玻璃"],
+      "description": "主楼东侧面向主湖，可先核对这段立面的玻璃分格，以及湖面和岸边植被在不同视角下的倒影。",
+      "facts": [
+        {"label": "主楼轮廓面积", "value": 1005, "unit": "m²", "source_ids": ["layout"]},
+        {"label": "楼层", "value": 6, "unit": "层", "source_ids": ["layout", "campus-office"]},
+        {"label": "东侧连续外墙长度", "value": 15.1, "unit": "m", "source_ids": ["east-edge"]},
+        {"label": "外墙朝向", "value": 86, "unit": "°", "source_ids": ["east-edge"]}
+      ]
+    },
+    {
+      "id": "t1-t2-link",
+      "label": "T1–T2 连廊",
+      "mesh_names": ["V52_LEVEL2_PEDESTRIAN_CONNECTION_04_CLOSED_SLAB_EXISTING_TOPOGRAPHY"],
+      "keywords": ["连廊", "连桥", "廊桥", "天桥", "人文楼", "对穿"],
+      "description": "该连接体位于 T1 厚德楼与 T2 人文楼之间。核查两端视线及外侧围护，区分内部通道和外部透视。",
+      "facts": [
+        {"label": "相邻建筑", "value": "T1 厚德楼 / T2 人文楼", "unit": "", "source_ids": ["campus-map", "bridge"]},
+        {"label": "平面投影面积", "value": 96, "unit": "m²", "source_ids": ["layout", "bridge"]},
+        {"label": "东侧边长", "value": 16.7, "unit": "m", "source_ids": ["bridge"]}
+      ]
+    },
+    {
+      "id": "northwest-wing",
+      "label": "西北低翼",
+      "mesh_names": ["MAIN_T1", "ROOF_DECK_T1", "ROOF_PARAPET_T1", "V89_STORYBAND_T1_00"],
+      "keywords": ["西北", "西翼", "二层", "西北低翼", "楼翼"],
+      "description": "西北低翼位于主体与 T2 一侧。可与主楼东立面进行对照，查看主湖方向与建筑遮挡如何改变观察视角。",
+      "facts": [
+        {"label": "轮廓面积", "value": 566, "unit": "m²", "source_ids": ["layout"]},
+        {"label": "楼层", "value": 2, "unit": "层", "source_ids": ["layout"]},
+        {"label": "楼翼高度", "value": 7.2, "unit": "m", "source_ids": ["layout"]},
+        {"label": "离主湖岸最近", "value": 80.8, "unit": "m", "source_ids": ["shoreline"]}
+      ]
+    },
+    {
+      "id": "southeast-wing",
+      "label": "东南低翼",
+      "mesh_names": ["T1_PART_03"],
+      "keywords": ["东南", "南翼", "首层", "一层", "东南低翼"],
+      "description": "东南低翼邻接主楼东端。可从贴近地面的取景位回看主楼，复核不同视角下的遮挡与天空倒影。",
+      "facts": [
+        {"label": "轮廓面积", "value": 346, "unit": "m²", "source_ids": ["layout"]},
+        {"label": "楼层", "value": 1, "unit": "层", "source_ids": ["layout"]},
+        {"label": "楼翼高度", "value": 3.6, "unit": "m", "source_ids": ["layout"]},
+        {"label": "离主湖岸最近", "value": 43.5, "unit": "m", "source_ids": ["shoreline"]}
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "campus-map",
+      "label": "BNBU 校园名称资料",
+      "description": "学校校园资料将 T1 标为厚德楼、T2 标为人文楼。",
+      "url": "https://www.bnbu.edu.cn/UICDiscover20190515.pdf"
+    },
+    {
+      "id": "campus-office",
+      "label": "工商管理学院官网",
+      "description": "院系官网公布办公点为厚德楼 T1-602，提供建筑用途及六楼的独立出处。",
+      "url": "https://fbm.bnbu.edu.cn/about_us/contact_us.htm"
+    },
+    {
+      "id": "layout",
+      "label": "v89 建筑轮廓和楼层",
+      "description": "v89 将 2025 年 6 月 10 日 WorldView-2 影像与 OSM 轮廓配准。面积由 EPSG:32649 平面多边形计算，高度取对应模型构件的相对高度。T1 整楼对应 OSM 关系 20188783。",
+      "url": "https://github.com/starright00631-dev/bird/blob/main/campus/evidence/bnbu_layout_ground_truth_v89.json"
+    },
+    {
+      "id": "shoreline",
+      "label": "v89 主湖轮廓",
+      "description": "在 EPSG:32649 中计算建筑或构件轮廓至 LAKE_00 湖岸的最短平面距离。步行线路、门禁和观看条件需现场核对。",
+      "url": "https://github.com/starright00631-dev/bird/blob/main/campus/evidence/bnbu_layout_ground_truth_v89.json"
+    },
+    {
+      "id": "east-edge",
+      "label": "主楼东侧模型外墙",
+      "description": "取构件 1475182846 朝向主湖的连续外边。长度按其端点计算，方位角为外法线相对 UTM 网格北顺时针的角度。玻璃分格、材质及光学参数仍需逐窗核对。",
+      "url": "https://github.com/starright00631-dev/bird/blob/main/campus/evidence/bnbu_layout_ground_truth_v89.json"
+    },
+    {
+      "id": "bridge",
+      "label": "T1–T2 连廊构件",
+      "description": "源模型 V52_04 构件按 OSM 1215776052 的轮廓生成，其模型元数据记录相邻 T1 和 T2。东侧边长取该轮廓向东的长边。围护材质和实际通行状态需现场核对。",
+      "url": "https://github.com/starright00631-dev/bird/blob/main/campus/build_layout_v89.py"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState, useSyncExternalStore} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Button, Callout, Card, FormGroup, Icon, InputGroup, Tag, TextArea} from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
+import {buildingFactText, buildingProfileAnswer, getBuildingProfile, openBuildingProfile, subscribeBuildingProfile} from './building_profile.js';
 import {apiContext, factText, getWorkspaceContext, pendingPaneAnswer, readFactSelection, refreshWorkspaceContext, revealWorkspaceEvidence, subscribeWorkspace} from './pane_evidence.js';
 
 const h = React.createElement;
@@ -12,6 +13,7 @@ function App() {
  const [config, setConfig] = useState({url:defaultUrl, model:'deepseek-flash', key:''});
  const [settings, setSettings] = useState(false), [input,setInput] = useState(''), [messages,setMessages] = useState([]), [busy,setBusy] = useState(false), [error,setError] = useState('');
  const workspace = useSyncExternalStore(subscribeWorkspace,getWorkspaceContext);
+ const building = useSyncExternalStore(subscribeBuildingProfile,getBuildingProfile);
  const requestRef = useRef(null);
  useEffect(()=>{
   requestRef.current?.abort();
@@ -20,12 +22,18 @@ function App() {
   setBusy(false);
   setError('');
   setInput('');
- },[workspace]);
+ },[workspace,building]);
  const set = field => e => setConfig({...config,[field]:e.target.value});
  async function send(e) {
   e.preventDefault(); const content=input.trim(); if (!content || busy) return;
   const context=refreshWorkspaceContext();
   if (context!==workspace) return;
+  const buildingAnswer=context.pane ? null : buildingProfileAnswer(content,building,context.scene);
+  if (buildingAnswer) {
+   setMessages([...messages,{role:'user',content,local:true},{role:'assistant',buildingAnswer,local:true}]);
+   setInput('');setError('');
+   return;
+  }
   const localAnswer=context.pane ? null : pendingPaneAnswer(content);
   if (localAnswer) {
    setMessages([...messages,{role:'user',content,local:true},{role:'assistant',content:localAnswer,local:true}]);
@@ -69,7 +77,7 @@ function App() {
  }
  return <div className="aip"><div className="aip-header"><div><h3 className="bp6-heading">空间研究助手</h3><span className="bp6-text-muted">使用自然语言分析校园空间模型</span></div><Button icon="cog" minimal aria-label="API 设置" onClick={()=>setSettings(!settings)}/></div>
  {settings && <Card className="aip-settings" compact><h4 className="bp6-heading">模型连接</h4><p className="bp6-text-muted">OpenAI 兼容 API</p><FormGroup label="API 基础地址" labelFor="api-url"><InputGroup id="api-url" value={config.url} onChange={set('url')} /></FormGroup><FormGroup label="模型 ID" labelFor="api-model"><InputGroup id="api-model" value={config.model} onChange={set('model')} /></FormGroup><FormGroup label="API Key" labelFor="api-key"><InputGroup id="api-key" type="password" autoComplete="off" value={config.key} onChange={set('key')} placeholder="输入 API Key" /></FormGroup><p className="bp6-text-muted">密钥仅保留在当前页面内，关闭或刷新后需重新输入。请求直接发送到所填服务地址；服务商需允许浏览器跨域访问。</p><Button intent="primary" onClick={()=>setSettings(false)}>完成</Button></Card>}
- <div className="aip-messages" aria-live="polite">{workspace.pane && <p className="bp6-text-muted">当前窗片 {workspace.pane.pane_id}{workspace.status==='synthetic'?'（合成示例）':workspace.status==='stale'?'（证据包已过期）':''}</p>}{messages.length===0 ? <div className="aip-empty"><Icon icon="chat" size={24}/><h4 className="bp6-heading">从空间开始提问</h4><p className="bp6-text-muted">窗片查询与模型详情使用同一份证据。发送问题时，兼容 API 会收到当前场景、问题及可展示事实。</p><Button fill alignText="left" icon="search" text="这个模型能帮助我研究哪些鸟撞玻璃问题？" onClick={()=>setInput('这个模型能帮助我研究哪些鸟撞玻璃问题？')}/><Button fill alignText="left" icon="document" text="解释当前模型的证据限制" onClick={()=>setInput('解释当前模型的证据限制。')}/></div> : messages.map((m,i)=><div className={'aip-message '+m.role} key={i}><div className="message-role bp6-text-muted">{m.role==='user'?'你':'空间研究助手'}</div><Card compact className="message-content">{m.facts ? <ul>{m.facts.map(fact=><li key={fact.id}>{factText(fact)} <Button minimal small onClick={()=>revealWorkspaceEvidence(fact.id)} text="查看证据"/></li>)}</ul> : m.content}</Card></div>)}{busy && <p className="bp6-text-muted">正在生成回答…</p>}</div>
+ <div className="aip-messages" aria-live="polite">{workspace.pane && <p className="bp6-text-muted">当前窗片 {workspace.pane.pane_id}{workspace.status==='synthetic'?'（合成示例）':workspace.status==='stale'?'（证据包已过期）':''}</p>}{!workspace.pane && building && <p className="bp6-text-muted">{building.building.label}{building.module && ` · ${building.module.label}`}</p>}{messages.length===0 ? <div className="aip-empty"><Icon icon="chat" size={24}/><h4 className="bp6-heading">从空间开始提问</h4><p className="bp6-text-muted">查询当前建筑、模型构件或窗片证据。</p>{!workspace.pane && workspace.scene==='campus' && <><Button fill alignText="left" icon="search" text="介绍 T1 厚德楼" onClick={()=>setInput('介绍 T1 厚德楼')}/><Button fill alignText="left" icon="map-marker" text="T1 的临湖立面在哪里？" onClick={()=>setInput('T1 的临湖立面在哪里？')}/></>}<Button fill alignText="left" icon="document" text="解释当前模型的证据限制" onClick={()=>setInput('解释当前模型的证据限制。')}/></div> : messages.map((m,i)=><div className={'aip-message '+m.role} key={i}><div className="message-role bp6-text-muted">{m.role==='user'?'你':'空间研究助手'}</div><Card compact className="message-content">{m.buildingAnswer ? <div className="aip-building-answer"><strong>{m.buildingAnswer.title}</strong>{m.buildingAnswer.description && <p>{m.buildingAnswer.description}</p>}<ul>{m.buildingAnswer.facts.map(fact=><li key={fact.label}>{fact.label} · {buildingFactText(fact)}</li>)}</ul><Button minimal small icon="locate" text="查看建筑资料" onClick={()=>openBuildingProfile(m.buildingAnswer.moduleId)}/></div> : m.facts ? <ul>{m.facts.map(fact=><li key={fact.id}>{factText(fact)} <Button minimal small onClick={()=>revealWorkspaceEvidence(fact.id)} text="查看证据"/></li>)}</ul> : m.content}</Card></div>)}{busy && <p className="bp6-text-muted">正在生成回答…</p>}</div>
  <div className="aip-compose">{error && <Callout intent="danger" role="alert">{error}</Callout>}<form onSubmit={send}><TextArea fill growVertically value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.nativeEvent.isComposing){e.preventDefault();e.currentTarget.form.requestSubmit();}}} placeholder="针对校园模型提问…" aria-label="输入消息"/><div className="compose-actions"><Tag minimal icon="application">{config.model || '未设置模型'}</Tag><span className="bp6-text-muted">{config.key ? '已配置密钥' : '未配置密钥'}</span><Button type="submit" intent="primary" icon="send-message" disabled={busy||!input.trim()} text="发送" /></div></form><div className="bp6-text-muted aip-note">回答可能有误；请结合证据与模型限制核实。</div></div></div>;
 }
 createRoot(document.getElementById('chat-root')).render(h(App));

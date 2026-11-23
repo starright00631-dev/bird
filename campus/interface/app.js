@@ -1,4 +1,5 @@
 import './chat.jsx';
+import {getBuildingModule, getBuildingProfile, mountBuildingProfile, profileBuildingId, selectBuildingProfileMesh, setBuildingProfile} from './building_profile.js';
 import {factText, getWorkspaceContext, parsePaneEvidence, refreshWorkspaceContext, setPaneEvidence, setWorkspaceSelection, subscribeWorkspace} from './pane_evidence.js';
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
@@ -824,6 +825,7 @@ function clearSelection(){
  $('selection').textContent=current==='campus'?'点击左侧 3D 网格查看名称、类型及 GIS 记录。':'点击遥感地形查看插值高程。';
  $('match-count').textContent='0 项关联';
  setWorkspaceSelection({scene:current,status:'empty'});
+ setBuildingProfile(null);
  redraw();
 }
 function selectMesh(mesh,position=null){
@@ -838,6 +840,8 @@ function selectMesh(mesh,position=null){
  $('selection').innerHTML=text;$('match-count').textContent=matches.length+' 项关联';
  const schematic=mesh.userData.bnbuCategory==='glass_proxies_unregistered';
  setWorkspaceSelection({scene:'campus',object_name:mesh.name,status:schematic?'schematic_pane':'model_object'});
+ selectBuildingProfileMesh(mesh.name);
+ if(getBuildingProfile()) $('architecture-v76-select').value=profileBuildingId;
  redraw();
 }
 const raycaster=new THREE.Raycaster(),point=new THREE.Vector2();
@@ -1298,8 +1302,47 @@ function architectureChoose76(){
   +'就近道路/步道（平面距离）：'+routes+'\n'
   +'就近湖面（平面距离）：'+water+'\n'
   +'建筑轮廓已按 2025-06-10 WorldView-2 影像与 OSM 校正；窗格玻璃面积及出入口实测仍待现场踏勘。';
+ setBuildingProfile(id);
  redraw();
 }
+
+let pendingBuildingProfile = new URLSearchParams(location.search).get('building') === profileBuildingId
+ ? {moduleId: null, showPanel: true} : null;
+
+async function focusBuildingProfile(moduleId, showPanel = false) {
+ if (!campus || !architecture76) {
+  pendingBuildingProfile = {moduleId, showPanel};
+  return;
+ }
+ await switchScene('campus');
+ $('architecture-v76-select').value = profileBuildingId;
+ const module = getBuildingModule(moduleId);
+ if (!module) {
+  architectureChoose76();
+ } else {
+  const bounds = new THREE.Box3();
+  for (const name of module.mesh_names) {
+   const mesh = campus.getObjectByName(name);
+   if (mesh) bounds.union(boxWorld(mesh));
+  }
+  if (bounds.isEmpty()) return;
+  clearSelection();
+  setBuildingProfile(profileBuildingId, module.id);
+  fit(bounds);
+  redraw();
+ }
+ if (showPanel) {
+  $('show-data').click();
+  $('building-profile').scrollIntoView({block:'nearest'});
+ }
+}
+
+function showBuildingModule(moduleId, showPanel = false) {
+ focusBuildingProfile(moduleId, showPanel).catch(showError);
+}
+
+mountBuildingProfile($('building-profile'), showBuildingModule);
+document.addEventListener('bnbu-open-building-profile', event => showBuildingModule(event.detail.moduleId, true));
 async function loadArchitecture76(){
  const [atlas,gltf]=await Promise.all([
     loadJson('v89-architecture','generated/BNBU_v89_ARCHITECTURE_COMPONENT_ATLAS.json'),
@@ -1316,6 +1359,7 @@ async function loadArchitecture76(){
    throw Error('Architecture source edge geometry failed '+family);
  }
  const opts=$('architecture-v76-select');opts.textContent='';
+ opts.add(new Option('请选择建筑',''));
  architectureModelIndex76.clear();
  const famLabels={T:'教学楼',V:'一期宿舍',D:'二期宿舍',LRC:'学习资源中心',OTHER:'校园公建与扩建'};
  const allRecs=[...(atlas.building_records||[]),...(atlas.extended_records||[])];
@@ -1343,6 +1387,11 @@ async function loadArchitecture76(){
  architectureApply76();
  $('architecture-v76-status').textContent='v89 已校准 8 栋 T、15 栋 V、6 栋 D、LRC 及 11 栋公建共 41 栋（Blender 兼容法线+PBR），无虚构窗格。';
  $('architecture-v76-detail').textContent='选择建筑可近距离查看校准后多翼体块、连桥与屋面结构，并核对前后布局 IoU 及道路/水体关系。';
+ if (pendingBuildingProfile) {
+  const {moduleId, showPanel} = pendingBuildingProfile;
+  pendingBuildingProfile = null;
+  await focusBuildingProfile(moduleId, showPanel);
+ }
  redraw();
 }
 $('architecture-v76-select').addEventListener('change',architectureChoose76);
