@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "synthetic",
+  "trial_id": "synthetic-retrofit-v1",
+  "registered_at": "2026-02-01T12:00:00+08:00",
+  "treatment_action": "full_pane_exterior_visual_markers",
+  "periods": {
+    "before": {
+      "start": "2026-02-02T07:00:00+08:00",
+      "end": "2026-03-02T07:00:00+08:00"
+    },
+    "after": {
+      "start": "2026-03-03T07:00:00+08:00",
+      "end": "2026-03-31T07:00:00+08:00"
+    }
+  },
+  "allocation": {
+    "method": "matched_pairs",
+    "source_id": "mock-pairing-plan",
+    "max_azimuth_difference_deg": 15,
+    "max_canopy_difference_pct_points": 5,
+    "max_flow_difference_per_hour": 3
+  },
+  "protocol": {
+    "target_independent_pairs": 4,
+    "minimum_pretrend_blocks": 2,
+    "minimum_meaningful_absolute_risk_difference": 0.05,
+    "sample_size_basis": "Illustrative engineering numbers. Set actual target with a blind pilot estimate of approach/contact rates, cluster variance and precision before allocation.",
+    "seasonal_trends_and_sampling_schedule": "Use the same clock hours and days in both arms. Estimate pretrends from weekly blocks and record weather, season and guild.",
+    "fixed_risk_gate_and_censoring": "Version the one-metre pane-centered risk gate, camera orientation and clock. Count each unique approach once. Keep occlusion, loss of follow-up and outages in a separate censoring log.",
+    "compliance_audit": "Audit full-pane exterior coverage and contrast weekly and after storms. Preserve assigned arms and record maintenance and exposure changes.",
+    "observer_bias_and_blinded_review": "Use common cameras and independent blinded review of endpoint status where feasible. Record disagreements and reviewer coverage.",
+    "detection_and_persistence_protocol": "Log surveyed zeroes separately from missed patrols. Use separate blinded searcher-efficiency and persistence trials matched by surface and season.",
+    "analysis_and_uncertainty": "Analyze the arm-by-period interaction on the risk difference with matched cluster-level uncertainty and censored-outcome sensitivity. Keep first-contact transfers and injury separate from patrol detections.",
+    "early_stop_rules": "Pause immediately for safety incidents, entanglement or serious observed injury pending independent review. Stop at scheduled effort or documented maximum duration. Do not stop early for apparent efficacy."
+  },
+  "pane_registry": {
+    "dataset_kind": "synthetic",
+    "panes": [
+      {
+        "identity": {
+          "pane_id": "SYN-T-1",
+          "building_id": "SYN-T",
+          "facade_id": "SYN-T-WEST",
+          "model_version": "synthetic-retrofit-geometry-v1"
+        },
+        "floor": "1",
+        "bay": "1",
+        "coordinate_system": "SYN-local-ENU-T",
+        "corners_m": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            2,
+            1
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            0,
+            3
+          ]
+        ],
+        "outward_azimuth_deg": 270,
+        "registration_error_m": 0.05,
+        "geometry_source_id": "mock-geometry-SYN-T-1",
+        "photos": [
+          {
+            "photo_id": "SYN-T-1-photo",
+            "source_id": "synthetic-no-image",
+            "captured_at": "2026-01-15T09:00:00+08:00"
+          }
+        ],
+        "field_verified_at": "2026-01-15T09:30:00+08:00"
+      },
+      {
+        "identity": {
+          "pane_id": "SYN-T-2",
+          "building_id": "SYN-T",
+          "facade_id": "SYN-T-WEST",
+          "model_version": "synthetic-retrofit-geometry-v1"
+        },
+        "floor": "1",
+        "bay": "2",
+        "coordinate_system": "SYN-local-ENU-T",
+        "corners_m": [
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            0,
+            5,
+            1
+          ],
+          [
+            0,
+            5,
+            3
+          ],
+          [
+            0,
+            3,
+            3
+          ]
+        ],
+        "outward_azimuth_deg": 270,
+        "registration_error_m": 0.05,
+        "geometry_source_id": "mock-geometry-SYN-T-2",
+        "photos": [
+          {
+            "photo_id": "SYN-T-2-photo",
+            "source_id": "synthetic-no-image",
+            "captured_at": "2026-01-15T09:00:00+08:00"
+          }
+        ],
+        "field_verified_at": "2026-01-15T09:30:00+08:00"
+      },
+      {
+        "identity": {
+          "pane_id": "SYN-C-1",
+          "building_id": "SYN-C",
+          "facade_id": "SYN-C-WEST",
+          "model_version": "synthetic-retrofit-geometry-v1"
+        },
+        "floor": "1",
+        "bay": "1",
+        "coordinate_system": "SYN-local-ENU-C",
+        "corners_m": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            2,
+            1
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            0,
+            3
+          ]
+        ],
+        "outward_azimuth_deg": 274,
+        "registration_error_m": 0.05,
+        "geometry_source_id": "mock-geometry-SYN-C-1",
+        "photos": [
+          {
+            "photo_id": "SYN-C-1-photo",
+            "source_id": "synthetic-no-image",
+            "captured_at": "2026-01-15T09:00:00+08:00"
+          }
+        ],
+        "field_verified_at": "2026-01-15T09:30:00+08:00"
+      },
+      {
+        "identity": {
+          "pane_id": "SYN-C-2",
+          "building_id": "SYN-C",
+          "facade_id": "SYN-C-WEST",
+          "model_version": "synthetic-retrofit-geometry-v1"
+        },
+        "floor": "1",
+        "bay": "2",
+        "coordinate_system": "SYN-local-ENU-C",
+        "corners_m": [
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            0,
+            5,
+            1
+          ],
+          [
+            0,
+            5,
+            3
+          ],
+          [
+            0,
+            3,
+            3
+          ]
+        ],
+        "outward_azimuth_deg": 274,
+        "registration_error_m": 0.05,
+        "geometry_source_id": "mock-geometry-SYN-C-2",
+        "photos": [
+          {
+            "photo_id": "SYN-C-2-photo",
+            "source_id": "synthetic-no-image",
+            "captured_at": "2026-01-15T09:00:00+08:00"
+          }
+        ],
+        "field_verified_at": "2026-01-15T09:30:00+08:00"
+      }
+    ]
+  },
+  "panes": [
+    {
+      "identity": {
+        "pane_id": "SYN-T-1",
+        "building_id": "SYN-T",
+        "facade_id": "SYN-T-WEST",
+        "model_version": "synthetic-retrofit-geometry-v1"
+      },
+      "role": "treatment",
+      "pair_id": "synthetic-pair-1",
+      "assignment_neighborhood_id": "SYN-T-N",
+      "glass_assembly_class": "synthetic-clear-insulated-unit",
+      "glass_assembly_source_id": "mock-glazing-T",
+      "glass_view": {
+        "evidence_id": "mock-view-evidence-SYN-T-1",
+        "source_id": "mock-view-SYN-T-1",
+        "appearance": "reflective_and_transparent",
+        "appearance_tier": "local_survey",
+        "observed_at": "2026-01-15T09:45:00+08:00",
+        "reviewer_id": "mock-reviewer",
+        "view_id": "mock-view-id-SYN-T-1",
+        "approach_azimuth_deg": 270,
+        "lighting_context": "synthetic cloudy morning",
+        "photo_ids": [
+          "SYN-T-1-photo"
+        ],
+        "reflected_habitat_fraction": {
+          "value": 0.4,
+          "unit": "fraction",
+          "tier": "measured",
+          "source_id": "mock-reflection-T"
+        },
+        "existing_pattern_status": "no_pattern_observed"
+      },
+      "canopy_cover_50m": {
+        "value": 30,
+        "unit": "percent",
+        "tier": "measured",
+        "source_id": "mock-canopy-T"
+      },
+      "bird_flow": {
+        "value": 9,
+        "unit": "approaches/hour",
+        "tier": "measured",
+        "source_id": "mock-flow-T"
+      },
+      "effort": {
+        "before": {
+          "camera_hours": 60,
+          "target_approaches": 120,
+          "patrol_hours": 6
+        },
+        "after": {
+          "camera_hours": 60,
+          "target_approaches": 120,
+          "patrol_hours": 6
+        }
+      },
+      "monitor_surfaces": [
+        {
+          "kind": "adjacent_pane",
+          "surface_id": "SYN-T-2",
+          "identity": {
+            "pane_id": "SYN-T-2",
+            "building_id": "SYN-T",
+            "facade_id": "SYN-T-WEST",
+            "model_version": "synthetic-retrofit-geometry-v1"
+          },
+          "source_id": "mock-spillover-map-T"
+        },
+        {
+          "kind": "frame",
+          "surface_id": "SYN-T-frame",
+          "source_id": "mock-frame-map-T"
+        }
+      ],
+      "candidate_reviews": {
+        "full_pane_exterior_visual_markers": {
+          "cost_cny": 125,
+          "cost_source_id": "mock-quote",
+          "maintenance": "Record adhesion and pattern coverage each week.",
+          "daylight": "Compare daylight illuminance and glare before and after."
+        },
+        "external_screen_or_cord_system": {
+          "checks": {
+            "entanglement_and_standoff": {
+              "status": "veto",
+              "source_id": "mock-screen-review",
+              "reviewed_at": "2026-01-25T13:00:00+08:00",
+              "notes": "An accessible slack cord was found during mock inspection."
+            }
+          }
+        }
+      }
+    },
+    {
+      "identity": {
+        "pane_id": "SYN-C-1",
+        "building_id": "SYN-C",
+        "facade_id": "SYN-C-WEST",
+        "model_version": "synthetic-retrofit-geometry-v1"
+      },
+      "role": "control",
+      "pair_id": "synthetic-pair-1",
+      "assignment_neighborhood_id": "SYN-C-N",
+      "glass_assembly_class": "synthetic-clear-insulated-unit",
+      "glass_assembly_source_id": "mock-glazing-C",
+      "glass_view": {
+        "evidence_id": "mock-view-evidence-SYN-C-1",
+        "source_id": "mock-view-SYN-C-1",
+        "appearance": "reflective_and_transparent",
+        "appearance_tier": "local_survey",
+        "observed_at": "2026-01-15T09:45:00+08:00",
+        "reviewer_id": "mock-reviewer",
+        "view_id": "mock-view-id-SYN-C-1",
+        "approach_azimuth_deg": 270,
+        "lighting_context": "synthetic cloudy morning",
+        "photo_ids": [
+          "SYN-C-1-photo"
+        ],
+        "reflected_habitat_fraction": {
+          "value": 0.4,
+          "unit": "fraction",
+          "tier": "measured",
+          "source_id": "mock-reflection-C"
+        },
+        "existing_pattern_status": "no_pattern_observed"
+      },
+      "canopy_cover_50m": {
+        "value": 32,
+        "unit": "percent",
+        "tier": "measured",
+        "source_id": "mock-canopy-C"
+      },
+      "bird_flow": {
+        "value": 10,
+        "unit": "approaches/hour",
+        "tier": "measured",
+        "source_id": "mock-flow-C"
+      },
+      "effort": {
+        "before": {
+          "camera_hours": 60,
+          "target_approaches": 120,
+          "patrol_hours": 6
+        },
+        "after": {
+          "camera_hours": 60,
+          "target_approaches": 120,
+          "patrol_hours": 6
+        }
+      },
+      "monitor_surfaces": [
+        {
+          "kind": "adjacent_pane",
+          "surface_id": "SYN-C-2",
+          "identity": {
+            "pane_id": "SYN-C-2",
+            "building_id": "SYN-C",
+            "facade_id": "SYN-C-WEST",
+            "model_version": "synthetic-retrofit-geometry-v1"
+          },
+          "source_id": "mock-spillover-map-C"
+        },
+        {
+          "kind": "frame",
+          "surface_id": "SYN-C-frame",
+          "source_id": "mock-frame-map-C"
+        }
+      ]
+    }
+  ]
+}
