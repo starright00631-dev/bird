@@ -17,6 +17,31 @@ RESULT.mkdir(parents=True,exist_ok=True)
 class Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
 
+def check_control_rendering(page):
+    checkboxes = page.locator(".bp6-checkbox > input[type=checkbox]").evaluate_all("""inputs =>
+        inputs.map(input => ({
+            id: input.id,
+            opacity: getComputedStyle(input).opacity,
+            position: getComputedStyle(input).position,
+            indicator: input.nextElementSibling?.classList.contains('bp6-control-indicator'),
+        }))
+    """)
+    assert checkboxes and all(
+        item["opacity"] == "0" and item["position"] == "absolute" and item["indicator"]
+        for item in checkboxes
+    ), checkboxes
+    building_select = page.locator("#architecture-v76-select").evaluate("""select => {
+        const style = getComputedStyle(select);
+        let next = select.nextElementSibling;
+        while (next && next.getClientRects().length === 0) next = next.nextElementSibling;
+        const textHeight = parseFloat(style.lineHeight) || parseFloat(style.fontSize);
+        const room = select.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+        return {appearance: style.appearance, room, textHeight,
+            overlaps: !!next && select.getBoundingClientRect().bottom > next.getBoundingClientRect().top};
+    }""")
+    assert building_select["appearance"] == "auto", building_select
+    assert building_select["room"] >= building_select["textHeight"] and not building_select["overlaps"], building_select
+
 def check_pane_evidence(page):
     page.locator("#pane-evidence-file").set_input_files(PANE_FIXTURE)
     select = page.locator("#pane-evidence-select")
@@ -147,6 +172,7 @@ def check(page,label,offline=False):
     assert not page.locator("#render-error").is_visible()
     page.wait_for_function("window.__BNBU_DEBUG__.waterfrontMaterialCount()===6",timeout=30000)
     assert page.evaluate("window.__BNBU_VERSION__")=="v89"
+    check_control_rendering(page)
     pane_evidence = check_pane_evidence(page)
     assert page.locator("#layers input[type=checkbox]").count()==10
     assert page.locator("#layers label.bp6-checkbox").count() == 10
@@ -179,7 +205,7 @@ def check(page,label,offline=False):
     set_checkbox("#show-v76-phaseii-gaps", False)
     assert page.evaluate("window.__BNBU_DEBUG__.v76PhaseIIGapsVisible()") is False
 
-    assert page.locator("#architecture-v76-select option").count()==41
+    assert page.locator("#architecture-v76-select option:not([value=''])").count()==41
     assert page.evaluate("window.__BNBU_DEBUG__.v76FeatureFamilies()")==5
     assert page.locator("#show-v76-facades").is_checked()
     assert page.locator("#show-v76-edges").is_checked()
@@ -187,9 +213,26 @@ def check(page,label,offline=False):
     assert page.evaluate("window.__BNBU_DEBUG__.v76EdgeVisible()") is True
     page.locator("#architecture-v76-select").select_option("T1")
     assert "T1 (T)" in page.locator("#architecture-v76-detail").inner_text()
+    building = page.locator("#building-profile")
+    assert building.get_by_role("heading", name="T1 厚德楼").is_visible()
+    assert building.locator("h3").evaluate("h => getComputedStyle(h).color") == building.evaluate("p => getComputedStyle(p).color")
+    assert building.get_by_text("2,012 m²", exact=True).is_visible()
+    building.get_by_role("button", name="T1–T2 连廊").click()
+    colors = building.locator("button").evaluate_all("buttons => buttons.map(b => [b.ariaPressed, getComputedStyle(b).backgroundColor])")
+    assert next(color for pressed, color in colors if pressed == "true") != next(color for pressed, color in colors if pressed == "false")
+    assert building.get_by_text("96 m²", exact=True).is_visible()
+    page.locator("#show-chat").click()
+    page.get_by_label("输入消息").fill("这段连廊的平面投影面积是多少？")
+    page.get_by_role("button", name="发送").click()
+    response = page.locator(".aip-building-answer")
+    response.get_by_text("平面投影面积 · 96 m²", exact=True).wait_for()
+    response.get_by_role("button", name="查看建筑资料").click()
+    assert building.get_by_role("button", name="T1–T2 连廊").get_attribute("aria-pressed") == "true"
+    building.get_by_role("button", name="概览").click()
     page.screenshot(path=str(RESULT/(label+"_v76_T1_facade.png")),full_page=True,timeout=45000)
     page.locator("#architecture-v76-select").select_option("V16")
     assert "V16 (V)" in page.locator("#architecture-v76-detail").inner_text()
+    assert building.is_hidden()
     page.screenshot(path=str(RESULT/(label+"_v76_V16_residence.png")),full_page=True,timeout=45000)
     page.locator("#architecture-v76-select").select_option("D1")
     assert "D1 (D)" in page.locator("#architecture-v76-detail").inner_text()
