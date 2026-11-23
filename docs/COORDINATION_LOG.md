@@ -122,3 +122,13 @@ Use identified, downloaded, checksum_verified, schema_audited, model_fitted and 
 - UBC LOBO paired cluster bootstrap (8 building clusters, 5,000 resamples) does not demonstrate predictive improvement over the exposure-only baseline. Keep the UBC model as a descriptive association benchmark only.
 
 - Added cumulative_cover_to_annular conversion: only uses measured valid clipped areas and area-weighted covered-area differences; incomplete or inconsistent cumulative buffers fail closed. This prevents nested-buffer percentages from being mislabelled as annular features.
+
+
+
+## Training-fold-only nested LOBO validation
+
+- Dedicated branch `research/ubc-nested-lobo-selection-20261117` is based on main commit `94003c4ec3345054ebfc226015178c78096dec71`. It does not touch campus geometry, viewer or campus reconstruction.
+- Adds an outer leave-one-building-out evaluation of four seasonal AICc candidates (full, building-only, vegetation-only, null). Predictor scaling, candidate fitting and AICc selection are repeated using only the seven training buildings; the held-out building is used only for prediction/scoring.
+- Compares against the same exposure-only binomial GLM with `log(survey_hours)` offset. Outputs all 32 folds, selected candidate/AICc per fold and four seasonal summaries; the eight buildings are also used as the cluster unit for a paired bootstrap.
+- The pinned workflow ran all 32 nested folds and both paired building bootstrap reports. Independent checks of the downloaded output matched all 8,835 held-out visits, 142 positive visits and both comparators. Every overall descriptive 95% interval crossed zero. This external experiment does not justify a BNBU prediction or establish an improvement over either comparator. [PR validation run and source artifact](https://github.com/starright00631-dev/bird/actions/runs/44088298422)
+- Scientific boundary: this is still a one-campus temperate-Pacific internal transfer test of detected carcass presence, not true approach probability, not detection-corrected mortality, not BNBU calibration and not independent-site validation.

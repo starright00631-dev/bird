@@ -423,13 +423,171 @@ fit_leave_one_building_out <- function(data, seasons) {
   do.call(rbind, output)
 }
 
+
+# Nested LOBO: candidate selection is repeated inside each training fold.
+# The held-out building is never used for scaling, AICc selection or fitting.
+
+# Nested LOBO: all preprocessing and candidate selection happen inside each
+# training-building fold. The held-out building is used only for scoring.
+fit_nested_leave_one_building_out <- function(data, seasons) {
+  output <- list()
+  for (season in seasons) {
+    season_data <- data[data$season == season, , drop = FALSE]
+    for (held_out in levels(data$building_id)) {
+      train_raw <- season_data[season_data$building_id != held_out, , drop = FALSE]
+      test_raw <- season_data[season_data$building_id == held_out, , drop = FALSE]
+      fail_row <- function(message, candidates = "", selected = NA_character_,
+                           selected_aicc = NA_real_) data.frame(
+        season = as.character(season), held_out_building = held_out,
+        selected_model = selected, selected_training_aicc = selected_aicc,
+        candidate_aicc = candidates,
+        n_train = nrow(train_raw), n_test = nrow(test_raw),
+        n_train_positive = sum(train_raw$mortality_present),
+        n_test_positive = sum(test_raw$mortality_present),
+        converged = FALSE, baseline_converged = FALSE,
+        auc = NA_real_, brier = NA_real_, log_loss = NA_real_,
+        baseline_brier = NA_real_, baseline_log_loss = NA_real_,
+        brier_skill_vs_exposure_baseline = NA_real_,
+        log_loss_skill_vs_exposure_baseline = NA_real_,
+        message = message, stringsAsFactors = FALSE
+      )
+      if (nrow(train_raw) == 0 || nrow(test_raw) == 0 ||
+          length(unique(train_raw$mortality_present)) < 2) {
+        output[[length(output) + 1]] <- fail_row("Insufficient training outcomes or test rows")
+        next
+      }
+
+      # Crucial: scale each predictor using training buildings only.
+      scaled <- tryCatch(scale_predictors(train_raw, test_raw), error = function(e) e)
+      if (inherits(scaled, "error")) {
+        output[[length(output) + 1]] <- fail_row(conditionMessage(scaled))
+        next
+      }
+      train <- scaled$train
+      test <- scaled$test
+      train$facade_id <- droplevels(factor(train$facade_id))
+      test$facade_id <- factor(
+        test$facade_id,
+        levels = unique(c(levels(train$facade_id), as.character(test$facade_id)))
+      )
+
+      # AICc candidate selection is performed on training buildings only.
+      candidate_fits <- lapply(names(model_fixed_terms), function(name) {
+        fit_one_model(train, as.character(season), name)
+      })
+      names(candidate_fits) <- names(model_fixed_terms)
+      candidate_rows <- do.call(rbind, lapply(candidate_fits, function(x) x$row))
+      valid <- candidate_rows[
+        candidate_rows$converged & is.finite(candidate_rows$AICc), , drop = FALSE
+      ]
+      aicc_labels <- ifelse(
+        is.finite(candidate_rows$AICc),
+        sprintf("%.6f", candidate_rows$AICc),
+        "NA"
+      )
+      candidate_text <- paste(
+        sprintf("%s=%s%s", candidate_rows$model, aicc_labels,
+                ifelse(candidate_rows$converged, "", "[failed]")),
+        collapse = ";"
+      )
+      if (nrow(valid) == 0) {
+        output[[length(output) + 1]] <- fail_row(
+          "No converged training-fold candidate", candidate_text
+        )
+        next
+      }
+      valid <- valid[order(valid$AICc, valid$model), , drop = FALSE]
+      selected <- as.character(valid$model[1])
+      selected_aicc <- as.numeric(valid$AICc[1])
+      fit <- candidate_fits[[selected]]$fit
+
+      prediction <- tryCatch(as.numeric(predict(
+        fit, newdata = test, type = "response",
+        re.form = NA, allow.new.levels = TRUE
+      )), error = function(e) e)
+      if (inherits(prediction, "error") || length(prediction) != nrow(test) ||
+          any(!is.finite(prediction))) {
+        message <- if (inherits(prediction, "error")) {
+          conditionMessage(prediction)
+        } else {
+          "Invalid held-out predictions"
+        }
+        output[[length(output) + 1]] <- fail_row(
+          message, candidate_text, selected, selected_aicc
+        )
+        next
+      }
+
+      # Same exposure-only comparator as the existing full-model LOBO.
+      baseline_fit <- tryCatch(stats::glm(
+        mortality_present ~ offset(log(survey_hours)),
+        data = train, family = stats::binomial(link = "logit")
+      ), error = function(e) e)
+      if (inherits(baseline_fit, "error") || !isTRUE(baseline_fit$converged)) {
+        message <- if (inherits(baseline_fit, "error")) {
+          paste("Exposure-only baseline failed:", conditionMessage(baseline_fit))
+        } else {
+          "Exposure-only baseline did not converge"
+        }
+        output[[length(output) + 1]] <- fail_row(
+          message, candidate_text, selected, selected_aicc
+        )
+        next
+      }
+      baseline_prediction <- tryCatch(as.numeric(stats::predict(
+        baseline_fit, newdata = test, type = "response"
+      )), error = function(e) e)
+      if (inherits(baseline_prediction, "error") ||
+          length(baseline_prediction) != nrow(test) ||
+          any(!is.finite(baseline_prediction))) {
+        message <- if (inherits(baseline_prediction, "error")) {
+          conditionMessage(baseline_prediction)
+        } else {
+          "Invalid exposure-only baseline predictions"
+        }
+        output[[length(output) + 1]] <- fail_row(
+          message, candidate_text, selected, selected_aicc
+        )
+        next
+      }
+
+      y <- as.integer(test$mortality_present)
+      probability <- pmin(pmax(prediction, 1e-8), 1 - 1e-8)
+      baseline_probability <- pmin(pmax(baseline_prediction, 1e-8), 1 - 1e-8)
+      output[[length(output) + 1]] <- data.frame(
+        season = as.character(season), held_out_building = held_out,
+        selected_model = selected, selected_training_aicc = selected_aicc,
+        candidate_aicc = candidate_text,
+        n_train = nrow(train), n_test = nrow(test),
+        n_train_positive = sum(train$mortality_present), n_test_positive = sum(y),
+        converged = TRUE, baseline_converged = TRUE,
+        auc = auc_rank(y, probability),
+        brier = mean((probability - y)^2),
+        log_loss = mean(-y * log(probability) - (1-y) * log(1-probability)),
+        baseline_brier = mean((baseline_probability-y)^2),
+        baseline_log_loss = mean(-y*log(baseline_probability) -
+                                 (1-y)*log(1-baseline_probability)),
+        brier_skill_vs_exposure_baseline = 1 -
+          mean((probability-y)^2) / mean((baseline_probability-y)^2),
+        log_loss_skill_vs_exposure_baseline = 1 -
+          mean(-y*log(probability)-(1-y)*log(1-probability)) /
+          mean(-y*log(baseline_probability) -
+               (1-y)*log(1-baseline_probability)),
+        message = "AICc candidate selection and scaling used training buildings only",
+        stringsAsFactors = FALSE
+      )
+    }
+  }
+  do.call(rbind, output)
+}
+
 args <- parse_args(commandArgs(trailingOnly = TRUE))
 dir.create(args$out_dir, recursive = TRUE, showWarnings = FALSE)
 validated <- read_and_validate_panel(args$input, args$audit)
-data <- validated$panel
+raw_data <- validated$panel
 audit <- validated$audit
 seasons <- c("fall", "winter", "spring", "summer")
-scaled <- scale_predictors(data)
+scaled <- scale_predictors(raw_data)
 data <- scaled$train
 scales <- scaled$scales
 
@@ -536,7 +694,21 @@ vif_values <- sapply(static_predictors, function(target) {
 write.csv(data.frame(feature = names(vif_values), VIF = as.numeric(vif_values)),
           file.path(args$out_dir, "ubc_facade_feature_vif.csv"), row.names = FALSE)
 
-lobo <- fit_leave_one_building_out(data, seasons)
+lobo <- fit_leave_one_building_out(raw_data, seasons)
+nested_lobo <- fit_nested_leave_one_building_out(raw_data, seasons)
+# Paired comparator: the fixed full-model score comes from the exact same
+# held-out building and season, never from an in-sample fitted value.
+full_key <- paste(lobo$season, lobo$held_out_building, sep = "::")
+nested_key <- paste(nested_lobo$season, nested_lobo$held_out_building, sep = "::")
+full_index <- match(nested_key, full_key)
+if (anyNA(full_index)) {
+  stop("Could not align nested LOBO folds to fixed-full LOBO folds", call. = FALSE)
+}
+nested_lobo$fixed_full_converged <- lobo$converged[full_index]
+nested_lobo$fixed_full_brier <- lobo$brier[full_index]
+nested_lobo$fixed_full_log_loss <- lobo$log_loss[full_index]
+nested_lobo$delta_brier_vs_fixed_full <- nested_lobo$brier - nested_lobo$fixed_full_brier
+nested_lobo$delta_log_loss_vs_fixed_full <- nested_lobo$log_loss - nested_lobo$fixed_full_log_loss
 
 summarize_lobo <- function(results) {
   season_names <- sort(unique(as.character(results$season)))
@@ -592,6 +764,61 @@ summarize_lobo <- function(results) {
 }
 
 lobo_summary <- summarize_lobo(lobo)
+
+summarize_nested_lobo <- function(results) {
+  summaries <- lapply(seasons, function(season_name) {
+    part <- results[as.character(results$season) == season_name, , drop = FALSE]
+    valid <- part[
+      part$converged & part$baseline_converged & part$fixed_full_converged &
+        part$n_test > 0 & is.finite(part$brier) &
+        is.finite(part$baseline_brier) & is.finite(part$log_loss) &
+        is.finite(part$baseline_log_loss) & is.finite(part$fixed_full_brier) &
+        is.finite(part$fixed_full_log_loss),
+      , drop = FALSE
+    ]
+    total_n <- if (nrow(valid)) sum(valid$n_test) else 0L
+    weighted <- function(column) {
+      if (!nrow(valid) || total_n <= 0) return(NA_real_)
+      sum(valid$n_test * valid[[column]]) / total_n
+    }
+    data.frame(
+      season = season_name,
+      expected_building_folds = nrow(part),
+      evaluated_building_folds = nrow(valid),
+      test_visits = total_n,
+      test_positive_visits = if (nrow(valid)) sum(valid$n_test_positive) else 0L,
+      oof_brier = weighted("brier"),
+      offset_only_brier = weighted("baseline_brier"),
+      delta_brier = weighted("brier") - weighted("baseline_brier"),
+      oof_log_loss = weighted("log_loss"),
+      offset_only_log_loss = weighted("baseline_log_loss"),
+      delta_log_loss = weighted("log_loss") - weighted("baseline_log_loss"),
+      fixed_full_brier = weighted("fixed_full_brier"),
+      delta_brier_vs_fixed_full = weighted("brier") - weighted("fixed_full_brier"),
+      fixed_full_log_loss = weighted("fixed_full_log_loss"),
+      delta_log_loss_vs_fixed_full = weighted("log_loss") - weighted("fixed_full_log_loss"),
+      selected_full = sum(valid$selected_model == "full", na.rm = TRUE),
+      selected_building_only = sum(valid$selected_model == "building_only", na.rm = TRUE),
+      selected_vegetation_only = sum(valid$selected_model == "vegetation_only", na.rm = TRUE),
+      selected_null = sum(valid$selected_model == "null", na.rm = TRUE),
+      mean_fold_auc = if (any(is.finite(valid$auc))) mean(valid$auc[is.finite(valid$auc)]) else NA_real_,
+      stringsAsFactors = FALSE
+    )
+  })
+  do.call(rbind, summaries)
+}
+
+nested_lobo_summary <- summarize_nested_lobo(nested_lobo)
+write.csv(
+  nested_lobo,
+  file.path(args$out_dir, "ubc_nested_leave_one_building_out_validation.csv"),
+  row.names = FALSE, na = ""
+)
+write.csv(
+  nested_lobo_summary,
+  file.path(args$out_dir, "ubc_nested_leave_one_building_out_summary.csv"),
+  row.names = FALSE, na = ""
+)
 write.csv(lobo, file.path(args$out_dir, "ubc_leave_one_building_out_validation.csv"),
           row.names = FALSE, na = "")
 write.csv(lobo_summary, file.path(args$out_dir, "ubc_leave_one_building_out_summary.csv"),
@@ -612,7 +839,7 @@ report <- list(
     candidate_sets = model_fixed_terms,
     random_effects = "(1 | facade_id), matching the published (1 | Build:Fac) grouping",
     offset = "log(survey_hours), with METHOD 1=24h and METHOD 2=48h",
-    scaling = "predictors standardized to mean 0 and SD 1 on the full balanced panel",
+    scaling = "full-panel scaling for descriptive seasonal fits; training-fold-only scaling for both held-out-building evaluations",
     model_selection = "AICc; delta AICc <= 2 reported as plausible",
     conditional_response_curves = paste(
       "Fixed-effect predictions from every model within delta AICc <= 2; random effects are excluded.",
@@ -622,6 +849,9 @@ report <- list(
     diagnostics = diagnostics,
     lobo_validation = "leave-one-building-out on the full candidate model; population-level predictions exclude held-out random effects",
     lobo_validation_summary = lobo_summary,
+    nested_lobo_validation = "outer leave-one-building-out; predictor scaling and AICc candidate selection are repeated on seven training buildings only",
+    nested_lobo_validation_summary = nested_lobo_summary,
+    nested_lobo_comparators = c("exposure-only binomial GLM with log-hours offset", "fixed full GLMM on the same held-out building-season fold"),
     lobo_interpretation = paste(
       "The offset-only binomial model is the predictive control. Positive delta Brier/log-loss means the full GLMM performs worse.",
       "These are internal held-out-building transfer checks, not external-site validation."
@@ -672,5 +902,6 @@ cat(jsonlite::toJSON(list(
   seasonal_positive_visits = lapply(seasonal_fits, function(x) x$positive_visits),
   lobo_rows = nrow(lobo),
   lobo_summary = lobo_summary,
+  nested_lobo_summary = nested_lobo_summary,
   output_directory = args$out_dir
 ), auto_unbox = TRUE, pretty = TRUE))
