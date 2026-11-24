@@ -5,6 +5,13 @@ registered pane in the selector or click its mesh. The details and conversation
 use the same pane and evidence snapshot. The supplied v89 geometry does not
 include independently verified physical pane bindings.
 
+## Pane ontology demo
+
+Download [the interactive pane graph](pane-ontology-demo.html) and open it in a
+browser to follow a synthetic building, facade and pane to its optical records
+and assessment status. The page runs offline and links each displayed fact to
+the versioned fixture.
+
 ## Export a package
 
 ```sh

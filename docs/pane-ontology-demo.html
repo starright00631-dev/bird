@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>窗片证据链 · BNBU 鸟撞研究</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101619;
+      --surface: #172125;
+      --line: #37484e;
+      --text: #eff6f4;
+      --muted: #b2c2c4;
+      --accent: #97e9c9;
+      --warning: #ffc990;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.65 system-ui, "Microsoft YaHei UI", sans-serif;
+    }
+    main { max-width: 1200px; margin: auto; padding: clamp(22px, 5vw, 60px); }
+    header { margin-bottom: 29px; }
+    .project { color: var(--accent); font-weight: 650; margin: 0; }
+    h1 { font-size: clamp(32px, 5vw, 54px); line-height: 1.18; margin: 9px 0 12px; }
+    h2 { font-size: 20px; margin: 0; }
+    p { margin: 0; }
+    .muted, .edge, .node small { color: var(--muted); }
+    .demo-label {
+      display: inline-block;
+      vertical-align: middle;
+      margin-inline-start: 6px;
+      padding: 1px 8px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr); }
+    .graph, .inspector { border: 1px solid var(--line); }
+    .graph {
+      padding: 22px clamp(18px, 3vw, 34px) 33px;
+      border-radius: 12px 0 0 12px;
+      border-inline-end: 0;
+      background: radial-gradient(circle, #334045 1px, transparent 1px) 0 0 / 20px 20px, #141d21;
+    }
+    .inspector { padding: 22px 24px 26px; border-radius: 0 12px 12px 0; background: var(--surface); }
+    .graph h2 { margin-bottom: 45px; }
+    .nodes {
+      --gap: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--gap);
+    }
+    .node {
+      display: grid;
+      position: relative;
+      align-content: center;
+      gap: 3px;
+      min-height: 84px;
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid #53666b;
+      border-radius: 7px;
+      background: #1c292e;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+    .node:hover { border-color: var(--accent); }
+    .node[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 3px 0 var(--accent); background: #233832; }
+    .node:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .node strong { line-height: 1.35; overflow-wrap: anywhere; }
+    .node small, .edge { font-size: 12px; }
+    .node .conflict, .warning { color: var(--warning); }
+    .edge {
+      position: absolute;
+      left: calc(100% + 1px);
+      top: calc(50% - 20px);
+      width: var(--gap);
+      text-align: center;
+      pointer-events: none;
+    }
+    .edge::before { content: ""; display: block; position: absolute; top: 20px; width: 100%; border-top: 1px solid #819699; }
+    .edge::after { content: ""; position: absolute; right: 1px; top: 17px; width: 6px; height: 6px; border: solid #819699; border-width: 1px 1px 0 0; transform: rotate(45deg); }
+    .joint { grid-column: 2 / 4; height: 51px; position: relative; }
+    .joint::before, .joint::after { content: ""; position: absolute; border: solid #819699; }
+    .joint::before {
+      top: 25px;
+      bottom: 0;
+      inset-inline: calc((100% - var(--gap)) / 4);
+      border-width: 1px 1px 0;
+    }
+    .joint::after { top: 0; height: 25px; right: calc((100% - var(--gap)) / 4); border-width: 0 1px 0 0; }
+    .optics { grid-column: 2; }
+    .details-heading { margin-bottom: 16px; }
+    article h3 { margin: 0 0 6px; font-size: 18px; }
+    dl { margin: 0; }
+    dl > div { padding: 11px 0; border-bottom: 1px solid var(--line); }
+    dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+    code { font: 0.87em/1.5 ui-monospace, Consolas, monospace; }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    .details-note { margin-top: 14px; }
+    footer { margin-top: 17px; font-size: 13px; }
+    @media (max-width: 880px) {
+      .workspace { grid-template-columns: minmax(0, 1fr); }
+      .graph { border-inline-end: 1px solid var(--line); border-radius: 12px 12px 0 0; }
+      .inspector { border-top: 0; border-radius: 0 0 12px 12px; }
+      .graph h2 { margin-bottom: 26px; }
+    }
+    @media (max-width: 480px) {
+      main { padding: 18px; }
+      .graph { padding: 16px 12px 20px; }
+      .inspector { padding: 16px; }
+      .nodes { --gap: 23px; }
+      .node { min-height: 76px; padding: 8px 6px; font-size: 13px; }
+      .node small, .edge { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="project">BNBU 鸟撞研究 <span class="demo-label">合成样例</span></p>
+      <h1>窗片证据链</h1>
+      <p class="muted">点击节点，查看一块窗片的定位、光学记录与评估状态。</p>
+    </header>
+
+    <div class="workspace">
+      <section class="graph" aria-labelledby="graph-title">
+        <h2 id="graph-title">对象关系</h2>
+        <div class="nodes">
+          <button class="node" type="button" aria-pressed="false" aria-controls="building">
+            <small>楼栋</small><strong>SYN-A</strong><span class="edge" aria-hidden="true">包含</span>
+          </button>
+          <button class="node" type="button" aria-pressed="false" aria-controls="facade">
+            <small>立面</small><strong>SYN-A-N</strong><span class="edge" aria-hidden="true">包含</span>
+          </button>
+          <button class="node" type="button" aria-pressed="false" aria-controls="pane">
+            <small>窗片</small><strong>SYN-A-1</strong>
+          </button>
+          <div class="joint" aria-hidden="true"></div>
+          <button class="node optics" type="button" aria-pressed="true" aria-controls="optics">
+            <strong>光学证据</strong><small class="conflict">反射率来源冲突</small>
+          </button>
+          <button class="node" type="button" aria-pressed="false" aria-controls="assessment">
+            <strong>评估结论</strong><small>等待本地验证</small>
+          </button>
+        </div>
+      </section>
+
+      <section class="inspector" aria-labelledby="details-title">
+        <h2 class="details-heading" id="details-title">节点详情</h2>
+        <div aria-live="polite">
+          <article id="building" hidden>
+            <h3>楼栋 <code>SYN-A</code></h3>
+            <p>样例楼栋包含立面 <code>SYN-A-N</code>。</p>
+          </article>
+          <article id="facade" hidden>
+            <h3>立面 <code>SYN-A-N</code></h3>
+            <p>所属楼栋为 <code>SYN-A</code>，本页展示其中的窗片 <code>SYN-A-1</code>。</p>
+          </article>
+          <article id="pane" hidden>
+            <h3>窗片 <code>SYN-A-1</code></h3>
+            <dl>
+              <div><dt>所属立面</dt><dd><code>SYN-A-N</code></dd></div>
+              <div><dt>楼层</dt><dd>1 层</dd></div>
+              <div><dt>窗格</dt><dd><code>SYN-A-1</code></dd></div>
+              <div><dt>模型版本</dt><dd><code>synthetic-v1</code></dd></div>
+            </dl>
+          </article>
+          <article id="optics">
+            <h3><code>SYN-A-1</code> 的光学记录</h3>
+            <dl>
+              <div>
+                <dt>外表面可见光反射率</dt>
+                <dd class="warning">来源冲突 · 暂不显示数值</dd>
+                <dd><a href="https://github.com/starright00631-dev/bird/blob/09c1a3bc6fe472efba2d34206d35ddd4bb71ca49/data/examples/synthetic_workspace_evidence.json#L38-L51"><code>synthetic-assembly-one</code><br><code>synthetic-assembly-two</code></a></dd>
+              </div>
+              <div>
+                <dt>外表面可见光透射率</dt>
+                <dd><strong>60%</strong> · 推断（假设级）</dd>
+                <dd class="muted"><time datetime="2026-01-09T09:00:00+08:00">2026-01-09 09:00（UTC+08:00）</time></dd>
+                <dd><a href="https://github.com/starright00631-dev/bird/blob/09c1a3bc6fe472efba2d34206d35ddd4bb71ca49/data/examples/synthetic_workspace_evidence.json#L52-L64"><code>synthetic-assembly-one</code></a></dd>
+              </div>
+            </dl>
+          </article>
+          <article id="assessment" hidden>
+            <h3><code>SYN-A-1</code> 的待验证结论</h3>
+            <dl>
+              <div><dt>每次接近的玻璃接触概率</dt><dd class="muted">等待连续接近监测与独立的本地验证</dd></div>
+              <div><dt>本地防撞改造效果</dt><dd class="muted">等待可比较的本地对照试验</dd></div>
+            </dl>
+            <p class="details-note"><a href="https://github.com/starright00631-dev/bird/blob/09c1a3bc6fe472efba2d34206d35ddd4bb71ca49/data/examples/synthetic_workspace_evidence.json#L181-L218">核对样例结论状态</a></p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <footer class="muted">
+      数据来自项目的<a href="https://github.com/starright00631-dev/bird/blob/09c1a3bc6fe472efba2d34206d35ddd4bb71ca49/data/examples/synthetic_workspace_evidence.json#L15-L218">合成窗片证据包</a>，仅用于演示对象关系与证据状态。
+    </footer>
+  </main>
+  <script>
+    const nodes = document.querySelectorAll('.node');
+    for (const node of nodes) {
+      node.addEventListener('click', () => {
+        for (const candidate of nodes) {
+          const selected = candidate === node;
+          candidate.setAttribute('aria-pressed', selected);
+          document.getElementById(candidate.getAttribute('aria-controls')).hidden = !selected;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
